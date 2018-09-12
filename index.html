@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <title>Form Professor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Form where the user add information about professor and class">
+    <meta name="author" content="Antonio Faienza">
+</head>
+
+<body>
+
+    <!-- Form Professor -->
+    <!-- REF: https://www.codeply.com/go/n2dowoRbcC/bootstrap-4-form-examples -->
+    <div class="card card-outline-secondary">
+        <div class="card-header">
+            <h3 class="mb-0">Aggiungi un Professore</h3>
+        </div>
+        <div class="card-body">
+            <form class="form" role="form" autocomplete="off">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Nome</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Cognome</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Matricola</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="number">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Tipo di Contratto</label>
+                    <div class="col-lg-9">
+                        <select id="user_time_zone" class="form-control" size="0">
+                            <option value="ricercatore">Ricercatore</option>
+                            <option value="professore-a-contratto">Professore a contratto</option>
+                            <option value="professore-associato">Professore Associato</option>
+                            <option value="professore-ordinario">Professore Ordinario</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input type="reset" class="btn btn-secondary" value="Cancella">
+                        <input type="button" class="btn btn-primary" value="Salva">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+
+    <!-- FORM MATERIA -->
+    <div class="card card-outline-secondary">
+        <div class="card-header">
+            <h3 class="mb-0">Aggiungi una materia</h3>
+        </div>
+        <div class="card-body">
+            <form class="form" role="form" autocomplete="off">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Nome Materia</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Obbligatorio</label>
+                    <div class="col-lg-9">
+                        <label class="radio-inline"><input type="radio" name="obbligatory" checked>Si </label>
+                        <label class="radio-inline"><input type="radio" name="obbligatory">no </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">CFU</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="number" min="1" max="18" value="6">
+                    </div>
+                </div>
+                <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Codice Identificativo</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="number">
+                        </div>
+                    </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Corso di laurea</label>
+                    <div class="col-lg-9">
+                        <select id="user_time_zone" class="form-control" size="0">
+                            <option value="informatica-triennale">Informatica Triennale</option>
+                            <option value="informatica-management">Informatica per il Management</option>
+                            <option value="informatica-magistrale-curriculumA">Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE</option>
+                            <option value="informatica-magistrale-curriculumB">Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT</option>
+                            <option value="informatica-magistrale-curriculumC">Informatica Magistrale - CURRICULUM C: SISTEMI E RETI</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Periodo</label>
+                    <div class="col-lg-9">
+                        <select id="user_time_zone" class="form-control" size="0">
+                            <option value="primo-semestre">Primo Semestre</option>
+                            <option value="secondo-semestre">Secondo Semestre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Ore Totali</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="number" value="40">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Ore Settimanali</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="number" value="2">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Titolare</label>
+                    <div class="col-lg-9">
+                        <select id="user_time_zone" class="form-control" size="0">
+                            <option value="prof1">Prof 1</option>
+                            <option value="prof2">Prof 2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input type="reset" class="btn btn-secondary" value="Cancella">
+                        <input type="button" class="btn btn-primary" value="Salva">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FORM AULA -->
+    <div class="card card-outline-secondary">
+            <div class="card-header">
+                <h3 class="mb-0">Aggiungi un'aula</h3>
+            </div>
+            <div class="card-body">
+                <form class="form" role="form" autocomplete="off">
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Nome</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label">Numero di posti</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" type="number" min="1" value="30">
+                            </div>
+                        </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Cablata</label>
+                        <div class="col-lg-9">
+                            <label class="radio-inline"><input type="radio" name="obbligatory">Si </label>
+                            <label class="radio-inline"><input type="radio" name="obbligatory">no </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label">WiFii</label>
+                            <div class="col-lg-9">
+                                <label class="radio-inline"><input type="radio" name="obbligatory">Si </label>
+                                <label class="radio-inline"><input type="radio" name="obbligatory">no </label>
+                            </div>
+                        </div>
+                    
+                    <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label">Codice Identificativo</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" type="number">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Indirizzo</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" required>
+                                </div>
+                            </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                        <div class="col-lg-9">
+                            <input type="reset" class="btn btn-secondary" value="Cancella">
+                            <input type="button" class="btn btn-primary" value="Salva">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="lib/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="lib/popper.min.js" crossorigin="anonymous"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
