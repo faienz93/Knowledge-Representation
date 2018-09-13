@@ -21,9 +21,68 @@ Un'ontologia sarà costituita da
     - sono correlati ad altri oggetti e ai valori dei dati tramite proprietà
 
 ## Definizione dell'ontologia
-- classi
-    - professore
-    - materia
-    - aula
 
-Per la definizione della nostra ontologia si è partiti dalla [Protegé Ontology Library](https://protegewiki.stanford.edu/wiki/Protege_Ontology_Library) e selezionato [Institutional Ontology](http://www.isibang.ac.in/~bisu/ontology/instOntology.owl)
+### Class
+- Person
+    - Teacher
+        - Contract_Professor
+        - Ordinary_Professor
+        - Associate_Professor
+
+- Course Name
+    - Undergraduate_Course
+        - Informatica Triennale
+        - Informatica Per il Management
+    - Postgraduate_Course
+        - Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE
+        - Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT
+        - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI
+                            
+
+- Discipline
+- aula
+
+
+### Properties
+
+#### Data Properties
+- Person
+    - First Name
+    - Last Name
+    - Roll Number 
+- Discipline
+    - obligatory
+    - cfu
+
+#### Object Properties
+- Discipline
+    - hasCourseof
+
+### Instances
+- Informatica Triennale
+    - Informatica Triennale 1 anno
+    - Informatica Triennale 2 anno
+    - Informatica Triennale 3 anno
+
+- Informatica Per il Management
+    - Informatica Per il Management 1 anno
+    - Informatica Per il Management 2 anno
+    - Informatica Per il Management 3 anno
+
+- Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE
+    - Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE 1 anno 
+    - Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE 2 anno
+
+- Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT
+    - Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT 1 anno 
+    - Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT 2 anno
+
+- Informatica Magistrale - CURRICULUM C: SISTEMI E RETI
+    - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI 1 anno 
+    - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI 2 anno
+
+Per la definizione della nostra ontologia si è 
+- Scaricato e installato [Pròtegé](https://protegewiki.stanford.edu/wiki/Protege4GettingStarted#Download)
+- Dalla [Protegé Ontology Library](https://protegewiki.stanford.edu/wiki/Protege_Ontology_Library) si è selezionato [Institutional Ontology](http://www.isibang.ac.in/~bisu/ontology/instOntology.owl). 
+- 
+I
