@@ -30,4 +30,4 @@ WHERE {
 }
 ```
 
-(**NOTA:** Ritornerà vuota se bob è stato inserito nessuna tripla   )
+(**NOTA:** Ritornerà vuota se non è stato inserito nessuna tripla   )

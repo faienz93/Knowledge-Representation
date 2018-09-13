@@ -31,6 +31,7 @@ nomenclatura usata da OWL) partendo da dati già esistenti
 - Bootstrap v4.1
 - Apache Jena Fuseki v3.8.0
 - RDFlib 
+- Pròtegé
 
 ## Come lanciare il progetto
 - Installare RDFlib `pip install rdflib --user`
