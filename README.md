@@ -29,3 +29,4 @@ nomenclatura usata da OWL) partendo da dati già esistenti
 
 ## Tecnologie Usate
 - Bootstrap v4.1
+- Apache Jena Fuseki v3.8.0
