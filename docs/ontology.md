@@ -40,7 +40,7 @@ Un'ontologia sarà costituita da
                             
 
 - Discipline
-- aula
+- ClassRoom
 
 
 ### Properties
@@ -53,10 +53,21 @@ Un'ontologia sarà costituita da
 - Discipline
     - obligatory
     - cfu
+    - totalHours
+    - semester
+    - weekHours
+    - Roll Number
+- ClassRoom
+    - capacity
+    - wired
+    - wifi
+    - Roll Number
+    - Address
 
 #### Object Properties
-- Discipline
-    - hasCourseof
+- Discipline 
+    - *hasCourseof* - Course_Name
+    - ]*isTaughtBy* - Teacher
 
 ### Instances
 - Informatica Triennale
@@ -81,8 +92,7 @@ Un'ontologia sarà costituita da
     - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI 1 anno 
     - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI 2 anno
 
+## Definizione dell'Ontologia
 Per la definizione della nostra ontologia si è 
 - Scaricato e installato [Pròtegé](https://protegewiki.stanford.edu/wiki/Protege4GettingStarted#Download)
 - Dalla [Protegé Ontology Library](https://protegewiki.stanford.edu/wiki/Protege_Ontology_Library) si è selezionato [Institutional Ontology](http://www.isibang.ac.in/~bisu/ontology/instOntology.owl). 
-- 
-I
