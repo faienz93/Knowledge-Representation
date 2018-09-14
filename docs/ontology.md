@@ -93,6 +93,7 @@ Un'ontologia sarà costituita da
     - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI 2 anno
 
 ## Definizione di un'Ontologia
-Per la definizione della nostra ontologia si è 
-- Scaricato e installato [Pròtegé](https://protegewiki.stanford.edu/wiki/Protege4GettingStarted#Download)
-- Dalla [Protegé Ontology Library](https://protegewiki.stanford.edu/wiki/Protege_Ontology_Library) si è selezionato [Institutional Ontology](http://www.isibang.ac.in/~bisu/ontology/instOntology.owl). 
+Per definire un'ontologia: 
+- Scaricare e installare [Protégé](https://protegewiki.stanford.edu/wiki/Protege4GettingStarted#Download)
+- Dalla [Protégé Ontology Library](https://protegewiki.stanford.edu/wiki/Protege_Ontology_Library) selezionare [Institutional Ontology](http://www.isibang.ac.in/~bisu/ontology/instOntology.owl). 
+- importare l'ontologia scaricata nel software e aggiungere nuove instanze, come suggerisce la [guida](https://protegewiki.stanford.edu/wiki/Protege4GettingStarted). 
