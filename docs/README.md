@@ -1,33 +1,31 @@
-# SPARQL Command
-(**NOTA:** Eseguire la query come *SPARQL Query* mentre le operazioni sul grafo come *SPARQL Update*)
-Qui di seguito alcuni comandi utili da utilizzare in SPARQL
-## Come caricare un file in formato ttl su fuseki
-- `fuseki-server --file=path/of/file.ttl /ds`
-(NOTA: `/ds` indica il datasets)
+# RDF 
+- RDF è un modello per la rappresentazione di dati.
+- Basato su triple soggetto-predicato-oggetto dette statement. 
 
-## Esempio di query 
-- Esempio per vedere se il file caricato è andato a buon fine: `SELECT * {?s ?p ?o}`
-In generale per vedere come accedere ad un grafo si può consultare la [GUIDA](https://www.w3.org/TR/sparql11-query/#queryDataset)
+# GRAFO RDF 
+Un Grafo RDF è un insieme di statement RDF
+- Un file contenente statement RDF descrive un grafo RDF
+- Gli stessi IRI contenuti in grafi RDF diversi si riferiscono alla stessa risorsa
 
-## Creare un grafo
-`CREATE GRAPH <NOME_GRAFO>`
+# TURTLE
+Turtle è un linguaggio non-XML sviluppato per diminuire la verbosità
+di RDF/XML e rendere i vari statement di facile comprensione non
+solo per le macchine ma anche per gli esseri umani
+- Vantaggi: molto machine-accessible (è facilmente parserizzabile), abbastanza
+comprensibile per gli esseri umani
+- Svantaggi: non è chiaro quanto lo è un grafo, possibili più linearizzazioni
 
-## Eliminare un grafo
-`DROP GRAPH <NOME_GRAFO>`
+# OWL
+OWL 2 è una Recommendation del W3C, originariamente pubblicato
+nel 2009 per creare [ontologie](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/ontology.md#ontologia) mediante l’uso di RDF
+- Implementa una specifica logica descrittiva chiamata SROIQ – le logiche
+descrittive sono una sorta di sottoinsieme delle logiche del primo
+ordine, e sono un buon compromesso tra espressività e computabilità
+- Particolari applicazioni (come i ragionatori) possono essere usati per
+inferire nuove asserzioni (che sono statement RDF conformemente alla
+nomenclatura usata da OWL) partendo da dati già esistenti
 
-## Eliminare un grafo non sapendo se è stato esplicitamente creato o meno
-`DROP SILENT GRAPH <NOME_GRAFO>`
+# SPARQL
+SPARQL è un linguaggio di interrogazione per dati rappresentati tramite il Resource Description Framework (RDF). Il framework di descrizione RDF è stato reso standard dal Data Access Working Group, un gruppo di lavoro del consorzio w3c, che lo ha reso raccomandazione ufficiale il 15 gennaio 2008.
 
-## Vedere se un grafo esiste 
- `ASK WHERE { GRAPH <NOME_GRAFO> { ?s ?p ?o } }`
-
-
-## Vedere tutti quelli che sono i grafi disponibili
-```
-SELECT ?g 
-WHERE {   
-    GRAPH ?g { } 
-}
-```
-
-(**NOTA:** Ritornerà vuota se non è stato inserito nessuna tripla   )
+SPARQL è uno degli elementi chiave delle tecnologie legate al paradigma noto come web semantico, e consente di estrarre informazioni dalle basi di conoscenza distribuite sul web. Il linguaggio RDF descrive i concetti e le relazioni su di essi attraverso l'introduzione di triple (soggetto-predicato-oggetto), e consente la costruzione di query basate su triple patterns, congiunzioni logiche, disgiunzioni logiche, e pattern opzionali.
