@@ -4,7 +4,7 @@
 - Bootstrap v4.1
 - Apache Jena Fuseki v3.8.0
 - RDFlib 
-- [Pròtegé](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/ontology.md#definizione-di-unontologia)
+- [Protégé](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/ontology.md#definizione-di-unontologia)
 
 ## Come lanciare il progetto
 - Installare RDFlib `pip install rdflib --user`
