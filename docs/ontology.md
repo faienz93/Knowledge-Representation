@@ -92,7 +92,7 @@ Un'ontologia sarà costituita da
     - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI 1 anno 
     - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI 2 anno
 
-## Definizione di um'Ontologia
+## Definizione di un'Ontologia
 Per la definizione della nostra ontologia si è 
 - Scaricato e installato [Pròtegé](https://protegewiki.stanford.edu/wiki/Protege4GettingStarted#Download)
 - Dalla [Protegé Ontology Library](https://protegewiki.stanford.edu/wiki/Protege_Ontology_Library) si è selezionato [Institutional Ontology](http://www.isibang.ac.in/~bisu/ontology/instOntology.owl). 
