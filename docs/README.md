@@ -26,6 +26,6 @@ inferire nuove asserzioni (che sono statement RDF conformemente alla
 nomenclatura usata da OWL) partendo da dati già esistenti
 
 # SPARQL
-SPARQL è un linguaggio di interrogazione per dati rappresentati tramite il Resource Description Framework (RDF). Il framework di descrizione RDF è stato reso standard dal Data Access Working Group, un gruppo di lavoro del consorzio w3c, che lo ha reso raccomandazione ufficiale il 15 gennaio 2008.
+[SPARQL](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/sparql.md#sparql-command) è un linguaggio di interrogazione per dati rappresentati tramite il Resource Description Framework (RDF). Il framework di descrizione RDF è stato reso standard dal Data Access Working Group, un gruppo di lavoro del consorzio w3c, che lo ha reso raccomandazione ufficiale il 15 gennaio 2008.
 
 SPARQL è uno degli elementi chiave delle tecnologie legate al paradigma noto come web semantico, e consente di estrarre informazioni dalle basi di conoscenza distribuite sul web. Il linguaggio RDF descrive i concetti e le relazioni su di essi attraverso l'introduzione di triple (soggetto-predicato-oggetto), e consente la costruzione di query basate su triple patterns, congiunzioni logiche, disgiunzioni logiche, e pattern opzionali.
