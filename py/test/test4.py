@@ -10,12 +10,12 @@ g = rdflib.Graph()
 g.load("prova.owl")
 
 # Il grafo del triplestore su cui voglio caricare le triple
-tps_graph = "luca_angelucci" 
+tps_graph = "http://www.rdcproject.com/graph/professor" 
 
 # Costruisco la query usando sia il grafo finale sia le triple da caricare
 query = """INSERT DATA {
-GRAPH <%s> { %s }
-}""" % (tps_graph, g.serialize(format="nt"))
+    GRAPH <%s> { %s }
+    }""" % (tps_graph, g.serialize(format="nt"))
 
 
 # NB: Usare 'DELETE' al posto di 'INSERT' per rimuovere

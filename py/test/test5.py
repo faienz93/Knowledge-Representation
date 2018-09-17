@@ -26,4 +26,6 @@ PREFIX oa: <http://www.w3.org/ns/oa#>
 
 
 # Run the query and print the result
+sparql.setQuery(query)
+sparql.setMethod('POST') 
 print sparql.query().convert()

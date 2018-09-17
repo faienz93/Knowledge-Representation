@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<rdf:RDF 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+	xmlns:owl="http://www.w3.org/2002/07/owl#" 
+	xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#" 
+	xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+	xmlns:wot="http://xmlns.com/wot/0.1/" 
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:uni="http://www.rdcproject.com/">
+
+    <!-- http://www.essepuntato.it/2013/citalo/test/data/alessio_Ciarrocchi -->
+    <uni:Teacher rdf:about="DDDD">
+        <uni:firstName>Alessio</uni:firstName>
+        <uni:lastName>Ciarrocchi</uni:lastName>
+        <foaf:knows rdf:resource="http://www.essepuntato.it/2013/citalo/test/data/antonio_faienza"/>
+        <foaf:age rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">40</foaf:age>
+        <uni:id_professor>0000342342</uni:id_professor>
+        <uni:role>Professore associato</uni:role>
+        <a:ciao>AAAA </a:ciao>
+  </uni:Teacher>
+
+ 
+
+  </rdf:RDF>

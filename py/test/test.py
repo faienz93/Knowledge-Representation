@@ -11,8 +11,8 @@ my_graph.load("data.owl")
 # my_graph.load("foaf.owl")
 
 # Iterate on all triples
-# for s, p, o in my_graph: 
-#     print s, p, o
+for s, p, o in my_graph: 
+    print s, p, o
 
 
 # Serialize
