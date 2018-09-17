@@ -40,4 +40,4 @@ for pair in pairs:
     rdf.add((person1, FOAF.knows, person2))
 
 # Save the new Graph in RDF/XML format
-rdf.serialize("data-updated.owl",format="pretty-xml")
+rdf.serialize("data-updated2.owl",format="pretty-xml")

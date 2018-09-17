@@ -7,6 +7,8 @@ import rdflib
 
 my_graph = rdflib.Graph()
 my_graph.load("data.owl")
+# # my_graph.load("../../ontology/universityOntology.owl")
+# my_graph.load("foaf.owl")
 
 # Iterate on all triples
 # for s, p, o in my_graph: 
