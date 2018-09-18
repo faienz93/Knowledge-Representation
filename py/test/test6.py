@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 
 # Import the class that i want use
@@ -8,25 +8,35 @@ import rdflib
 
 g = rdflib.Graph()
 # Set the end-point and ask if it give me the result to JSON
-# sparql = SPARQLWrapper("http://localhost:3030/ds/update",returnFormat="json")
+sparql = SPARQLWrapper("http://localhost:3030/ds/update",returnFormat="json")
+sparql.setReturnFormat("json")
 tps_graph = "http://www.rdcproject.com/graph/professor" 
+name = "Fabio";
+surname = "Vitali"
+id_professor = "150348"
+role = "ordinario"
 # Create a new Query
-sparql.setQuery("""
+query = '''
 PREFIX uni: <http://www.rdfproject.com/>
 PREFIX un: <http://www.w3.org/2007/ont/unit#>
 INSERT DATA
 { 
-   GRAPH <%s>
-  <http://example/Luca> a uni:Teacher ;
-                        uni:firstName "Fabio"; 
-  						uni:lastName "Vitali".
+   GRAPH <'''+tps_graph+'''>{
+   <http://www.rdfproject.com/150348> a uni:Teacher;
+                        uni:firstName "'''+name+'''"; 
+  						uni:lastName "'''+surname+'''";
+      					uni:id_professor "'''+id_professor+'''";
+      					uni:role "'''+role+'''".
+    }
 }
-"""% (tps_graph, g.serialize(format="nt")))
+'''
+
 
 
 # Run the query and print the result
-sparql = SPARQLWrapper("http://localhost:3030/ds/update" ,returnFormat="json")
 sparql.setQuery(query)
 sparql.setMethod('POST') 
 q = sparql.query()
-print q.convert()
+
+# print q.info()["content-type"]
+# print q.convert()

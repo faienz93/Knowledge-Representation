@@ -9,7 +9,7 @@ from SPARQLWrapper import SPARQLWrapper
 sparql = SPARQLWrapper("http://localhost:3030/ds/query",returnFormat="json")
 
 # Create a new Query
-sparql.setQuery("""
+query = """
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
@@ -22,7 +22,7 @@ PREFIX oa: <http://www.w3.org/ns/oa#>
     OPTIONAL { ?user sioc:name ?username }
     ?annotation rdf:type oa:Annotation ;
         oa:annotatedBy ?user }
-    ORDER BY ?username""")
+    ORDER BY ?username"""
 
 
 # Run the query and print the result
