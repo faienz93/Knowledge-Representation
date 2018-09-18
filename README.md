@@ -5,9 +5,11 @@
 - Apache Jena Fuseki v3.8.0
 - RDFlib 
 - Protégé
+- Rule-reactor
 
 ## Come lanciare il progetto
 - Installare RDFlib `pip install rdflib --user`
+- Installare rule-reactor `npm install rule-reactor`
 
 - Installare [Protégé](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/ontology.md#definizione-di-unontologia)
 
