@@ -18,7 +18,6 @@
         <foaf:age rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">40</foaf:age>
         <uni:id_professor>0000342342</uni:id_professor>
         <uni:role>Professore associato</uni:role>
-        <a:ciao>AAAA </a:ciao>
   </uni:Teacher>
 
  
