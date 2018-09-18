@@ -2,6 +2,11 @@
 # coding=utf-8
 
 
+# ==================================
+# TEST for create a query
+# ==================================
+
+
 # Import the class that i want use
 from SPARQLWrapper import SPARQLWrapper
 

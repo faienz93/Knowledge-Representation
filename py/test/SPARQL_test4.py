@@ -1,6 +1,11 @@
 #!/usr/bin/python
 # coding=utf-8
 
+
+# ==================================
+# TEST for loading triplef from file
+# ==================================
+
 # from support import load_graph
 from SPARQLWrapper import SPARQLWrapper, JSON
 import rdflib

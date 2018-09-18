@@ -1,5 +1,10 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
+# coding=utf-8
+
+
+# =========================================
+# TEST for Insert a single triple from code
+# =========================================
 
 
 # Import the class that i want use
