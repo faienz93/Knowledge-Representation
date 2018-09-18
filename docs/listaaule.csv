@@ -1,0 +1,11 @@
+id_room,className,address,capacity,wifi,wired
+12347,E1,Ercolani,40,true,true
+12348,E2,Ercolani,35,true,true
+12349,E3,Ercolani,20,true,true
+51200,Enriquez,Matematica,30,false,false
+51201,Pincherle,Matematica,30,false,false
+51202,Cremona,Matematica,30,false,false
+51203,Tonelli,Matematica,30,true,false
+51204,Sem8,Matematica,30,true,false
+44981,C1 Ranzani,Ranzani,30,false,false
+44982,Lab Ranzani,Ranzani,30,true,true
