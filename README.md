@@ -1,6 +1,7 @@
 # Knowledge-Representation
 
 ## Tecnologie Usate
+- XAMPP/LAMPP
 - Bootstrap v4.1
 - Apache Jena Fuseki v3.8.0
 - RDFlib 
