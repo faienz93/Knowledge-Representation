@@ -25,9 +25,8 @@ Un'ontologia sarà costituita da
 ### Class
 - Person
     - Teacher
-        - Contract_Professor
-        - Ordinary_Professor
-        - Associate_Professor
+- Discipline
+- ClassRoom
 
 - Course Name
     - Undergraduate_Course
@@ -39,29 +38,30 @@ Un'ontologia sarà costituita da
         - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI
                             
 
-- Discipline
-- ClassRoom
+
 
 
 ### Properties
 
 #### Data Properties
-- Person
+- Teacher
     - First Name
     - Last Name
-    - Roll Number 
+    - ID Professor 
+    - Role
 - Discipline
+    - discipline name
     - obligatory
     - cfu
     - totalHours
     - semester
     - weekHours
-    - Roll Number
+    - ID Discipline
 - ClassRoom
     - capacity
     - wired
     - wifi
-    - Roll Number
+    - ID Classroom
     - Address
 
 #### Object Properties
