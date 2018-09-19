@@ -3,7 +3,7 @@
 
 
 # =========================================
-# TEST for Insert a single triple from code
+# TEST for DELETE a single triple from code
 # =========================================
 
 
@@ -14,7 +14,7 @@ import rdflib
 g = rdflib.Graph()
 # Set the end-point and ask if it give me the result to JSON
 sparql = SPARQLWrapper("http://localhost:3030/ds/update",returnFormat="json")
-sparql.setReturnFormat("json")
+
 tps_graph = "http://www.rdcproject.com/graph/professor" 
 name = "Fabio";
 surname = "Vitali"
@@ -24,7 +24,7 @@ role = "ordinario"
 query = '''
 PREFIX uni: <http://www.rdfproject.com/>
 PREFIX un: <http://www.w3.org/2007/ont/unit#>
-INSERT DATA
+DELETE DATA
 { 
    GRAPH <'''+tps_graph+'''>{
    uni:150348 a uni:Teacher;
