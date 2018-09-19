@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" crossorigin="anonymous">
 
-    <title>Form Professor</title>
+    <title>Forms</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Form where the user add information about professor and class">
     <meta name="author" content="Antonio Faienza">
@@ -24,11 +24,11 @@
             <h3 class="mb-0">Aggiungi un Professore</h3>
         </div>
         <div class="card-body">
-            <form class="form" role="form" autocomplete="off">
+            <form class="form" role="form" autocomplete="off" action="py/insertProfessor.py" method="post">
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text">
+                        <input class="form-control" type="text" name="nome">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -59,7 +59,7 @@
                     <label class="col-lg-3 col-form-label form-control-label"></label>
                     <div class="col-lg-9">
                         <input type="reset" class="btn btn-secondary" value="Cancella">
-                        <input type="button" class="btn btn-primary" value="Salva">
+                        <input type="submit" class="btn btn-primary" value="Salva">
                     </div>
                 </div>
             </form>
@@ -223,11 +223,11 @@
 
     <!-- Test Rules -->
     <script src="js/test/rules.js"></script>
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             InitRuleReactor();
         });
-    </script>
+    </script> -->
 </body>
 
 </html>
