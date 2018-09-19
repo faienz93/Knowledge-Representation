@@ -8,7 +8,7 @@
 - Rule-reactor
 
 ## Requisiti
-- Verificare che [XAMPP/LAMPP](boh) sia abilitato all'utilizzo di Python
+- Verificare che [XAMPP/LAMPP](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/xampp.md#xampp) sia abilitato all'utilizzo di Python
 - Installare RDFlib `pip install rdflib --user`
 - Installare rule-reactor `npm install rule-reactor`
 - Installare flask `pip install flask`

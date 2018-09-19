@@ -30,3 +30,5 @@ print("I can view this in my browser yay!!")
 - `gedit admin:///opt/lampp/etc/httpd.conf`
 
 **NOTA2:** In caso di errore vedere il log del file: `/opt/lampp/logs`
+
+Per info su come eseguirlo su Windows si consulti la guida [QUI](https://stackoverflow.com/questions/42704846/running-python-scripts-with-xampp?answertab=votes#tab-top)
