@@ -114,6 +114,7 @@
     
 
 
+    <!-- DATA TYPE COURSE -->
     <!-- http://www.rdcproject.com/courseName -->
 
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/courseName">
@@ -121,9 +122,23 @@
         <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
         <rdfs:label xml:lang="en">Course Name</rdfs:label>
     </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/curriculum -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/curriculum">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Course"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">Curriculum</rdfs:label>
+    </owl:DatatypeProperty>
     
+    <!-- http://www.rdcproject.com/courseType -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/courseType">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Course"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">Course Type</rdfs:label>
+    </owl:DatatypeProperty>
 
 
+    <!-- DATA TYPE DISCIPLINE -->
     <!-- http://www.rdcproject.com/disciplineName -->
 
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/disciplineName">
@@ -265,13 +280,12 @@
     
 
     <!-- http://www.rdcproject.com/year -->
-
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/year">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
         <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
-        <rdfs:label xml:lang="en">YEAR</rdfs:label>
-</owl:DatatypeProperty>
+        <rdfs:label xml:lang="en">year</rdfs:label>
+    </owl:DatatypeProperty>
 
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -295,7 +309,7 @@
     <!-- http://www.rdcproject.com/Course -->
 
     <owl:Class rdf:about="http://www.rdcproject.com/Course">
-        <rdfs:comment xml:lang="en">Is the type of university. Ex postdegree and Undergraduate</rdfs:comment>
+        <rdfs:comment xml:lang="en">Is the university Course</rdfs:comment>
         <rdfs:label xml:lang="en">Course</rdfs:label>
     </owl:Class>
     
@@ -310,13 +324,12 @@
     
 
 
-    <!-- http://www.rdcproject.com/Postgraduate_course -->
- 
-    <owl:Class rdf:about="http://www.rdcproject.com/Postgraduate_course">
+    <!-- http://www.rdcproject.com/Postgraduate_course --> 
+    <!-- <owl:Class rdf:about="http://www.rdcproject.com/Postgraduate_course">
         <rdfs:comment xml:lang="en">Is the discipline after the graduation</rdfs:comment>
         <rdfs:label xml:lang="en">Postgraduate_course</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.rdcproject.com/Course"/>
-    </owl:Class>
+    </owl:Class> -->
     
 
 
@@ -332,11 +345,11 @@
 
     <!-- http://www.rdcproject.com/Undergraduate_course -->
 
-    <owl:Class rdf:about="http://www.rdcproject.com/Undergraduate_course">
+    <!-- <owl:Class rdf:about="http://www.rdcproject.com/Undergraduate_course">
         <rdfs:comment xml:lang="en">Is the discipline before the graduation</rdfs:comment>
         <rdfs:label xml:lang="en">Undergraduate_course</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.rdcproject.com/Course"/>
-    </owl:Class>
+    </owl:Class> -->
     
 
 
@@ -353,97 +366,95 @@
 
     <!-- http://www.rdcproject.com/Informatica_Magistrale_Curriculum_A_1_Anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_A_1_Anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_A_1_Anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Postgraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_Magistrale_Curriculum_A_2_Anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_A_2_Anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_A_2_Anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Postgraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_Magistrale_Curriculum_B_1_Anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_B_1_Anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_B_1_Anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Postgraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_Magistrale_Curriculum_B_2_Anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_B_2_Anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_B_2_Anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Postgraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_Magistrale_Curriculum_C_1_Anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_C_1_Anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_C_1_Anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Postgraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_Magistrale_Curriculum_C_2_Anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_C_2_Anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_Magistrale_Curriculum_C_2_Anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Postgraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_per_il_management_1_anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_per_il_management_1_anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_per_il_management_1_anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Undergraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_per_il_management_2_anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_per_il_management_2_anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_per_il_management_2_anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Undergraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_per_il_management_3_anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_per_il_management_3_anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_per_il_management_3_anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Undergraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_triennale_1_Anno -->
-
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_triennale_1_Anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_triennale_1_Anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Undergraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_triennale_2_anno -->
 
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_triennale_2_anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_triennale_2_anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Undergraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
     
 
 
     <!-- http://www.rdcproject.com/Informatica_triennale_3_anno -->
-
-    <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_triennale_3_anno">
+    <!-- <owl:NamedIndividual rdf:about="http://www.rdcproject.com/Informatica_triennale_3_anno">
         <rdf:type rdf:resource="http://www.rdcproject.com/Undergraduate_course"/>
-    </owl:NamedIndividual>
+    </owl:NamedIndividual> -->
 </rdf:RDF>
 
 
