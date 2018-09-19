@@ -27,7 +27,7 @@ PREFIX un: <http://www.w3.org/2007/ont/unit#>
 INSERT DATA
 { 
    GRAPH <'''+tps_graph+'''>{
-   <http://www.rdfproject.com/150348> a uni:Teacher;
+   uni:150348 a uni:Teacher;
                         uni:firstName "'''+name+'''"; 
   						uni:lastName "'''+surname+'''";
       					uni:id_professor "'''+id_professor+'''";
