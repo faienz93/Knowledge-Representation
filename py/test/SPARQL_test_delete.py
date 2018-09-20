@@ -41,7 +41,7 @@ elif(classes=="course"):
 
 
 #id dell'oggetto della classe scelta
-id='000011'
+id='000004'
 
 queryDelete = '''
 PREFIX uni: <http://www.rdfproject.com/>
