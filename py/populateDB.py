@@ -220,6 +220,7 @@ with open('../assets/disciplines.csv', 'rb') as csvfile:
         cfu = row[6]
         year = row[7]
         course = row[8]
+        teacher=row[9]
 
         # Create a new Query
         query = '''
@@ -237,7 +238,8 @@ with open('../assets/disciplines.csv', 'rb') as csvfile:
                                 uni:cfu "'''+cfu+'''";
                                 uni:year "'''+year+'''";
                                 uni:idDiscipline "'''+id_discipline+'''";
-                                uni:hasCourseof uni:'''+course+'''
+                                uni:hasCourseof uni:'''+course+''';
+                                uni:isTaughtBy uni:'''+teacher+'''
                                 
             }
         }
