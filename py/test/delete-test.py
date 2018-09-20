@@ -11,24 +11,37 @@ graph_disciplines = "http://www.rdcproject.com/graph/disciplines"
 graph_classrooms = "http://www.rdcproject.com/graph/classrooms" 
 graph_courses = "http://www.rdcproject.com/graph/course"
 
+integrity_query=""
 #delete in base al tipo di classe
 classes="professor"
 if(classes=="professor"):
     graph_name=graph_professor
     id_name="idProfessor"
+    integrity_query='''
+    GRAPH <http://www.rdcproject.com/graph/disciplines> 
+      {
+        ?objectData uni:isTaughtBy ?object. 
+      }
+      '''
 elif(classes=="discipline"):
     graph_name=graph_disciplines
-    id_name="idDiscipline"
+    id_name="idDiscipline"    
 elif(classes=="classroom"):
     graph_name=graph_classrooms
     id_name="idRoom"
 elif(classes=="course"):
     graph_name=graph_courses
     id_name="idCourse"
+    integrity_query='''
+    GRAPH <http://www.rdcproject.com/graph/disciplines> 
+      {
+        ?ObjectData uni:hasCourseof ?object. 
+      }
+      '''
 
 
 #id dell'oggetto della classe scelta
-id='000006'
+id='000011'
 
 queryDelete = '''
 PREFIX uni: <http://www.rdfproject.com/>
@@ -38,6 +51,7 @@ DELETE WHERE {
   ?object uni:'''+id_name+' "'+id+'"'''';
                          ?property      ?value 
   }
+  '''+integrity_query+'''
   }
 '''
 
