@@ -24,32 +24,32 @@
             <h3 class="mb-0">Aggiungi un Professore</h3>
         </div>
         <div class="card-body">
-            <form class="form" role="form" autocomplete="off" action="py/insertProfessor.py" method="post">
+            <form class="form" role="form" autocomplete="off" action="http://127.0.0.1:5000/addProfessor" method="POST">
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text" name="nome" required>
+                        <input class="form-control" type="text" name="nameProfessorForm" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Cognome</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text">
+                        <input class="form-control" type="text" name="surnameProfessorForm" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Matricola</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="number">
+                        <input class="form-control" type="number" name="idProfessorForm" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Tipo di Contratto</label>
                     <div class="col-lg-9">
-                        <select id="user_time_zone" class="form-control" size="0">
-                            <option value="professore-a-contratto">Professore a contratto</option>
-                            <option value="professore-associato">Professore Associato</option>
-                            <option value="professore-ordinario">Professore Ordinario</option>
+                        <select id="user_time_zone" class="form-control" size="0" name="roleProfessorForm">
+                            <option value="contratto">Professore a contratto</option>
+                            <option value="associato">Professore Associato</option>
+                            <option value="ordinario">Professore Ordinario</option>
                         </select>
                     </div>
                 </div>
@@ -223,6 +223,7 @@
 
     <!-- Test Rules -->
     <script src="js/test/rules.js"></script>
+    <script src="js/main.js"></script>
     <!-- <script>
         $(document).ready(function() {
             InitRuleReactor();
