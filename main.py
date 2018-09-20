@@ -22,6 +22,9 @@ app = Flask(__name__, template_folder=template_dir)
 def index():
     return render_template("index.html")
 
+@app.route('/temp')
+def temp():
+    return render_template("temp.html")
 
 
 # ======================================================
@@ -37,8 +40,10 @@ def send_lib(path):
 def send_js(path):
     return send_from_directory('js', path)
 
+
+# Create RDF Professor Query
 @app.route('/addProfessor', methods = ['POST', 'GET'])
-def insertProfessor():
+def addProfessor():
     name = request.form['nameProfessorForm']
     surname = request.form['surnameProfessorForm']
     id_professor = request.form['idProfessorForm']
@@ -60,6 +65,46 @@ def insertProfessor():
                                     uni:lastName "'''+surname+'''";
                                     uni:idProfessor "'''+id_professor+'''";
                                     uni:role "'''+role+'''".
+                }
+            }
+            '''
+    
+    # Run the query 
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    q = sparql.query()
+
+    return redirect("/", code=302)
+
+
+# Create RDF ClassRoom Query
+@app.route('/addClassRoom', methods = ['POST', 'GET'])
+def addClassRoom():
+    
+    className = request.form['className']
+    capacity = request.form['capacity']    
+    wired = request.form['wired']
+    wifi = request.form['wifi']
+    id_room = request.form['id_room']
+    address = request.form['address']
+    
+    graph_classrooms = "http://www.rdcproject.com/graph/classrooms" 
+
+    # Create a new Query
+    query = '''
+            PREFIX uni: <http://www.rdfproject.com/>
+            PREFIX un: <http://www.w3.org/2007/ont/unit#>
+            INSERT DATA
+            { 
+            GRAPH <'''+graph_classrooms+'''>{
+            uni:'''+id_room+''' a uni:Classroom;
+                                    uni:classroomname "'''+className+'''"; 
+                                    uni:address "'''+address+'''";
+                                    uni:capacity "'''+capacity+'''";
+                                    uni:wifi "'''+wifi+'''";
+                                    uni:idRoom "'''+id_room+'''"; 
+                                    uni:wired "'''+wired+'''".
                 }
             }
             '''
