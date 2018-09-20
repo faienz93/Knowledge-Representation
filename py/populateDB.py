@@ -135,6 +135,7 @@ sparql.setQuery(queryCurrC)
 sparql.setMethod('POST') 
 q = sparql.query()
 
+
 # Insert into graph professor the professor written inside csv file "professors.csv"
 with open('../assets/professors.csv', 'rb') as csvfile:
     testReader = csv.reader(csvfile, skipinitialspace=False, delimiter=',')
