@@ -22,9 +22,9 @@ app = Flask(__name__, template_folder=template_dir)
 def index():
     return render_template("index.html")
 
-@app.route('/temp')
-def temp():
-    return render_template("temp.html")
+@app.route('/test')
+def test():
+    return render_template("test.html")
 
 
 # ======================================================
@@ -39,6 +39,12 @@ def send_lib(path):
 @app.route('/js/<path:path>')
 def send_js(path):
     return send_from_directory('js', path)
+
+
+# I indicate where load the static file (css) instead static directory
+@app.route('/css/<path:path>')
+def send_css(path):
+    return send_from_directory('css', path)
 
 
 # Create RDF Professor Query
