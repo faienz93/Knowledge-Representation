@@ -26,15 +26,21 @@
 
 <body>
 
-    <!-- Form Professor -->
+  
     <!-- REF: https://www.codeply.com/go/n2dowoRbcC/bootstrap-4-form-examples -->
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Form Professor
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
     <div class="card card-outline-secondary">
         <div class="card-header">
             <h3 class="mb-0">Aggiungi un Professore</h3>
         </div>
         <div class="card-body">
-            <form class="form" id="professorForm" role="form" autocomplete="off" action="http://127.0.0.1:5000/addProfessor"
-                method="POST">
+            <form class="form" id="professorForm" role="form" autocomplete="off" action="http://127.0.0.1:5000/addProfessor" method="POST">
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome</label>
                     <div class="col-lg-9">
@@ -76,73 +82,97 @@
         </div>
     </div>
 
-
-    <!-- FORM MATERIA -->
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Form Materia
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
     <div class="card card-outline-secondary">
         <div class="card-header">
             <h3 class="mb-0">Aggiungi una materia</h3>
         </div>
         <div class="card-body">
-            <form class="form" role="form" autocomplete="off">
+            <form class="form" id="disciplineForm" role="form"  autocomplete="off" action="http://127.0.0.1:5000/addDiscipline" method="POST">
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome Materia</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text" required>
+                        <input class="form-control" type="text" name="discipline_name" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Obbligatorio</label>
                     <div class="col-lg-9">
-                        <label class="radio-inline"><input type="radio" name="obbligatory" checked>Si </label>
-                        <label class="radio-inline"><input type="radio" name="obbligatory">no </label>
+                        <label class="radio-inline"><input type="radio" name="obligatory" value="true" required>Si </label>
+                        <label class="radio-inline"><input type="radio" name="obligatory" value="true">No </label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">CFU</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="number" min="1" max="18" value="6">
+                        <input class="form-control" type="number" min="1" max="18" value="6" name="cfu" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Codice Identificativo</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="number">
+                        <input class="form-control" type="number" name="id_discipline" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Corso di laurea</label>
                     <div class="col-lg-9">
-                        <select id="user_time_zone" class="form-control" size="0">
-                            <option value="informatica-triennale">Informatica Triennale</option>
-                            <option value="informatica-management">Informatica per il Management</option>
-                            <option value="informatica-magistrale-curriculumA">Informatica Magistrale - CURRICULUM A:
-                                TECNICHE DEL SOFTWARE</option>
-                            <option value="informatica-magistrale-curriculumB">Informatica Magistrale - CURRICULUM B:
-                                INFORMATICA PER IL MANAGEMENT</option>
-                            <option value="informatica-magistrale-curriculumC">Informatica Magistrale - CURRICULUM C:
-                                SISTEMI E RETI</option>
-                        </select>
+                        
+
+                        <select data-placeholder="Scegli l'anno in riferimento al corsro" class="form-control chosen-select" tabindex="5" name="degree" required>
+                                <option value=""></option>
+                                <optgroup label="Informatica Triennale">
+                                    <option value="8009 1">Primo Anno</option>
+                                    <option value="8009 2">Secondo Anno</option>
+                                    <option value="8009 3">Terzo Anno</option>
+                                </optgroup>
+                                <optgroup label="Informatica per il Management">
+                                    <option value="8014 1">Primo Anno</option>
+                                    <option value="8014 2">Secondo Anno</option>
+                                    <option value="8014 3">Terzo Anno</option>
+                                </optgroup>
+                                <optgroup label="Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE">
+                                    <option value="8028A 1">Primo Anno</option>
+                                    <option value="8028A 2">Secondo Anno</option>                                 
+                                </optgroup>
+                                <optgroup label="Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT">
+                                    <option value="8028B 1">Primo Anno</option>
+                                    <option value="8028B 2">Secondo Anno</option>                                 
+                                </optgroup>
+                                <optgroup label="Informatica Magistrale - CURRICULUM C: SISTEMI E RETI">
+                                    <option value="8028C 1">Primo Anno</option>
+                                    <option value="8028C 2">Secondo Anno</option>                                 
+                                </optgroup>
+                               
+                              </select>
+
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Periodo</label>
                     <div class="col-lg-9">
-                        <select id="user_time_zone" class="form-control" size="0">
-                            <option value="primo-semestre">Primo Semestre</option>
-                            <option value="secondo-semestre">Secondo Semestre</option>
+                        <select id="user_time_zone" class="form-control" size="0" name="semester" required>
+                            <option value="1">Primo Semestre</option>
+                            <option value="2">Secondo Semestre</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Ore Totali</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="number" value="40">
+                        <input class="form-control" type="number" value="40" name="totalHours" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Ore Settimanali</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="number" value="2">
+                        <input class="form-control" type="number" value="2" name="weeksHours" required>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -153,16 +183,16 @@
                             <option value="prof2">Prof 2</option>
                         </select> -->
                         
-                        <select data-placeholder="Begin typing a name to filter..." id="assign_professor" multiple class="form-control chosen-select" name="test" tabindex="4" size="0">
+                        <select data-placeholder="Begin typing a name to filter..." id="assign_professor" multiple class="form-control chosen-select" tabindex="4" size="0" name="teacher" required>
                             <option value=""></option>
-                            <option>American Black Bear</option>
-                            <option>Asiatic Black Bear</option>
-                            <option>Brown Bear</option>
+                            <option value="prof1">American Black Bear</option>
+                            <option value="prof1">Asiatic Black Bear</option>
+                            <!-- <option>Brown Bear</option>
                             <option>Giant Panda</option>
                             <option>Sloth Bear</option>
                             <option>Sun Bear</option>
                             <option>Polar Bear</option>
-                            <option>Spectacled Bear</option>
+                            <option>Spectacled Bear</option> -->
                           </select>
 
                     </div>
@@ -170,15 +200,22 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label"></label>
                     <div class="col-lg-9">
-                        <input type="reset" class="btn btn-secondary" value="Cancella">
-                        <input type="button" class="btn btn-primary" value="Salva">
+                        <input type="reset" id="resetDisciplineBbtn" class="btn btn-secondary" value="Cancella">
+                        <input type="submit" class="btn btn-primary" value="Salva">
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- FORM AULA -->
+   
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Form Aula
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
     <div class="card card-outline-secondary">
         <div class="card-header">
             <h3 class="mb-0">Aggiungi un'aula</h3>
