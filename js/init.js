@@ -15,6 +15,14 @@ $(document).ready(function () {
         $("#classRoomForm")[0].reset();
     });
 
+    // Reset value of form Discipline 
+    $("#resetDisciplineBbtn").click(function () {
+        /* Single line Reset function executes on click of Reset Button */
+        $("#disciplineForm")[0].reset();
+    });
+
+    
+
     var config = {
         '.chosen-select'           : {},
         '.chosen-select-deselect'  : { allow_single_deselect: true },
