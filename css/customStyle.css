@@ -1,0 +1,14 @@
+/****************************
+* Custom CSS file 
+*****************************/
+
+/* Update Chosen Style  */
+  .chosen-container-multi .chosen-choices {    
+    padding: .375rem .75rem;
+    height: calc(2.25rem + 2px);
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: .25rem;
+  }
