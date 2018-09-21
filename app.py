@@ -46,8 +46,9 @@ def send_js(path):
 def send_css(path):
     return send_from_directory('css', path)
 
-
+# =====================================
 # Create RDF Professor Query
+# =====================================
 @app.route('/addProfessor', methods = ['POST', 'GET'])
 def addProfessor():
     name = request.form['nameProfessorForm']
@@ -57,9 +58,8 @@ def addProfessor():
 
     graph_professor = "http://www.rdcproject.com/graph/professor"
 
-    # =====================================
+    
     # Create a new Query
-    # =====================================
     query = '''
             PREFIX uni: <http://www.rdfproject.com/>
             PREFIX un: <http://www.w3.org/2007/ont/unit#>
@@ -83,8 +83,61 @@ def addProfessor():
 
     return redirect("/", code=302)
 
+# =====================================
+# Create RDF Discipline Query
+# =====================================
+@app.route('/addDiscipline', methods = ['POST', 'GET'])
+def addDiscipline():   
+    discipline_name = request.form['discipline_name']
+    obligatory = request.form['obligatory']
+    cfu = request.form['cfu']
+    id_discipline = request.form['id_discipline']
 
+    degree = request.form['degree'].split()
+    course = degree[0]
+    year = degree[1]    
+
+    semester = request.form['semester']
+    totalHours = request.form['totalHours']
+    weeksHours = request.form['weeksHours']
+    teacher= request.form['teacher']      
+    
+
+    graph_disciplines = "http://www.rdcproject.com/graph/disciplines"
+    # Create a new Query
+    query = '''
+    PREFIX uni: <http://www.rdfproject.com/>
+    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+    INSERT DATA
+    { 
+    GRAPH <'''+graph_disciplines+'''>{
+    uni:'''+id_discipline +''' a uni:Discipline;
+                            uni:disciplinename "'''+discipline_name+'''"; 
+                            uni:semester "'''+semester+'''"; 
+                            uni:obligatory "'''+obligatory+'''"; 
+                            uni:totalhours "'''+totalHours+'''";
+                            uni:weekhours "'''+weeksHours+'''";
+                            uni:cfu "'''+cfu+'''";
+                            uni:year "'''+year+'''";
+                            uni:idDiscipline "'''+id_discipline+'''";
+                            uni:hasCourseof uni:'''+course+''';
+                            uni:isTaughtBy uni:'''+teacher+'''
+                            
+        }
+    }
+    '''
+        
+    # Run the query and print the result
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    q = sparql.query()
+
+    return redirect("/", code=302)
+
+# =====================================
 # Create RDF ClassRoom Query
+# =====================================
 @app.route('/addClassRoom', methods = ['POST', 'GET'])
 def addClassRoom():
     
@@ -129,5 +182,12 @@ if __name__ == '__main__':
     # If debug = TRUE
     # app.run(debug = True)
     # Bind to PORT if defined, otherwise default to 5000.
-    # port = int(os.environ.get('PORT', 5000))
+    # port = int(os.environ.get('PORT', 6000))
     # app.run(host='0.0.0.0', port=port)
+
+
+
+
+
+
+
