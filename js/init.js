@@ -15,19 +15,15 @@ $(document).ready(function () {
         $("#classRoomForm")[0].reset();
     });
 
-    $('.ui.dropdown')
-        .dropdown()
-        ;
-        
-    $('.max.example .ui.normal.dropdown')
-        .dropdown({
-            maxSelections: 3
-        })
-        ;
-    $('.max.example .ui.special.dropdown')
-        .dropdown({
-            useLabels: false,
-            maxSelections: 3
-        })
-        ;
+    var config = {
+        '.chosen-select'           : {},
+        '.chosen-select-deselect'  : { allow_single_deselect: true },
+        '.chosen-select-no-single' : { disable_search_threshold: 10 },
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+        '.chosen-select-rtl'       : { rtl: true },
+        '.chosen-select-width'     : { width: '95%' }
+      }
+      for (var selector in config) {
+        $(selector).chosen(config[selector]);
+      }
 });
