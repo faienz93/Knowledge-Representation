@@ -12,3 +12,15 @@
     background-clip: padding-box;
     border-radius: .25rem;
   }
+
+  .chosen-container-single .chosen-single {    
+    padding: .375rem .75rem;
+    height: calc(2.25rem + 2px);
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    font-size: 1rem; 
+    line-height: 1.5;
+    color: #495057 !important;
+}
