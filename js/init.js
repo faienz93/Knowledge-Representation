@@ -1,12 +1,14 @@
 $(document).ready(function () {
     // alert("PROVA");
-    // InitRuleReactor(); 
+    InitRuleReactor(); 
 
     chosenPlugin();
-    
+
     $("#cardBodyProfessor").hide();
     $("#cardBodyDiscipline").hide();
     $("#cardBodyClassRoom").hide();
+    $("#cardBodyProfessorDelete").hide();
+    
     slideDownAndUp();
 
     selectProfessor();
@@ -16,6 +18,8 @@ $(document).ready(function () {
         /* Single line Reset function executes on click of Reset Button */
         $("#professorForm")[0].reset();
     });
+
+    
 
 
     // Reset value of form ClassRoom 
@@ -47,6 +51,11 @@ function slideDownAndUp(){
     // slideToggle Professor
     $("#headerProfessor").click(function(){
         $("#cardBodyProfessor").slideToggle("slow");
+    });
+
+    // slideToggle Delete Professor
+    $("#headerProfessorDelete").click(function(){
+        $("#cardBodyProfessorDelete").slideToggle("slow");
     });
 
     // slideToggle Discipline

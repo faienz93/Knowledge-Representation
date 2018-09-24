@@ -26,12 +26,12 @@
 
 <body>
 
-    
+
     <!-- REF: https://www.codeply.com/go/n2dowoRbcC/bootstrap-4-form-examples -->
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
-    // Form Professor
+    // Add Professor
     //
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
@@ -84,6 +84,44 @@
         </div>
     </div>
 
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Delete Professor
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+    <div class="card card-outline-secondary">
+        <div class="card-header" id="headerProfessorDelete">
+            <h3 class="mb-0">Cancella un Professore</h3>
+        </div>
+        <div class="card-body" id="cardBodyProfessorDelete">
+            <!-- <div id="prova">PRova</div> -->
+            <form class="form" id="professorFormDelete" role="form" autocomplete="off" action="http://127.0.0.1:5000/deleteProfessor"
+                method="POST">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Titolare</label>
+                    <div class="col-lg-9">
+                        <select id="assignProfessor" data-placeholder="Begin typing a name to filter..."  class="form-control chosen-select"
+                            tabindex="4" size="0" name="deleteTeacher" required>
+                            <option value=""></option>
+                            <!-- the otpion tag are fullied in javasctipt file init.js -->
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input type="submit" class="btn btn-danger" value="Cancella">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //

@@ -3,7 +3,7 @@
 
 
 from flask import Flask, render_template, redirect, send_from_directory, request
-from py.query import insertProfessor, insertDiscipline, insertClassRoom
+from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor
 import os
 
 
@@ -59,6 +59,16 @@ def addProfessor():
 
     insertProfessor(id_professor, name, surname, role)
 
+    return redirect("/", code=302)
+
+
+# =====================================
+# Delete Professor
+# =====================================
+@app.route('/deleteProfessor', methods = ['POST', 'GET'])
+def deleteProfessor():
+    teacher = request.form['deleteTeacher']
+    cancelProfessor(teacher)
     return redirect("/", code=302)
 
 # =====================================
