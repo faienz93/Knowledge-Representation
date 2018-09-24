@@ -3,6 +3,7 @@ $(document).ready(function () {
     // InitRuleReactor(); 
 
 
+
     selectProfessor()
 
     // Reset value of form Professor 
@@ -26,6 +27,13 @@ $(document).ready(function () {
 
 
 
+    chosenPlugin();
+
+
+});
+
+function chosenPlugin() {
+
     var config = {
         '.chosen-select': {},
         '.chosen-select-deselect': { allow_single_deselect: true },
@@ -37,24 +45,16 @@ $(document).ready(function () {
     for (var selector in config) {
         $(selector).chosen(config[selector]);
     }
-
-    
-});
-
-
-function handleResults(json) {
-    $.each(json.results.bindings, function (idx, obj) {
-        $("#results").append($(
-            "<p>IRI: " + obj.person.value + "<br />User: " +
-            obj.username.value + "</p>"));
-    });
 }
 
-
+// Query for select all professor
+// It return: 
+//     - id
+//     - name
+//     - surname
 function selectProfessor() {
-    var endpointURL = "http://localhost:3030/ds/query";
 
-    
+    var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
@@ -71,32 +71,30 @@ function selectProfessor() {
 
     var encodedquery = encodeURIComponent(myquery);
 
-    
-    $.ajax({ 
-        dataType: "jsonp", 
-        url: endpointURL + "?query=" + encodedquery + "&format=" + "json", 
-        success: function(results) {
-           
+
+    $.ajax({
+        dataType: "jsonp",
+        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+        success: function (results) {
+
             // ChosenJS Select Dropdown List
             var ddl = $("#assignProfessor");
-            $.each(results, function(index, element) {
-                
-                // console.log(element.vars);
+            $.each(results, function (index, element) {
+
+               
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
-                for(i in bindings) {
-                    
-                    
+                for (i in bindings) {
                     var id = bindings[i].id.value
                     var name = bindings[i].name.value
                     var surname = bindings[i].surname.value
                     ddl.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
-                  }
+                }
 
-                  ddl.trigger("chosen:updated");
-               
+                ddl.trigger("chosen:updated");
+
             });
-            
+
         }
 
     });
