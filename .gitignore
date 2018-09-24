@@ -2,5 +2,17 @@
 path.txt
 /docs/IlSemanticWeb-esercitazione.pdf
 foaf.owl
+##########################
+# Ignore Node Modules
+##########################
 /node_modules
+
+##########################
+# Ignore Editor File
+##########################
 .vscode
+
+##########################
+# Ignore Compiler File
+##########################
+*.pyc
