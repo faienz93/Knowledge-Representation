@@ -3,13 +3,10 @@
 
 
 from flask import Flask, render_template, redirect, send_from_directory, request
-from SPARQLWrapper import SPARQLWrapper
-import rdflib
+from py.query import insertProfessor, insertDiscipline, insertClassRoom
 import os
 
-g = rdflib.Graph()
-# Set the end-point and ask if it give me the result to JSON
-sparql = SPARQLWrapper("http://localhost:3030/ds/update",returnFormat="json")
+
 
 
 template_dir = os.path.abspath('./')
@@ -56,30 +53,7 @@ def addProfessor():
     id_professor = request.form['idProfessorForm']
     role = request.form['roleProfessorForm']
 
-    graph_professor = "http://www.rdcproject.com/graph/professor"
-
-    
-    # Create a new Query
-    query = '''
-            PREFIX uni: <http://www.rdfproject.com/>
-            PREFIX un: <http://www.w3.org/2007/ont/unit#>
-            INSERT DATA
-            { 
-            GRAPH <'''+graph_professor+'''>{
-            uni:'''+id_professor+''' a uni:Teacher;
-                                    uni:firstName "'''+name+'''"; 
-                                    uni:lastName "'''+surname+'''";
-                                    uni:idProfessor "'''+id_professor+'''";
-                                    uni:role "'''+role+'''".
-                }
-            }
-            '''
-    
-    # Run the query 
-    sparql.setQuery(query)
-    sparql.setMethod('POST') 
-    print query
-    q = sparql.query()
+    insertProfessor(id_professor, name, surname, role)
 
     return redirect("/", code=302)
 
@@ -102,36 +76,8 @@ def addDiscipline():
     weeksHours = request.form['weeksHours']
     teacher= request.form['teacher']      
     
-
-    graph_disciplines = "http://www.rdcproject.com/graph/disciplines"
-    # Create a new Query
-    query = '''
-    PREFIX uni: <http://www.rdfproject.com/>
-    PREFIX un: <http://www.w3.org/2007/ont/unit#>
-    INSERT DATA
-    { 
-    GRAPH <'''+graph_disciplines+'''>{
-    uni:'''+id_discipline +''' a uni:Discipline;
-                            uni:disciplinename "'''+discipline_name+'''"; 
-                            uni:semester "'''+semester+'''"; 
-                            uni:obligatory "'''+obligatory+'''"; 
-                            uni:totalhours "'''+totalHours+'''";
-                            uni:weekhours "'''+weeksHours+'''";
-                            uni:cfu "'''+cfu+'''";
-                            uni:year "'''+year+'''";
-                            uni:idDiscipline "'''+id_discipline+'''";
-                            uni:hasCourseof uni:'''+course+''';
-                            uni:isTaughtBy uni:'''+teacher+'''
-                            
-        }
-    }
-    '''
-        
-    # Run the query and print the result
-    sparql.setQuery(query)
-    sparql.setMethod('POST') 
-    print query
-    q = sparql.query()
+    insertDiscipline(id_discipline, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
+    
 
     return redirect("/", code=302)
 
@@ -148,31 +94,7 @@ def addClassRoom():
     id_room = request.form['id_room']
     address = request.form['address']
     
-    graph_classrooms = "http://www.rdcproject.com/graph/classrooms" 
-
-    # Create a new Query
-    query = '''
-            PREFIX uni: <http://www.rdfproject.com/>
-            PREFIX un: <http://www.w3.org/2007/ont/unit#>
-            INSERT DATA
-            { 
-            GRAPH <'''+graph_classrooms+'''>{
-            uni:'''+id_room+''' a uni:Classroom;
-                                    uni:classroomname "'''+className+'''"; 
-                                    uni:address "'''+address+'''";
-                                    uni:capacity "'''+capacity+'''";
-                                    uni:wifi "'''+wifi+'''";
-                                    uni:idRoom "'''+id_room+'''"; 
-                                    uni:wired "'''+wired+'''".
-                }
-            }
-            '''
-    
-    # Run the query 
-    sparql.setQuery(query)
-    sparql.setMethod('POST') 
-    print query
-    q = sparql.query()
+    insertClassRoom(id_room,className, address, capacity, wifi, wired)
 
     return redirect("/", code=302)
 
