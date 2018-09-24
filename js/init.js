@@ -2,7 +2,11 @@ $(document).ready(function () {
     // alert("PROVA");
     // InitRuleReactor(); 
 
-    $("#cardBodyProfessor").slideUp();
+    chosenPlugin();
+    
+    $("#cardBodyProfessor").hide();
+    $("#cardBodyDiscipline").hide();
+    $("#cardBodyClassRoom").hide();
     slideDownAndUp();
 
     selectProfessor();
@@ -28,7 +32,7 @@ $(document).ready(function () {
 
 
 
-    chosenPlugin();
+    
 
 
 });
