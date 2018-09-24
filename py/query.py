@@ -62,6 +62,12 @@ def insertProfessor(id_professor, name, surname, role):
 #   - teacher
 # ======================================================================
 def insertDiscipline(id_discipline, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):
+
+    isTaughtBy = ""
+    for t in teacher:          
+        isTaughtBy += "uni:isTaughtBy uni:" + t + ";"
+
+    
     graph_disciplines = "http://www.rdcproject.com/graph/disciplines"
     # Create a new Query
     query = '''
@@ -79,8 +85,8 @@ def insertDiscipline(id_discipline, discipline_name,semester,obligatory, totalHo
                             uni:cfu "'''+cfu+'''";
                             uni:year "'''+year+'''";
                             uni:idDiscipline "'''+id_discipline+'''";
-                            uni:hasCourseof uni:'''+course+''';
-                            uni:isTaughtBy uni:'''+teacher+'''
+                            '''+isTaughtBy+'''
+                            uni:hasCourseof uni:'''+course+'''.
                             
         }
     }
