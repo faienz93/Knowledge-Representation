@@ -2,9 +2,10 @@ $(document).ready(function () {
     // alert("PROVA");
     // InitRuleReactor(); 
 
+    $("#cardBodyProfessor").slideUp();
+    slideDownAndUp();
 
-
-    selectProfessor()
+    selectProfessor();
 
     // Reset value of form Professor 
     $("#resetProfessorBbtn").click(function () {
@@ -32,6 +33,44 @@ $(document).ready(function () {
 
 });
 
+/**
+ * This function aims to slideUp and slideDown Panel
+ * @method slideDownUp
+ * REF: https://www.khanacademy.org/computer-programming/jquery-example-slideup-slidedown-and-slidetoggle/4722237555474432
+ */
+function slideDownAndUp(){
+
+    // slideToggle Professor
+    $("#headerProfessor").click(function(){
+        $("#cardBodyProfessor").slideToggle("slow");
+    });
+
+    // slideToggle Discipline
+    $("#headerDiscipline").click(function(){
+        $("#cardBodyDiscipline").slideToggle("slow");
+    });
+
+    // slideToggle ClassRoom
+    $("#headerClassRoom").click(function(){
+        $("#cardBodyClassRoom").slideToggle("slow");
+    });
+
+    // var $this = $('#ciao');
+    // if (!$this.hasClass('panel-collapsed')) {
+    //     $this.parents('.panel').find('.panel-body').slideUp("slow");
+    //     $this.addClass('panel-collapsed');
+    //     // $this.removeClass('oi oi-minus').addClass('oi oi-plus');
+    // } else {
+    //     $this.parents('.panel').find('.panel-body').slideDown("slow");
+    //     $this.removeClass('panel-collapsed');
+    //     // $this.removeClass('oi oi-plus').addClass('oi oi-minus');
+    // }
+}
+
+/**
+ * Config the Chosen Plugin
+ * @method chosenPlugin
+ */
 function chosenPlugin() {
 
     var config = {
@@ -47,11 +86,16 @@ function chosenPlugin() {
     }
 }
 
-// Query for select all professor
-// It return: 
-//     - id
-//     - name
-//     - surname
+
+
+/**
+ * Query for select all professor
+ * It return: 
+ *  - id
+ *  - name
+ *  - surname
+ * @method selectProfessor
+ */
 function selectProfessor() {
 
     var endpointURL = "http://localhost:3030/ds/query";

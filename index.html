@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    
 
-    
+
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" crossorigin="anonymous">
 
@@ -16,7 +16,7 @@
 
     <link rel="stylesheet" href="css/customStyle.css">
 
-    
+
 
     <title>Forms</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@
 
 <body>
 
-  
+    
     <!-- REF: https://www.codeply.com/go/n2dowoRbcC/bootstrap-4-form-examples -->
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -36,11 +36,13 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
     <div class="card card-outline-secondary">
-        <div class="card-header">
+        <div class="card-header" id="headerProfessor">
             <h3 class="mb-0">Aggiungi un Professore</h3>
         </div>
-        <div class="card-body">
-            <form class="form" id="professorForm" role="form" autocomplete="off" action="http://127.0.0.1:5000/addProfessor" method="POST">
+        <div class="card-body" id="cardBodyProfessor">
+            <!-- <div id="prova">PRova</div> -->
+            <form class="form" id="professorForm" role="form" autocomplete="off" action="http://127.0.0.1:5000/addProfessor"
+                method="POST">
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome</label>
                     <div class="col-lg-9">
@@ -90,11 +92,12 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
     <div class="card card-outline-secondary">
-        <div class="card-header">
-            <h3 class="mb-0">Aggiungi una materia</h3>
+        <div class="card-header" id="headerDiscipline">
+            <h3 class="mb-0">Aggiungi una Materia</h3>
         </div>
-        <div class="card-body">
-            <form class="form" id="disciplineForm" role="form"  autocomplete="off" action="http://127.0.0.1:5000/addDiscipline" method="POST">
+        <div class="card-body" id="cardBodyDiscipline">
+            <form class="form" id="disciplineForm" role="form" autocomplete="off" action="http://127.0.0.1:5000/addDiscipline"
+                method="POST">
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome Materia</label>
                     <div class="col-lg-9">
@@ -104,7 +107,8 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Obbligatorio</label>
                     <div class="col-lg-9">
-                        <label class="radio-inline"><input type="radio" name="obligatory" value="true" required>Si </label>
+                        <label class="radio-inline"><input type="radio" name="obligatory" value="true" required>Si
+                        </label>
                         <label class="radio-inline"><input type="radio" name="obligatory" value="true">No </label>
                     </div>
                 </div>
@@ -123,34 +127,35 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Corso di laurea</label>
                     <div class="col-lg-9">
-                        
 
-                        <select data-placeholder="Scegli l'anno in riferimento al corso" class="form-control chosen-select" tabindex="5" name="degree" required>
-                                <option value=""></option>
-                                <optgroup label="Informatica Triennale">
-                                    <option value="8009 1">Primo Anno</option>
-                                    <option value="8009 2">Secondo Anno</option>
-                                    <option value="8009 3">Terzo Anno</option>
-                                </optgroup>
-                                <optgroup label="Informatica per il Management">
-                                    <option value="8014 1">Primo Anno</option>
-                                    <option value="8014 2">Secondo Anno</option>
-                                    <option value="8014 3">Terzo Anno</option>
-                                </optgroup>
-                                <optgroup label="Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE">
-                                    <option value="8028A 1">Primo Anno</option>
-                                    <option value="8028A 2">Secondo Anno</option>                                 
-                                </optgroup>
-                                <optgroup label="Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT">
-                                    <option value="8028B 1">Primo Anno</option>
-                                    <option value="8028B 2">Secondo Anno</option>                                 
-                                </optgroup>
-                                <optgroup label="Informatica Magistrale - CURRICULUM C: SISTEMI E RETI">
-                                    <option value="8028C 1">Primo Anno</option>
-                                    <option value="8028C 2">Secondo Anno</option>                                 
-                                </optgroup>
-                               
-                              </select>
+
+                        <select data-placeholder="Scegli l'anno in riferimento al corso" class="form-control chosen-select"
+                            tabindex="5" name="degree" required>
+                            <option value=""></option>
+                            <optgroup label="Informatica Triennale">
+                                <option value="8009 1">Primo Anno</option>
+                                <option value="8009 2">Secondo Anno</option>
+                                <option value="8009 3">Terzo Anno</option>
+                            </optgroup>
+                            <optgroup label="Informatica per il Management">
+                                <option value="8014 1">Primo Anno</option>
+                                <option value="8014 2">Secondo Anno</option>
+                                <option value="8014 3">Terzo Anno</option>
+                            </optgroup>
+                            <optgroup label="Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE">
+                                <option value="8028A 1">Primo Anno</option>
+                                <option value="8028A 2">Secondo Anno</option>
+                            </optgroup>
+                            <optgroup label="Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT">
+                                <option value="8028B 1">Primo Anno</option>
+                                <option value="8028B 2">Secondo Anno</option>
+                            </optgroup>
+                            <optgroup label="Informatica Magistrale - CURRICULUM C: SISTEMI E RETI">
+                                <option value="8028C 1">Primo Anno</option>
+                                <option value="8028C 2">Secondo Anno</option>
+                            </optgroup>
+
+                        </select>
 
                     </div>
                 </div>
@@ -177,11 +182,12 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Titolare</label>
-                    <div class="col-lg-9">                        
-                        <select id="assignProfessor" data-placeholder="Begin typing a name to filter..." multiple class="form-control chosen-select" tabindex="4" size="0" name="teacher" required>
+                    <div class="col-lg-9">
+                        <select id="assignProfessor" data-placeholder="Begin typing a name to filter..." multiple class="form-control chosen-select"
+                            tabindex="4" size="0" name="teacher" required>
                             <option value=""></option>
                             <!-- the otpion tag are fullied in javasctipt file init.js -->
-                          </select>
+                        </select>
 
                     </div>
                 </div>
@@ -196,7 +202,7 @@
         </div>
     </div>
 
-   
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -205,10 +211,10 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
     <div class="card card-outline-secondary">
-        <div class="card-header">
-            <h3 class="mb-0">Aggiungi un'aula</h3>
+        <div class="card-header" id="headerClassRoom">
+            <h3 class="mb-0"> <a href="#"><img src="assets/img/classroom.png"></a></li> Aggiungi un'Aula</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body" id="cardBodyClassRoom">
             <form id="classRoomForm" class="form" role="form" autocomplete="off" action="http://127.0.0.1:5000/addClassRoom"
                 method="POST">
                 <div class="form-group row">
@@ -262,6 +268,12 @@
         </div>
     </div>
 
+    <!-- <footer>
+        <p>Rappresentazione della Conoscenza</p>
+        <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"
+            title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"
+            title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+    </footer> -->
 
 
     <!-- Optional JavaScript -->
@@ -282,8 +294,7 @@
     <!-- main Javascript file -->
     <script src="js/init.js"></script>
 
-   
+
 </body>
 
 </html>
-
