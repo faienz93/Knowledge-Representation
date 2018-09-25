@@ -43,9 +43,10 @@ def send_js(path):
 def send_css(path):
     return send_from_directory('css', path)
 
-@app.route('/assets/img/<path:path>')
+# Indicate the path of image
+@app.route('/assets/<path:path>')
 def send_img(path):
-    return send_from_directory('/assets/img', path)
+    return send_from_directory('assets', path)
 
 # =====================================
 # Create RDF Professor Query

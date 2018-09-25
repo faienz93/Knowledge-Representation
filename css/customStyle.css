@@ -24,7 +24,16 @@
     line-height: 1.5;
     color: #495057 !important;
 }
+.top {
+  background-color: #4c2b4f !important;
+}
+.card-header {
+  background-color: #88488e;
+}
 
+.mb-0 {
+  color: #fff;
+}
 /* footer {
   position:absolute;
   bottom:0;
