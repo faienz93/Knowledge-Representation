@@ -139,7 +139,7 @@ q = sparql.query()
 # READ FROM CSV
 # Insert into graph professor the professor written inside csv file "professors.csv"
 # ===========================================================================================
-with open('../assets/professors.csv', 'rb') as csvfile:
+with open('../assets/csv/professors.csv', 'rb') as csvfile:
     testReader = csv.reader(csvfile, skipinitialspace=False, delimiter=',')
     t = list(testReader)
    
@@ -172,7 +172,7 @@ with open('../assets/professors.csv', 'rb') as csvfile:
 
 
 # Insert into graph classrooms the class written inside csv file "classrooms.csv"
-with open('../assets/classrooms.csv', 'rb') as csvfile:
+with open('../assets/csv/classrooms.csv', 'rb') as csvfile:
     testReader = csv.reader(csvfile, skipinitialspace=False, delimiter=',')
     t = list(testReader)
     
@@ -208,7 +208,7 @@ with open('../assets/classrooms.csv', 'rb') as csvfile:
         q = sparql.query()
 
 # Insert into graph disciplines the subjects written inside csv file "disciplines.csv"
-with open('../assets/disciplines.csv', 'rb') as csvfile:
+with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
     testReader = csv.reader(csvfile, skipinitialspace=False, delimiter=',')
     t = list(testReader)
    
