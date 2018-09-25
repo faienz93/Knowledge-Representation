@@ -35,10 +35,11 @@
     //
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
-    
+
     <div class="card card-outline-secondary">
-        <div class="top card-header" >
-                <h1 class="mb-0"> <a href="#"><img src="assets/img/man-talking-by-mic-on-a-presentation.png"></a> Professore</h1>
+        <div class="top card-header">
+            <h1 class="mb-0"> <a href="#"><img src="assets/img/man-talking-by-mic-on-a-presentation.png"></a>
+                Professore</h1>
         </div>
         <div class="card-header" id="headerProfessor">
             <h3 class="mb-0"> <a href="#"><img src="assets/img/add-circular-button.png"></a> Aggiungi</h3>
@@ -107,7 +108,7 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Titolare</label>
                     <div class="col-lg-9">
-                        <select id="assignProfessor" data-placeholder="Begin typing a name to filter..."  class="form-control chosen-select"
+                        <select id="assignProfessor" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
                             tabindex="4" size="0" name="deleteTeacher" required>
                             <option value=""></option>
                             <!-- the otpion tag are fullied in javasctipt file init.js -->
@@ -124,6 +125,85 @@
             </form>
         </div>
     </div>
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Update Professor
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+    <div class="card card-outline-secondary">
+        <div class="card-header" id="headerProfessorDelete">
+            <h3 class="mb-0"><a href="#"><img src="assets/img/rotate.png"></a> Aggiorna</h3>
+        </div>
+        <div class="card-body" id="cardBodyProfessorUpdate">
+            <!--  -->
+            <!--  -->
+            <form class="form" id="professorFormDelete" role="form" autocomplete="off" action="#"
+                method="POST">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Titolare</label>
+                    <div class="col-lg-9">
+                        <select id="assignProfessor" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                            tabindex="4" size="0" name="deleteTeacher" required>
+                            <option value=""></option>
+                            <!-- the otpion tag are fullied in javasctipt file init.js -->
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input type="submit" class="btn btn-primary" value="Cerca">
+                    </div>
+                </div>
+            </form>
+            <!--  -->
+            <!--  -->
+            <form class="form" id="professorForm" role="form" autocomplete="off" action="http://127.0.0.1:5000/updateProfessor"
+                method="POST">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Nome</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" name="nameProfessorForm" value="PROVA" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Cognome</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" name="surnameProfessorForm" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Matricola</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="number" name="idProfessorForm" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Tipo di Contratto</label>
+                    <div class="col-lg-9">
+                        <select id="user_time_zone" class="form-control" size="0" name="roleProfessorForm">
+                            <option value="contratto">Professore a contratto</option>
+                            <option value="associato">Professore Associato</option>
+                            <option value="ordinario">Professore Ordinario</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input type="button" id="resetProfessorBbtn" class="btn btn-secondary" value="Cancella">
+                        <input type="submit" class="btn btn-success" value="Aggiorna">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <br>
     <br>
     <!-- 
@@ -134,9 +214,9 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
     <div class="card card-outline-secondary">
-            <div class="top card-header" >
-                    <h1 class="mb-0"> <a href="#"><img src="assets/img/books-stack-of-three.png"></a> Materia</h1>
-            </div>
+        <div class="top card-header">
+            <h1 class="mb-0"> <a href="#"><img src="assets/img/books-stack-of-three.png"></a> Materia</h1>
+        </div>
         <div class="card-header" id="headerDiscipline">
             <h3 class="mb-0"><a href="#"><img src="assets/img/add-circular-button.png"></a> Aggiungi</h3>
         </div>
@@ -256,9 +336,9 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
     <div class="card card-outline-secondary">
-            <div class="top card-header" >
-                    <h1 class="mb-0"> <a href="#"><img src="assets/img/classroom.png"></a> Aula</h1>
-            </div>
+        <div class="top card-header">
+            <h1 class="mb-0"> <a href="#"><img src="assets/img/classroom.png"></a> Aula</h1>
+        </div>
         <div class="card-header" id="headerClassRoom">
             <h3 class="mb-0"> <a href="#"><img src="assets/img/add-circular-button.png"></a> Aggiungi</h3>
             <!-- <h3 class="mb-0"> Aggiungi un'Aula</h3> -->
