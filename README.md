@@ -14,6 +14,7 @@
 - Installare SPARQLWrapper `pip install sparqlwrapper --user`
 - Installare RDFlib `pip install rdflib --user`
 - Installare rule-reactor `npm install rule-reactor`
+- Installare [Apache Jena Fuseki](https://jena.apache.org/download/#apache-jena-fuseki)
 - Installare [Protégé](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/ontology.md#definizione-di-unontologia)
 
 
@@ -21,6 +22,8 @@
 ## Come lanciare il progetto
 
 - Lanciare il server FLASK con il comando `python main.py`
-- Lanciare dalla cartella contentente il server Fuseki e dare il comando: ```./fuseki-server --update --mem /ds```
+- Lanciare dalla cartella contentente il server Fuseki e dare il comando:
+    - ```./fuseki-server --update --mem /ds``` (LINUX)
+    -  ```fuseki-server.bat --update --mem /ds``` (WINDOWS)
 
 **NOTA:** Verificare lo stato del DB andando su: `http://localhost:3030/ds/`
