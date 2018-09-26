@@ -283,3 +283,33 @@ def cancelClassRoom(id_room):
     sparql.setMethod('POST') 
     print query
     sparql.query()
+
+# ======================================================================
+# Search ClassRoom
+# @param
+#   - idRoom
+# ======================================================================
+def searchClassRoom(idRoom):   
+    query = '''
+                PREFIX uni: <http://www.rdfproject.com/>
+                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+
+                    SELECT ?idRoom ?classroomname ?address ?capacity ?wifi ?wired
+                    FROM <http://www.rdcproject.com/graph/classrooms>
+                    WHERE
+                    { ?x  a uni:Classroom;
+                            uni:idRoom ?"'''+ idRoom +'''";
+                            uni:idRoom ?idRoom;
+                            uni:classroomname ?classroomname;
+                            uni:address ?address;
+                            uni:capacity ?capacity;
+                            uni:wifi ?wifi;
+                            uni:wired ?wired;
+                        }
+                    ORDER BY ?idRoom
+                '''
+
+    sparqlQuery.setQuery(query)
+    sparqlQuery.setMethod('POST') 
+    print query
+    return sparqlQuery.query().convert()

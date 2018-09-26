@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from flask import Flask, render_template, redirect, send_from_directory, request
-from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, searchProfessor, modifyProfessor, cancelDiscipline, cancelClassRoom
+from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, searchProfessor, modifyProfessor, cancelDiscipline, cancelClassRoom, searchClassRoom
 import os
 
 template_dir = os.path.abspath('./')
@@ -162,6 +162,21 @@ def deleteClassRoom():
     cancelClassRoom(classroom)
     return redirect("/", code=302)
 
+# =====================================
+# Find ClassRoom
+# =====================================
+@app.route('/findClassRoom', methods = ['POST', 'GET'])
+def findClassRoom():
+    classRoom = request.form['updateClassRoom'].strip()
+    result = searchClassRoom(classRoom)
+
+    room ={}
+    for entry in result['results']['bindings']:
+        for key in entry:
+            room[key] = str(entry[key]['value']).strip()
+            print room[key] + " count: " + str(len(room[key]))
+
+    return render_template("index.html", classRoom = room)
 
 
 
@@ -172,10 +187,3 @@ if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
     # port = int(os.environ.get('PORT', 6000))
     # app.run(host='0.0.0.0', port=port)
-
-
-
-
-
-
-

@@ -25,7 +25,7 @@
     // Add Professor
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+    -->
     <div class="card card-outline-secondary">
         <div class="top card-header">
             <h1 class="mb-0"><img src="assets/img/man-talking-by-mic-on-a-presentation.png"> Professore</h1>
@@ -83,7 +83,7 @@
     // Delete Professor
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+    -->
     <div class="card card-outline-secondary">
         <div class="card-header" id="headerProfessorDelete">
             <h3 class="mb-0"><a href="#"><img src="assets/img/delete.png"></a> Elimina</h3>
@@ -118,7 +118,7 @@
     // Update Professor
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+    -->
     <div class="card card-outline-secondary">
         <div class="card-header" id="headerProfessorUpdate">
             <h3 class="mb-0"><a href="#"><img src="assets/img/rotate.png"></a> Aggiorna</h3>
@@ -220,7 +220,7 @@
     // Form Materia
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+    -->
     <div class="card card-outline-secondary">
         <div class="top card-header">
             <h1 class="mb-0"><img src="assets/img/books-stack-of-three.png"> Materia</h1>
@@ -340,8 +340,8 @@
     // Delete Materia
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-     <div class="card card-outline-secondary">
+    -->
+    <div class="card card-outline-secondary">
             <div class="card-header" id="headerDisciplineDelete">
                 <h3 class="mb-0"><a href="#"><img src="assets/img/delete.png"></a> Elimina</h3>
             </div>
@@ -381,14 +381,13 @@
     // Form Aula
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+    -->
     <div class="card card-outline-secondary">
         <div class="top card-header">
             <h1 class="mb-0"><img src="assets/img/classroom.png"> Aula</h1>
         </div>
         <div class="card-header" id="headerClassRoom">
             <h3 class="mb-0"> <a href="#"><img src="assets/img/add-circular-button.png"></a> Aggiungi</h3>
-            <!-- <h3 class="mb-0"> Aggiungi un'Aula</h3> -->
         </div>
         <div class="card-body" id="cardBodyClassRoom">
             <form id="classRoomForm" class="form" role="form" autocomplete="off" action="http://127.0.0.1:5000/addClassRoom"
@@ -423,7 +422,7 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Codice Identificativo</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="number" name="id_room" required>
+                        <input class="form-control" type="numeric" name="id_room" required>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -449,7 +448,7 @@
     // Delete Aula
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+    -->
     <div class="card card-outline-secondary">
         <div class="card-header" id="headerClassRoomDelete">
             <h3 class="mb-0"><a href="#"><img src="assets/img/delete.png"></a> Elimina</h3>
@@ -473,6 +472,114 @@
                     <label class="col-lg-3 col-form-label form-control-label"></label>
                     <div class="col-lg-9">
                         <input type="submit" class="btn btn-danger" value="Cancella">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Update Aula
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+    -->
+     <div class="card card-outline-secondary">
+        <div class="card-header" id="headerUpdateClassRoom">
+            <h3 class="mb-0"> <a href="#"><img src="assets/img/rotate.png"></a> Aggiorna</h3>
+        </div>
+        <div class="card-body" id="cardBodyClassRoomUpdate">
+            <!--  -->
+            <!--  -->
+            <form class="form" id="findClassRoomFormUpdate" role="form" autocomplete="off" action="http://127.0.0.1:5000/findClassRoom"
+                method="POST">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Nome</label>
+                    <div class="col-lg-9">
+                        <select id="findClassRoomUpdate" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                            tabindex="4" size="0" name="updateClassRoom" required>
+                            <option value=""></option>
+                            <!-- the otpion tag are fullied in javasctipt file init.js -->
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input type="submit" class="btn btn-primary" value="Cerca">
+                    </div>
+                </div>
+            </form>
+            <!--  -->
+            <!--  -->
+            <form id="classRoomFormUpdate" class="form" role="form" autocomplete="off" action="http://127.0.0.1:5000/updateClassRoom"
+                method="POST">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Nome</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" name="classNameUpdate" value="{% if classRoom!=null %}{{classRoom['classroomname']}}{% endif %}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Numero di posti</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="numeric" min="1" name="capacityUpdate" value="{% if classRoom!=null %}{{classRoom['capacity']}}{% endif %}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Cablata</label>
+                    <div class="col-lg-9">
+                        {% if classRoom==null %} 
+                            <label class="radio-inline"><input type="radio" name="wiredUpdate" value="true" required>Si </label>
+                            <label class="radio-inline"><input type="radio" name="wiredUpdate" value="false">No </label>
+                        {% else %}
+                            {% if classRoom['wired']=="true" %}
+                                <label class="radio-inline"><input type="radio" name="wiredUpdate" value="true" checked required>Si </label>
+                                <label class="radio-inline"><input type="radio" name="wiredUpdate" value="false">No </label>
+                                {%else%}
+                                    <label class="radio-inline"><input type="radio" name="wiredUpdate" value="true" required>Si </label>
+                                    <label class="radio-inline"><input type="radio" name="wiredUpdate" value="false" checked>No </label>
+                            {% endif %}
+                        {% endif %}                     
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">WiFii</label>
+                    <div class="col-lg-9">
+                        {% if classRoom==null %} 
+                            <label class="radio-inline"><input type="radio" name="wifiUpdate" value="true" required>Si </label>
+                            <label class="radio-inline"><input type="radio" name="wifiUpdate" value="false">No </label>
+                        {% else %}
+                            {% if classRoom['wifi']=="true" %}
+                                <label class="radio-inline"><input type="radio" name="wifiUpdate" value="true" checked required>Si </label>
+                                <label class="radio-inline"><input type="radio" name="wifiUpdate" value="false">No </label>
+                                {%else%}
+                                    <label class="radio-inline"><input type="radio" name="wifiUpdate" value="true" required>Si </label>
+                                    <label class="radio-inline"><input type="radio" name="wifiUpdate" value="false" checked>No </label>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Codice Identificativo</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="numeric" name="id_roomUpdate" value="{% if classRoom!=null %}{{classRoom['idRoom']}}{% endif %}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Indirizzo</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" name="addressUpdate" value="{% if classRoom!=null %}{{classRoom['address']}}{% endif %}" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input type="reset" id="resetUpdateClassRoom" class="btn btn-secondary" value="Cancella">
+                        <input type="submit" class="btn btn-success" value="Salva">
                     </div>
                 </div>
             </form>

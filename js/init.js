@@ -17,17 +17,19 @@ $(document).ready(function () {
  * @method setShowHideCards
  */
 function setShowHideCards(){
-    $("#cardBodyProfessor").hide();
-    $("#cardBodyProfessorDelete").hide();
-    var valore = $('#idProfessorUpdate').val();
-    if(valore== null){
-        $("#cardBodyProfessorUpdate").hide();
-    }
-    
-    $("#cardBodyDiscipline").hide();
-    $("#cardBodyDisciplineDelete").hide();
-    $("#cardBodyClassRoom").hide();   
-    $("#cardBodyClassRoomDelete").hide(); 
+    $('#cardBodyProfessor').hide();
+    $('#cardBodyProfessorDelete').hide();
+    if($('#nameProfessorUpdate').val() == null){
+        $('#cardBodyProfessorUpdate').hide();
+    }   
+
+    $('#cardBodyDiscipline').hide();
+    $('#cardBodyDisciplineDelete').hide();
+
+
+    $('#cardBodyClassRoom').hide();   
+    $('#cardBodyClassRoomDelete').hide(); 
+    $('#cardBodyClassRoomUpdate').hide(); 
 }
 
 /**
@@ -37,26 +39,29 @@ function setShowHideCards(){
 function setResetBtns(){
     // Reset value of form Add Professor 
     $('#resetAddProfessor').click(function () {
-        /* Single line Reset function executes on click of Reset Button */
         $('#professorForm')[0].reset();
     });
-
     // Reset value of form Update Professor 
     $('#resetUpdateProfessor').click(function () {
         $('#professorFormUpdate')[0].reset();
     });
 
-    // Reset value of form ClassRoom 
-    $('#resetClassRoomBbtn').click(function () {
-        /* Single line Reset function executes on click of Reset Button */
-        $('#classRoomForm')[0].reset();
-    });
 
     // Reset value of form Discipline 
     $('#resetDisciplineBbtn').click(function () {
-        /* Single line Reset function executes on click of Reset Button */
         $('#disciplineForm')[0].reset();
     }); 
+
+
+    // Reset value of form ClassRoom 
+    $('#resetClassRoomBbtn').click(function () {
+        $('#classRoomForm')[0].reset();
+    });
+    // Reset value of form Update ClassRoom 
+    $('#resetUpdateClassRoom').click(function () {
+        $('#classRoomFormUpdate')[0].reset();
+    });
+    
 }
 
 /**
@@ -65,42 +70,43 @@ function setResetBtns(){
  * REF: https://www.khanacademy.org/computer-programming/jquery-example-slideup-slidedown-and-slidetoggle/4722237555474432
  */
 function slideDownAndUp(){
-
     // slideToggle Professor
-    $("#headerProfessor").click(function(){
-        $("#cardBodyProfessor").slideToggle("slow");
+    $('#headerProfessor').click(function(){
+        $('#cardBodyProfessor').slideToggle("slow");
     });
-
     // slideToggle Delete Professor
-    $("#headerProfessorDelete").click(function(){
-        $("#cardBodyProfessorDelete").slideToggle("slow");
+    $('#headerProfessorDelete').click(function(){
+        $('#cardBodyProfessorDelete').slideToggle("slow");
+    });
+    // slideToggle Update Professor
+    $('#headerProfessorUpdate').click(function(){
+        $('#cardBodyProfessorUpdate').slideToggle("slow");
     });
 
-    // slideToggle Update Professor
-    $("#headerProfessorUpdate").click(function(){
-        $("#cardBodyProfessorUpdate").slideToggle("slow");
-    });
 
     // slideToggle Discipline
-    $("#headerDiscipline").click(function(){
-        $("#cardBodyDiscipline").slideToggle("slow");
+    $('#headerDiscipline').click(function(){
+        $('#cardBodyDiscipline').slideToggle("slow");
+    });
+    // slideToggle Delete Discipline
+    $('#headerDisciplineDelete').click(function(){
+        $('#cardBodyDisciplineDelete').slideToggle("slow");
     });
 
-    // slideToggle Delete Discipline
-    $("#headerDisciplineDelete").click(function(){
-        $("#cardBodyDisciplineDelete").slideToggle("slow");
-    });
+
 
     // slideToggle ClassRoom
-    $("#headerClassRoom").click(function(){
-        $("#cardBodyClassRoom").slideToggle("slow");
+    $('#headerClassRoom').click(function(){
+        $('#cardBodyClassRoom').slideToggle("slow");
     });
-
     // slideToggle Delete ClassRoom
-    $("#headerClassRoomDelete").click(function(){
-        $("#cardBodyClassRoomDelete").slideToggle("slow");
+    $('#headerClassRoomDelete').click(function(){
+        $('#cardBodyClassRoomDelete').slideToggle("slow");
     });
-
+    // slideToggle Update ClassRoom
+    $('#headerUpdateClassRoom').click(function(){
+        $('#cardBodyClassRoomUpdate').slideToggle("slow");
+    });
 
 }
 
@@ -257,15 +263,14 @@ function selectClassrooms() {
 
     var encodedquery = encodeURIComponent(myquery);
 
-
     $.ajax({
         dataType: "jsonp",
         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
         success: function (results) {
 
             // ChosenJS Select Dropdown List
-            var ddl = $("#findClassRoomDelete");
-
+            var ddl = $('#findClassRoomDelete');
+            var ddl1 = $('#findClassRoomUpdate');
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
@@ -273,14 +278,71 @@ function selectClassrooms() {
                     var id = bindings[i].idRoom.value
                     var name = bindings[i].classroomname.value
                     ddl.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
+                    ddl1.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
                 }
 
                 ddl.trigger("chosen:updated");
+                ddl1.trigger("chosen:updated");
             });
 
         }
 
     });
 }
+/**
+ * Query selected classroom
+ * It returns all the data
+ * @method findClassRoom
+ */
+// function findClassRoom(){
+//     var endpointURL = "http://localhost:3030/ds/query";
 
+//     var roomId = $('#findClassRoomUpdate').val();
+//     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
+//                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
+
+//                     SELECT ?idRoom ?classroomname ?address ?capacity ?wifi ?wired
+//                     FROM <http://www.rdcproject.com/graph/classrooms>
+//                     WHERE
+//                     { ?x  a uni:Classroom;
+//                             uni:idRoom ?"`+ roomId +`";
+//                             uni:idRoom ?idRoom;
+//                             uni:classroomname ?classroomname;
+//                             uni:address ?address;
+//                             uni:capacity ?capacity;
+//                             uni:wifi ?wifi;
+//                             uni:wired ?wired;
+//                         }
+//                     ORDER BY ?idRoom`;
+
+//     var encodedquery = encodeURIComponent(myquery);
+
+//     $.ajax({
+//         dataType: "jsonp",
+//         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+//         success: function (results) {
+//             alert("ci sono")
+//             $.each(results, function (index, element) {
+//                 var bindings = element.bindings;
+//                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
+//                 for (i in bindings) {
+//                     var idRoom = bindings[i].idRoom.value
+//                     var classroomname = bindings[i].classroomname.value
+//                     var address = bindings[i].address.value
+//                     var capacity = bindings[i].capacity.value
+//                     var wifi = bindings[i].wifi.value
+//                     var wired = bindings[i].wired.value
+//                     $('#findClassRoomUpdate').val(idRoom)
+//                     $('#classNameUpdate').val(classroomname)
+//                     $('#findClassRoomUpdate').val(address)
+//                     $('#capacityUpdate').val(capacity)
+//                     $('#findClassRoomUpdate').val(wifi)
+//                     $('#findClassRoomUpdate').val(wired)
+//                 }
+//             });
+
+//         }
+
+//     });
+// }
 
