@@ -5,39 +5,46 @@ $(document).ready(function () {
     chosenPlugin();
 
     $("#cardBodyProfessor").hide();
-    $("#cardBodyDiscipline").hide();
-    $("#cardBodyClassRoom").hide();
     $("#cardBodyProfessorDelete").hide();
+
+    var valore = $('#idProfessorUpdate').val();
+    // alert(valore)
+    if(valore== null){
+        $("#cardBodyProfessorUpdate").hide();
+    }
+    else{
+        $("#cardBodyProfessorUpdate").show();
+    }
+    
+    $("#cardBodyDiscipline").hide();
+    $("#cardBodyClassRoom").hide();   
     
     slideDownAndUp();
 
-    selectProfessor();
+    selectProfessors();
 
-    // Reset value of form Professor 
-    $("#resetProfessorBbtn").click(function () {
+    // Reset value of form Add Professor 
+    $('#resetAddProfessor').click(function () {
         /* Single line Reset function executes on click of Reset Button */
-        $("#professorForm")[0].reset();
+        $('#professorForm')[0].reset();
     });
 
-    
-
+     // Reset value of form Update Professor 
+     $('#resetUpdateProfessor').click(function () {
+        $('#professorFormUpdate')[0].reset();
+    });
 
     // Reset value of form ClassRoom 
-    $("#resetClassRoomBbtn").click(function () {
+    $('#resetClassRoomBbtn').click(function () {
         /* Single line Reset function executes on click of Reset Button */
-        $("#classRoomForm")[0].reset();
+        $('#classRoomForm')[0].reset();
     });
 
     // Reset value of form Discipline 
-    $("#resetDisciplineBbtn").click(function () {
+    $('#resetDisciplineBbtn').click(function () {
         /* Single line Reset function executes on click of Reset Button */
-        $("#disciplineForm")[0].reset();
-    });
-
-
-
-    
-
+        $('#disciplineForm')[0].reset();
+    }); 
 
 });
 
@@ -56,6 +63,11 @@ function slideDownAndUp(){
     // slideToggle Delete Professor
     $("#headerProfessorDelete").click(function(){
         $("#cardBodyProfessorDelete").slideToggle("slow");
+    });
+
+    // slideToggle Update Professor
+    $("#headerProfessorUpdate").click(function(){
+        $("#cardBodyProfessorUpdate").slideToggle("slow");
     });
 
     // slideToggle Discipline
@@ -99,18 +111,15 @@ function chosenPlugin() {
     }
 }
 
-
-
 /**
- * Query for select all professor
- * It return: 
+ * Query for select all professors
+ * It returns: 
  *  - id
  *  - name
  *  - surname
- * @method selectProfessor
+ * @method selectProfessors
  */
-function selectProfessor() {
-
+function selectProfessors() {
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -135,10 +144,11 @@ function selectProfessor() {
         success: function (results) {
 
             // ChosenJS Select Dropdown List
-            var ddl = $("#assignProfessor");
-            $.each(results, function (index, element) {
+            var ddl = $("#findProfessorDelete");
+            var ddl1 = $("#findProfessorUpdate");
+            var ddl2 = $("#assignProfessor");
 
-               
+            $.each(results, function (index, element) {
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
@@ -146,13 +156,17 @@ function selectProfessor() {
                     var name = bindings[i].name.value
                     var surname = bindings[i].surname.value
                     ddl.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
+                    ddl1.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
+                    ddl2.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
                 }
 
                 ddl.trigger("chosen:updated");
-
+                ddl1.trigger("chosen:updated");
+                ddl2.trigger("chosen:updated");
             });
 
         }
 
     });
 }
+

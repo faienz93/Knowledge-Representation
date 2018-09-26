@@ -3,7 +3,7 @@
 
 
 from flask import Flask, render_template, redirect, send_from_directory, request
-from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor
+from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, searchProfessor, modifyProfessor
 import os
 
 
@@ -13,7 +13,7 @@ template_dir = os.path.abspath('./')
 app = Flask(__name__, template_folder=template_dir)
 
 # If the second parameter is absent than teh index file are inside templates direcotry
-# app = Flask(__name__, template_folder="template") 
+# app = Flask(__name__, template_folder="template")
 
 @app.route('/')
 def index():
@@ -62,7 +62,6 @@ def addProfessor():
 
     return redirect("/", code=302)
 
-
 # =====================================
 # Delete Professor
 # =====================================
@@ -73,10 +72,40 @@ def deleteProfessor():
     return redirect("/", code=302)
 
 # =====================================
+# Update Professor
+# =====================================
+@app.route('/updateProfessor', methods = ['POST', 'GET'])
+def updateProfessor():
+
+    id_professor = request.form['idProfessorUpdate'].strip()
+    name = request.form['nameProfessorUpdate'].strip()
+    surname = request.form['surnameProfessorUpdate'].strip()
+    role = request.form['roleProfessorUpdate'].strip()
+
+    modifyProfessor(id_professor, name, surname, role)
+    return redirect("/", code=302)
+
+# =====================================
+# Find Professor
+# =====================================
+@app.route('/findProfessor', methods = ['POST', 'GET'])
+def findProfessor():
+    teacher = request.form['updateTeacher'].strip()
+    result = searchProfessor(teacher)
+
+    prof ={}
+    for entry in result['results']['bindings']:
+        for key in entry:
+            prof[key] = str(entry[key]['value']).strip()
+            #print prof[key] + " count: " + str(len(prof[key]))
+
+    return render_template("index.html", professor = prof)
+
+# =====================================
 # Create RDF Discipline Query
 # =====================================
 @app.route('/addDiscipline', methods = ['POST', 'GET'])
-def addDiscipline():   
+def addDiscipline():
     discipline_name = request.form['discipline_name']
     obligatory = request.form['obligatory']
     cfu = request.form['cfu']
@@ -84,7 +113,7 @@ def addDiscipline():
 
     degree = request.form['degree'].split()
     course = degree[0]
-    year = degree[1]    
+    year = degree[1]
 
     semester = request.form['semester']
     totalHours = request.form['totalHours']
@@ -93,7 +122,7 @@ def addDiscipline():
     print teacher
 
     insertDiscipline(id_discipline, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
-    
+
 
     return redirect("/", code=302)
 
@@ -102,17 +131,17 @@ def addDiscipline():
 # =====================================
 @app.route('/addClassRoom', methods = ['POST', 'GET'])
 def addClassRoom():
-    
+
     className = request.form['className']
-    capacity = request.form['capacity']    
+    capacity = request.form['capacity']
     wired = request.form['wired']
     wifi = request.form['wifi']
     id_room = request.form['id_room']
     address = request.form['address']
-    
+
     insertClassRoom(id_room,className, address, capacity, wifi, wired)
 
-    return redirect("/", code=302)
+    return redirect("/updateProfessor", code=302)
 
 
 if __name__ == '__main__':
