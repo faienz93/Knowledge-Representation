@@ -15,6 +15,7 @@ g = rdflib.Graph()
 sparql = SPARQLWrapper("http://localhost:3030/ds/update",returnFormat="json")
 sparqlQuery = SPARQLWrapper("http://localhost:3030/ds/query",returnFormat="json")
 
+
 # ======================================================================
 # Insert Professor
 # @param
@@ -146,6 +147,8 @@ def modifyProfessor(id_professor, name, surname, role):
     sparql.query()
 
 
+
+
 # ======================================================================
 # Insert Discipline
 # @param
@@ -203,7 +206,6 @@ def insertDiscipline(id_discipline, discipline_name,semester,obligatory, totalHo
 #   - id_discipline
 # ======================================================================
 def cancelDiscipline(id_discipline):   
-    print("ID DISCIPLINE " + id_discipline) 
     query = '''
                 PREFIX uni: <http://www.rdfproject.com/>
                 PREFIX un: <http://www.w3.org/2007/ont/unit#>
@@ -219,6 +221,7 @@ def cancelDiscipline(id_discipline):
     sparql.setMethod('POST') 
     print query
     sparql.query()
+
 
 
 
@@ -254,6 +257,28 @@ def insertClassRoom(id_room,className, address, capacity, wifi, wired):
             '''
     
     # Run the query 
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    sparql.query()
+
+# ======================================================================
+# Delete ClassRoom
+# @param
+#   - id_room
+# ======================================================================
+def cancelClassRoom(id_room):   
+    query = '''
+                PREFIX uni: <http://www.rdfproject.com/>
+                PREFIX un: <http://www.w3.org/2007/ont/unit#>
+                DELETE WHERE { 
+                GRAPH <http://www.rdcproject.com/graph/classrooms> {
+                        ?object uni:idRoom "'''+id_room+'''";
+                         ?property  ?value 
+                }
+                }
+                '''
+
     sparql.setQuery(query)
     sparql.setMethod('POST') 
     print query

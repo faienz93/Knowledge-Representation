@@ -1,13 +1,9 @@
 #!/usr/bin/python
 # coding=utf-8
 
-
 from flask import Flask, render_template, redirect, send_from_directory, request
-from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, searchProfessor, modifyProfessor
+from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, searchProfessor, modifyProfessor, cancelDiscipline, cancelClassRoom
 import os
-
-
-
 
 template_dir = os.path.abspath('./')
 app = Flask(__name__, template_folder=template_dir)
@@ -37,7 +33,6 @@ def send_lib(path):
 def send_js(path):
     return send_from_directory('js', path)
 
-
 # I indicate where load the static file (css) instead static directory
 @app.route('/css/<path:path>')
 def send_css(path):
@@ -47,6 +42,8 @@ def send_css(path):
 @app.route('/assets/<path:path>')
 def send_img(path):
     return send_from_directory('assets', path)
+
+
 
 # =====================================
 # Create RDF Professor Query
@@ -101,6 +98,8 @@ def findProfessor():
 
     return render_template("index.html", professor = prof)
 
+
+
 # =====================================
 # Create RDF Discipline Query
 # =====================================
@@ -127,6 +126,17 @@ def addDiscipline():
     return redirect("/", code=302)
 
 # =====================================
+# Delete Discipline
+# =====================================
+@app.route('/deleteDiscipline', methods = ['POST', 'GET'])
+def deleteDiscipline():
+    discipline = request.form['deleteDiscipline']
+    cancelDiscipline(discipline)
+    return redirect("/", code=302)
+
+
+
+# =====================================
 # Create RDF ClassRoom Query
 # =====================================
 @app.route('/addClassRoom', methods = ['POST', 'GET'])
@@ -142,6 +152,17 @@ def addClassRoom():
     insertClassRoom(id_room,className, address, capacity, wifi, wired)
 
     return redirect("/updateProfessor", code=302)
+
+# =====================================
+# Delete ClassRoom
+# =====================================
+@app.route('/deleteClassRoom', methods = ['POST', 'GET'])
+def deleteClassRoom():
+    classroom = request.form['deleteClassRoom']
+    cancelClassRoom(classroom)
+    return redirect("/", code=302)
+
+
 
 
 if __name__ == '__main__':
