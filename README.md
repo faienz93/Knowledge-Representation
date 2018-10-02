@@ -5,17 +5,18 @@
 - Bootstrap v4.1
 - Apache Jena Fuseki v3.8.0
 - RDFlib 
-- Protégé
-- Rule-reactor
+- [Protégé](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/ontology.md#definizione-di-unontologia)
+- [Rule-reactor](https://github.com/anywhichway/rule-reactor#rule-reactor)
+- [jquery-calendar](https://github.com/ArrobeFr/jquery-calendar#jquery-calendar)
 
 ## Requisiti
 
 - Installare flask `pip install flask`
 - Installare SPARQLWrapper `pip install sparqlwrapper --user`
 - Installare RDFlib `pip install rdflib --user`
-- Installare rule-reactor `npm install rule-reactor`
+- Installare le dipendenze npm `npm install`
 - Installare [Apache Jena Fuseki](https://jena.apache.org/download/#apache-jena-fuseki)
-- Installare [Protégé](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/ontology.md#definizione-di-unontologia)
+
 
 
 ## Come lanciare il progetto
