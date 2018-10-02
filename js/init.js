@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    InitRuleReactor(); 
+    
     chosenPlugin();
  
     slideDownAndUp();
