@@ -19,13 +19,13 @@ $(document).ready(function () {
 function setShowHideCards(){
     $('#cardBodyProfessor').hide();
     $('#cardBodyProfessorDelete').hide();
-    if($('#nameProfessorUpdate').val() == null){
+    if($('#nameProfessorUpdate').val() == null){    //TODO: non fa quello che ci aspettiamo
         $('#cardBodyProfessorUpdate').hide();
     }   
 
     $('#cardBodyDiscipline').hide();
     $('#cardBodyDisciplineDelete').hide();
-
+    $('#cardBodyDisciplineUpdate').hide(); 
 
     $('#cardBodyClassRoom').hide();   
     $('#cardBodyClassRoomDelete').hide(); 
@@ -51,6 +51,10 @@ function setResetBtns(){
     $('#resetDisciplineBbtn').click(function () {
         $('#disciplineForm')[0].reset();
     }); 
+    // Reset value of form Update Discipline 
+    $('#resetUpdateDiscipline').click(function () {
+        $('#disciplineFormUpdate')[0].reset();
+    });
 
 
     // Reset value of form ClassRoom 
@@ -92,7 +96,10 @@ function slideDownAndUp(){
     $('#headerDisciplineDelete').click(function(){
         $('#cardBodyDisciplineDelete').slideToggle("slow");
     });
-
+    // slideToggle Update Professor
+    $('#headerDisciplineUpdate').click(function(){
+        $('#cardBodyDisciplineUpdate').slideToggle("slow");
+    });
 
 
     // slideToggle ClassRoom
@@ -165,6 +172,7 @@ function selectProfessors() {
             var ddl = $("#findProfessorDelete");
             var ddl1 = $("#findProfessorUpdate");
             var ddl2 = $("#assignProfessor");
+            var ddl3 = $("#assignProfessorUpdate");
 
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
@@ -176,11 +184,13 @@ function selectProfessors() {
                     ddl.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
                     ddl1.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
                     ddl2.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
+                    ddl3.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
                 }
 
                 ddl.trigger("chosen:updated");
                 ddl1.trigger("chosen:updated");
                 ddl2.trigger("chosen:updated");
+                ddl3.trigger("chosen:updated");
             });
 
         }
@@ -220,6 +230,7 @@ function selectDisciplines() {
 
             // ChosenJS Select Dropdown List
             var ddl = $("#findDisciplineDelete");
+            var ddl1 = $("#findDisciplineUpdate");
 
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
@@ -228,9 +239,11 @@ function selectDisciplines() {
                     var id = bindings[i].idDiscipline.value
                     var name = bindings[i].disciplinename.value
                     ddl.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
+                    ddl1.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
                 }
 
                 ddl.trigger("chosen:updated");
+                ddl1.trigger("chosen:updated");
             });
 
         }

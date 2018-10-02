@@ -3,8 +3,19 @@
 
 # This file contains the query for 
 # - Insert Professor
+# - Delete Professor
+# - Search Professor
+# - Modify Professor
+
 # - Insert Discipline
+# - Delete Discipline
+# - Search Discipline
+# - Modify Discipline
+
 # - Insert ClassRoom
+# - Delete ClassRoom
+# - Search ClassRoom
+# - Modify ClassRoom
 
 
 from SPARQLWrapper import SPARQLWrapper
@@ -222,6 +233,113 @@ def cancelDiscipline(id_discipline):
     print query
     sparql.query()
 
+# ======================================================================
+# Search Discipline
+# @param
+#   - id_discipline
+# ======================================================================
+def searchDiscipline(id_discipline):   
+    query = '''
+                PREFIX uni: <http://www.rdfproject.com/>
+                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+
+                    SELECT ?idDiscipline ?disciplinename ?semester ?obligatory ?totalhours ?weekhours ?cfu ?year ?isTaughtBy ?hasCourseof
+                    FROM <http://www.rdcproject.com/graph/disciplines>
+                    WHERE
+                    { ?x  a uni:Discipline;
+                            uni:idDiscipline ?"'''+ id_discipline +'''";
+                            uni:idDiscipline ?idDiscipline;
+                            uni:disciplinename ?disciplinename;
+                            uni:semester ?semester;
+                            uni:obligatory ?obligatory;
+                            uni:totalhours ?totalhours;
+                            uni:weekhours ?weekhours;
+                            uni:cfu ?cfu;
+                            uni:year ?year;
+                            uni:isTaughtBy ?isTaughtBy;
+                            uni:hasCourseof ?hasCourseof;
+                        }
+                    ORDER BY ?idDiscipline
+                '''
+
+    sparqlQuery.setQuery(query)
+    sparqlQuery.setMethod('POST') 
+    print query
+    return sparqlQuery.query().convert()
+
+# ======================================================================
+# Modify ClassRoom
+# @param
+#   - id_discipline
+#   - discipline_name
+#   - semester
+#   - obligatory
+#   - totalHours
+#   - weeksHours
+#   - cfu
+#   - year
+#   - course
+#   - teacher
+# ======================================================================
+def modifyDiscipline(id_discipline, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):   
+    isTaughtBy = ""
+    for t in teacher:          
+        isTaughtBy += "uni:isTaughtBy uni:" + t + ";"
+
+    query = '''
+            PREFIX uni: <http://www.rdfproject.com/>
+            PREFIX un: <http://www.w3.org/2007/ont/unit#>
+            WITH <http://www.rdcproject.com/graph/disciplines>
+            DELETE { 
+            ?x a uni:Discipline;
+                uni:idDiscipline ?oldidDiscipline;
+                uni:disciplinename ?olddisciplinename;
+                uni:semester ?oldsemester
+                uni:obligatory ?oldobligatory;
+                uni:totalhours ?oldtotalhours;
+                uni:weekhours ?oldweekhours;
+                uni:cfu ?oldcfu;
+                uni:year ?oldwyear;
+                uni:isTaughtBy ?oldisTaughtBy;
+                uni:hasCourseof ?oldhasCourseof;
+            }
+            INSERT {  
+            ?x a uni:Discipline;
+                uni:idDiscipline "'''+id_discipline+'''";
+                uni:disciplinename "'''+discipline_name+'''";
+                uni:semester "'''+semester+'''";
+                uni:obligatory "'''+obligatory+'''";
+                uni:totalhours "'''+totalHours+'''";
+                uni:weekhours "'''+weeksHours+'''";
+                uni:cfu "'''+cfu+'''";
+                uni:year "'''+year+'''";
+                '''+isTaughtBy+''';
+                uni:hasCourseof "'''+course+'''";
+            }
+            WHERE { 
+            ?x a uni:Discipline;
+                uni:idDiscipline "'''+id_discipline+'''";
+                OPTIONAL {
+                    ?x a uni:Discipline;
+                        uni:idDiscipline ?oldidDiscipline;
+                        uni:disciplinename ?olddisciplinename;
+                        uni:semester ?oldsemester
+                        uni:obligatory ?oldobligatory;
+                        uni:totalhours ?oldtotalhours;
+                        uni:weekhours ?oldweekhours;
+                        uni:cfu ?oldcfu;
+                        uni:year ?oldwyear;
+                        uni:isTaughtBy ?oldisTaughtBy;
+                        uni:hasCourseof ?oldhasCourseof;
+                }
+            }
+            '''
+
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    sparql.query()
+
 
 
 
@@ -313,3 +431,57 @@ def searchClassRoom(idRoom):
     sparqlQuery.setMethod('POST') 
     print query
     return sparqlQuery.query().convert()
+
+# ======================================================================
+# Modify ClassRoom
+# @param
+#   - id_room, 
+#   - name_room, 
+#   - capacity_room, 
+#   - wired_room,
+#   - wifi_room,
+#   - address_room
+# ======================================================================
+def modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, address_room):   
+    query = '''
+            PREFIX uni: <http://www.rdfproject.com/>
+            PREFIX un: <http://www.w3.org/2007/ont/unit#>
+            WITH <http://www.rdcproject.com/graph/classrooms>
+            DELETE { 
+            ?x a uni:Classroom;
+                uni:idRoom ?oldidRoom;
+                uni:classroomname ?oldclassroomname;
+                uni:address ?oldaddress;
+                uni:capacity ?oldcapacity;
+                uni:wifi ?oldwifi;
+                uni:wired ?oldwired;
+            }
+            INSERT {  
+            ?x a uni:Classroom;
+                uni:idRoom "'''+id_room+'''";
+                uni:classroomname "'''+name_room+'''";
+                uni:address "'''+address_room+'''";
+                uni:capacity "'''+capacity_room+'''";
+                uni:wifi "'''+wifi_room+'''";
+                uni:wired "'''+wired_room+'''";
+            }
+            WHERE { 
+            ?x a uni:Classroom;
+                uni:idRoom "'''+id_room+'''";
+                OPTIONAL {
+                    ?x a uni:Classroom;
+                        uni:idRoom ?oldidRoom;
+                        uni:classroomname ?oldclassroomname;
+                        uni:address ?oldaddress;
+                        uni:capacity ?oldcapacity;
+                        uni:wifi ?oldwifi;
+                        uni:wired ?oldwired;
+                }
+            }
+            '''
+
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    sparql.query()
+
