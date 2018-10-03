@@ -37,6 +37,10 @@ function Lesson(day, discipline, startLesson, endLesson, classroom, course) {
         return this.classroom;
     }
 
+    this.setClassroom = function (aula) {
+        this.classroom = aula;
+    }
+
     this.getCourse = function () {
         return this.course;
     }

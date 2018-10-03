@@ -146,10 +146,11 @@ reactor.createRule("spliDurationLesson6H", 0, { l: Lesson },
         var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
         var newL2 = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
         l.setDurationLesson(2);
+        if(newL.getDay() == newL2.getDay()){
+            newL2.setClassroom(newL.getClassroom());
+        }
         timetable.tt.push(newL);
         timetable.tt.push(newL2);
-
-        // TODO: se le lezioni sono sequenziali, l'aula deve essere la stessa e viene creata 
 
     });
 
