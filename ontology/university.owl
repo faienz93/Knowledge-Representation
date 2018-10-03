@@ -147,6 +147,12 @@
         <rdfs:label xml:lang="en">Discipline Name</rdfs:label>
     </owl:DatatypeProperty>
     
+        <!-- http://www.rdcproject.com/disciplineAbbreviation -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/disciplineAbbreviation">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">Discipline Name</rdfs:label>
+    </owl:DatatypeProperty>
 
 
     <!-- http://www.rdcproject.com/idDiscipline -->

@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from flask import Flask, render_template, redirect, send_from_directory, request
-from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, cancelDiscipline, cancelClassRoom, searchProfessor, searchClassRoom, searchDiscipline, modifyProfessor, modifyDiscipline, modifyClassRoom
+from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, cancelDiscipline, cancelClassRoom, searchProfessor, getAllProfessors, searchClassRoom, searchDiscipline, modifyProfessor, modifyDiscipline, modifyClassRoom
 import os
 
 template_dir = os.path.abspath('./')
@@ -106,6 +106,7 @@ def updateProfessor():
 # =====================================
 @app.route('/addDiscipline', methods = ['POST', 'GET'])
 def addDiscipline():
+    discipline_abb = request.form['discipline_abb']
     discipline_name = request.form['discipline_name']
     obligatory = request.form['obligatory']
     cfu = request.form['cfu']
@@ -121,7 +122,7 @@ def addDiscipline():
     teacher = request.form.getlist('teacher')
     print teacher
 
-    insertDiscipline(id_discipline, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
+    insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
 
 
     return redirect("/", code=302)
@@ -147,7 +148,17 @@ def findDiscipline():
     for entry in result['results']['bindings']:
         for key in entry:
             disc[key] = str(entry[key]['value']).strip()
-            print disc[key] + " count: " + str(len(disc[key]))
+            #print disc[key] + " count: " + str(len(disc[key]))
+
+    # result = getAllProfessors()
+    # profs = {}
+    # print result
+    # for entry in result['results']['bindings']:
+    #     print entry
+    #     for i in entry
+
+    #     for key in entry:
+    #         profs[key] = str(entry[key]['value']).strip()
 
     return render_template("index.html", disci= disc)
 
@@ -156,7 +167,7 @@ def findDiscipline():
 # =====================================
 @app.route('/updateDiscipline', methods = ['POST', 'GET'])
 def updateDiscipline():
-
+    discipline_abb = request.form['discipline_abbUpdate'].strip()
     discipline_name = request.form['discipline_nameUpdate'].strip()
     obligatory = request.form['obligatoryUpdate'].strip()
     cfu = request.form['cfuUpdate'].strip()
@@ -171,7 +182,7 @@ def updateDiscipline():
     weeksHours = request.form['weeksHoursUpdate'].strip()
     teacher = request.form.getlist('teacherUpdate')
 
-    modifyDiscipline(id_discipline, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
+    modifyDiscipline(id_discipline,discipline_abb,discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
     return redirect("/", code=302)
 
 

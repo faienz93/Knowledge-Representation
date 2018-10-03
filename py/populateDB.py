@@ -214,15 +214,16 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
    
     for row in t[1:]:
         id_discipline = row[0]
-        discipline_name = row[1]
-        semester = row[2]
-        obligatory = row[3]
-        totalHours = row[4]
-        weeksHours = row[5]
-        cfu = row[6]
-        year = row[7]
-        course = row[8]
-        teacher=row[9]
+        discipline_abb = row[1]
+        discipline_name = row[2]
+        semester = row[3]
+        obligatory = row[4]
+        totalHours = row[5]
+        weeksHours = row[6]
+        cfu = row[7]
+        year = row[8]
+        course = row[9]
+        teacher=row[10]
 
         # Create a new Query
         query = '''
@@ -232,6 +233,7 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
         { 
         GRAPH <'''+graph_disciplines+'''>{
         uni:'''+id_discipline +''' a uni:Discipline;
+                                uni:disciplineAbbreviation "'''+discipline_abb+'''"; 
                                 uni:disciplinename "'''+discipline_name+'''"; 
                                 uni:semester "'''+semester+'''"; 
                                 uni:obligatory "'''+obligatory+'''"; 

@@ -157,8 +157,29 @@ def modifyProfessor(id_professor, name, surname, role):
     print query
     sparql.query()
 
+# ======================================================================
+# Get all Professor objects
+# ======================================================================
+def getAllProfessors():
+    query = '''
+                PREFIX uni: <http://www.rdfproject.com/>
+                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
+                    SELECT ?name ?surname ?id
+                    FROM <http://www.rdcproject.com/graph/professor>
+                    WHERE
+                    { ?x  a uni:Teacher.
+                        ?x uni:firstName ?name.
+                        ?x uni:lastName ?surname.
+                        ?x uni:idProfessor ?id.
+                        }
+                    ORDER BY ?surname
+                '''
 
+    sparqlQuery.setQuery(query)
+    sparqlQuery.setMethod('POST') 
+    print query
+    return sparqlQuery.query().convert()
 
 # ======================================================================
 # Insert Discipline
@@ -174,7 +195,7 @@ def modifyProfessor(id_professor, name, surname, role):
 #   - course
 #   - teacher
 # ======================================================================
-def insertDiscipline(id_discipline, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):
+def insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):
 
     isTaughtBy = ""
     for t in teacher:          
@@ -190,6 +211,7 @@ def insertDiscipline(id_discipline, discipline_name,semester,obligatory, totalHo
     { 
     GRAPH <'''+graph_disciplines+'''>{
     uni:'''+id_discipline +''' a uni:Discipline;
+                            uni:disciplineAbbreviation "'''+discipline_abb+'''"; 
                             uni:disciplinename "'''+discipline_name+'''"; 
                             uni:semester "'''+semester+'''"; 
                             uni:obligatory "'''+obligatory+'''"; 
@@ -243,12 +265,13 @@ def searchDiscipline(id_discipline):
                 PREFIX uni: <http://www.rdfproject.com/>
                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                    SELECT ?idDiscipline ?disciplinename ?semester ?obligatory ?totalhours ?weekhours ?cfu ?year ?isTaughtBy ?hasCourseof
+                    SELECT ?idDiscipline ?disciplineAbbreviation ?disciplinename ?semester ?obligatory ?totalhours ?weekhours ?cfu ?year ?isTaughtBy ?hasCourseof
                     FROM <http://www.rdcproject.com/graph/disciplines>
                     WHERE
                     { ?x  a uni:Discipline;
                             uni:idDiscipline ?"'''+ id_discipline +'''";
                             uni:idDiscipline ?idDiscipline;
+                            uni:disciplineAbbreviation ?disciplineAbbreviation; 
                             uni:disciplinename ?disciplinename;
                             uni:semester ?semester;
                             uni:obligatory ?obligatory;
@@ -281,7 +304,7 @@ def searchDiscipline(id_discipline):
 #   - course
 #   - teacher
 # ======================================================================
-def modifyDiscipline(id_discipline, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):   
+def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):   
     isTaughtBy = ""
     for t in teacher:          
         isTaughtBy += "uni:isTaughtBy uni:" + t + ";"
@@ -293,6 +316,7 @@ def modifyDiscipline(id_discipline, discipline_name,semester,obligatory, totalHo
             DELETE { 
             ?x a uni:Discipline;
                 uni:idDiscipline ?oldidDiscipline;
+                uni:disciplineAbbreviation ?olddisciplineAbb;
                 uni:disciplinename ?olddisciplinename;
                 uni:semester ?oldsemester
                 uni:obligatory ?oldobligatory;
@@ -306,6 +330,7 @@ def modifyDiscipline(id_discipline, discipline_name,semester,obligatory, totalHo
             INSERT {  
             ?x a uni:Discipline;
                 uni:idDiscipline "'''+id_discipline+'''";
+                uni:disciplineAbbreviation "'''+discipline_abb+'''"; 
                 uni:disciplinename "'''+discipline_name+'''";
                 uni:semester "'''+semester+'''";
                 uni:obligatory "'''+obligatory+'''";
@@ -322,6 +347,7 @@ def modifyDiscipline(id_discipline, discipline_name,semester,obligatory, totalHo
                 OPTIONAL {
                     ?x a uni:Discipline;
                         uni:idDiscipline ?oldidDiscipline;
+                        uni:disciplineAbbreviation ?olddisciplineAbb;
                         uni:disciplinename ?olddisciplinename;
                         uni:semester ?oldsemester
                         uni:obligatory ?oldobligatory;
