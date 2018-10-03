@@ -111,8 +111,12 @@ reactor.createRule("spliDurationLesson6H", 0, { l: Lesson },
         var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
         var newL2 = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
         l.setDurationLesson(2);
+        if(newL.getDay() == newL2.getDay()){
+            newL2.setClassroom(newL.getClassroom());
+        }
         timetable.tt.push(newL);
         timetable.tt.push(newL2);
+
 
     });
 
@@ -178,7 +182,7 @@ for (var i = 0; i < nomiMaterie.length; i++) {
     var rClass = aule[Math.floor(Math.random() * aule.length)];
     var rHour = orari[Math.floor(Math.random() * orari.length)];
     var rDurate = 2 + Math.round(Math.random());
-    timetable.tt.push(new Lesson("Monday", nomiMaterie[i], START_LESSONS, START_LESSONS + 3, rClass, "8028B"))
+    timetable.tt.push(new Lesson("Monday", nomiMaterie[i], START_LESSONS, START_LESSONS + 6, rClass, "8028B"))
 }
 
 var o = JSON.stringify({ timetable }, null, " ");
