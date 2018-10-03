@@ -7,10 +7,10 @@
  */
 
 
- /**
-  * Convert day of week into integer
-  * @param {integer} d - number of day 
-  */
+/**
+ * Convert day of week into integer
+ * @param {integer} d - number of day 
+ */
 function defineDayNumber(d) {
     var day = 0;
     if (d == 'Monday') {
@@ -28,10 +28,10 @@ function defineDayNumber(d) {
     return day;
 }
 
- /**
-  * Convert day of week into String
-  * @param {String} d - day of week
-  */
+/**
+ * Convert day of week into String
+ * @param {String} d - day of week
+ */
 function defineDayString(d) {
     var day = 'Monday';
     if (d == 1) {
@@ -49,11 +49,11 @@ function defineDayString(d) {
     return day;
 }
 
- /**
-  * Generate Random Day from array previusly deleting a specific day.
-  * If @toRemove is undefined it not delete nothing day
-  * @param {String} toRemove - day to remove
-  */
+/**
+ * Generate Random Day from array previusly deleting a specific day.
+ * If @toRemove is undefined it not delete nothing day
+ * @param {String} toRemove - day to remove
+ */
 function generateDay(toRemove = undefined) {
     var giorni = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -69,13 +69,32 @@ function generateDay(toRemove = undefined) {
 }
 
 /**
+ * Generate Random Classroom from array previusly deleting a specific day.
+ * If @toRemove is undefined it not delete nothing day
+ * @param {String} toRemove - day to remove
+ */
+function generateClassroom(toRemove = undefined) {
+    var aule = ['Aula Ercolani 1', 'Aula Ercolani 2', 'Aula Ercolani 3', 'Lab Ercolani', 'Ranzani', 'Vitali', 'Pincherle', 'Cremona', 'Tonelli'];
+
+    if (toRemove != null) {
+        var index = aule.indexOf(toRemove);
+        if (index > -1) {
+            aule.splice(index, 1);
+        }
+    }
+
+    var rClass = aule[Math.floor(Math.random() * aule.length)];
+    return rClass;
+}
+
+/**
  * Return random nnumber between two value
  * @param {Integer} min 
  * @param {Integer} max 
  */
-function randomIntFromInterval(min,max) // min and max included
+function randomIntFromInterval(min, max) // min and max included
 {
-    return Math.floor(Math.random()*(max-min+1)+min);
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 /**
@@ -84,6 +103,6 @@ function randomIntFromInterval(min,max) // min and max included
  */
 function printForDebug(toPrint) {
     console.log("==========================================");
-    console.log(toPrint);
+    console.log("%c"+toPrint, "color:black; background:yellow");
     console.log("==========================================")
 }
