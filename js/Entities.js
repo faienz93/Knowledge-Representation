@@ -1,7 +1,9 @@
 // define the business object model consisting of
 // Day, Timetable, Professor, Discipline. 
 
-
+function TimetableArray() {
+    this.tt = [];
+}
 
 function Lesson(day, discipline, startLesson, endLesson, classroom, course) {
     this.day = day;
@@ -65,6 +67,10 @@ function Lesson(day, discipline, startLesson, endLesson, classroom, course) {
         this.endLesson = el;
     }
 
+    this.setClassroom = function (cl) {
+        this.classroom = cl;
+    }
+
 
 
     // this.generateTimeSlot = function () {
@@ -89,9 +95,7 @@ function Lesson(day, discipline, startLesson, endLesson, classroom, course) {
 }
 
 
-function TimetableArray() {
-    this.tt = [];
-}
+
 
 // firstName,surName,id_professor,role
 function Professor(firstName, surname, id, role) {
