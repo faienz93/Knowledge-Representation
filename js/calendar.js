@@ -50,7 +50,7 @@ $(document).ready(function () {
     locale: 'en',
     weekday: {
       timeline: {
-        //   intervalMinutes: 30,
+        intervalMinutes: 30,
         fromHour: 8,
         toHour: 23
       }
