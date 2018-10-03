@@ -204,7 +204,7 @@ reactor.createRule("swapDay", 0, { l: Lesson },
     function (l) {
         // printForDebug(l);
         // printForDebug(l.getDiscipline() + " " + l.getStartLesson() + " " + l.startLesson) ;
-        if (l.getStartLesson() >= 18) return true;
+        return l.getStartLesson() >= 18;
 
     },
     function (l) {
@@ -223,14 +223,46 @@ reactor.createRule("swapDay", 0, { l: Lesson },
     });
 
 // split the duration lessons of 5 h into two days 
+reactor.createRule("spliDurationLesson4H", 0, { l: Lesson },
+    function (l) {
+        if (l.getDurationLesson() == 4) return true;
+    }, function (l) {
+        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
+        l.setDurationLesson(2);
+        timetable.tt.push(newL);
+    });
+
+// split the duration lessons of 5 h into two days 
 reactor.createRule("spliDurationLesson5H", 0, { l: Lesson },
     function (l) {
         if (l.getDurationLesson() == 5) return true;
     }, function (l) {
-        var randomD = randomIntFromInterval(2,3);
-        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + randomD, l.getClassroom(),l.getCourse());
-        l.setDurationLesson(5 - randomD);    
+        var randomD = randomIntFromInterval(2, 3);
+        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + randomD, l.getClassroom(), l.getCourse());
+        l.setDurationLesson(5 - randomD);
         timetable.tt.push(newL);
+    });
+
+/**
+ * split the duration lessons of 6 h .
+ * The solution are two:  
+ *  - split lesson in three days (2 - 2 - 2)
+ *  - split lesson in two days (4 - 2) for laboratory.
+ *    This case is inclused into the first. In fact the function @generateDay 
+ *    exlude alway the same day and for this can be the case 2 2 2 or 4 2
+ *  
+ */
+reactor.createRule("spliDurationLesson6H", 0, { l: Lesson },
+    function (l) {
+        return l.getDurationLesson() == 6;
+    },
+    function (l) {
+        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
+        var newL2 = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
+        l.setDurationLesson(2);
+        timetable.tt.push(newL);
+        timetable.tt.push(newL2);
+
     });
 
 reactor.createRule("stop", -1, {},
@@ -295,11 +327,11 @@ for (var i = 0; i < nomiMaterie.length; i++) {
     var rClass = aule[Math.floor(Math.random() * aule.length)];
     var rHour = orari[Math.floor(Math.random() * orari.length)];
     var rDurate = 2 + Math.round(Math.random());
-    timetable.tt.push(new Lesson("Monday", nomiMaterie[i], START_LESSONS, START_LESSONS + 5, rClass, "8028B"))
+    timetable.tt.push(new Lesson("Monday", nomiMaterie[i], START_LESSONS, START_LESSONS + 4, rClass, "8028B"))
 }
 
 var o = JSON.stringify({ timetable }, null, " ");
-document.write("<pre>" + o + "</pre>");
+console.log(o);
 
 assert(timetable);
 reactor.run(Infinity, true, function () {
@@ -312,9 +344,9 @@ reactor.run(Infinity, true, function () {
         var newEvent = {
             start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
             end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
-            title: timetable.tt[i].discipline + ' - ' + timetable.tt[i].getClassroom(), 
-            content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" + "CORSO: " + timetable.tt[i].getCourse() ,//'Hello World! <br> <p>Foo Bar</p>',
-            category: timetable.tt[i].discipline
+            title: timetable.tt[i].discipline + ' - ' + timetable.tt[i].getClassroom(),
+            content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" + "CORSO: " + timetable.tt[i].getCourse(),//'Hello World! <br> <p>Foo Bar</p>',
+            category: timetable.tt[i].getCourse()
         }
         events.push(newEvent);
     }
