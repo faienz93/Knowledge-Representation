@@ -55,15 +55,15 @@ function defineDayString(d) {
  * @param {String} toRemove - day to remove
  */
 function generateDay(toRemove = undefined) {
-    var giorni = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    var giorniTemp = giorni.slice();
 
     if (toRemove != null) {
-        var index = giorni.indexOf(toRemove);
+        var index = giorniTemp.indexOf(toRemove);
         if (index > -1) {
-            giorni.splice(index, 1);
+            giorniTemp.splice(index, 1);
         }
     }
-    var randomDay = giorni[Math.floor(Math.random() * giorni.length)];
+    var randomDay = giorniTemp[Math.floor(Math.random() * giorniTemp.length)];
     //alert(randomDay);
     return randomDay;
 }
@@ -74,16 +74,16 @@ function generateDay(toRemove = undefined) {
  * @param {String} toRemove - day to remove
  */
 function generateClassroom(toRemove = undefined) {
-    var aule = ['Aula Ercolani 1', 'Aula Ercolani 2', 'Aula Ercolani 3', 'Lab Ercolani', 'Ranzani', 'Vitali', 'Pincherle', 'Cremona', 'Tonelli'];
+    var auleTemp = aule.slice();
 
     if (toRemove != null) {
-        var index = aule.indexOf(toRemove);
+        var index = auleTemp.indexOf(toRemove);
         if (index > -1) {
-            aule.splice(index, 1);
+            auleTemp.splice(index, 1);
         }
     }
 
-    var rClass = aule[Math.floor(Math.random() * aule.length)];
+    var rClass = auleTemp[Math.floor(Math.random() * auleTemp.length)];
     return rClass;
 }
 
@@ -101,8 +101,8 @@ function randomIntFromInterval(min, max) // min and max included
  * Function for print somethings
  * @param {Object} toPrint - Object to print i.e String/Integer/array etc.
  */
-function printForDebug(toPrint) {
-    console.log("==========================================");
-    console.log("%c"+toPrint, "color:black; background:yellow");
-    console.log("==========================================")
+function printForDebug(toPrint, color = "black", background = "yellow") {
+    console.log("%c ==========================================", "color:"+color+"; background:"+background);
+    console.log("%c"+toPrint, "color:"+color+"; background:"+background);
+    console.log("%c ==========================================","color:"+color+"; background:"+background)
 }
