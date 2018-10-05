@@ -14,7 +14,11 @@ function forAll() { return reactor.forAll.apply(reactor, arguments); }
 reactor.trace(0);
 
 
-
+/**
+ * **********************************************************************
+ * ***************************** PRIORITY 0 *****************************
+ * ********************************************************************** 
+ */
 
 reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
     function (l) {
@@ -30,6 +34,37 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
         }
     });
 
+
+/**
+ * If lesson start after the 18:00 then swap to next Day
+ */
+reactor.createRule("swapDay", 0, { l: Lesson },
+    function (l) {
+        // printForDebug(l.getDiscipline() + " " + l.getStartLesson() + " " + l.startLesson) ;
+        return l.getStartLesson() >= END_LESSONS;
+
+    },
+    function (l) {
+
+        var dL = l.getDurationLesson();
+        // qui setto alle 9 perchè tanto poi anche se si sovrappongono due materie che iniziano entrambe alle 9
+        // allora rientra in regola la prima rule: overlapTimeSlot
+        l.setStartLesson(START_LESSONS);
+        l.setEndLesson(START_LESSONS + dL);
+
+        // se le precendenti righe fossero commentate si avrebbe una lezione il martedi e un altra 
+        // il mercoledi. Questo risulta ovvio in quanto l'ultimo giorno sarebbe letto due volte per via 
+        // della condizione l1.getStartLesson() > 18) che si ripete
+        var actualDay = l.getDay();
+        l.setDay(actualDay, 1);
+    });
+
+/**
+ * ***********************************************************************
+ * ***************************** PRIORITY -1 *****************************
+ * *********************************************************************** 
+ */
+
 /**
  * RULE: check if:
  * - the discipline are different
@@ -38,7 +73,7 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
  * - overlap the time slot
  * In this case, switch the time slot to make it consequential
  */
-reactor.createRule("overlapTimeSlot", 0, { l1: Lesson, l2: Lesson },
+reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         return l1 != l2 &&
             l1.getCourse() == l2.getCourse() &&
@@ -70,46 +105,34 @@ reactor.createRule("overlapTimeSlot", 0, { l1: Lesson, l2: Lesson },
 */
 reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
-        var overlap = (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson());
-        return l1.getCourse() != l2.getCourse() &&
+
+        return l1 != l2 &&
+            l1.getCourse() != l2.getCourse() &&
             l1.getDay() == l2.getDay() &&
-            overlap &&
+            (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
             l1.getClassroom() == l2.getClassroom();
     },
     function (l1, l2) {
-       printForDebug(l1.getDiscipline() + " " + l1.getCourse() + " " + l1.getDay() + " " + l1.startLesson + " " + l1.endLesson + " " + l1.getClassroom() + "</br>" +
-            l2.getDiscipline() + " " + l2.getCourse() + " " + l2.getDay() + " " + l2.startLesson + " " + l2.endLesson + " " + l2.getClassroom());
-        var actualClassRoom = l1.getClassroom();       
-        var newClassRoom = generateClassroom(actualClassRoom);
-        l1.setClassroom(newClassRoom);
+
+        printForDebug(l1.toString() + " " + l2.toString(), "white", "black");
+
+
+
+        var dL = l2.getDurationLesson();
+        l2.setStartLesson(l1.getEndLesson()); 
+        l2.setEndLesson(l2.getStartLesson() + dL);
+        // assert([l1, l2]); 
+        assert(timetable);
     });
 
 /**
- * If lesson start after the 18:00 then swap to next Day
+ * ***********************************************************************
+ * ***************************** PRIORITY -2 *****************************
+ * *********************************************************************** 
  */
-reactor.createRule("swapDay", 0, { l: Lesson },
-    function (l) {
-        // printForDebug(l.getDiscipline() + " " + l.getStartLesson() + " " + l.startLesson) ;
-        return l.getStartLesson() >= END_LESSONS;
-
-    },
-    function (l) {
-
-        var dL = l.getDurationLesson();
-        // qui setto alle 9 perchè tanto poi anche se si sovrappongono due materie che iniziano entrambe alle 9
-        // allora rientra in regola la prima rule: overlapTimeSlot
-        l.setStartLesson(START_LESSONS);
-        l.setEndLesson(START_LESSONS + dL);
-
-        // se le precendenti righe fossero commentate si avrebbe una lezione il martedi e un altra 
-        // il mercoledi. Questo risulta ovvio in quanto l'ultimo giorno sarebbe letto due volte per via 
-        // della condizione l1.getStartLesson() > 18) che si ripete
-        var actualDay = l.getDay();
-        l.setDay(actualDay, 1);
-    });
 
 // split the duration lessons of 4 h into two days 
-reactor.createRule("spliDurationLesson4H", 0, { l: Lesson },
+reactor.createRule("spliDurationLesson4H", -2, { l: Lesson },
     function (l) {
         if (l.getDurationLesson() == 4) return true;
     }, function (l) {
@@ -119,7 +142,7 @@ reactor.createRule("spliDurationLesson4H", 0, { l: Lesson },
     });
 
 // split the duration lessons of 5 h into two days 
-reactor.createRule("spliDurationLesson5H", 0, { l: Lesson },
+reactor.createRule("spliDurationLesson5H", -2, { l: Lesson },
     function (l) {
         if (l.getDurationLesson() == 5) return true;
     }, function (l) {
@@ -138,7 +161,7 @@ reactor.createRule("spliDurationLesson5H", 0, { l: Lesson },
  *    exlude alway the same day and for this can be the case 2 2 2 or 4 2
  *  
  */
-reactor.createRule("spliDurationLesson6H", 0, { l: Lesson },
+reactor.createRule("spliDurationLesson6H", -2, { l: Lesson },
     function (l) {
         return l.getDurationLesson() == 6;
     },
@@ -146,7 +169,7 @@ reactor.createRule("spliDurationLesson6H", 0, { l: Lesson },
         var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
         var newL2 = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
         l.setDurationLesson(2);
-        if(newL.getDay() == newL2.getDay()){
+        if (newL.getDay() == newL2.getDay()) {
             newL2.setClassroom(newL.getClassroom());
         }
         timetable.tt.push(newL);
@@ -187,12 +210,15 @@ console.log("Numero di settimane di lezione " + numberOfWeek);
 
 var timetable = new TimetableArray();
 
-var giorni = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
 // var nomiMaterie = ['RDC', 'SM', 'IOT', 'MSC', 'MAT', 'COM', 'UUX'];
-var nomiMaterie = ['RDC', 'SM', 'IOT', 'MAT'];
-var nomiMaterieInfoMan = ['DI', 'EA', 'AM', 'PI'];
-// var aule = ['Aula Ercolani 1', 'Aula Ercolani 2', 'Aula Ercolani 3', 'Lab Ercolani', 'Ranzani', 'Vitali'];
-var aule = ['Aula Ercolani 1', 'Aula Ercolani 2', 'Aula Ercolani 3', 'Lab Ercolani', 'Ranzani', 'Vitali', 'Pincherle', 'Cremona', 'Tonelli'];
+// var nomiMaterie = ['RDC', 'SM', 'IOT', 'MAT'];
+var nomiMaterie = ['RDC', 'SM', 'IOT'];
+
+// var nomiMaterieInfoMan = ['DI', 'EA', 'AM', 'PI'];
+var nomiMaterieInfoMan = ['DI', 'EA', 'AM'];
+
+var nomiMaterieInfoTriennale = ['P', 'O', 'CN'];
 
 var orari = []
 for (var i = START_LESSONS; i < END_LESSONS; i++) {
@@ -214,19 +240,18 @@ for (var i = START_LESSONS; i < END_LESSONS; i++) {
 // START MONDAY
 // ====================
 for (var i = 0; i < nomiMaterie.length; i++) {
-    var rDay = giorni[Math.floor(Math.random() * giorni.length)];
     var rClass = aule[Math.floor(Math.random() * aule.length)];
-    var rHour = orari[Math.floor(Math.random() * orari.length)];
-    var rDurate = 2 + Math.round(Math.random());
-    timetable.tt.push(new Lesson("Monday", nomiMaterie[i], START_LESSONS, START_LESSONS + 2, rClass, "8028B"))
+    timetable.tt.push(new Lesson("Monday", nomiMaterie[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8028B"))
 }
 
 for (var i = 0; i < nomiMaterieInfoMan.length; i++) {
-    var rDay = giorni[Math.floor(Math.random() * giorni.length)];
     var rClass = aule[Math.floor(Math.random() * aule.length)];
-    var rHour = orari[Math.floor(Math.random() * orari.length)];
-    var rDurate = 2 + Math.round(Math.random());
-    timetable.tt.push(new Lesson("Monday", nomiMaterieInfoMan[i], START_LESSONS, START_LESSONS + 2, rClass, "8014"))
+    timetable.tt.push(new Lesson("Monday", nomiMaterieInfoMan[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8014"))
+}
+
+for (var i = 0; i < nomiMaterieInfoTriennale.length; i++) {
+    var rClass = aule[Math.floor(Math.random() * aule.length)];
+    timetable.tt.push(new Lesson("Monday", nomiMaterieInfoTriennale[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8009"))
 }
 
 var o = JSON.stringify({ timetable }, null, " ");
