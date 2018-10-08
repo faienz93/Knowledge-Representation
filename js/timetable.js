@@ -59,15 +59,44 @@ reactor.createRule("swapDay", 0, { l: Lesson },
         l.setDay(actualDay, 1);
     });
 
-// if l1 != l2 && l1.getCourse() == l2.getCourse() && l1.getOblicatory() == true && l2.getObligaotory() == true
-// && l1.getLesson.getCurriculum == l2.getLesson.getCurriculum
+
 
 /**
  * ***********************************************************************
  * ***************************** PRIORITY -1 *****************************
  * *********************************************************************** 
  */
+// if l1 != l2 && l1.getCourse() == l2.getCourse() && l1.getOblicatory() == true && l2.getObligaotory() == true
+// && l1.getLesson.getCurriculum == l2.getLesson.getCurriculum
+reactor.createRule("overlapCurriculum", -1, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
 
+        var belongToSameCurriculum = false;
+        for(var i = 0; i < l1.getCurriculum().length; i++){
+            belongToSameCurriculum = l2.getExistCurriculum(l1.getCurriculum()[i])
+        }
+        return l1 != l2 &&
+        l1.getCourse() == l2.getCourse() &&
+        l1.getDay() == l2.getDay() &&
+        l1.getObligatory() == true && l2.getObligatory() == true && 
+        belongToSameCurriculum==true ;
+    },
+    function (l1, l2) {
+        if (l1.getStartLesson() < l2.getStartLesson()) {
+
+            var dL = l2.getDurationLesson();
+            l2.setStartLesson(l1.getEndLesson()); // METTERCI + 15 minuti di differenza
+            l2.setEndLesson(l2.getStartLesson() + dL);
+        }
+        else {
+            var dL = l1.getDurationLesson();
+            l1.setStartLesson(l2.getEndLesson()); // METTERCI + 15 minuti di differenza
+            l1.setEndLesson(l1.getStartLesson() + dL);
+        }
+
+        
+
+    });
 /**
  * RULE: check if:
  * - the discipline are different
@@ -222,9 +251,6 @@ var timetable = new TimetableArray();
 var infoman = new Course(8014, "Informatica per il Management");
 var info = new Course(8009, "Informatica Triennale");
 var infolm = new Course(8028, "Informatica Magistrale");
-var infolmcurrA = new Course(8028, "Informatica Magistrale", "A", "Tecniche del Software");
-var infolmcurrB = new Course(8028, "Informatica Magistrale", "B", "Informatica per il management");
-var infolmcurrC = new Course(8028, "Informatica Magistrale", "C", "Sistemi e Reti");
 
 // Discipline(id, abbreviation ,name, semester, obligatory, totalHours, weeksHours, cfu, year) {
 var cbd = new Discipline("28796", "CBD", "COMPLEMENTI DI BASI DI DATI", "1", true, 60, 5, 6, 1);
@@ -234,6 +260,19 @@ var ap = new Discipline("81668", "AA", "ALGORITMI PARALLELI", "1", true, 60, 6, 
 var isos = new Discipline("77803", "ISOS", "INGEGNERIA DEL SOFTWARE ORIENTATA AI SERVIZI", "1", false, 50, 5, 6, 1);
 var fsc = new Discipline("23762", "FSC", "FISICA DEI SISTEMI COMPLESSI", "1", false, 50, 5, 6, 1);
 var sds = new Discipline("37760", "SDS", "SIMULAZIONE DI SISTEMI", "1", false, 50, 5, 6, 1);
+
+var currA = new Curriculum("A", "Tecniche del Software");
+var currB = new Curriculum("B", "Informatica per il Management");
+var currC = new Curriculum("C", "Sistemi e Reti");
+cbd.addCurriculum(currA);
+cbd.addCurriculum(currB);
+cbd.addCurriculum(currC);
+uux.addCurriculum(currA);
+uux.addCurriculum(currB);
+uux.addCurriculum(currC);
+gmb.addCurriculum(currB);
+ap.addCurriculum(currA);
+ap.addCurriculum(currC);
 
 // firstName,surName,id_professor,role
 var dm = new Professor("Danilo", "Montesi", 211832, "ordinario");
@@ -249,6 +288,7 @@ var ld = new Professor("Lorenzo", "Donatiello", 000005, "ordinario");
 
 
 ///////////////////////////////////////////////////////////
+// ADD TEACHER
 cbd.addTeacher(dm);
 uux.addTeacher(fv);
 gmb.addTeacher(gr);
@@ -257,19 +297,14 @@ isos.addTeacher(dr);
 fsc.addTeacher(sr);
 sds.addTeacher(ld);
 
-// cbd.addCourse(infolmcurrA);
-// cbd.addCourse(infolmcurrB);
-// cbd.addCourse(infolmcurrC);
-// uux.addCourse(infolmcurrA);
-// uux.addCourse(infolmcurrB);
-// uux.addCourse(infolmcurrC);
-
-// gmb.addCourse(infolmcurrB);
-// ap.addCourse(infolmcurrA);
-// ap.addCourse(infolmcurrC);
-// isos.addCourse(infolm);
-// fsc.addCourse(infolm);
-// sds.addCourse(infolm);
+// ADD COURSE
+cbd.addCourse(infolm);
+uux.addCourse(infolm);
+gmb.addCourse(infolm);
+ap.addCourse(infolm);
+isos.addCourse(infolm);
+fsc.addCourse(infolm);
+sds.addCourse(infolm);
 
 
 // INFOMAN
@@ -290,12 +325,13 @@ cn.addCourse(info);
 
 
 var subject = [];
-subject.push(di);
-subject.push(ea);
-subject.push(am);
-subject.push(p);
-subject.push(o);
-subject.push(cn);
+// TRIENNALE
+// subject.push(di);
+// subject.push(ea);
+// subject.push(am);
+// subject.push(p);
+// subject.push(o);
+// subject.push(cn);
 
 // MAGISTRALE
 subject.push(cbd);
@@ -307,22 +343,20 @@ subject.push(fsc);
 subject.push(sds);
 
 for (var i = 0; i < subject.length; i++) {
-    
-//    console.log(subject.toString());
-   var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
-   timetable.tt.push(new Lesson("Monday", subject[i].getName(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse()))
+    //    console.log(subject.toString());
+    var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
+    timetable.tt.push(new Lesson("Monday", subject[i].getName(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getCurriculum(), subject[i].getObligatory()));
+
 }
-
-// for(var i = 0; i < timetable.tt.length; i++) {
-//     console.log(timetable.tt[i].toString());
-// }
+// subject[i].getCurriculum().length>0
 
 
+// console.log(subject[0].getCurriculum());
+// console.log(subject[2].getCurriculum());
+// var prova = compareArray(subject[0].getCurriculum(), subject[2].getCurriculum())
+// console.log(prova);
 
-// console.log(timetable.tt[0].toString());
-// console.log(timetable.tt[0].getCourse());
-// console.log(timetable.tt[0].getCourse()[0].getId());
-// console.log(timetable.tt[0].getCourse()[0].getName());
+
 
 
 
@@ -331,37 +365,10 @@ for (var i = START_LESSONS; i < END_LESSONS; i++) {
     orari.push(new Date(null, null, null, i).getHours());
 }
 
-// =====================
-// RANDOM
-// ====================
-// for (var i = 0; i < nomiMaterie.length; i++) {
-//     var rDay = days[Math.floor(Math.random() * days.length)];
-//     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
-//     var rHour = orari[Math.floor(Math.random() * orari.length)];
-//     var rDurate = 2 + Math.round(Math.random());
-//     timetable.tt.push(new Lesson(rDay, nomiMaterie[i], rHour, rHour + rDurate, rClass))
-// }
 
-// =====================
-// START MONDAY
-// ====================
-// for (var i = 0; i < nomiMaterie.length; i++) {
-//     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
-//     timetable.tt.push(new Lesson("Monday", nomiMaterie[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8028B"))
-// }
 
-// for (var i = 0; i < nomiMaterieInfoMan.length; i++) {
-//     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
-//     timetable.tt.push(new Lesson("Monday", nomiMaterieInfoMan[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8014"))
-// }
-
-// for (var i = 0; i < nomiMaterieInfoTriennale.length; i++) {
-//     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
-//     timetable.tt.push(new Lesson("Monday", nomiMaterieInfoTriennale[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8009"))
-// }
-
-var o = JSON.stringify({ timetable }, null, " ");
-console.log(o);
+// var o = JSON.stringify({ timetable }, null, " ");
+// console.log(o);
 
 assert(timetable);
 reactor.run(Infinity, true, function () {
@@ -376,7 +383,7 @@ reactor.run(Infinity, true, function () {
             end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
             title: timetable.tt[i].getDiscipline() + ' - ' + timetable.tt[i].getClassroom(),
             content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" + "CORSO: " + timetable.tt[i].getCourse(),//'Hello World! <br> <p>Foo Bar</p>',
-            category: timetable.tt[i].getCourse()[0]
+            category: timetable.tt[i].getCourse()
         }
         events.push(newEvent);
     }

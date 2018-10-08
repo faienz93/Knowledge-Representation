@@ -97,6 +97,12 @@ function randomIntFromInterval(min, max) // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+
+function compareArray(ary1,ary2){
+    return (ary1.join('') == ary2.join(''));
+  }
+
+
 /**
  * Function for print somethings
  * @param {Object} toPrint - Object to print i.e String/Integer/array etc.
