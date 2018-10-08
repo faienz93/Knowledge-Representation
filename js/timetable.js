@@ -59,6 +59,9 @@ reactor.createRule("swapDay", 0, { l: Lesson },
         l.setDay(actualDay, 1);
     });
 
+// if l1 != l2 && l1.getCourse() == l2.getCourse() && l1.getOblicatory() == true && l2.getObligaotory() == true
+// && l1.getLesson.getCurriculum == l2.getLesson.getCurriculum
+
 /**
  * ***********************************************************************
  * ***************************** PRIORITY -1 *****************************
@@ -119,7 +122,7 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
 
 
         var dL = l2.getDurationLesson();
-        l2.setStartLesson(l1.getEndLesson()); 
+        l2.setStartLesson(l1.getEndLesson());
         l2.setEndLesson(l2.getStartLesson() + dL);
         // assert([l1, l2]); 
         assert(timetable);
@@ -211,14 +214,117 @@ console.log("Numero di settimane di lezione " + numberOfWeek);
 var timetable = new TimetableArray();
 
 
-// var nomiMaterie = ['RDC', 'SM', 'IOT', 'MSC', 'MAT', 'COM', 'UUX'];
-// var nomiMaterie = ['RDC', 'SM', 'IOT', 'MAT'];
-var nomiMaterie = ['RDC', 'SM', 'IOT'];
 
-// var nomiMaterieInfoMan = ['DI', 'EA', 'AM', 'PI'];
-var nomiMaterieInfoMan = ['DI', 'EA', 'AM'];
 
-var nomiMaterieInfoTriennale = ['P', 'O', 'CN'];
+
+
+// id, name
+var infoman = new Course(8014, "Informatica per il Management");
+var info = new Course(8009, "Informatica Triennale");
+var infolm = new Course(8028, "Informatica Magistrale");
+var infolmcurrA = new Course(8028, "Informatica Magistrale", "A", "Tecniche del Software");
+var infolmcurrB = new Course(8028, "Informatica Magistrale", "B", "Informatica per il management");
+var infolmcurrC = new Course(8028, "Informatica Magistrale", "C", "Sistemi e Reti");
+
+// Discipline(id, abbreviation ,name, semester, obligatory, totalHours, weeksHours, cfu, year) {
+var cbd = new Discipline("28796", "CBD", "COMPLEMENTI DI BASI DI DATI", "1", true, 60, 5, 6, 1);
+var uux = new Discipline("81670", "UUX", "USABILITA E USER EXPERIENCE", "1", true, 60, 6, 6, 1);
+var gmb = new Discipline("81960", "TG", "GIOCHI E MODELLI BOOLEANI", "1", true, 60, 6, 6, 1);
+var ap = new Discipline("81668", "AA", "ALGORITMI PARALLELI", "1", true, 60, 6, 6, 1);
+var isos = new Discipline("77803", "ISOS", "INGEGNERIA DEL SOFTWARE ORIENTATA AI SERVIZI", "1", false, 50, 5, 6, 1);
+var fsc = new Discipline("23762", "FSC", "FISICA DEI SISTEMI COMPLESSI", "1", false, 50, 5, 6, 1);
+var sds = new Discipline("37760", "SDS", "SIMULAZIONE DI SISTEMI", "1", false, 50, 5, 6, 1);
+
+// firstName,surName,id_professor,role
+var dm = new Professor("Danilo", "Montesi", 211832, "ordinario");
+var fv = new Professor("Fabio", "Vitali", 150348, "ordinario");
+var gr = new Professor("Giovanni", "Rossi", 000002, "contratto");
+var ab = new Professor("Alan Albert", "Bertossi", 295601, "ordinario");
+var dr = new Professor("Davide", "Rossi", 000003, "contratto");
+var sr = new Professor("Sandro", "Rambaldi", 841964, "associato");
+var ld = new Professor("Lorenzo", "Donatiello", 000005, "ordinario");
+
+
+
+
+
+///////////////////////////////////////////////////////////
+cbd.addTeacher(dm);
+uux.addTeacher(fv);
+gmb.addTeacher(gr);
+ap.addTeacher(ab);
+isos.addTeacher(dr);
+fsc.addTeacher(sr);
+sds.addTeacher(ld);
+
+// cbd.addCourse(infolmcurrA);
+// cbd.addCourse(infolmcurrB);
+// cbd.addCourse(infolmcurrC);
+// uux.addCourse(infolmcurrA);
+// uux.addCourse(infolmcurrB);
+// uux.addCourse(infolmcurrC);
+
+// gmb.addCourse(infolmcurrB);
+// ap.addCourse(infolmcurrA);
+// ap.addCourse(infolmcurrC);
+// isos.addCourse(infolm);
+// fsc.addCourse(infolm);
+// sds.addCourse(infolm);
+
+
+// INFOMAN
+var di = new Discipline("28796", "DI", "Diritto di Internet", "1", true, 60, 5, 6, 1);
+var ea = new Discipline("28797", "EA", "Economia Aziendale", "1", true, 60, 5, 6, 1);
+var am = new Discipline("28798", "AM", "Analisis Matematica", "1", true, 60, 5, 6, 1);
+di.addCourse(infoman);
+ea.addCourse(infoman);
+am.addCourse(infoman);
+
+// INFORMATICA TRIENNALE
+var p = new Discipline("28799", "P", "Programmazione", "1", true, 60, 5, 6, 1);
+var o = new Discipline("28800", "O", "Ottimizzazione", "1", true, 60, 5, 6, 1);
+var cn = new Discipline("28801", "CN", "Calcolo Numerico", "1", true, 60, 5, 6, 1);
+p.addCourse(info);
+o.addCourse(info);
+cn.addCourse(info);
+
+
+var subject = [];
+subject.push(di);
+subject.push(ea);
+subject.push(am);
+subject.push(p);
+subject.push(o);
+subject.push(cn);
+
+// MAGISTRALE
+subject.push(cbd);
+subject.push(uux);
+subject.push(gmb)
+subject.push(ap);
+subject.push(isos);
+subject.push(fsc);
+subject.push(sds);
+
+for (var i = 0; i < subject.length; i++) {
+    
+//    console.log(subject.toString());
+   var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
+   timetable.tt.push(new Lesson("Monday", subject[i].getName(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse()))
+}
+
+// for(var i = 0; i < timetable.tt.length; i++) {
+//     console.log(timetable.tt[i].toString());
+// }
+
+
+
+// console.log(timetable.tt[0].toString());
+// console.log(timetable.tt[0].getCourse());
+// console.log(timetable.tt[0].getCourse()[0].getId());
+// console.log(timetable.tt[0].getCourse()[0].getName());
+
+
 
 var orari = []
 for (var i = START_LESSONS; i < END_LESSONS; i++) {
@@ -229,8 +335,8 @@ for (var i = START_LESSONS; i < END_LESSONS; i++) {
 // RANDOM
 // ====================
 // for (var i = 0; i < nomiMaterie.length; i++) {
-//     var rDay = giorni[Math.floor(Math.random() * giorni.length)];
-//     var rClass = aule[Math.floor(Math.random() * aule.length)];
+//     var rDay = days[Math.floor(Math.random() * days.length)];
+//     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
 //     var rHour = orari[Math.floor(Math.random() * orari.length)];
 //     var rDurate = 2 + Math.round(Math.random());
 //     timetable.tt.push(new Lesson(rDay, nomiMaterie[i], rHour, rHour + rDurate, rClass))
@@ -239,20 +345,20 @@ for (var i = START_LESSONS; i < END_LESSONS; i++) {
 // =====================
 // START MONDAY
 // ====================
-for (var i = 0; i < nomiMaterie.length; i++) {
-    var rClass = aule[Math.floor(Math.random() * aule.length)];
-    timetable.tt.push(new Lesson("Monday", nomiMaterie[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8028B"))
-}
+// for (var i = 0; i < nomiMaterie.length; i++) {
+//     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
+//     timetable.tt.push(new Lesson("Monday", nomiMaterie[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8028B"))
+// }
 
-for (var i = 0; i < nomiMaterieInfoMan.length; i++) {
-    var rClass = aule[Math.floor(Math.random() * aule.length)];
-    timetable.tt.push(new Lesson("Monday", nomiMaterieInfoMan[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8014"))
-}
+// for (var i = 0; i < nomiMaterieInfoMan.length; i++) {
+//     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
+//     timetable.tt.push(new Lesson("Monday", nomiMaterieInfoMan[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8014"))
+// }
 
-for (var i = 0; i < nomiMaterieInfoTriennale.length; i++) {
-    var rClass = aule[Math.floor(Math.random() * aule.length)];
-    timetable.tt.push(new Lesson("Monday", nomiMaterieInfoTriennale[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8009"))
-}
+// for (var i = 0; i < nomiMaterieInfoTriennale.length; i++) {
+//     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
+//     timetable.tt.push(new Lesson("Monday", nomiMaterieInfoTriennale[i], START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, "8009"))
+// }
 
 var o = JSON.stringify({ timetable }, null, " ");
 console.log(o);
@@ -268,9 +374,9 @@ reactor.run(Infinity, true, function () {
         var newEvent = {
             start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
             end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
-            title: timetable.tt[i].discipline + ' - ' + timetable.tt[i].getClassroom(),
+            title: timetable.tt[i].getDiscipline() + ' - ' + timetable.tt[i].getClassroom(),
             content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" + "CORSO: " + timetable.tt[i].getCourse(),//'Hello World! <br> <p>Foo Bar</p>',
-            category: timetable.tt[i].getCourse()
+            category: timetable.tt[i].getCourse()[0]
         }
         events.push(newEvent);
     }

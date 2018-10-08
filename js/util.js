@@ -55,15 +55,15 @@ function defineDayString(d) {
  * @param {String} toRemove - day to remove
  */
 function generateDay(toRemove = undefined) {
-    var giorniTemp = giorni.slice();
+    var daysTemp = days.slice();
 
     if (toRemove != null) {
-        var index = giorniTemp.indexOf(toRemove);
+        var index = daysTemp.indexOf(toRemove);
         if (index > -1) {
-            giorniTemp.splice(index, 1);
+            daysTemp.splice(index, 1);
         }
     }
-    var randomDay = giorniTemp[Math.floor(Math.random() * giorniTemp.length)];
+    var randomDay = daysTemp[Math.floor(Math.random() * daysTemp.length)];
     //alert(randomDay);
     return randomDay;
 }
@@ -74,16 +74,16 @@ function generateDay(toRemove = undefined) {
  * @param {String} toRemove - day to remove
  */
 function generateClassroom(toRemove = undefined) {
-    var auleTemp = aule.slice();
+    var classroomsTemp = classrooms.slice();
 
     if (toRemove != null) {
-        var index = auleTemp.indexOf(toRemove);
+        var index = classroomsTemp.indexOf(toRemove);
         if (index > -1) {
-            auleTemp.splice(index, 1);
+            classroomsTemp.splice(index, 1);
         }
     }
 
-    var rClass = auleTemp[Math.floor(Math.random() * auleTemp.length)];
+    var rClass = classroomsTemp[Math.floor(Math.random() * classroomsTemp.length)];
     return rClass;
 }
 

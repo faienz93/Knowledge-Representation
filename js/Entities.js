@@ -1,3 +1,6 @@
+
+
+
 // define the business object model consisting of
 // Day, Timetable, Professor, Discipline. 
 
@@ -5,6 +8,7 @@ function TimetableArray() {
     this.tt = [];
 }
 
+// TODO add Teacher
 function Lesson(day, discipline, startLesson, endLesson, classroom, course) {
     this.day = day;
     this.discipline = discipline;
@@ -45,6 +49,8 @@ function Lesson(day, discipline, startLesson, endLesson, classroom, course) {
         return this.course;
     }
 
+    
+
 
     this.setDurationLesson = function (dur) {
         this.endLesson = this.startLesson + dur;
@@ -77,24 +83,9 @@ function Lesson(day, discipline, startLesson, endLesson, classroom, course) {
 
 
 
-    // this.generateTimeSlot = function () {
-    //     var orari = []
-    //     for (var i = START_LESSONS; i < END_LESSONS; i++) {
-    //         orari.push(new Date(null, null, null, i).getHours());
-    //     }
-
-
-    //     var rHour = orari[Math.floor(Math.random() * orari.length)];
-    //     // var rDurate = 2 + Math.round(Math.random());
-    //     // timetable.tt.push(new Lesson(rDay, nomiMaterie[i], rHour, rHour + rDurate, rClass));
-    //     return rHour;
-
-    // }
-
     this.toString = function () {
-        this.classroom = classroom;
-        var printO = this.day + " " + this.discipline + " " + this.startLesson + " " + this.endLesson + " " + this.classroom;
-        return JSON.stringify(printO);
+         return this.day + " " + this.discipline + " " + this.startLesson + " " + this.endLesson + " " + this.classroom + " " + this.course ;
+     
     }
 }
 
@@ -116,8 +107,9 @@ function Professor(firstName, surname, id, role) {
 }
 
 // id_discipline,disciplineName,semester,obligatory,totalHours,weeksHours,cfu,year,course,teacher
-function Discipline(id, name, semester, obligatory, totalHours, weeksHours, cfu, year) {
+function Discipline(id, abbreviation, name, semester, obligatory, totalHours, weeksHours, cfu, year) {
     this.id = id;
+    this.abbreviation = abbreviation;
     this.name = name;
     this.semester = semester;
     this.obligatory = obligatory;
@@ -125,11 +117,47 @@ function Discipline(id, name, semester, obligatory, totalHours, weeksHours, cfu,
     this.weeksHours = weeksHours;
     this.cfu = cfu;
     this.year = year;
-    this.teacher = null;
+    var teacher = [];
+    var course = [];
+
 
     this.getName = function () {
         return this.name;
     };
+
+    // TEACHER
+    this.addTeacher = function (t) {
+        teacher.push(t);
+    }
+
+    this.getTeacher = function () {
+        return teacher;
+    }
+
+    this.getTeacherJSON = function () {
+        return JSON.stringify({ teacher }, null, " ");
+    }
+
+    // COURSE
+    this.addCourse = function (c) {
+        course.push(c);
+    }
+
+    this.getCourse = function () {
+        return course;
+    }
+
+    this.getCourseJSON = function () {
+        return JSON.stringify({ course }, null, " ");
+    }
+
+    this.toString = function() {
+        var t = JSON.stringify({ teacher }, null, " ");
+        var c = JSON.stringify({ course }, null, " ");
+        return this.name + " " + t  + " " + c;
+    }
+
+    
 
 }
 
@@ -144,13 +172,83 @@ function Classroom(id, name, address, capacity, wifi, wired) {
 }
 
 
-function Course(id, name) {
+// https://developer.mozilla.org/it/docs/Web/JavaScript/Inheritance_and_the_prototype_chain#Example
+// function Course(id, name) {
+//     this.id = id;
+//     this.name = name;
+// }
+
+// Course.prototype.getId = function () {
+//     return this.id;
+// };
+
+// Course.prototype.getName = function () {
+//     return this.name;
+// };
+
+// Course.prototype.toString = function () {
+//     return this.id + " " + this.name;
+// };
+
+// function Curriculum(id, name, sigle,curr) {
+//     Course.call(this, id, name);
+//     this.sigle = sigle;
+//     this.curr = curr;
+
+//     this.getSigle = function () {
+//         return this.sigle;
+//     }
+
+//     this.getCurriculum = function () {
+//         return this.curr;
+//     }
+
+   
+// }
+
+// Curriculum.prototype = Object.create(Course.prototype);
+// Curriculum.prototype.constructor = Curriculum;
+
+
+
+// Curriculum.prototype.toString = function () {
+//     return this.id + " " + this.name + " " + this.sigle + " " + this.curr;
+// };
+
+
+
+
+function Course(id, name, sigle = null,curr = null) {
     this.id = id;
     this.name = name;
+    this.sigle = sigle;
+    this.curr = curr;
 
-    this.discipline = [];
+    this.getId = function () {
+        return this.id;
+    }
 
-    this.getDiscipline = function () {
-        return this.discipline;
+    this.getName = function () {
+        return this.name;
+    }
+
+    this.getSigle = function () {
+        return this.sigle;
+    }
+
+    this.getCurriculum = function () {
+        return this.curr;
+    }
+
+    this.toString = function () {
+        if(this.sigle == null || this.curr == null) {
+            return this.id + " " + this.name;
+        }
+        else {
+            return this.id + " " + this.name + " " + this.sigle + " " + this.curr;
+        }
+        
     };
+
+   
 }

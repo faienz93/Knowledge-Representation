@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/antoniofaienza93/Knowledge-Representation#readme",
   "dependencies": {
-    "arrobefr-jquery-calendar": "^1.0.10"
+    "arrobefr-jquery-calendar": "^1.0.12"
   }
 }
