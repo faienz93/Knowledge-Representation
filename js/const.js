@@ -28,4 +28,4 @@ var events = [];
 var aule = ['Aula Ercolani 1', 'Aula Ercolani 2'];
 
 
-var giorni = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+var giorni = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
