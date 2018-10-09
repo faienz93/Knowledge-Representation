@@ -1,13 +1,13 @@
 $(document).ready(function () {
-    
+    // InitRuleReactor(); 
     chosenPlugin();
  
     slideDownAndUp();
     setResetBtns();
     
     selectProfessors();
-    selectDisciplines();
-    selectClassrooms();
+    // selectDisciplines();
+    // selectClassrooms();
 
     setShowHideCards();
 });
@@ -17,19 +17,8 @@ $(document).ready(function () {
  * @method setShowHideCards
  */
 function setShowHideCards(){
-    $('#cardBodyProfessor').hide();
-    $('#cardBodyProfessorDelete').hide();
-    if($('#nameProfessorUpdate').val() == null){
-        $('#cardBodyProfessorUpdate').hide();
-    }   
+    $('#cardBodyConstraint').hide();
 
-    $('#cardBodyDiscipline').hide();
-    $('#cardBodyDisciplineDelete').hide();
-
-
-    $('#cardBodyClassRoom').hide();   
-    $('#cardBodyClassRoomDelete').hide(); 
-    $('#cardBodyClassRoomUpdate').hide(); 
 }
 
 /**
@@ -38,30 +27,9 @@ function setShowHideCards(){
  */
 function setResetBtns(){
     // Reset value of form Add Professor 
-    $('#resetAddProfessor').click(function () {
-        $('#professorForm')[0].reset();
-    });
-    // Reset value of form Update Professor 
-    $('#resetUpdateProfessor').click(function () {
-        $('#professorFormUpdate')[0].reset();
-    });
-
-
-    // Reset value of form Discipline 
-    $('#resetDisciplineBbtn').click(function () {
-        $('#disciplineForm')[0].reset();
-    }); 
-
-
-    // Reset value of form ClassRoom 
-    $('#resetClassRoomBbtn').click(function () {
-        $('#classRoomForm')[0].reset();
-    });
-    // Reset value of form Update ClassRoom 
-    $('#resetUpdateClassRoom').click(function () {
-        $('#classRoomFormUpdate')[0].reset();
-    });
-    
+    $('#resetConstraint').click(function () {
+        $('#constraintForm')[0].reset();
+    });  
 }
 
 /**
@@ -71,43 +39,9 @@ function setResetBtns(){
  */
 function slideDownAndUp(){
     // slideToggle Professor
-    $('#headerProfessor').click(function(){
-        $('#cardBodyProfessor').slideToggle("slow");
+    $('#headerConstraint').click(function(){
+        $('#cardBodyConstraint').slideToggle("slow");
     });
-    // slideToggle Delete Professor
-    $('#headerProfessorDelete').click(function(){
-        $('#cardBodyProfessorDelete').slideToggle("slow");
-    });
-    // slideToggle Update Professor
-    $('#headerProfessorUpdate').click(function(){
-        $('#cardBodyProfessorUpdate').slideToggle("slow");
-    });
-
-
-    // slideToggle Discipline
-    $('#headerDiscipline').click(function(){
-        $('#cardBodyDiscipline').slideToggle("slow");
-    });
-    // slideToggle Delete Discipline
-    $('#headerDisciplineDelete').click(function(){
-        $('#cardBodyDisciplineDelete').slideToggle("slow");
-    });
-
-
-
-    // slideToggle ClassRoom
-    $('#headerClassRoom').click(function(){
-        $('#cardBodyClassRoom').slideToggle("slow");
-    });
-    // slideToggle Delete ClassRoom
-    $('#headerClassRoomDelete').click(function(){
-        $('#cardBodyClassRoomDelete').slideToggle("slow");
-    });
-    // slideToggle Update ClassRoom
-    $('#headerUpdateClassRoom').click(function(){
-        $('#cardBodyClassRoomUpdate').slideToggle("slow");
-    });
-
 }
 
 /**
@@ -162,9 +96,8 @@ function selectProfessors() {
         success: function (results) {
 
             // ChosenJS Select Dropdown List
-            var ddl = $("#findProfessorDelete");
-            var ddl1 = $("#findProfessorUpdate");
-            var ddl2 = $("#assignProfessor");
+            var ddl = $("#findProfessor");
+
 
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
@@ -174,13 +107,8 @@ function selectProfessors() {
                     var name = bindings[i].name.value
                     var surname = bindings[i].surname.value
                     ddl.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
-                    ddl1.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
-                    ddl2.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
                 }
-
                 ddl.trigger("chosen:updated");
-                ddl1.trigger("chosen:updated");
-                ddl2.trigger("chosen:updated");
             });
 
         }
@@ -220,6 +148,7 @@ function selectDisciplines() {
 
             // ChosenJS Select Dropdown List
             var ddl = $("#findDisciplineDelete");
+            var ddl1 = $("#findDisciplineUpdate");
 
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
@@ -228,9 +157,11 @@ function selectDisciplines() {
                     var id = bindings[i].idDiscipline.value
                     var name = bindings[i].disciplinename.value
                     ddl.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
+                    ddl1.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
                 }
 
                 ddl.trigger("chosen:updated");
+                ddl1.trigger("chosen:updated");
             });
 
         }

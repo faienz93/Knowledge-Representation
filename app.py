@@ -13,7 +13,7 @@ app = Flask(__name__, template_folder=template_dir)
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("indexVincoli.html")
 
 @app.route('/test')
 def test():
