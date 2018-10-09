@@ -97,18 +97,36 @@ function randomIntFromInterval(min, max) // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
-function compareArray(ary1,ary2){
+/**
+ * Compare two array and check if has same value
+ * @param {Array} ary1 
+ * @param {Array} ary2 
+ */
+function compareArray(ary1, ary2) {
     return (ary1.join('') == ary2.join(''));
-  }
+}
 
+/**
+ * Compare the number of Subscription of one course i.e IoT with the capacity of classRoom
+ * It return an array only with classroom that has more capacity respect the number of Students
+ * @param {Integer} numSub - number of Students subscribed to Course
+ */
+function checkCapacityClassroom(numSub) {
+    var result = [];
+    for (var i = 0; i < classrooms.length; i++) {
+        if (classrooms[i].getCapacity() > numSub){
+            result.push(classrooms[i]);
+        }
+    }
+    return result;
+}
 
 /**
  * Function for print somethings
  * @param {Object} toPrint - Object to print i.e String/Integer/array etc.
  */
 function printForDebug(toPrint, color = "black", background = "yellow") {
-    console.log("%c ==========================================", "color:"+color+"; background:"+background);
-    console.log("%c"+toPrint, "color:"+color+"; background:"+background);
-    console.log("%c ==========================================","color:"+color+"; background:"+background)
+    console.log("%c ==========================================", "color:" + color + "; background:" + background);
+    console.log("%c" + toPrint, "color:" + color + "; background:" + background);
+    console.log("%c ==========================================", "color:" + color + "; background:" + background)
 }

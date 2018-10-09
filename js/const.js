@@ -28,8 +28,8 @@ var events = [];
 // var classrooms = ['Aula Ercolani 1', 'Aula Ercolani 2'];
 var classrooms = [];
 classrooms.push(new Classroom(12347,"E1","Ercolani",40,true,true));
-classrooms.push(new Classroom(12348,"E2","Ercolani",35,true,true));
-classrooms.push(new Classroom(12349,"E3","Ercolani",20,true,true));
+classrooms.push(new Classroom(12348,"E2","Ercolani",40,true,true));
+classrooms.push(new Classroom(12349,"E3","Ercolani",30,true,true));
 classrooms.push(new Classroom(51200,"Enriquez","Matematica",30,false,false));
 classrooms.push(new Classroom(51201,"Pincherle","Matematica",30,false,false));
 classrooms.push(new Classroom(51202,"Cremona","Matematica",30,false,false));
@@ -60,13 +60,13 @@ var info = new Course(8009, "Informatica Triennale");
 var infolm = new Course(8028, "Informatica Magistrale");
 
 // Discipline(id, abbreviation ,name, semester, obligatory, totalHours, weeksHours, cfu, year) {
-var cbd = new Discipline("28796", "CBD", "COMPLEMENTI DI BASI DI DATI", "1", true, 60, 5, 6, 1);
-var uux = new Discipline("81670", "UUX", "USABILITA E USER EXPERIENCE", "1", true, 60, 6, 6, 1);
-var gmb = new Discipline("81960", "TG", "GIOCHI E MODELLI BOOLEANI", "1", true, 60, 6, 6, 1);
-var ap = new Discipline("81668", "AA", "ALGORITMI PARALLELI", "1", true, 60, 6, 6, 1);
-var isos = new Discipline("77803", "ISOS", "INGEGNERIA DEL SOFTWARE ORIENTATA AI SERVIZI", "1", false, 50, 5, 6, 1);
-var fsc = new Discipline("23762", "FSC", "FISICA DEI SISTEMI COMPLESSI", "1", false, 50, 5, 6, 1);
-var sds = new Discipline("37760", "SDS", "SIMULAZIONE DI SISTEMI", "1", false, 50, 5, 6, 1);
+    var cbd = new Discipline("28796", "CBD", "COMPLEMENTI DI BASI DI DATI", "1", true, 60, 5, 6, 1,29);
+    var uux = new Discipline("81670", "UUX", "USABILITA E USER EXPERIENCE", "1", true, 60, 6, 6, 1,29);
+    var gmb = new Discipline("81960", "TG", "GIOCHI E MODELLI BOOLEANI", "1", true, 60, 6, 6, 1,29);
+    var ap = new Discipline("81668", "AA", "ALGORITMI PARALLELI", "1", true, 60, 6, 6, 1,29);
+    var isos = new Discipline("77803", "ISOS", "INGEGNERIA DEL SOFTWARE ORIENTATA AI SERVIZI", "1", false, 50, 5, 6, 1,29);
+    var fsc = new Discipline("23762", "FSC", "FISICA DEI SISTEMI COMPLESSI", "1", false, 50, 5, 6, 1,29);
+    var sds = new Discipline("37760", "SDS", "SIMULAZIONE DI SISTEMI", "1", false, 50, 5, 6, 1, 39);
 
 var currA = new Curriculum("A", "Tecniche del Software");
 var currB = new Curriculum("B", "Informatica per il Management");
@@ -115,17 +115,17 @@ sds.addCourse(infolm);
 
 
 // INFOMAN
-var di = new Discipline("28796", "DI", "Diritto di Internet", "1", true, 60, 5, 6, 1);
-var ea = new Discipline("28797", "EA", "Economia Aziendale", "1", true, 60, 5, 6, 1);
-var am = new Discipline("28798", "AM", "Analisis Matematica", "1", true, 60, 5, 6, 1);
+var di = new Discipline("28796", "DI", "Diritto di Internet", "1", true, 60, 5, 6, 1,29);
+var ea = new Discipline("28797", "EA", "Economia Aziendale", "1", true, 60, 5, 6, 1,29);
+var am = new Discipline("28798", "AM", "Analisi Matematica", "1", true, 60, 5, 6, 1,39);
 di.addCourse(infoman);
 ea.addCourse(infoman);
 am.addCourse(infoman);
 
 // INFORMATICA TRIENNALE
-var p = new Discipline("28799", "P", "Programmazione", "1", true, 60, 5, 6, 1);
-var o = new Discipline("28800", "O", "Ottimizzazione", "1", true, 60, 5, 6, 1);
-var cn = new Discipline("28801", "CN", "Calcolo Numerico", "1", true, 60, 5, 6, 1);
+var p = new Discipline("28799", "P", "Programmazione", "1", true, 60, 5, 6, 1,29);
+var o = new Discipline("28800", "O", "Ottimizzazione", "1", true, 60, 5, 6, 1,29);
+var cn = new Discipline("28801", "CN", "Calcolo Numerico", "1", true, 60, 5, 6, 1,39);
 p.addCourse(info);
 o.addCourse(info);
 cn.addCourse(info);

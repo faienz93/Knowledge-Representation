@@ -9,7 +9,7 @@ function TimetableArray() {
 }
 
 // TODO add Teacher
-function Lesson(day, discipline, startLesson, endLesson, classroom, course, curriculum, obligatory) {
+function Lesson(day, discipline, startLesson, endLesson, classroom, course, curriculum, obligatory,numStudents) {
     this.day = day;
     this.discipline = discipline;
     this.startLesson = startLesson;
@@ -18,6 +18,7 @@ function Lesson(day, discipline, startLesson, endLesson, classroom, course, curr
     this.course = course;
     this.curriculum = curriculum;
     this.obligatory = obligatory;
+    this.numStudents=numStudents;
 
     this.getObligatory = function () {
         return this.obligatory;
@@ -50,7 +51,7 @@ function Lesson(day, discipline, startLesson, endLesson, classroom, course, curr
     this.setClassroom = function (aula) {
         this.classroom = aula;
     }
-
+    discipline
     this.getCourse = function () {
         return this.course;
     }
@@ -66,7 +67,11 @@ function Lesson(day, discipline, startLesson, endLesson, classroom, course, curr
         }else {
             return false;
         }
-    }   
+    } 
+    
+    this.getNumStudent = function(){
+        return this.numStudents;
+    }
 
     this.setDurationLesson = function (dur) {
         this.endLesson = this.startLesson + dur;
@@ -123,7 +128,7 @@ function Professor(firstName, surname, id, role) {
 }
 
 // id_discipline,disciplineName,semester,obligatory,totalHours,weeksHours,cfu,year,course,teacher
-function Discipline(id, abbreviation, name, semester, obligatory, totalHours, weeksHours, cfu, year) {
+function Discipline(id, abbreviation, name, semester, obligatory, totalHours, weeksHours, cfu, year,numStudents) {
     this.id = id;
     this.abbreviation = abbreviation;
     this.name = name;
@@ -133,9 +138,11 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     this.weeksHours = weeksHours;
     this.cfu = cfu;
     this.year = year;
+    this.numStudents=numStudents;
     var teacher = [];
     this.course = null;
     var curriculum = [];
+    
 
 
     this.getName = function () {
@@ -177,6 +184,10 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
 
     this.getCourse = function () {
         return this.course;
+    }
+
+    this.getNumStudent = function(){
+        return this.numStudents;
     }
 
     this.toString = function() {
@@ -232,7 +243,7 @@ function Classroom(id, name, address, capacity, wifi, wired) {
     }
 
     this.toString = function () {
-        return this.id +  " " + this.name +  " " + this.address +  " " + this.capacity +  " " + this.wifi +  " " + this.wifi;
+        return this.id +  " " + this.name +  " " + this.address +  " " + this.capacity;
     }
 }
 

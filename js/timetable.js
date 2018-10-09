@@ -60,14 +60,32 @@ reactor.createRule("swapDay", 0, { l: Lesson },
     });
 
 
+/**
+* RULE: check: 
+* Assign Classroom based on number subscription
+*/
+reactor.createRule("assignClassroom", -0, { l: Lesson },
+    function (l) {
+        // alert(l.getDiscipline() + " " +l.getNumStudent() + " " + l.getClassroom().getCapacity())
+        return l.getNumStudent() > l.getClassroom().getCapacity(); 
+    },
+    function (l) {
+        printForDebug(l.getDiscipline() + " " + l.getNumStudent() + " -- " +  l.getClassroom().toString());
+        var compatibilityClassroom = checkCapacityClassroom(l.getNumStudent());       
+        var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
+        l.setClassroom(newClassRoom);
+        assert(l);
+        
+    });
+
 
 /**
  * ***********************************************************************
  * ***************************** PRIORITY -1 *****************************
  * *********************************************************************** 
  */
-// TODO lavorare al contrario stesso giorno stesso corso uno dei due non è obbligatorio e non appartengono allo stesso
-// curriculum allora, li sovrapponi
+// if l1 != l2 && l1.getCourse() == l2.getCourse() && l1.getOblicatory() == true && l2.getObligaotory() == true
+// && l1.getLesson.getCurriculum == l2.getLesson.getCurriculum
 // reactor.createRule("overlapCurriculum", -1, { l1: Lesson, l2: Lesson },
 //     function (l1, l2) {
 
@@ -94,7 +112,7 @@ reactor.createRule("swapDay", 0, { l: Lesson },
 //             l1.setEndLesson(l1.getStartLesson() + dL);
 //         }
 
-
+        
 
 //     });
 /**
@@ -246,29 +264,16 @@ var timetable = new TimetableArray();
 
 
 
-for(var i = 0; i < classrooms.length; i++){
-    console.log(classrooms[i]);
-}
+
+
 
 for (var i = 0; i < subject.length; i++) {
     //    console.log(subject.toString());
     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
-    // console.log(rClass);
-    timetable.tt.push(new Lesson("Monday", subject[i].getName(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getCurriculum(), subject[i].getObligatory()));
+    timetable.tt.push(new Lesson("Monday", subject[i].getName(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getCurriculum(), subject[i].getObligatory(), subject[i].getNumStudent()));
 
 }
-
-
-
-
-
-
-
 // subject[i].getCurriculum().length>0
-
-
-
-
 
 
 
@@ -279,8 +284,8 @@ for (var i = START_LESSONS; i < END_LESSONS; i++) {
 
 
 
-var o = JSON.stringify({ timetable }, null, " ");
-console.log(o);
+// var o = JSON.stringify({ timetable }, null, " ");
+// console.log(o);
 
 assert(timetable);
 reactor.run(Infinity, true, function () {
@@ -294,7 +299,7 @@ reactor.run(Infinity, true, function () {
             start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
             end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
             title: timetable.tt[i].getDiscipline() + ' - ' + timetable.tt[i].getClassroom().getName(),
-            content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" + "CORSO: " + timetable.tt[i].getCourse(),
+            content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" + "CORSO: " + timetable.tt[i].getCourse(),//'Hello World! <br> <p>Foo Bar</p>',
             category: timetable.tt[i].getCourse()
         }
         events.push(newEvent);
