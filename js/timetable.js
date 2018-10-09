@@ -64,9 +64,9 @@ reactor.createRule("swapDay", 0, { l: Lesson },
 * RULE: check: 
 * Assign Classroom based on number subscription
 */
-reactor.createRule("assignClassroom", -0, { l: Lesson },
+reactor.createRule("assignClassroom", 0, { l: Lesson },
     function (l) {
-        // alert(l.getDiscipline() + " " +l.getNumStudent() + " " + l.getClassroom().getCapacity())
+        // console.log(l.getDiscipline() + " " +l.getNumStudent() + " " + l.getClassroom())
         return l.getNumStudent() > l.getClassroom().getCapacity(); 
     },
     function (l) {
@@ -268,19 +268,18 @@ var timetable = new TimetableArray();
 
 
 for (var i = 0; i < subject.length; i++) {
-    //    console.log(subject.toString());
     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
     timetable.tt.push(new Lesson("Monday", subject[i].getName(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getCurriculum(), subject[i].getObligatory(), subject[i].getNumStudent()));
 
 }
-// subject[i].getCurriculum().length>0
 
 
 
-var orari = []
-for (var i = START_LESSONS; i < END_LESSONS; i++) {
-    orari.push(new Date(null, null, null, i).getHours());
-}
+
+// var orari = []
+// for (var i = START_LESSONS; i < END_LESSONS; i++) {
+//     orari.push(new Date(null, null, null, i).getHours());
+// }
 
 
 

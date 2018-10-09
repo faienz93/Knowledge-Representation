@@ -45,13 +45,14 @@ function Lesson(day, discipline, startLesson, endLesson, classroom, course, curr
     }
 
     this.getClassroom = function () {
+        // console.log(this.classroom);
         return this.classroom;
     }
 
     this.setClassroom = function (aula) {
         this.classroom = aula;
     }
-    discipline
+    
     this.getCourse = function () {
         return this.course;
     }
@@ -137,12 +138,11 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     this.totalHours = totalHours;
     this.weeksHours = weeksHours;
     this.cfu = cfu;
-    this.year = year;
-    this.numStudents=numStudents;
+    this.year = year;    
     var teacher = [];
     this.course = null;
     var curriculum = [];
-    
+    this.numStudents=numStudents;
 
 
     this.getName = function () {
