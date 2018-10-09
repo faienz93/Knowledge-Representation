@@ -67,17 +67,49 @@ reactor.createRule("swapDay", 0, { l: Lesson },
 reactor.createRule("assignClassroom", 0, { l: Lesson },
     function (l) {
         // console.log(l.getDiscipline() + " " +l.getNumStudent() + " " + l.getClassroom());
-        return l.getNumStudent() > l.getClassroom().getCapacity(); 
+        return l.getNumStudent() > l.getClassroom().getCapacity();
     },
     function (l) {
-        printForDebug(l.getDiscipline() + " " + l.getNumStudent() + " -- " +  l.getClassroom().toString());
-        var compatibilityClassroom = checkCapacityClassroom(l.getNumStudent());       
+        printForDebug(l.getDiscipline() + " " + l.getNumStudent() + " -- " + l.getClassroom().toString());
+        var compatibilityClassroom = checkCapacityClassroom(l.getNumStudent());
         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
         l.setClassroom(newClassRoom);
         assert(l);
-        
+
     });
 
+
+reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var isTaughtBySameProfessor = false;
+        for (var i = 0; i < l1.getProfessor().length; i++) {
+            var professor = l1.getProfessor()[i];
+            isTaughtBySameProfessor = professor.checkExistProfessor(l2.getProfessor(), professor.getId());
+            
+        }
+
+        return l1 != l2 &&
+            l1.getCourse() != l2.getCourse() &&
+            l1.getDay() == l2.getDay() &&
+            (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
+            isTaughtBySameProfessor == true;
+
+    },
+    function (l1, l2) {
+        printForDebug(l1.toString() + " ** " + l2.toString(), "red", "white");
+        if (l1.getStartLesson() < l2.getStartLesson()) {
+
+            var dL = l2.getDurationLesson();
+            l2.setStartLesson(l1.getEndLesson()); 
+            l2.setEndLesson(l2.getStartLesson() + dL);
+        }
+        else {
+            var dL = l1.getDurationLesson();
+            l1.setStartLesson(l2.getEndLesson()); 
+            l1.setEndLesson(l1.getStartLesson() + dL);
+        }
+        assert(timetable);
+    });
 
 /**
  * ***********************************************************************
@@ -112,7 +144,7 @@ reactor.createRule("assignClassroom", 0, { l: Lesson },
 //             l1.setEndLesson(l1.getStartLesson() + dL);
 //         }
 
-        
+
 
 //     });
 /**
@@ -135,12 +167,12 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
         if (l1.getStartLesson() < l2.getStartLesson()) {
 
             var dL = l2.getDurationLesson();
-            l2.setStartLesson(l1.getEndLesson()); // METTERCI + 15 minuti di differenza
+            l2.setStartLesson(l1.getEndLesson()); 
             l2.setEndLesson(l2.getStartLesson() + dL);
         }
         else {
             var dL = l1.getDurationLesson();
-            l1.setStartLesson(l2.getEndLesson()); // METTERCI + 15 minuti di differenza
+            l1.setStartLesson(l2.getEndLesson()); 
             l1.setEndLesson(l1.getStartLesson() + dL);
         }
 
@@ -186,7 +218,7 @@ reactor.createRule("spliDurationLesson4H", -2, { l: Lesson },
     function (l) {
         if (l.getDurationLesson() == 4) return true;
     }, function (l) {
-        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(),l.getProfessor(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse(), l.getNumStudent());
+        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), l.getProfessor(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse(), l.getNumStudent());
         l.setDurationLesson(2);
         timetable.tt.push(newL);
     });
@@ -197,7 +229,7 @@ reactor.createRule("spliDurationLesson5H", -2, { l: Lesson },
         if (l.getDurationLesson() == 5) return true;
     }, function (l) {
         var randomD = randomIntFromInterval(2, 3);
-        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(),l.getProfessor(), START_LESSONS, START_LESSONS + randomD, l.getClassroom(), l.getCourse(), l.getNumStudent());
+        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), l.getProfessor(), START_LESSONS, START_LESSONS + randomD, l.getClassroom(), l.getCourse(), l.getNumStudent());
         l.setDurationLesson(5 - randomD);
         timetable.tt.push(newL);
     });
@@ -217,8 +249,8 @@ reactor.createRule("spliDurationLesson6H", -2, { l: Lesson },
     },
     function (l) {
         // new Lesson(generateDay(l.getDay()), l.getDiscipline(),l.getProfessor(), START_LESSONS, START_LESSONS + randomD, l.getClassroom(), l.getCourse(), l.getNumStudent());
-        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), l.getProfessor(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse() , l.getNumStudent());
-        var newL2 = new Lesson(generateDay(l.getDay()), l.getDiscipline(), l.getProfessor(),START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse(), l.getNumStudent());
+        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), l.getProfessor(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse(), l.getNumStudent());
+        var newL2 = new Lesson(generateDay(l.getDay()), l.getDiscipline(), l.getProfessor(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse(), l.getNumStudent());
         l.setDurationLesson(2);
         if (newL.getDay() == newL2.getDay()) {
             newL2.setClassroom(newL.getClassroom());
@@ -266,7 +298,7 @@ for (var i = 0; i < subject.length; i++) {
     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
     // TODO -----------> RICORDA SE LO CAMBI QUI LO CAMBI PURE NELLO SPLITLESSONS. 
     // TODO --> tolto obbligatorieta e curriculum. timetable.tt.push(new Lesson("Monday", subject[i].getName(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getCurriculum(), subject[i].getObligatory(), subject[i].getNumStudent()));
-    timetable.tt.push(new Lesson("Monday", subject[i].getName(), subject[i].getProfessor(),START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getNumStudent()));
+    timetable.tt.push(new Lesson("Monday", subject[i].getName(), subject[i].getProfessor(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getNumStudent()));
 
 }
 
@@ -287,8 +319,8 @@ reactor.run(Infinity, true, function () {
             end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
             title: timetable.tt[i].getDiscipline() + ' - ' + timetable.tt[i].getClassroom().getName(),
             content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
-                     "CORSO: " + timetable.tt[i].getCourse() + "<br>" + // TODO gestire i professori multipli
-                     "PROFESSORE " + timetable.tt[i].getProfessor()[0].getSurname(),//'Hello World! <br> <p>Foo Bar</p>',
+                "CORSO: " + timetable.tt[i].getCourse() + "<br>" + // TODO gestire i professori multipli
+                "PROFESSORE " + timetable.tt[i].getProfessor()[0].getCompleteName(),//'Hello World! <br> <p>Foo Bar</p>',
             category: timetable.tt[i].getCourse()
         }
         events.push(newEvent);

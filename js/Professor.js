@@ -13,7 +13,20 @@ function Professor(name, surname, id, role) {
         return this.surname;
     };
 
-    // this.getCompleteName() = function () {
-    //     return this.name + " " + this.surname;
-    // }
+    this.getId = function(){
+        return this.id;
+    }
+
+    this.getCompleteName = function () {
+        return this.name + " " + this.surname;
+    }
+
+    // https://stackoverflow.com/a/8217584/4700162
+    this.checkExistProfessor = function(arr,idP) {
+        if (arr.some(e => e.id === idP)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
