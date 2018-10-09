@@ -32,23 +32,59 @@
             <!--  -->
             <!--  -->
             <form class="form" id="constraintForm" role="form" autocomplete="off" action="#" method="POST">
+                <input type="hidden" id="weekHours">
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome Professore</label>
                     <div class="col-lg-9">
-                    <select id="findProfessor" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
-                                tabindex="4" size="0" name="selectProfessor" required>
-                        <option value=""></option>
-                    </select>
+                        <select id="findProfessor" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                                    tabindex="4" size="0" name="selectProfessor" required>
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome Disciplina</label>
                     <div class="col-lg-9">
-                    <select id="findDiscipline" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
-                                tabindex="4" size="0" name="selectDiscipline" required>
-                        <option value=""></option>
-                    </select>
+                        <select id="findDiscipline" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                                    tabindex="4" size="0" name="selectDiscipline" required>
+                            <option value=""></option>
+                        </select>
                     </div>
+                </div>
+                <div class="form-group row" id="RowDiscipline6H">
+                    <label class="col-lg-3 col-form-label form-control-label">Con quale formato di ore si vuole suddividere la disciplina da 6 ore settimanali?</label>
+                    <div class="col-lg-9">
+                        <fieldset id="Discipline6H">
+                            <input type="radio" value="2" name="Discipline6H">2h 2h 2h<br/>
+                            <input type="radio" value="3" name="Discipline6H">3h 3h<br/>
+                            <input type="radio" value="4" name="Discipline6H">4h 2h<br/>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="form-group row" id="RowConsecutiveDays">
+                    <label class="col-lg-3 col-form-label form-control-label">Si vuole svolgere le lezioni in giorni consecutivi?</label>
+                    <div class="col-lg-9">
+                        <fieldset id="ConsecutiveDays">
+                            <input type="radio" value="1" name="ConsecutiveDays">Si
+                            <input type="radio" value="0" name="ConsecutiveDays">No<br/>
+                        </fieldset>                        
+                    </div>    
+                </div>
+                <div class="form-group row" id="RowWhichConsecutiveDays">
+                        <label class="col-lg-3 col-form-label form-control-label">In quali giorni?</label>
+                        <div class="col-lg-9">
+                            <fieldset id="3ConsacutiveDays">
+                                <input type="radio" value="LUN" name="3ConsacutiveDays">Lunedi/Martedi/Mercoledi<br/>
+                                <input type="radio" value="MAR" name="3ConsacutiveDays">Martedi/Mercoledi/Giovedi<br/>
+                                <input type="radio" value="MER" name="3ConsacutiveDays">Mercoledi/Giovedi/Venerdi<br/>
+                            </fieldset>
+                            <fieldset id="2ConsacutiveDays">
+                                <input type="radio" value="LUN" name="2ConsacutiveDays">Lunedi/Martedi<br/>
+                                <input type="radio" value="MAR" name="2ConsacutiveDays">Martedi/Mercoledi<br/>
+                                <input type="radio" value="MER" name="2ConsacutiveDays">Mercoledi/Giovedi<br/>
+                                <input type="radio" value="GIO" name="2ConsacutiveDays">Giovedi/Venerdi<br/>
+                            </fieldset>
+                        </div>
                 </div>
 
 

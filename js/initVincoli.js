@@ -10,11 +10,74 @@ $(document).ready(function () {
     // selectClassrooms();
 
     setShowHideCards();
+    setHideConstraintsRows();
 
     $('#findProfessor').change(function() {
+        // reset values
+        setHideConstraintsRows();
+        $('input[name=Discipline6H]', '#constraintForm').prop('checked', false);
+        $('input[name=ConsecutiveDays]', '#constraintForm').prop('checked', false);
+        $('input[name=ConsecutiveDays]', '#3ConsacutiveDays').prop('checked', false);
+        $('input[name=ConsecutiveDays]', '#2ConsacutiveDays').prop('checked', false);
+        $('#weekHours').val("0");  
+
+        // get disciplines of this professor
         var prof = $('#findProfessor').val();
         selectDisciplines(prof);
-      });
+    });
+
+    $('#findDiscipline').change(function() {
+        $('#RowWhichConsecutiveDays').hide();      
+        $('input[name=Discipline6H]', '#constraintForm').prop('checked', false);
+        $('input[name=ConsecutiveDays]', '#constraintForm').prop('checked', false);
+        $('input[name=ConsecutiveDays]', '#3ConsacutiveDays').prop('checked', false);
+        $('input[name=ConsecutiveDays]', '#2ConsacutiveDays').prop('checked', false);
+        $('#weekHours').val("0"); 
+
+        var id = $('#findDiscipline').val();
+        selectSingleDiscipline(id);
+    });
+
+    $('#Discipline6H input[type=radio]').change(function() {
+        var consecutive = $('input[name=ConsecutiveDays]:checked', '#constraintForm').val();
+        var TwoHoursSplit = $('input[name=Discipline6H]:checked', '#constraintForm').val();
+        if (consecutive=="1" && TwoHoursSplit == "2"){
+            $('#3ConsacutiveDays').show();
+            $('#2ConsacutiveDays').hide();
+        }
+        else{
+            $('#3ConsacutiveDays').hide();
+            $('#2ConsacutiveDays').show();
+        }
+    });
+
+    $('#ConsecutiveDays input[type=radio]').change(function() {
+        var consecutive = $('input[name=ConsecutiveDays]:checked', '#constraintForm').val();
+        if (consecutive=="1"){
+            $('#RowWhichConsecutiveDays').show();
+            if($('#weekHours').val() == "6"){
+                var TwoHoursSplit = $('input[name=Discipline6H]:checked', '#constraintForm').val();
+                if(TwoHoursSplit == "2"){
+                    $('#3ConsacutiveDays').show();
+                    $('#2ConsacutiveDays').hide();
+                }
+                else{
+                    $('#3ConsacutiveDays').hide();
+                    $('#2ConsacutiveDays').show();
+                }
+                
+            }
+            else{
+                $('#3ConsacutiveDays').hide();
+                $('#2ConsacutiveDays').show();
+            }
+        }
+        else{
+            $('#RowWhichConsecutiveDays').hide();
+        }
+    });
+
+
 });
 
 /**
@@ -24,6 +87,16 @@ $(document).ready(function () {
 function setShowHideCards(){
     $('#cardBodyConstraint').hide();
 
+    
+}
+
+function setHideConstraintsRows(){
+    $('#RowDiscipline6H').hide();
+
+    $('#RowConsecutiveDays').hide();
+    $('#RowWhichConsecutiveDays').hide();
+    $('#3ConsacutiveDays').hide();
+    $('#2ConsacutiveDays').hide();
 }
 
 /**
@@ -120,9 +193,10 @@ function selectProfessors() {
 }
 
 /**
- * Query for select all disciplines
+ * Query for select all disciplines of a professor
  * It returns: 
  *  - id
+ *  - code
  *  - name
  * @method selectDisciplines
  */
@@ -152,7 +226,7 @@ function selectDisciplines(prof) {
 
             // ChosenJS Select Dropdown List
             var ddl = $("#findDiscipline");
-            ddl.html("");
+            ddl.html("<option value=''></option>");
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
@@ -167,6 +241,51 @@ function selectDisciplines(prof) {
 
         }
 
+    });
+}
+
+/**
+ * Query for select a discipline
+ * @method selectSingleDiscipline
+ */
+function selectSingleDiscipline(id) {
+    var endpointURL = "http://localhost:3030/ds/query";
+
+    var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
+                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+
+                    SELECT ?weekhours
+                    FROM <http://www.rdcproject.com/graph/disciplines>
+                    WHERE
+                    { ?x  a uni:Discipline.
+                        ?x uni:idDiscipline ? "`+ id +`".
+                        ?x uni:weekhours ?weekhours.
+                        }
+                    `;
+
+    var encodedquery = encodeURIComponent(myquery);
+
+
+    $.ajax({
+        dataType: "jsonp",
+        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+        success: function (results) {
+            $.each(results, function (index, element) {
+                var bindings = element.bindings;
+                for (i in bindings) {
+                    var weekhours = bindings[i].weekhours.value
+                    $('#weekHours').val(weekhours);                   
+                    $('#RowConsecutiveDays').show();
+                    
+                    if (weekhours == "6"){
+                        $('#RowDiscipline6H').show();  
+                    }
+                    else{
+                        $('#RowDiscipline6H').hide();   
+                    }
+                }
+            });
+        }
     });
 }
 
