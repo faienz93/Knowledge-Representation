@@ -346,3 +346,63 @@ function selectClassrooms() {
 //     });
 // }
 
+
+/**
+ * Query for select all classrooms
+ * It returns: 
+ *  - id
+ *  - name
+ * @method selectClassrooms
+ */
+function selectCl() {
+    var endpointURL = "http://localhost:3030/ds/query";
+
+    var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
+                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+    
+                    SELECT ?id ?indirizzo ?capacita ?nome ?wifi ?cablata
+                    FROM <http://www.rdcproject.com/graph/classrooms>
+                    WHERE{
+                    ?x  a uni:Classroom;
+                        uni:address ?indirizzo;
+                        uni:capacity ?capacita;
+                        uni:classroomname ?nome;
+                        uni:idRoom ?id;
+                        uni:wifi ?wifi;
+                        uni:wired ?cablata.
+                    }ORDER BY ?nome`;
+
+    var encodedquery = encodeURIComponent(myquery);
+
+
+    $.ajax({
+        dataType: "jsonp",
+        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+        success: function (results) {
+
+            
+
+            $.each(results, function (index, element) {
+                var bindings = element.bindings;
+                // REF: https://www.w3.org/TR/rdf-sparql-json-res/
+                for (i in bindings) {
+                    var id = bindings[i].id.value
+                    var name = bindings[i].nome.value;
+                    var indirizzo = bindings[i].indirizzo.value;
+                    var capacita = bindings[i].capacita.value;
+                    var cablata = bindings[i].cablata.value;
+                    var wifi = bindings[i].wifi.value;
+                    // id, name, address, capacity, wifi, wired
+                    // console.log(id + " " +name + " " + indirizzo + " " + capacita + " " + cablata + " " + wifi);
+
+                    // var cl = new Classroom(id,name, indirizzo,capacita,wifi,cablata );
+                    // classrooms.push(cl);
+                }               
+            });
+
+        }
+
+    });
+
+    
+}
