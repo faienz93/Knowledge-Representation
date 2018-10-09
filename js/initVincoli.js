@@ -10,6 +10,10 @@ $(document).ready(function () {
     // selectClassrooms();
 
     setShowHideCards();
+
+    $('#findProfessor').onChange({
+
+    });
 });
 
 /**

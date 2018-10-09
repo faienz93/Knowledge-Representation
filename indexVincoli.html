@@ -11,10 +11,6 @@
     <link rel="stylesheet" href="lib/chosen/chosen.min.css">
     <link rel="stylesheet" href="css/customStyle.css">  
 
-     
-     
-    
-
     <title>Vincoli e Calendario</title>
 </head>
 <body>
@@ -35,15 +31,22 @@
         <div class="card-body" id="cardBodyConstraint">
             <!--  -->
             <!--  -->
-            <form class="form" id="constraintForm" role="form" autocomplete="off" action="#"
-                method="POST">
+            <form class="form" id="constraintForm" role="form" autocomplete="off" action="#" method="POST">
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Nome Professore</label>
-                    <div class="col-lg-9">
+                    <label class="col-lg-2 col-form-label form-control-label">Nome Professore</label>
+                    <div class="col-lg-6">
                     <select id="findProfessor" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
                                 tabindex="4" size="0" name="selectProfessor" required>
                         <option value=""></option>
-                        <!-- the otpion tag are fullied in javasctipt file init.js -->
+                    </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-2 col-form-label form-control-label">Nome Disciplina</label>
+                    <div class="col-lg-6">
+                    <select id="findDiscipline" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                                tabindex="4" size="0" name="selectDiscipline" required>
+                        <option value=""></option>
                     </select>
                     </div>
                 </div>
