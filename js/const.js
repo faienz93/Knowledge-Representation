@@ -6,10 +6,14 @@
  * ===========================================================================
  */
 
+function TimetableArray() {
+    this.tt = [];
+}
+
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 4;
+var DURATION_LESSON = 2;
 
 // end lessons
 var END_LESSONS = 18;
@@ -45,12 +49,12 @@ var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 // var nomiMaterie = ['RDC', 'SM', 'IOT', 'MSC', 'MAT', 'COM', 'UUX'];
 // var nomiMaterie = ['RDC', 'SM', 'IOT', 'MAT'];
-var nomiMaterie = ['RDC', 'SM', 'IOT'];
+// var nomiMaterie = ['RDC', 'SM', 'IOT'];
 
-// var nomiMaterieInfoMan = ['DI', 'EA', 'AM', 'PI'];
-var nomiMaterieInfoMan = ['DI', 'EA', 'AM'];
+// // var nomiMaterieInfoMan = ['DI', 'EA', 'AM', 'PI'];
+// var nomiMaterieInfoMan = ['DI', 'EA', 'AM'];
 
-var nomiMaterieInfoTriennale = ['P', 'O', 'CN'];
+// var nomiMaterieInfoTriennale = ['P', 'O', 'CN'];
 
 
 
@@ -58,6 +62,9 @@ var nomiMaterieInfoTriennale = ['P', 'O', 'CN'];
 var infoman = new Course(8014, "Informatica per il Management");
 var info = new Course(8009, "Informatica Triennale");
 var infolm = new Course(8028, "Informatica Magistrale");
+var currA = new Curriculum("A", "Tecniche del Software");
+var currB = new Curriculum("B", "Informatica per il Management");
+var currC = new Curriculum("C", "Sistemi e Reti");
 
 // Discipline(id, abbreviation ,name, semester, obligatory, totalHours, weeksHours, cfu, year) {
 var cbd = new Discipline("28796", "CBD", "COMPLEMENTI DI BASI DI DATI", "1", true, 60, 5, 6, 1, 29);
@@ -67,10 +74,10 @@ var ap = new Discipline("81668", "AA", "ALGORITMI PARALLELI", "1", true, 60, 6, 
 var isos = new Discipline("77803", "ISOS", "INGEGNERIA DEL SOFTWARE ORIENTATA AI SERVIZI", "1", false, 50, 5, 6, 1, 29);
 var fsc = new Discipline("23762", "FSC", "FISICA DEI SISTEMI COMPLESSI", "1", false, 50, 5, 6, 1, 29);
 var sds = new Discipline("37760", "SDS", "SIMULAZIONE DI SISTEMI", "1", false, 50, 5, 6, 1, 39);
+var iot =  new Discipline("37760", "IoT", "INTERNET OF THING", "1", false, 50, 5, 6, 1, 10);
+var sismob =  new Discipline("37760", "SM", "SISTEMI MOBILI", "1", false, 50, 5, 6, 1, 29);
 
-var currA = new Curriculum("A", "Tecniche del Software");
-var currB = new Curriculum("B", "Informatica per il Management");
-var currC = new Curriculum("C", "Sistemi e Reti");
+
 cbd.addCurriculum(currA);
 cbd.addCurriculum(currB);
 cbd.addCurriculum(currC);
@@ -84,11 +91,20 @@ ap.addCurriculum(currC);
 // firstName,surName,id_professor,role
 var dm = new Professor("Danilo", "Montesi", 211832, "ordinario");
 var fv = new Professor("Fabio", "Vitali", 150348, "ordinario");
-var gr = new Professor("Giovanni", "Rossi", 000002, "contratto");
+var gr = new Professor("Giovanni", "Rossi", 342, "contratto");
 var ab = new Professor("Alan Albert", "Bertossi", 295601, "ordinario");
-var dr = new Professor("Davide", "Rossi", 000003, "contratto");
+var dr = new Professor("Davide", "Rossi", 211833, "contratto");
 var sr = new Professor("Sandro", "Rambaldi", 841964, "associato");
-var ld = new Professor("Lorenzo", "Donatiello", 000005, "ordinario");
+var ld = new Professor("Lorenzo", "Donatiello", 211632, "ordinario");
+var gf = new Professor("Giosuella", "Finocchiaro", 211832, "ordinario");
+var ra = new Professor("Roberto", "Aprile", 211832, "contratto");
+var sm = new Professor("Serena", "Morigi", 211832, "ordinario");
+var mf = new Professor("Marco", "Di Felice", 211832, "ordinario");
+var lb = new Professor("Luciano", "Bononi", 211832, "ordinario");
+var ivanlanese = new Professor("Ivan", "Lanese", 211832, "ordinario"); 
+var giuCas = new Professor("Giulio", "Casciola", 211832, "ordinario");  
+var ul = new Professor("Ugo", "Dal Lago", 211832, "ordinario"); 
+
 
 
 
@@ -96,13 +112,17 @@ var ld = new Professor("Lorenzo", "Donatiello", 000005, "ordinario");
 
 ///////////////////////////////////////////////////////////
 // ADD TEACHER
-cbd.addTeacher(dm);
-uux.addTeacher(fv);
-gmb.addTeacher(gr);
-ap.addTeacher(ab);
-isos.addTeacher(dr);
-fsc.addTeacher(sr);
-sds.addTeacher(ld);
+cbd.setProfessor(dm);
+uux.setProfessor(fv);
+gmb.setProfessor(gr);
+ap.setProfessor(ab);
+isos.setProfessor(dr);
+fsc.setProfessor(sr);
+sds.setProfessor(ld);
+// PROFESSORI CHE CONDIVIDONO LO STESSO CORSO
+iot.setProfessor(mf);
+iot.setProfessor(lb);
+sismob.setProfessor(mf)
 
 // ADD COURSE
 cbd.addCourse(infolm);
@@ -112,15 +132,24 @@ ap.addCourse(infolm);
 isos.addCourse(infolm);
 fsc.addCourse(infolm);
 sds.addCourse(infolm);
-
+iot.addCourse(infolm);
+sismob.addCourse(infolm);
 
 // INFOMAN
 var di = new Discipline("28796", "DI", "Diritto di Internet", "1", true, 60, 5, 6, 1, 29);
 var ea = new Discipline("28797", "EA", "Economia Aziendale", "1", true, 60, 5, 6, 1, 29);
 var am = new Discipline("28798", "AM", "Analisi Matematica", "1", true, 60, 5, 6, 1, 39);
+var bd = new Discipline("28798", "BD", "Basi di Dati", "1", true, 60, 5, 6, 1, 39);
 di.addCourse(infoman);
 ea.addCourse(infoman);
 am.addCourse(infoman);
+bd.addCourse(infoman);
+
+// ADD TEACHER
+di.setProfessor(gf); 
+ea.setProfessor(ra);
+am.setProfessor(sm);
+bd.setProfessor(mf)
 
 // INFORMATICA TRIENNALE
 var p = new Discipline("28799", "P", "Programmazione", "1", true, 60, 5, 6, 1, 29);
@@ -130,23 +159,35 @@ p.addCourse(info);
 o.addCourse(info);
 cn.addCourse(info);
 
+// ADD TEACHER
+p.setProfessor(ivanlanese); 
+o.setProfessor(ul); 
+cn.setProfessor(giuCas); 
+
 
 var subject = [];
 // TRIENNALE
+// INFO MAN
 subject.push(di);
 subject.push(ea);
 subject.push(am);
+subject.push(bd);
+
+// INFO TRIENNALE
 subject.push(p);
 subject.push(o);
 subject.push(cn);
+
 
 // MAGISTRALE
 subject.push(cbd);
 subject.push(uux);
 subject.push(gmb)
 subject.push(ap);
-subject.push(isos);
+// subject.push(isos);
 subject.push(fsc);
-subject.push(sds);
+// subject.push(sds);
+subject.push(iot);
+subject.push(sismob);
 
 

@@ -66,7 +66,7 @@ reactor.createRule("swapDay", 0, { l: Lesson },
 */
 reactor.createRule("assignClassroom", 0, { l: Lesson },
     function (l) {
-        // console.log(l.getDiscipline() + " " +l.getNumStudent() + " " + l.getClassroom())
+        // console.log(l.getDiscipline() + " " +l.getNumStudent() + " " + l.getClassroom());
         return l.getNumStudent() > l.getClassroom().getCapacity(); 
     },
     function (l) {
@@ -186,7 +186,7 @@ reactor.createRule("spliDurationLesson4H", -2, { l: Lesson },
     function (l) {
         if (l.getDurationLesson() == 4) return true;
     }, function (l) {
-        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
+        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(),l.getProfessor(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse(), l.getNumStudent());
         l.setDurationLesson(2);
         timetable.tt.push(newL);
     });
@@ -197,7 +197,7 @@ reactor.createRule("spliDurationLesson5H", -2, { l: Lesson },
         if (l.getDurationLesson() == 5) return true;
     }, function (l) {
         var randomD = randomIntFromInterval(2, 3);
-        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + randomD, l.getClassroom(), l.getCourse());
+        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(),l.getProfessor(), START_LESSONS, START_LESSONS + randomD, l.getClassroom(), l.getCourse(), l.getNumStudent());
         l.setDurationLesson(5 - randomD);
         timetable.tt.push(newL);
     });
@@ -216,8 +216,9 @@ reactor.createRule("spliDurationLesson6H", -2, { l: Lesson },
         return l.getDurationLesson() == 6;
     },
     function (l) {
-        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
-        var newL2 = new Lesson(generateDay(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse());
+        // new Lesson(generateDay(l.getDay()), l.getDiscipline(),l.getProfessor(), START_LESSONS, START_LESSONS + randomD, l.getClassroom(), l.getCourse(), l.getNumStudent());
+        var newL = new Lesson(generateDay(l.getDay()), l.getDiscipline(), l.getProfessor(), START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse() , l.getNumStudent());
+        var newL2 = new Lesson(generateDay(l.getDay()), l.getDiscipline(), l.getProfessor(),START_LESSONS, START_LESSONS + 2, l.getClassroom(), l.getCourse(), l.getNumStudent());
         l.setDurationLesson(2);
         if (newL.getDay() == newL2.getDay()) {
             newL2.setClassroom(newL.getClassroom());
@@ -261,26 +262,13 @@ console.log("Numero di settimane di lezione " + numberOfWeek);
 var timetable = new TimetableArray();
 
 
-
-
-
-
-
-
 for (var i = 0; i < subject.length; i++) {
     var rClass = classrooms[Math.floor(Math.random() * classrooms.length)];
-    timetable.tt.push(new Lesson("Monday", subject[i].getName(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getCurriculum(), subject[i].getObligatory(), subject[i].getNumStudent()));
+    // TODO -----------> RICORDA SE LO CAMBI QUI LO CAMBI PURE NELLO SPLITLESSONS. 
+    // TODO --> tolto obbligatorieta e curriculum. timetable.tt.push(new Lesson("Monday", subject[i].getName(), START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getCurriculum(), subject[i].getObligatory(), subject[i].getNumStudent()));
+    timetable.tt.push(new Lesson("Monday", subject[i].getName(), subject[i].getProfessor(),START_LESSONS, START_LESSONS + DURATION_LESSON, rClass, subject[i].getCourse(), subject[i].getNumStudent()));
 
 }
-
-
-
-
-// var orari = []
-// for (var i = START_LESSONS; i < END_LESSONS; i++) {
-//     orari.push(new Date(null, null, null, i).getHours());
-// }
-
 
 
 // var o = JSON.stringify({ timetable }, null, " ");
@@ -289,8 +277,8 @@ for (var i = 0; i < subject.length; i++) {
 assert(timetable);
 reactor.run(Infinity, true, function () {
     printForDebug("END");
-    var output = JSON.stringify({ timetable }, null, " ");
-    console.log(output);
+    // var output = JSON.stringify({ timetable }, null, " ");
+    // console.log(output);
 
     for (var i = 0; i < timetable.tt.length; i++) {
         var numDay = defineDayNumber(timetable.tt[i].getDay());
@@ -298,7 +286,9 @@ reactor.run(Infinity, true, function () {
             start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
             end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
             title: timetable.tt[i].getDiscipline() + ' - ' + timetable.tt[i].getClassroom().getName(),
-            content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" + "CORSO: " + timetable.tt[i].getCourse(),//'Hello World! <br> <p>Foo Bar</p>',
+            content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
+                     "CORSO: " + timetable.tt[i].getCourse() + "<br>" + // TODO gestire i professori multipli
+                     "PROFESSORE " + timetable.tt[i].getProfessor()[0].getSurname(),//'Hello World! <br> <p>Foo Bar</p>',
             category: timetable.tt[i].getCourse()
         }
         events.push(newEvent);
