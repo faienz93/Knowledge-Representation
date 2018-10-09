@@ -158,7 +158,7 @@ function selectProfessors() {
                         ?x uni:lastName ?surname.
                         ?x uni:idProfessor ?id.
                         }
-                    ORDER BY ?surname`;
+                    ORDER BY ?surname ?name`;
 
     var encodedquery = encodeURIComponent(myquery);
 
@@ -181,10 +181,10 @@ function selectProfessors() {
                     var id = bindings[i].id.value
                     var name = bindings[i].name.value
                     var surname = bindings[i].surname.value
-                    ddl.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
-                    ddl1.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
-                    ddl2.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
-                    ddl3.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
+                    ddl.append("<option value='" + id + "'>" + surname + " " + name + "</option>");
+                    ddl1.append("<option value='" + id + "'>" + surname + " " + name + "</option>");
+                    ddl2.append("<option value='" + id + "'>" + surname + " " + name + "</option>");
+                    ddl3.append("<option value='" + id + "'>" + surname + " " + name + "</option>");
                 }
 
                 ddl.trigger("chosen:updated");
