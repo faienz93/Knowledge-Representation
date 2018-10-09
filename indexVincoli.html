@@ -5,36 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Other CSS -->
-    <link rel="stylesheet" href="lib/chosen/chosen.css">
-    <link rel="stylesheet" href="css/customStyle.css">
+    <!---- COMMON ---->
+    <!-- CSS -->
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="lib/chosen/chosen.min.css">
+    <link rel="stylesheet" href="css/customStyle.css">  
 
-    <!-- JQuery -->
-    <script src="lib/jquery-3.3.1.min.js"></script>
+     
+     
+    
 
-    <script src="lib/rule-reactor.js"></script>
-    <!-- Chose Plugin -->
-    <script src="lib/chosen/chosen.jquery.js" type="text/javascript"></script>
-
-    <!-- CALENDAR -->
-    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <script src="node_modules/jquery/dist/jquery.min.js"></script> -->
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/moment/min/moment-with-locales.min.js"></script>
-    <script src="node_modules/jquery-touchswipe/jquery.touchSwipe.min.js"></script>
-    <script src="node_modules/arrobefr-jquery-calendar/dist/js/jquery-calendar.min.js"></script>
-    <link rel="stylesheet" href="node_modules/arrobefr-jquery-calendar/dist/css/jquery-calendar.min.css">
-
-    <!-- FILE -->
-    <script src="js/Entities.js" type="text/javascript"></script>
-    <script src="js/const.js" type="text/javascript"></script>
-    <script src="js/util.js" type="text/javascript"></script>
-    <script src="js/calendar.js" type="text/javascript"></script>
-    <script src="js/timetable.js" type="text/javascript"></script>
-
-
-    <!-- <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css">
-    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css"> -->
     <title>Vincoli e Calendario</title>
 </head>
 <body>
@@ -46,8 +26,11 @@
     ///////////////////////////////////////////////////////////////////////////////////////
     -->
     <div class="card card-outline-secondary">
+        <div class="top card-header">
+            <h1 class="mb-0"><img src="assets/img/books-stack-of-three.png"> Vincolo</h1>
+        </div>
         <div class="card-header" id="headerConstraint">
-            <h3 class="mb-0"><a href="#"><img src="assets/img/add-circular-button.png"></a> Aggiungi Vincolo</h3>
+            <h3 class="mb-0"><a href="#"><img src="assets/img/add-circular-button.png"></a> Aggiungi</h3>
         </div>
         <div class="card-body" id="cardBodyConstraint">
             <!--  -->
@@ -101,6 +84,28 @@
         </div>
     </div> -->
 
-    <script src="js/initVincoli.js" type="text/javascript"></script>
+    <!-- JS -->
+    <script type="text/javascript" src="lib/jquery-3.3.1.min.js"></script>  
+    <script type="text/javascript" src="lib/popper.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/chosen/chosen.jquery.js"></script>
+    <script type="text/javascript" src="lib/rule-reactor.js"></script>
+    <!---- CALENDAR ---->
+    <!-- JS -->
+    <script type="text/javascript" src="lib/calendar/js/jquery-calendar.min.js"></script>
+    <script type="text/javascript" src="lib/calendar/js/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="lib/calendar/js/jquery.touchSwipe.min.js"></script>       
+    <!-- CSS -->
+    <link rel="stylesheet" href="lib/calendar/css/jquery-calendar.min.css"> 
+
+    <!---- CUSTOM ---->
+    <!-- JS -->
+    <script type="text/javascript" src="js/Entities.js"></script>
+    <script type="text/javascript" src="js/const.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/calendar.js"></script>
+    <script type="text/javascript" src="js/timetable.js"></script>
+    <script type="text/javascript" src="js/initVincoli.js" ></script>
+
 </body>
 </html>
