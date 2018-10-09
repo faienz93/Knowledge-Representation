@@ -11,9 +11,11 @@ $(document).ready(function () {
 
     setShowHideCards();
 
-    $('#findProfessor').onChange({
-
-    });
+    $('#findProfessor').change(function() {
+        var prof = $('#findProfessor').val();
+        alert(prof);
+        selectDisciplines(prof);
+      });
 });
 
 /**
@@ -127,7 +129,7 @@ function selectProfessors() {
  *  - name
  * @method selectDisciplines
  */
-function selectDisciplines() {
+function selectDisciplines(prof) {
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -139,8 +141,11 @@ function selectDisciplines() {
                     { ?x  a uni:Discipline.
                         ?x uni:idDiscipline ?idDiscipline.
                         ?x uni:disciplinename ?disciplinename.
+                        ?x uni:isTaughtBy ? "`+ prof +`";
                         }
-                    ORDER BY ?idDiscipline`;
+                    ORDER BY ?disciplinename`;
+
+                    console.log(myquery);
 
     var encodedquery = encodeURIComponent(myquery);
 
@@ -151,8 +156,7 @@ function selectDisciplines() {
         success: function (results) {
 
             // ChosenJS Select Dropdown List
-            var ddl = $("#findDisciplineDelete");
-            var ddl1 = $("#findDisciplineUpdate");
+            var ddl = $("#findDiscipline");
 
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
@@ -161,11 +165,9 @@ function selectDisciplines() {
                     var id = bindings[i].idDiscipline.value
                     var name = bindings[i].disciplinename.value
                     ddl.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
-                    ddl1.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
                 }
 
                 ddl.trigger("chosen:updated");
-                ddl1.trigger("chosen:updated");
             });
 
         }

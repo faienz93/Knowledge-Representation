@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from flask import Flask, render_template, redirect, send_from_directory, request
-from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, searchProfessor, modifyProfessor, cancelDiscipline, cancelClassRoom, searchClassRoom
+from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, cancelDiscipline, cancelClassRoom, searchProfessor, getAllProfessors, searchClassRoom, searchDiscipline, modifyProfessor, modifyDiscipline, modifyClassRoom
 import os
 
 template_dir = os.path.abspath('./')
@@ -32,11 +32,6 @@ def send_lib(path):
 @app.route('/js/<path:path>')
 def send_js(path):
     return send_from_directory('js', path)
-
-# I indicate where load the static file (js) instead static directory
-@app.route('/node_modules/<path:path>')
-def send_node(path):
-    return send_from_directory('node_modules', path)
 
 # I indicate where load the static file (css) instead static directory
 @app.route('/css/<path:path>')
@@ -74,20 +69,6 @@ def deleteProfessor():
     return redirect("/", code=302)
 
 # =====================================
-# Update Professor
-# =====================================
-@app.route('/updateProfessor', methods = ['POST', 'GET'])
-def updateProfessor():
-
-    id_professor = request.form['idProfessorUpdate'].strip()
-    name = request.form['nameProfessorUpdate'].strip()
-    surname = request.form['surnameProfessorUpdate'].strip()
-    role = request.form['roleProfessorUpdate'].strip()
-
-    modifyProfessor(id_professor, name, surname, role)
-    return redirect("/", code=302)
-
-# =====================================
 # Find Professor
 # =====================================
 @app.route('/findProfessor', methods = ['POST', 'GET'])
@@ -103,6 +84,21 @@ def findProfessor():
 
     return render_template("index.html", professor = prof)
 
+# =====================================
+# Update Professor
+# =====================================
+@app.route('/updateProfessor', methods = ['POST', 'GET'])
+def updateProfessor():
+
+    id_professor = request.form['idProfessorUpdate'].strip()
+    name = request.form['nameProfessorUpdate'].strip()
+    surname = request.form['surnameProfessorUpdate'].strip()
+    role = request.form['roleProfessorUpdate'].strip()
+
+    modifyProfessor(id_professor, name, surname, role)
+    return redirect("/", code=302)
+
+
 
 
 # =====================================
@@ -110,6 +106,7 @@ def findProfessor():
 # =====================================
 @app.route('/addDiscipline', methods = ['POST', 'GET'])
 def addDiscipline():
+    discipline_abb = request.form['discipline_abb']
     discipline_name = request.form['discipline_name']
     obligatory = request.form['obligatory']
     cfu = request.form['cfu']
@@ -125,7 +122,7 @@ def addDiscipline():
     teacher = request.form.getlist('teacher')
     print teacher
 
-    insertDiscipline(id_discipline, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
+    insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
 
 
     return redirect("/", code=302)
@@ -138,6 +135,56 @@ def deleteDiscipline():
     discipline = request.form['deleteDiscipline']
     cancelDiscipline(discipline)
     return redirect("/", code=302)
+
+# =====================================
+# Find Discipline
+# =====================================
+@app.route('/findDiscipline', methods = ['POST', 'GET'])
+def findDiscipline():
+    di = request.form['updateDiscipline'].strip()
+    result = searchDiscipline(di)
+
+    disc ={}
+    for entry in result['results']['bindings']:
+        for key in entry:
+            disc[key] = str(entry[key]['value']).strip()
+            #print disc[key] + " count: " + str(len(disc[key]))
+
+    # result = getAllProfessors()
+    # profs = {}
+    # print result
+    # for entry in result['results']['bindings']:
+    #     print entry
+    #     for i in entry
+
+    #     for key in entry:
+    #         profs[key] = str(entry[key]['value']).strip()
+
+    return render_template("index.html", disci= disc)
+
+# =====================================
+# Update Discipline
+# =====================================
+@app.route('/updateDiscipline', methods = ['POST', 'GET'])
+def updateDiscipline():
+    discipline_abb = request.form['discipline_abbUpdate'].strip()
+    discipline_name = request.form['discipline_nameUpdate'].strip()
+    obligatory = request.form['obligatoryUpdate'].strip()
+    cfu = request.form['cfuUpdate'].strip()
+    id_discipline = request.form['id_disciplineUpdate'].strip()
+
+    degree = request.form['degreeUpdate']
+    course = degree[0]
+    year = degree[1]
+
+    semester = request.form['semesterUpdate'].strip()
+    totalHours = request.form['totalHoursUpdate'].strip()
+    weeksHours = request.form['weeksHoursUpdate'].strip()
+    teacher = request.form.getlist('teacherUpdate')
+
+    modifyDiscipline(id_discipline,discipline_abb,discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
+    return redirect("/", code=302)
+
 
 
 
@@ -182,6 +229,22 @@ def findClassRoom():
             print room[key] + " count: " + str(len(room[key]))
 
     return render_template("index.html", classRoom = room)
+
+# =====================================
+# Update ClassRoom
+# =====================================
+@app.route('/updateClassRoom', methods = ['POST', 'GET'])
+def updateClassRoom():
+
+    id_room = request.form['id_roomUpdate'].strip()
+    name_room = request.form['classNameUpdate'].strip()
+    capacity_room = request.form['capacityUpdate'].strip()
+    wired_room = request.form['wiredUpdate'].strip()
+    wifi_room = request.form['wifiUpdate'].strip()
+    address_room = request.form['addressUpdate'].strip()
+
+    modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, address_room)
+    return redirect("/", code=302)
 
 
 
