@@ -13,7 +13,6 @@ $(document).ready(function () {
 
     $('#findProfessor').change(function() {
         var prof = $('#findProfessor').val();
-        alert(prof);
         selectDisciplines(prof);
       });
 });
@@ -91,7 +90,7 @@ function selectProfessors() {
                         ?x uni:lastName ?surname.
                         ?x uni:idProfessor ?id.
                         }
-                    ORDER BY ?surname`;
+                    ORDER BY ?surname ?name`;
 
     var encodedquery = encodeURIComponent(myquery);
 
@@ -104,15 +103,13 @@ function selectProfessors() {
             // ChosenJS Select Dropdown List
             var ddl = $("#findProfessor");
 
-
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
-                // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
                     var id = bindings[i].id.value
                     var name = bindings[i].name.value
                     var surname = bindings[i].surname.value
-                    ddl.append("<option value='" + id + "'>" + name + " " + surname + "</option>");
+                    ddl.append("<option value='" + id + "'>" + surname + " " + name + "</option>");
                 }
                 ddl.trigger("chosen:updated");
             });
@@ -141,11 +138,9 @@ function selectDisciplines(prof) {
                     { ?x  a uni:Discipline.
                         ?x uni:idDiscipline ?idDiscipline.
                         ?x uni:disciplinename ?disciplinename.
-                        ?x uni:isTaughtBy ? "`+ prof +`";
+                        ?x uni:isTaughtBy ? uni:`+ prof +`;
                         }
                     ORDER BY ?disciplinename`;
-
-                    console.log(myquery);
 
     var encodedquery = encodeURIComponent(myquery);
 
@@ -157,7 +152,7 @@ function selectDisciplines(prof) {
 
             // ChosenJS Select Dropdown List
             var ddl = $("#findDiscipline");
-
+            ddl.html("");
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
