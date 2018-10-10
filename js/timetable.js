@@ -77,40 +77,7 @@ reactor.createRule("assignClassroom", 0, { l: Lesson },
 
     });
 
-/**
-* RULE: Check If the same professor teaching at the same moment
-*/
-reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
-    function (l1, l2) {
-        var isTaughtBySameProfessor = false;
-        for (var i = 0; i < l1.getDiscipline().getProfessor().length; i++) {
-            var professor = l1.getDiscipline().getProfessor()[i];
-            isTaughtBySameProfessor = professor.checkExistProfessor(l2.getDiscipline().getProfessor(), professor.getId());
-            
-        }
 
-        return l1 != l2 &&
-            l1.getDiscipline().getCourse() != l2.getDiscipline().getCourse() &&
-            l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
-            isTaughtBySameProfessor == true;
-
-    },
-    function (l1, l2) {
-        printForDebug(l1.toString() + " ** " + l2.toString(), "red", "white");
-        if (l1.getStartLesson() < l2.getStartLesson()) {
-
-            var dL = l2.getDurationLesson();
-            l2.setStartLesson(l1.getEndLesson()); 
-            l2.setEndLesson(l2.getStartLesson() + dL);
-        }
-        else {
-            var dL = l1.getDurationLesson();
-            l1.setStartLesson(l2.getEndLesson()); 
-            l1.setEndLesson(l1.getStartLesson() + dL);
-        }
-        assert(timetable);
-    });
 
 /**
  * ***********************************************************************
@@ -148,6 +115,71 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
 
 
 //     });
+
+/**
+* RULE: Check From Preference if exist a particular day where the professor doesn't want doing a lesson
+*/
+reactor.createRule("avoidLessonProfessor", -1, { l: Lesson},
+    function (l) {
+        var professor = l.getDiscipline().getProfessor();    
+
+        
+        // check if exist preference with specific key
+        var checkAvoidLesson = professor[0].checkExistPreference("avoidLessonDay");        
+        var dayNotGood = professor[0].incompatibilyDay(l.getDay());
+          
+        return checkAvoidLesson && dayNotGood;
+
+    },
+    function (l) {
+        var professor = l.getDiscipline().getProfessor();
+        // printForDebug(l.getDiscipline().getName() + " " +l.getDiscipline().getProfessor()[0].toString(), "white", "blue");
+        // console.log(" èèèèèèèèèè " + professor[0].getPreference()[1]["avoidLessonDay"]);
+
+        var actualDayToAvoid = l.getDay();
+        console.log("oooo " + actualDayToAvoid);
+        var prova = generateDay(actualDayToAvoid);
+        console.log(prova);
+        l.day = prova;  
+        // assert(timetable);
+
+    });
+
+/**
+* RULE: Check If the same professor teaching at the same moment
+*/
+reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var isTaughtBySameProfessor = false;
+        for (var i = 0; i < l1.getDiscipline().getProfessor().length; i++) {
+            var professor = l1.getDiscipline().getProfessor()[i];
+            isTaughtBySameProfessor = professor.checkExistProfessor(l2.getDiscipline().getProfessor(), professor.getId());
+            
+        }
+
+        return l1 != l2 &&
+            l1.getDiscipline().getCourse() != l2.getDiscipline().getCourse() &&
+            l1.getDay() == l2.getDay() &&
+            (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
+            isTaughtBySameProfessor == true;
+
+    },
+    function (l1, l2) {
+        printForDebug(l1.toString() + " ** " + l2.toString(), "red", "white");
+        if (l1.getStartLesson() < l2.getStartLesson()) {
+
+            var dL = l2.getDurationLesson();
+            l2.setStartLesson(l1.getEndLesson()); 
+            l2.setEndLesson(l2.getStartLesson() + dL);
+        }
+        else {
+            var dL = l1.getDurationLesson();
+            l1.setStartLesson(l2.getEndLesson()); 
+            l1.setEndLesson(l1.getStartLesson() + dL);
+        }
+        assert(timetable);
+    });
+
 /**
  * RULE: check if:
  * - the discipline are different

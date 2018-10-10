@@ -13,7 +13,7 @@ function TimetableArray() {
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 6;
+var DURATION_LESSON = 2;
 
 // end lessons
 var END_LESSONS = 18;
@@ -107,6 +107,9 @@ var giuCas = new Professor("Giulio", "Casciola", "211834", "ordinario");
 var ul = new Professor("Ugo", "Dal Lago", "211835", "ordinario"); 
 
 
+// mf.beginsLessonFrom("Wednesday");
+mf.avoidLessonDay("Monday");
+mf.avoidLessonDay("Tuesday");
 
 
 
