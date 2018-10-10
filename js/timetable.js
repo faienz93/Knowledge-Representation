@@ -70,7 +70,7 @@ reactor.createRule("assignClassroom", 0, { l: Lesson },
         return l.getNumStudent() > l.getClassroom().getCapacity(); 
     },
     function (l) {
-        printForDebug(l.getDiscipline() + " " + l.getNumStudent() + " -- " +  l.getClassroom().toString());
+      //  printForDebug(l.getDiscipline() + " " + l.getNumStudent() + " -- " +  l.getClassroom().toString());
         var compatibilityClassroom = checkCapacityClassroom(l.getNumStudent());       
         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
         l.setClassroom(newClassRoom);
@@ -164,7 +164,7 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
 
-        printForDebug(l1.toString() + " " + l2.toString(), "white", "black");
+       // printForDebug(l1.toString() + " " + l2.toString(), "white", "black");
 
 
 
@@ -228,6 +228,24 @@ reactor.createRule("spliDurationLesson6H", -2, { l: Lesson },
 
     });
 
+//rule euristiche
+//regola che verifica che non ci siano più di 6 ore di lezione al giorno per gli studenti di uno stesso corso
+reactor.createRule("studentStress",-5 ,{ l: Lesson},
+    function(l){
+        //printForDebug(l.getCourse()+"   " +maxCountHours(l.getCourse())+"   " +countHours(l.getCourse().getId(),maxCountHours(l.getCourse().getId())),"purple","white")
+        //printForDebug(countHours(l.getCourse().getId(),l.getDay()),"purple","white")
+
+        return countHours(l.getCourse().getId(),l.getDay())>=6;
+},
+    function(l){  
+        console.log(l.getCourse().getId());
+        var prova = minCountHours(l.getCourse().getId());
+        console.log(prova);
+       l.day = prova;
+    //    l.setDay(l.getDay(),1);
+    //    assert(l);
+});
+
 reactor.createRule("stop", -100, {},
     function () {
         return not(exists({ timetable: TimetableArray },
@@ -276,6 +294,11 @@ for (var i = 0; i < subject.length; i++) {
 
 assert(timetable);
 reactor.run(Infinity, true, function () {
+
+
+    // for (var i=0;i<courses.length;i++){
+    // printForDebug(minCountHours(courses[i].getId()),"red","white")
+    // }
     printForDebug("END");
     // var output = JSON.stringify({ timetable }, null, " ");
     // console.log(output);

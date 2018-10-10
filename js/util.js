@@ -130,3 +130,44 @@ function printForDebug(toPrint, color = "black", background = "yellow") {
     console.log("%c" + toPrint, "color:" + color + "; background:" + background);
     console.log("%c ==========================================", "color:" + color + "; background:" + background)
 }
+
+/**
+ * Function that counts number of hours of a specific course in a specific day
+ * 
+ */
+function countHours(course,day){
+     var result=0;
+    // console.log(timetable.tt[0].getCourse().getId());
+     for(var i=0;i<timetable.tt.length;i++){        
+         if(timetable.tt[i].getCourse().getId() == course && timetable.tt[i].getDay() == day){
+            result+=timetable.tt[i].getDurationLesson();
+                }       
+}   
+    return result;
+}
+/**
+ * Function that return the day with the min hour for a specific course
+ * 
+ */
+function minCountHours(course){
+    var hourForDay=[];
+    for(var i=0;i<days.length;i++){        
+        hourForDay[i]=countHours(course,days[i]);
+}
+    var minIndex=hourForDay.indexOf(Math.min(...hourForDay));  
+    var result=days[minIndex];      
+    return result;
+}
+/**
+ * Function that return the day with the max hour for a specific course
+ * 
+ */
+function maxCountHours(course){
+    var hourForDay=[];
+    for(var i=0;i<days.length;i++){        
+        hourForDay[i]=countHours(course,days[i]);
+}
+    var maxIndex=hourForDay.indexOf(Math.max(...hourForDay));  
+    var result=days[maxIndex];      
+    return result;
+}

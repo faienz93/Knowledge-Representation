@@ -66,6 +66,8 @@ var currA = new Curriculum("A", "Tecniche del Software");
 var currB = new Curriculum("B", "Informatica per il Management");
 var currC = new Curriculum("C", "Sistemi e Reti");
 
+var courses=[infoman,info,infolm];
+
 // Discipline(id, abbreviation ,name, semester, obligatory, totalHours, weeksHours, cfu, year) {
 var cbd = new Discipline("28796", "CBD", "COMPLEMENTI DI BASI DI DATI", "1", true, 60, 5, 6, 1, 29);
 var uux = new Discipline("81670", "UUX", "USABILITA E USER EXPERIENCE", "1", true, 60, 6, 6, 1, 29);
