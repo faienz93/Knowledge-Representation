@@ -13,7 +13,7 @@ function TimetableArray() {
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 2;
+var DURATION_LESSON = 6;
 
 // end lessons
 var END_LESSONS = 18;
@@ -78,6 +78,7 @@ var fsc = new Discipline("23762", "FSC", "FISICA DEI SISTEMI COMPLESSI", "1", fa
 var sds = new Discipline("37760", "SDS", "SIMULAZIONE DI SISTEMI", "1", false, 50, 5, 6, 1, 39);
 var iot =  new Discipline("37760", "IoT", "INTERNET OF THING", "1", false, 50, 5, 6, 1, 10);
 var sismob =  new Discipline("37760", "SM", "SISTEMI MOBILI", "1", false, 50, 5, 6, 1, 29);
+var siswir = new Discipline("37760", "SW", "SISTEMI WIRELESS", "1", false, 50, 5, 6, 1, 29);
 
 
 cbd.addCurriculum(currA);
@@ -91,21 +92,21 @@ ap.addCurriculum(currA);
 ap.addCurriculum(currC);
 
 // firstName,surName,id_professor,role
-var dm = new Professor("Danilo", "Montesi", 211832, "ordinario");
-var fv = new Professor("Fabio", "Vitali", 150348, "ordinario");
-var gr = new Professor("Giovanni", "Rossi", 342, "contratto");
-var ab = new Professor("Alan Albert", "Bertossi", 295601, "ordinario");
-var dr = new Professor("Davide", "Rossi", 211833, "contratto");
-var sr = new Professor("Sandro", "Rambaldi", 841964, "associato");
-var ld = new Professor("Lorenzo", "Donatiello", 211632, "ordinario");
-var gf = new Professor("Giosuella", "Finocchiaro", 211832, "ordinario");
-var ra = new Professor("Roberto", "Aprile", 211832, "contratto");
-var sm = new Professor("Serena", "Morigi", 211832, "ordinario");
-var mf = new Professor("Marco", "Di Felice", 211832, "ordinario");
-var lb = new Professor("Luciano", "Bononi", 211832, "ordinario");
-var ivanlanese = new Professor("Ivan", "Lanese", 211832, "ordinario"); 
-var giuCas = new Professor("Giulio", "Casciola", 211832, "ordinario");  
-var ul = new Professor("Ugo", "Dal Lago", 211832, "ordinario"); 
+var dm = new Professor("Danilo", "Montesi", "211832", "ordinario");
+var fv = new Professor("Fabio", "Vitali", "5", "ordinario");
+var gr = new Professor("Giovanni", "Rossi", "342", "contratto");
+var ab = new Professor("Alan Albert", "Bertossi", "295601", "ordinario");
+var dr = new Professor("Davide", "Rossi", "211833", "contratto");
+var sr = new Professor("Sandro", "Rambaldi", "841964", "associato");
+var ld = new Professor("Lorenzo", "Donatiello", "251632", "ordinario");
+var gf = new Professor("Giosuella", "Finocchiaro", "219832", "ordinario");
+var ra = new Professor("Roberto", "Aprile", "0025", "contratto");
+var sm = new Professor("Serena", "Morigi", "098", "ordinario");
+var mf = new Professor("Marco", "Di Felice", "00009", "ordinario");
+var lb = new Professor("Luciano", "Bononi", "00008", "ordinario");
+var ivanlanese = new Professor("Ivan", "Lanese", "211833", "ordinario"); 
+var giuCas = new Professor("Giulio", "Casciola", "211834", "ordinario");  
+var ul = new Professor("Ugo", "Dal Lago", "211835", "ordinario"); 
 
 
 
@@ -125,6 +126,7 @@ sds.setProfessor(ld);
 iot.setProfessor(mf);
 iot.setProfessor(lb);
 sismob.setProfessor(mf)
+siswir.setProfessor(lb);
 
 // ADD COURSE
 cbd.addCourse(infolm);
@@ -136,6 +138,7 @@ fsc.addCourse(infolm);
 sds.addCourse(infolm);
 iot.addCourse(infolm);
 sismob.addCourse(infolm);
+siswir.addCourse(infolm);
 
 // INFOMAN
 var di = new Discipline("28796", "DI", "Diritto di Internet", "1", true, 60, 5, 6, 1, 29);
@@ -170,26 +173,27 @@ cn.setProfessor(giuCas);
 var subject = [];
 // TRIENNALE
 // INFO MAN
-subject.push(di);
-subject.push(ea);
+// subject.push(di);
+// subject.push(ea);
 subject.push(am);
 subject.push(bd);
 
 // INFO TRIENNALE
 subject.push(p);
-subject.push(o);
-subject.push(cn);
+// subject.push(o);
+// subject.push(cn);
 
 
 // MAGISTRALE
 subject.push(cbd);
-subject.push(uux);
-subject.push(gmb)
-subject.push(ap);
+// subject.push(uux);
+// subject.push(gmb)
+// subject.push(ap);
 // subject.push(isos);
 subject.push(fsc);
 // subject.push(sds);
 subject.push(iot);
 subject.push(sismob);
+subject.push(siswir)
 
 
