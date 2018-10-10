@@ -13,7 +13,7 @@ function TimetableArray() {
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 2;
+var DURATION_LESSON = 6;
 
 // end lessons
 var END_LESSONS = 18;
