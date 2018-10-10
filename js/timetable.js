@@ -61,8 +61,7 @@ reactor.createRule("swapDay", 0, { l: Lesson },
 
 
 /**
-* RULE: check: 
-* Assign Classroom based on number subscription
+* RULE: Assign Classroom based on number subscription
 */
 reactor.createRule("assignClassroom", 0, { l: Lesson },
     function (l) {
@@ -78,7 +77,9 @@ reactor.createRule("assignClassroom", 0, { l: Lesson },
 
     });
 
-
+/**
+* RULE: Check If the same professor teaching at the same moment
+*/
 reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         var isTaughtBySameProfessor = false;
