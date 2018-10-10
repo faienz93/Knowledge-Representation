@@ -229,7 +229,7 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
 
-        printForDebug(l1.toString() + " " + l2.toString(), "white", "black");
+       // printForDebug(l1.toString() + " " + l2.toString(), "white", "black");
 
         var dL = l2.getDurationLesson();
         l2.setStartLesson(l1.getEndLesson());
@@ -291,6 +291,19 @@ reactor.createRule("spliDurationLesson6H", -2, { l: Lesson },
 
     });
 
+//rule euristiche
+//regola che verifica che non ci siano più di 6 ore di lezione al giorno per gli studenti di uno stesso corso
+reactor.createRule("studentStress",-5 ,{ l: Lesson},
+    function(l){
+        //printForDebug(l.getCourse()+"   " +maxCountHours(l.getCourse())+"   " +countHours(l.getCourse().getId(),maxCountHours(l.getCourse().getId())),"purple","white")
+        //printForDebug(countHours(l.getCourse().getId(),l.getDay()),"purple","white")
+
+        return countHours(l.getDiscipline().getCourse().getId(),l.getDay())>=6;
+},
+    function(l){         
+        l.day = minCountHours(l.getDiscipline().getCourse().getId());    
+});
+
 reactor.createRule("stop", -100, {},
     function () {
         return not(exists({ timetable: TimetableArray },
@@ -339,6 +352,11 @@ for (var i = 0; i < subject.length; i++) {
 
 assert(timetable);
 reactor.run(Infinity, true, function () {
+
+
+    // for (var i=0;i<courses.length;i++){
+    // printForDebug(minCountHours(courses[i].getId()),"red","white")
+    // }
     printForDebug("END");
     // var output = JSON.stringify({ timetable }, null, " ");
     // console.log(output);
