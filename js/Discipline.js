@@ -9,10 +9,11 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     this.weeksHours = weeksHours;
     this.cfu = cfu;
     this.year = year;
-    var professor = [];
-    this.course = null;
-    var curriculum = [];
     this.numStudents = numStudents;
+    var professor = [];
+    var course = null;
+    var curriculum = [];
+    
 
 
     this.getName = function () {
@@ -45,15 +46,23 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         return JSON.stringify({ curriculum }, null, " ");
     }
 
+    // this.getExistCurriculum = function (sigle) {
+    //     var obj = this.curriculum.find(o => o.id === sigle);
+    //     if (obj != undefined) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
 
     // COURSE
     this.addCourse = function (c) {
-        this.course = c;
+        course = c;
     }
 
     this.getCourse = function () {
-        return this.course;
+        return course;
     }
 
     this.getNumStudent = function () {
@@ -61,14 +70,13 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     }
 
     this.toString = function () {
-
-        return this.name + " " + professor + " " + this.course;
+        return this.name + " " + professor + " " + course;
     }
 
     this.toStringJSON = function () {
         var t = JSON.stringify({ professor }, null, " ");
         var cur = JSON.stringify({ curriculum }, null, " ");
-        return this.name + " " + t + " " + this.course + cur;
+        return this.name + " " + t + " " + course + cur;
     }
 
     this.getObligatory = function () {

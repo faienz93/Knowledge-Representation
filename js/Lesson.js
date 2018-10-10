@@ -1,19 +1,12 @@
-// function Lesson(day, discipline, professor, startLesson, endLesson, classroom, course, curriculum = null, obligatory = null, numStudents) {
-    function Lesson(day, discipline, professor, startLesson, endLesson, classroom, course, numStudents) {
+
+    function Lesson(day, discipline, startLesson, endLesson, classroom) {
     this.day = day;
     this.discipline = discipline;
-    this.professor = professor;
     this.startLesson = startLesson;
     this.endLesson = endLesson;
-    this.classroom = classroom;
-    this.course = course;
-    // this.curriculum = curriculum;
-    // this.obligatory = obligatory;
-    this.numStudents = numStudents;
+    this.classroom = classroom;  
 
-    // this.getObligatory = function () {
-    //     return this.obligatory;
-    // }
+   
 
     this.getDay = function () {
         return this.day;
@@ -36,39 +29,14 @@
     }
 
     this.getClassroom = function () {
-        // console.log(this.classroom);
         return this.classroom;
     }
 
-    this.getProfessor = function() {
-        return professor;
-    }
-
-    this.getProfessorJSON = function () {
-        var t = JSON.stringify({ professor }, null, " ");
-        return t;
-    }
 
     this.setClassroom = function (aula) {
         this.classroom = aula;
     }
-
-    this.getCourse = function () {
-        return this.course;
-    }
-
-    // this.getCurriculum = function () {
-    //     return this.curriculum;
-    // }
-
-    // this.getExistCurriculum = function (sigle) {
-    //     var obj = this.curriculum.find(o => o.id === sigle);
-    //     if (obj != undefined) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
+    
 
     this.getNumStudent = function () {
         return this.numStudents;
@@ -103,10 +71,14 @@
         this.classroom = cl;
     }
 
-
-
     this.toString = function () {
-        return this.day + " " + this.discipline + " " + this.startLesson + " " + this.endLesson + " " + this.classroom + " " + this.course;
+        return this.day + " " + this.discipline.getName() + " " + this.startLesson + " " + this.endLesson + " " + this.classroom;
+
+    }
+
+    this.toStringJSON = function () {
+        var d = JSON.stringify({ discipline }, null, " ");
+        return this.day + " " + d + " " + this.startLesson + " " + this.endLesson + " " + this.classroom;
 
     }
 }
