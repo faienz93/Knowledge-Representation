@@ -139,7 +139,7 @@ function countHours(course,day){
      var result=0;
     // console.log(timetable.tt[0].getCourse().getId());
      for(var i=0;i<timetable.tt.length;i++){        
-         if(timetable.tt[i].getCourse().getId() == course && timetable.tt[i].getDay() == day){
+         if(timetable.tt[i].getDiscipline().getCourse().getId() == course && timetable.tt[i].getDay() == day){
             result+=timetable.tt[i].getDurationLesson();
                 }       
 }   

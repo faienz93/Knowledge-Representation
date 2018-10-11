@@ -56,7 +56,7 @@ reactor.createRule("swapDay", 0, { l: Lesson },
         // il mercoledi. Questo risulta ovvio in quanto l'ultimo giorno sarebbe letto due volte per via 
         // della condizione l1.getStartLesson() > 18) che si ripete
         var actualDay = l.getDay();
-        l.setDay(actualDay, 1);
+        l.setNewDay(actualDay, 1);
     });
 
 
@@ -126,7 +126,7 @@ reactor.createRule("avoidLessonProfessor", -1, { l: Lesson},
         
         // check if exist preference with specific key
         var checkAvoidLesson = professor[0].checkExistPreference("avoidLessonDay");        
-        var dayNotGood = professor[0].incompatibilyDay(l.getDay());
+        var dayNotGood = professor[0].checkIncompatibilyDay(l.getDay());
           
         return checkAvoidLesson && dayNotGood;
 
@@ -137,11 +137,11 @@ reactor.createRule("avoidLessonProfessor", -1, { l: Lesson},
         // console.log(" èèèèèèèèèè " + professor[0].getPreference()[1]["avoidLessonDay"]);
 
         var actualDayToAvoid = l.getDay();
-        console.log("oooo " + actualDayToAvoid);
-        var prova = generateDay(actualDayToAvoid);
-        console.log(prova);
-        l.day = prova;  
-        // assert(timetable);
+        // console.log("oooo " + actualDayToAvoid);
+       
+        
+        l.setDay(generateDay(actualDayToAvoid));  
+        assert(timetable);
 
     });
 
@@ -301,7 +301,7 @@ reactor.createRule("studentStress",-5 ,{ l: Lesson},
         return countHours(l.getDiscipline().getCourse().getId(),l.getDay())>=6;
 },
     function(l){         
-        l.day = minCountHours(l.getDiscipline().getCourse().getId());    
+        l.setDay(minCountHours(l.getDiscipline().getCourse().getId()));    
 });
 
 reactor.createRule("stop", -100, {},

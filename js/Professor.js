@@ -62,9 +62,11 @@ function Professor(name, surname, id, role) {
     //     preference.push(cd);
     // }
 
-    this.avoidLessonDay = function(d){
-        var cd = { "avoidLessonDay": d };
-        preference.push(cd);
+    this.avoidLessonDay = function(d,s){
+        var aDay = { "avoidLessonDay": d};
+        var sub = { "discipline": s};
+        preference.push(aDay);
+        preference.push(sub);
     }
 
 
@@ -82,7 +84,7 @@ function Professor(name, surname, id, role) {
         }
     }
 
-    this.incompatibilyDay = function(v) {
+    this.checkIncompatibilyDay = function(v) {
        if(preference.some(e => e.avoidLessonDay === v)){
            return true;
        }else {

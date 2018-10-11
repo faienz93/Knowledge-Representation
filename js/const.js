@@ -112,6 +112,8 @@ var ul = new Professor("Ugo", "Dal Lago", "211835", "ordinario");
 // mf.beginsLessonFrom("Wednesday");
 mf.avoidLessonDay("Monday");
 mf.avoidLessonDay("Tuesday");
+// mf.avoidLessonDay("Monday","SM");
+// mf.avoidLessonDay("Tuesday","SM");
 
 
 

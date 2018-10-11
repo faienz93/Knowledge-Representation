@@ -83,7 +83,7 @@ function Lesson(day, discipline, startLesson, endLesson, classroom) {
     /**
      * Set a new day based on String passend as the first param and the secod param 
      */
-    this.setDay = function (dString, dNumber) {
+    this.setNewDay = function (dString, dNumber) {
         // i.e Monday return 1
         var dNum = defineDayNumber(dString);
 
