@@ -13,7 +13,7 @@ function TimetableArray() {
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 2;
+var DURATION_LESSON = 5;
 
 // end lessons
 var END_LESSONS = 18;
@@ -109,12 +109,6 @@ var giuCas = new Professor("Giulio", "Casciola", "211834", "ordinario");
 var ul = new Professor("Ugo", "Dal Lago", "211835", "ordinario"); 
 
 
-// mf.beginsLessonFrom("Wednesday");
-mf.avoidLessonDay("Monday");
-mf.avoidLessonDay("Tuesday");
-// mf.avoidLessonDay("Monday","SM");
-// mf.avoidLessonDay("Tuesday","SM");
-
 
 
 
@@ -173,6 +167,22 @@ cn.addCourse(info);
 p.setProfessor(ivanlanese); 
 o.setProfessor(ul); 
 cn.setProfessor(giuCas); 
+
+
+
+
+// Preferenze di Marco di Felice
+// iot.avoidLessonDay("Monday");
+// iot.avoidLessonDay("Tuesday");
+// sismob.avoidLessonDay("Monday");
+// sismob.avoidLessonDay("Tuesday");
+// bd.avoidLessonDay("Monday");
+// bd.avoidLessonDay("Tuesday");
+
+iot.consecutiveDay(true);
+sismob.consecutiveDay(true);
+bd.consecutiveDay(true);
+
 
 
 var subject = [];

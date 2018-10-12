@@ -54,7 +54,7 @@ function defineDayString(d) {
  * If @toRemove is undefined it not delete nothing day
  * @param {String} toRemove - day to remove
  */
-function generateDay(toRemove = undefined) {
+function generateDayByExcludingOne(toRemove = undefined) {
     var daysTemp = days.slice();
 
     if (toRemove != null) {
@@ -66,6 +66,29 @@ function generateDay(toRemove = undefined) {
     var randomDay = daysTemp[Math.floor(Math.random() * daysTemp.length)];
     //alert(randomDay);
     return randomDay;
+}
+
+
+/**
+ * Generate A concescutive Day from array previusly deleting a specific day.
+ * If @toRemove is undefined it not delete nothing day
+ * @param {String} toRemove - day to remove
+ */
+function generateDayConsecutive(toRemove = undefined) {
+    var daysTemp = days.slice();
+
+    if (toRemove != null) {
+        var index = daysTemp.indexOf(toRemove);
+        if (index > -1) {
+            daysTemp.splice(index, 1);
+        }
+    }
+
+    // 
+    
+
+    //alert(randomDay);
+    return daysTemp[0];
 }
 
 /**

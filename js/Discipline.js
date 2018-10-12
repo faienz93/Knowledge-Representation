@@ -20,6 +20,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     var professor = [];
     this.course = null;
     var curriculum = [];
+    var preference = []; 
 
 
     /**
@@ -112,9 +113,85 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     }
 
     /**
+     * **********************************************************************************************
+     * ***************************************** PREFERENCE *****************************************
+     * **********************************************************************************************
+     */   
+    
+
+    /**
+     * Set the preference of consecutive day as true
+     */
+    this.consecutiveDay = function (d){
+        var consday = {"consecutiveDay": d}
+        preference.push(consday);
+    }
+
+    /**
+     * Set the preference that for this discipline an professor
+     * want to avoid a specific day
+     */
+    this.avoidLessonDay = function(d){
+        var avDay = { "avoidLessonDay": d};
+        preference.push(avDay);        
+    }
+
+    /**
+     * Check from the preference if exist a lesson day that is assigned 
+     * to a day to avoid
+     */
+    this.checkIncompatibilyDay = function(v) {
+        if(preference.some(e => e.avoidLessonDay === v)){
+            return true;
+        }else {
+            return false;
+        }
+     }
+     
+     /**
+      * Check from Preference exist a particular preference named by param i.e avoidLessonDay
+      * REF: https://stackoverflow.com/questions/1098040/checking-if-a-key-exists-in-a-javascript-object
+      */
+     this.checkExistPreference = function(key){
+         for(var i = 0; i < preference.length; i++) {
+             if(key in preference[i]) {
+                 return true;
+             }else {
+                 return false;
+             }
+         }       
+     }
+
+    // /**
+    //  * Find ALL Object value of array from Specific Key
+    //  * REF: https://stackoverflow.com/a/46694321/4700162
+    //  */
+    // this.findValuePreference = function(keyy){       
+    //     var obj = preference.find(o => o.keyy === key);        
+    // }
+
+    /**
+     * Return the array of Preference
+     */
+    this.getPreference = function () {
+        if (preference.length == 0) {
+            return "ATTENZIONE: Nessuna preferenza impostata per " + this.name + " " + this.surname;
+        } else {
+            return preference;
+        }
+    }
+
+    /**
+     * **********************************************************************************************
+     * ****************************************** TOSTRING ******************************************
+     * **********************************************************************************************
+     */
+
+    /**
      * Return the main information of discipline
      */
     this.toString = function () {
+        var p = JSON.stringify({ preference }, null, " ");
         return this.name + " " + professor + " " + course;
     }
 
@@ -124,7 +201,8 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     this.toStringJSON = function () {
         var t = JSON.stringify({ professor }, null, " ");
         var cur = JSON.stringify({ curriculum }, null, " ");
-        return this.name + " " + t + " " + course + cur;
+        var p = JSON.stringify({ preference }, null, " ");
+        return this.name + " " + t + " " + course + " " + cur + " " + p;
     }
 
 
