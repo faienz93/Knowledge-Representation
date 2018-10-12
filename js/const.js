@@ -13,7 +13,7 @@ function TimetableArray() {
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 2;
+var DURATION_LESSON = 4;
 
 // end lessons
 var END_LESSONS = 18;
@@ -179,17 +179,20 @@ cn.setProfessor(giuCas);
 // bd.avoidLessonDay("Monday");
 // bd.avoidLessonDay("Tuesday");
 
-// iot.consecutiveDay(true);
-// sismob.consecutiveDay(true);
-// bd.consecutiveDay(true);
+iot.consecutiveDay(true);
+sismob.consecutiveDay(true);
+bd.consecutiveDay(true);
 
-iot.setPeriodOfDay("AM");
-sismob.setPeriodOfDay("AM");
-bd.setPeriodOfDay("AM");
-
-
+// iot.setPeriodOfDay("AM");
+// sismob.setPeriodOfDay("AM");
+// bd.setPeriodOfDay("AM");
 
 var subject = [];
+
+
+
+
+
 // TRIENNALE
 // INFO MAN
 // subject.push(di);
@@ -215,4 +218,64 @@ subject.push(iot);
 subject.push(sismob);
 subject.push(siswir)
 
+for(var i=0;i<subject.length;i++){
+    subject[i].splitDurationLessons6h(3);
+}
 
+// iot.splitDurationLessons6h(2);
+// sismob.splitDurationLessons6h(4);
+
+
+/**
+ * 
+ * 
+ */
+// function splitLessons(arrayLesson){
+//     var subName="";
+//     var subHours=0;
+//     var result=[];
+//     for (var i=0;i<arrayLesson.length;i++){
+//             subHours=arrayLesson[i].getWeeksHours();
+//             subName=arrayLesson[i].getName();
+//             console.log("-------"+subName+"   "+subHours+"------------");
+//             var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
+//             if(subHours<4){
+//                 var newL=new Lesson("Monday", subName, 9, 9+DURATION_LESSON, randomClassroom);
+//                 result.push(newL);
+//             }
+//             else if(subHours==4){
+//                 var newL1=new Lesson("Monday", subName, 9, 11, randomClassroom);
+//                 var newL2=new Lesson("Monday", subName, 9, 11, randomClassroom);
+//                 result.push(newL1);
+//                 result.push(newL2);
+//             }else if(subHours==5){
+//                 var newL1=new Lesson("Monday", subName, 9, 11, randomClassroom);
+//                 var newL2=new Lesson("Monday", subName, 9, 12, randomClassroom);
+//                 result.push(newL1);
+//                 result.push(newL2);
+//             }
+//             else{
+//                 if(arrayLesson[i].getSplitDuration()==2){
+//                 var newL1=new Lesson("Monday", subName, 9, 11, randomClassroom);
+//                 var newL2=new Lesson("Monday", subName, 9, 11, randomClassroom);
+//                 var newL3=new Lesson("Monday", subName, 9, 11, randomClassroom);
+//                 result.push(newL1);
+//                 result.push(newL2);
+//                 result.push(newL3);
+//                 }else if(arrayLesson[i].getSplitDuration()==3){
+//                 var newL1=new Lesson("Monday", subName, 9, 12, randomClassroom);
+//                 var newL2=new Lesson("Monday", subName, 9, 12, randomClassroom);
+//                 result.push(newL1);
+//                 result.push(newL2);
+//                 }
+//                 else{
+//                 var newL1=new Lesson("Monday", subName, 9, 11, randomClassroom);
+//                 var newL2=new Lesson("Monday", subName, 9, 13, randomClassroom);
+//                 result.push(newL1);
+//                 result.push(newL2);
+//                 }
+//             }
+//           }
+
+//         return result;
+//     }
