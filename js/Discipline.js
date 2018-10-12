@@ -147,6 +147,27 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
             return false;
         }
      }
+
+     /**
+      * Set the period of day into preference
+      */
+     this.setPeriodOfDay = function(d) {
+        var pDay = { "setperiodofday": d};
+        preference.push(pDay);
+     }
+
+     /**
+      * Return based on key the value that i find
+      */
+     this.getPeriodOfDay = function(p){
+        var obj =  preference.find(o => o.setperiodofday === p); 
+        if(obj!=undefined){
+            return obj.setperiodofday;
+        }       
+        else {
+            return undefined;
+        } 
+     }
      
      /**
       * Check from Preference exist a particular preference named by param i.e avoidLessonDay

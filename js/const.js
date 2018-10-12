@@ -13,7 +13,7 @@ function TimetableArray() {
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 5;
+var DURATION_LESSON = 2;
 
 // end lessons
 var END_LESSONS = 18;
@@ -179,9 +179,13 @@ cn.setProfessor(giuCas);
 // bd.avoidLessonDay("Monday");
 // bd.avoidLessonDay("Tuesday");
 
-iot.consecutiveDay(true);
-sismob.consecutiveDay(true);
-bd.consecutiveDay(true);
+// iot.consecutiveDay(true);
+// sismob.consecutiveDay(true);
+// bd.consecutiveDay(true);
+
+iot.setPeriodOfDay("AM");
+sismob.setPeriodOfDay("AM");
+bd.setPeriodOfDay("AM");
 
 
 

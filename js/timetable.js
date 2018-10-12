@@ -187,7 +187,7 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
  * *********************************************************************** 
  */
 
- 
+
 /**
  * RULE: split the duration lessons of 4 h into two days 
  */
@@ -205,20 +205,20 @@ reactor.createRule("spliDurationLesson4H", -2, { l: Lesson },
  */
 reactor.createRule("spliDurationLesson4HConsecutive", -1, { l: Lesson },
     function (l) {
-         // check if exist preference with specific key
+        // check if exist preference with specific key
         var existConsecutiveDay = l.getDiscipline().checkExistPreference("consecutiveDay");
         return existConsecutiveDay && l.getDurationLesson() == 4;
     }, function (l) {
 
         printForDebug("4HCONSECUTIVE: " + l.toString(), "red");
-       
+
         var newL = new Lesson(generateDayConsecutive(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom());
         l.setDurationLesson(2);
         timetable.tt.push(newL);
         assert(timetable);
     });
 
-  
+
 /**
  * RULE: split the duration lessons of 5 h into two days 
  */
@@ -237,13 +237,13 @@ reactor.createRule("spliDurationLesson4HConsecutive", -1, { l: Lesson },
  */
 reactor.createRule("spliDurationLesson5HConsecutive", -1, { l: Lesson },
     function (l) {
-         // check if exist preference with specific key
+        // check if exist preference with specific key
         var existConsecutiveDay = l.getDiscipline().checkExistPreference("consecutiveDay");
         return existConsecutiveDay && l.getDurationLesson() == 5;
     }, function (l) {
 
         printForDebug("5HCONSECUTIVE: " + l.toString(), "red");
-       
+
         var newL = new Lesson(generateDayConsecutive(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom());
         l.setDurationLesson(2);
         timetable.tt.push(newL);
@@ -293,8 +293,8 @@ reactor.createRule("avoidLessonProfessor", -1, { l: Lesson },
         return existLessotToAvoid && existIncompatibilyDay;
 
     },
-    function (l) {       
-        printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "blue");      
+    function (l) {
+        printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "blue");
 
         var actualDayToAvoid = l.getDay();
         var dL = l.getDurationLesson();
@@ -303,6 +303,57 @@ reactor.createRule("avoidLessonProfessor", -1, { l: Lesson },
         l.setDay(generateDayByExcludingOne(actualDayToAvoid));
         assert(timetable);
 
+    });
+
+/**
+* RULE: Set the lesson at the afternoon
+*/
+reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
+    function (l) {
+
+        var setPreference;
+        if (l.getDiscipline().checkExistPreference("setperiodofday")) {
+            setPreference = l.getDiscipline().getPeriodOfDay("PM");
+        }
+
+        return setPreference == "PM" && l.getStartLesson() < 13;
+    },
+    function (l) {
+        printForDebug("SETPERIODOFDAY_PM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "green");
+        var dL = l.getDurationLesson();
+        l.setStartLesson(13);
+        l.setEndLesson(13 + dL);
+        assert(timetable);
+
+    });
+
+/**
+* RULE: Set the lesson in the morning
+*/
+reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
+    function (l) {
+
+        var setPreference;
+        if (l.getDiscipline().checkExistPreference("setperiodofday")) {
+            setPreference = l.getDiscipline().getPeriodOfDay("AM");
+        }
+
+        return setPreference == "AM" && l.getStartLesson() >= 13;
+    },
+    function (l) {
+        printForDebug("SETPERIODOFDAY_AM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "red");
+               
+        
+        if(l.getStartLesson()==13) {
+            var actualDay = l.getDay();
+            l.setNewDay(actualDay, 1);
+        }
+
+        var dL = l.getDurationLesson();
+        l.setStartLesson(START_LESSONS);
+        l.setEndLesson(START_LESSONS + dL); 
+
+        assert(timetable);       
     });
 
 
