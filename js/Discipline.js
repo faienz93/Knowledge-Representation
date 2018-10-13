@@ -36,7 +36,19 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     this.getObligatory = function () {
         return this.obligatory;
     }
-
+    /**
+     * Return the WeeksHours of Course
+     */
+    this.getWeeksHours = function () {
+        return this.weeksHours;
+    };
+    /**
+     * Return the obligatory of Course
+     */
+    this.getObligatory = function () {
+        return this.obligatory;
+    };
+    
     /**
      * Set a new Professor insiede an array becaure for an discipline can
      * be taught by multiple professor
@@ -275,7 +287,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
      */
     this.toString = function () {
         var p = JSON.stringify({ preference }, null, " ");
-        return this.name + " " + professor + " " + course;
+        return this.name + " " + professor + " " + this.course;
     }
 
     /**

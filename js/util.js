@@ -194,3 +194,23 @@ function maxCountHours(course){
     var result=days[maxIndex];      
     return result;
 }
+
+// function printPreferences(d){
+//     console.log("=============INIZIO PREFERENZE=================");
+//     var disciplineName="";
+//     var disciplinePreference= "";
+//     var preferenceKey=null;
+//     for(var i=0;i<d.length;i++){
+//         discipline=d[i].getDiscipline();
+//         disciplineName= discipline.getName();
+//     for(var j=0;j<d.length;j++){          
+//         disciplinePreference = discipline.getPreference();
+//         preferenceKey = Object.keys(disciplinePreference); 
+//         if(disciplinePreference!=undefined){
+//             console.log(disciplinePreference);
+//        // console.log(disciplineName+" "+preferenceKey +" " + disciplinePreference[j].preferenceKey);
+//         }
+//     }
+// }
+// console.log("=============FINE PREFERENZE=================");
+// }
