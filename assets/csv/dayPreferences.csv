@@ -1,0 +1,10 @@
+teacher,day,fromHour,toHour,noLesson
+211832,LUN,9,13,true
+211832,MAR,9,13,false
+211832,VEN,16,18,false
+150348,MAR,9,13,true
+150348,MER,12,16,false
+150348,GIO,9,11,false
+000001,LUN,9.30,14,true
+000001,MAR,9.30,14,false
+000001,MER,9.30,14,false

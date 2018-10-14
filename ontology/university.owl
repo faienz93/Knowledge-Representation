@@ -19,14 +19,10 @@
          <dcterms:contributor>Antonio Faienza</dcterms:contributor>
         <dcterms:contributor>Luca Angelucci</dcterms:contributor>
         <dcterms:contributor>Alessio Ciarrocchi</dcterms:contributor>
-        <owl:versionInfo xml:lang="en">Version 1.0 - 2018-09-17</owl:versionInfo>
+        <owl:versionInfo xml:lang="en">Version 1.0 - 2018-10-15</owl:versionInfo>
         <vann:preferredNamespacePrefix>uni</vann:preferredNamespacePrefix>
         <vann:preferredNamespaceUri>http://www.rdcproject.com/</vann:preferredNamespaceUri>
     </owl:Ontology>
-
-    
-    
-
 
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -36,27 +32,36 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
-
-
     <!-- http://www.rdcproject.com/hasCourseof -->
-
     <owl:ObjectProperty rdf:about="http://www.rdcproject.com/hasCourseof">
         <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
         <rdfs:range rdf:resource="http://www.rdcproject.com/Course"/>
         <rdfs:label xml:lang="en">Has Course Of</rdfs:label>
         <rdfs:comment xml:lang="en">Is the subject of a Course of Degree.</rdfs:comment>
     </owl:ObjectProperty>
-    
-
 
     <!-- http://www.rdcproject.com/isTaughtBy -->
-
     <owl:ObjectProperty rdf:about="http://www.rdcproject.com/isTaughtBy">
         <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
         <rdfs:range rdf:resource="http://www.rdcproject.com/Teacher"/>
          <rdfs:label xml:lang="en">Is Taught By</rdfs:label>
-         <rdfs:comment xml:lang="en">Is the discipline toueht by a specifi Professor.</rdfs:comment>
+         <rdfs:comment xml:lang="en">Is the discipline toueht by a specific Professor.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <!-- http://www.rdcproject.com/isPreferenceOf -->
+    <owl:ObjectProperty rdf:about="http://www.rdcproject.com/isPreferenceOf">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Preference"/>
+        <rdfs:range rdf:resource="http://www.rdcproject.com/Teacher"/>
+         <rdfs:label xml:lang="en">Is Preference Of</rdfs:label>
+         <rdfs:comment xml:lang="en">Is the preference of a specific Professor.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <!-- http://www.rdcproject.com/isDayPreferenceOf -->
+    <owl:ObjectProperty rdf:about="http://www.rdcproject.com/isPreferenceOf">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/DayPreference"/>
+        <rdfs:range rdf:resource="http://www.rdcproject.com/Teacher"/>
+         <rdfs:label xml:lang="en">Is Day Preference Of</rdfs:label>
+         <rdfs:comment xml:lang="en">Is the day preference of a specific Professor.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -69,8 +74,15 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
+    <!-- DATA TYPE CLASSROOM -->
 
+    <!-- http://www.rdcproject.com/idRoom -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/idRoom">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Classroom"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">ID Room</rdfs:label>
+    </owl:DatatypeProperty>
 
     <!-- http://www.rdcproject.com/address -->
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/address">
@@ -79,22 +91,16 @@
         <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
         <rdfs:label xml:lang="en">Address</rdfs:label>
     </owl:DatatypeProperty>
-    
-
 
     <!-- http://www.rdcproject.com/capacity -->
-
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/capacity">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
         <rdfs:domain rdf:resource="http://www.rdcproject.com/Classroom"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
         <rdfs:label xml:lang="en">Capacity</rdfs:label>
     </owl:DatatypeProperty>
-    
-
 
     <!-- http://www.rdcproject.com/cfu -->
-
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/cfu">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
         <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
@@ -102,21 +108,120 @@
         <rdfs:label xml:lang="en">CFU</rdfs:label>
     </owl:DatatypeProperty>
     
-
-
     <!-- http://www.rdcproject.com/classroomName -->
-
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/classroomname">
         <rdfs:domain rdf:resource="http://www.rdcproject.com/Classroom"/>
         <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
         <rdfs:label xml:lang="en">Class Room Name</rdfs:label>
     </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/wifi -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/wifi">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Classroom"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label xml:lang="en">Wifi</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/wired -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/wired">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Classroom"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label xml:lang="en">Wired</rdfs:label>
+    </owl:DatatypeProperty>
     
+
+    <!-- DATA TYPE PREFERENCE -->
+
+    <!-- http://www.rdcproject.com/idPreference -->
+    <!-- <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/idPreference">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Preference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">ID Preference</rdfs:label>
+    </owl:DatatypeProperty> -->
+
+    <!-- http://www.rdcproject.com/consecutiveDays -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/consecutiveDays">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Preference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#boolean"/>
+        <rdfs:label xml:lang="en">COnsecutive days</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/cabledRoom -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/cabledRoom">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Preference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#boolean"/>
+        <rdfs:label xml:lang="en">Cabled classRoom</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/chalksRoom -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/chalksRoom">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Preference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#boolean"/>
+        <rdfs:label xml:lang="en">ClassRoom with chalks</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/sixHourSplit -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/sixHourSplit">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Preference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">How to split 6 hours Discipline</rdfs:label>
+    </owl:DatatypeProperty>
+
+    
+    <!-- DATA TYPE DAY PREFERENCE -->
+
+    <!-- http://www.rdcproject.com/idDayPreference -->
+    <!-- <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/idDayPreference">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/DayPreference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">ID Day Preference</rdfs:label>
+    </owl:DatatypeProperty> -->
+
+    <!-- http://www.rdcproject.com/day -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/day">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/DayPreference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">Day</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/fromHour -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/fromHour">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/DayPreference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">From hour</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/toHour -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/toHour">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/DayPreference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">To hour</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/noLesson -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/noLesson">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/DayPreference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#boolean"/>
+        <rdfs:label xml:lang="en">No lesson day</rdfs:label>
+    </owl:DatatypeProperty>
+
 
 
     <!-- DATA TYPE COURSE -->
-    <!-- http://www.rdcproject.com/courseName -->
 
+    <!-- http://www.rdcproject.com/idCourse -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/idCourse">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Course"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">ID Course</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/courseName -->
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/courseName">
         <rdfs:domain rdf:resource="http://www.rdcproject.com/Course"/>
         <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
@@ -139,15 +244,20 @@
 
 
     <!-- DATA TYPE DISCIPLINE -->
-    <!-- http://www.rdcproject.com/disciplineName -->
 
+    <!-- http://www.rdcproject.com/disciplineName -->
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/disciplinename">
         <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
         <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
         <rdfs:label xml:lang="en">Discipline Name</rdfs:label>
     </owl:DatatypeProperty>
     
-
+    <!-- http://www.rdcproject.com/disciplineAbbreviation -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/disciplineAbbreviation">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">Discipline Abbreviation</rdfs:label>
+    </owl:DatatypeProperty>
 
     <!-- http://www.rdcproject.com/idDiscipline -->
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/idDiscipline">
@@ -157,38 +267,7 @@
         <rdfs:label xml:lang="en">ID Discipline</rdfs:label>
     </owl:DatatypeProperty>
     
-
-
-    <!-- http://www.rdcproject.com/idProfessor -->
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/idProfessor">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Teacher"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-        <rdfs:label xml:lang="en">ID Professor</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.rdcproject.com/idRoom -->
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/idRoom">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Classroom"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-        <rdfs:label xml:lang="en">ID Room</rdfs:label>
-    </owl:DatatypeProperty>
-
-    <!-- http://www.rdcproject.com/idCourse -->
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/idCourse">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Course"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-        <rdfs:label xml:lang="en">ID Course</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://www.rdcproject.com/obligatory -->
-
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/obligatory">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
         <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
@@ -196,94 +275,6 @@
         <rdfs:label xml:lang="en">Obligatory</rdfs:label>
     </owl:DatatypeProperty>
     
-
-
-    <!-- http://www.rdcproject.com/role -->
-
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/role">
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Teacher"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-        <rdfs:label xml:lang="en">Role</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.rdcproject.com/semester -->
-
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/semester">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-        <rdfs:label xml:lang="en">Semester</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.rdcproject.com/totalHours -->
-
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/totalhours">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
-        <rdfs:label xml:lang="en">Total Hours</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.rdcproject.com/weekHours -->
-
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/weekhours">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
-        <rdfs:label xml:lang="en">Week Hours</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.rdcproject.com/wifi -->
-
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/wifi">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Classroom"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">Wifi</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.rdcproject.com/wired -->
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/wired">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Classroom"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">Wired</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://xmlns.com/foaf/0.1/firstName -->
-    <!-- <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/firstName">
-        <rdfs:domain rdf:resource="http://www.w3.org/2000/10/swap/pim/contact#Person"/>
-    </rdf:Description> -->
-    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/firstName">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Teacher"/>
-        <rdfs:label xml:lang="en">First Name</rdfs:label>
-    </owl:DatatypeProperty>
-
-
-    <!-- http://xmlns.com/foaf/0.1/lastName -->
-    <!-- <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/lastName">
-        <rdfs:domain rdf:resource="http://www.w3.org/2000/10/swap/pim/contact#Person"/>
-    </rdf:Description> -->
-     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/lastName">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.rdcproject.com/Teacher"/>
-        <rdfs:label xml:lang="en">Last Name</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
     <!-- http://www.rdcproject.com/year -->
     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/year">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
@@ -292,6 +283,64 @@
         <rdfs:label xml:lang="en">year</rdfs:label>
     </owl:DatatypeProperty>
 
+    <!-- http://www.rdcproject.com/semester -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/semester">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">Semester</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://www.rdcproject.com/totalHours -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/totalhours">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+        <rdfs:label xml:lang="en">Total Hours</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://www.rdcproject.com/weekHours -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/weekhours">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Discipline"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+        <rdfs:label xml:lang="en">Week Hours</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    
+    <!-- DATA TYPE TEACHER -->
+
+    <!-- http://www.rdcproject.com/idProfessor -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/idProfessor">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Teacher"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">ID Professor</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://xmlns.com/foaf/0.1/firstName -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/firstName">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Teacher"/>
+        <rdfs:label xml:lang="en">First Name</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://xmlns.com/foaf/0.1/lastName -->
+     <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/lastName">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Teacher"/>
+        <rdfs:label xml:lang="en">Last Name</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://www.rdcproject.com/role -->
+    <owl:DatatypeProperty rdf:about="http://www.rdcproject.com/role">
+        <rdfs:domain rdf:resource="http://www.rdcproject.com/Teacher"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <rdfs:label xml:lang="en">Role</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+    
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -300,16 +349,24 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
-
 
     <!-- http://www.rdcproject.com/Classroom -->
     <owl:Class rdf:about="http://www.rdcproject.com/Classroom">
         <rdfs:comment xml:lang="en">Is the class Room where the course is taught</rdfs:comment>
         <rdfs:label xml:lang="en">Classroom</rdfs:label>
     </owl:Class>
-    
 
+    <!-- http://www.rdcproject.com/Preference -->
+    <owl:Class rdf:about="http://www.rdcproject.com/Preference">
+        <rdfs:comment xml:lang="en">Is the Preference</rdfs:comment>
+        <rdfs:label xml:lang="en">Preference</rdfs:label>
+    </owl:Class>
+
+    <!-- http://www.rdcproject.com/DayPreference -->
+    <owl:Class rdf:about="http://www.rdcproject.com/DayPreference">
+        <rdfs:comment xml:lang="en">Is the Day Preference</rdfs:comment>
+        <rdfs:label xml:lang="en">Day Preference</rdfs:label>
+    </owl:Class>
 
     <!-- http://www.rdcproject.com/Course -->
     <owl:Class rdf:about="http://www.rdcproject.com/Course">
@@ -317,15 +374,18 @@
         <rdfs:label xml:lang="en">Course</rdfs:label>
     </owl:Class>
     
-
-
     <!-- http://www.rdcproject.com/Discipline -->
-
     <owl:Class rdf:about="http://www.rdcproject.com/Discipline">
         <rdfs:comment xml:lang="en">Is the Subject</rdfs:comment>
         <rdfs:label xml:lang="en">Discipline</rdfs:label>
     </owl:Class>
-    
+
+    <!-- http://www.rdcproject.com/Teacher -->
+    <owl:Class rdf:about="http://www.rdcproject.com/Teacher">
+        <rdfs:comment xml:lang="en">It is the main class. It describes the teacher</rdfs:comment>
+        <rdfs:label xml:lang="en">Teacher</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/10/swap/pim/contact#Person"/>
+    </owl:Class>
 
 
     <!-- http://www.rdcproject.com/Postgraduate_course --> 
@@ -334,18 +394,6 @@
         <rdfs:label xml:lang="en">Postgraduate_course</rdfs:label>
         <rdfs:subClassOf rdf:resource="http://www.rdcproject.com/Course"/>
     </owl:Class> -->
-    
-
-
-    <!-- http://www.rdcproject.com/Teacher -->
-
-    <owl:Class rdf:about="http://www.rdcproject.com/Teacher">
-        <rdfs:comment xml:lang="en">Is the main class. It describe the teacher</rdfs:comment>
-        <rdfs:label xml:lang="en">Teacher</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/10/swap/pim/contact#Person"/>
-    </owl:Class>
-    
-
 
     <!-- http://www.rdcproject.com/Undergraduate_course -->
 
@@ -355,7 +403,6 @@
         <rdfs:subClassOf rdf:resource="http://www.rdcproject.com/Course"/>
     </owl:Class> -->
     
-
 
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
