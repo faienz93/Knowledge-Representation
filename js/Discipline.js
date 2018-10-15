@@ -216,11 +216,11 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
      * to a day to avoid
      */
     this.checkIncompatibilyDay = function (v) {
+        var inDay = false;
         if (preference.some(e => e.avoidLessonDay === v)) {
-            return true;
-        } else {
-            return false;
-        }
+            inDay = true;
+        } 
+        return inDay;
     }
 
     /**
@@ -278,6 +278,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         var splitD = { "splitdurationlessons6h": d };
         preference.push(splitD);
     }
+
     /**
      * Return the preference of split duration lesson
      */
