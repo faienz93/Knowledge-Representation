@@ -5,12 +5,12 @@
  * This file create a CLassroom Class
  * ===========================================================================
  */
-function Classroom(id, name, address, capacity, wifi, wired) {
+function Classroom(id, name, address, capacity, chalk, wired) {
     this.id = id;
     this.name = name;
     this.address = address;
     this.capacity = capacity;
-    this.wifi = wifi;
+    this.chalk = chalk;
     this.wired = wired;
 
     /**
@@ -43,10 +43,10 @@ function Classroom(id, name, address, capacity, wifi, wired) {
     }
 
     /**
-     * Return wifii
+     * Return chalk
      */
-    this.getWifi = function () {
-        return this.wifi;
+    this.getChalk = function () {
+        return this.chalk;
     }
 
     /**

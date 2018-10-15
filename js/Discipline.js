@@ -277,6 +277,38 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     }
 
     /**
+     * ****************************
+     * ***** CHALK CLASS *****
+     * ****************************
+     */
+
+    /**
+     * Set the preference that for this discipline 
+     * that classroom has the chalk
+     */
+    this.chalkClass = function (d="No") {
+        var chalkBool = { "chalkclass": d };
+        preference.push(chalkBool);
+    }
+    
+
+    /**
+     * Return based on key the value that i find
+     */
+    this.getChalkClass = function () {
+        var obj = preference.find(o => o.chalkclass);
+        console.log(obj);
+        if (obj != undefined) {            
+            return obj.chalkclass;
+        }
+        else {
+            return undefined;
+        }
+    }
+     
+
+
+    /**
      * **********************************************************************************************
      * ****************************************** TOSTRING ******************************************
      * **********************************************************************************************

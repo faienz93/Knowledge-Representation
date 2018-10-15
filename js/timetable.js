@@ -257,6 +257,26 @@ reactor.createRule("consecutiveLessons", -2, { l1: Lesson, l2 : Lesson },
         
     });
 
+/**
+ * RULE: Professor preferences a classroom with chalk
+ * 
+ */
+    reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
+    function (l) {
+        console.log(l.getDiscipline().getChalkClass()+"<>"+l.getClassroom().getChalk())
+        return  l.getClassroom().getChalk()!= l.getDiscipline().getChalkClass();
+    },
+    function (l) {
+        
+        var compatibilityRooms=[];
+        for (var i=0;i<classrooms.length;i++){
+            if(classrooms[i].getChalk() == l.getDiscipline().getChalkClass()){
+                compatibilityRooms.push(classrooms[i]);
+                    }}
+        var randomClassroom = compatibilityRooms[Math.floor(Math.random() * compatibilityRooms.length)];       
+        l.setClassroom(randomClassroom);
+
+    });
 
 
 /**

@@ -31,16 +31,16 @@ var events = [];
 // var classrooms = ['Aula Ercolani 1', 'Aula Ercolani 2', 'Aula Ercolani 3', 'Lab Ercolani', 'Ranzani', 'Vitali'];
 // var classrooms = ['Aula Ercolani 1', 'Aula Ercolani 2'];
 var classrooms = [];
-classrooms.push(new Classroom(12347, "E1", "Ercolani", 40, true, true));
-classrooms.push(new Classroom(12348, "E2", "Ercolani", 40, true, true));
-classrooms.push(new Classroom(12349, "E3", "Ercolani", 30, true, true));
-classrooms.push(new Classroom(51200, "Enriquez", "Matematica", 30, false, false));
-classrooms.push(new Classroom(51201, "Pincherle", "Matematica", 30, false, false));
-classrooms.push(new Classroom(51202, "Cremona", "Matematica", 30, false, false));
-classrooms.push(new Classroom(51203, "Tonelli", "Matematica", 30, true, false));
-classrooms.push(new Classroom(51204, "Sem8", "Matematica", 30, true, false));
-classrooms.push(new Classroom(44981, "C1 Ranzani", "Ranzani", 30, false, false));
-classrooms.push(new Classroom(44982, "Lab Ranzani", "Ranzani", 30, true, true));
+classrooms.push(new Classroom(12347, "E1", "Ercolani", 40, "No", false));
+classrooms.push(new Classroom(12348, "E2", "Ercolani", 40, "No", false));
+classrooms.push(new Classroom(12349, "E3", "Ercolani", 30, "No", false));
+classrooms.push(new Classroom(51200, "Enriquez", "Matematica", 30, "No", false));
+classrooms.push(new Classroom(51201, "Pincherle", "Matematica", 30, "No", false));
+classrooms.push(new Classroom(51202, "Cremona", "Matematica", 30, "No", false));
+classrooms.push(new Classroom(51203, "Tonelli", "Matematica", 30, "No", false));
+classrooms.push(new Classroom(51204, "Sem8", "Matematica", 30, "No", false));
+classrooms.push(new Classroom(44981, "C1 Ranzani", "Ranzani", 30, "No", false));
+classrooms.push(new Classroom(44982, "Lab Ranzani", "Ranzani", 30, "Yes", true));
 
 
 
@@ -179,13 +179,17 @@ cn.setProfessor(giuCas);
 // bd.avoidLessonDay("Monday");
 // bd.avoidLessonDay("Tuesday");
 
-iot.consecutiveDay(true);
-sismob.consecutiveDay(true);
-bd.consecutiveDay(true);
+//GIORNI CONSECUTIVI
+
+// iot.consecutiveDay(true);
+// sismob.consecutiveDay(true);
+// bd.consecutiveDay(true);
 
 // iot.setPeriodOfDay("AM");
 // sismob.setPeriodOfDay("AM");
 // bd.setPeriodOfDay("AM");
+
+
 
 var subject = [];
 
@@ -218,13 +222,47 @@ subject.push(iot);
 subject.push(sismob);
 subject.push(siswir)
 
+
+
+
+
+
+
+//===============PREFERENZE==========================
+
+
+//Preferenze di default 
 for(var i=0;i<subject.length;i++){
     subject[i].splitDurationLessons6h(3);
+    subject[i].chalkClass();
 }
 
-iot.splitDurationLessons6h(2);
-// sismob.splitDurationLessons6h(4);
 
+
+// Preferenze di Marco di Felice
+// iot.avoidLessonDay("Monday");
+// iot.avoidLessonDay("Tuesday");
+// sismob.avoidLessonDay("Monday");
+// sismob.avoidLessonDay("Tuesday");
+// bd.avoidLessonDay("Monday");
+// bd.avoidLessonDay("Tuesday");
+
+//GIORNI CONSECUTIVI
+
+// iot.consecutiveDay(true);
+// sismob.consecutiveDay(true);
+// bd.consecutiveDay(true);
+
+// iot.setPeriodOfDay("AM");
+// sismob.setPeriodOfDay("AM");
+// bd.setPeriodOfDay("AM");
+
+//SPLIT Lessons
+iot.splitDurationLessons6h(2);
+sismob.splitDurationLessons6h(4);
+
+//GESSETTO solo Ranzani ha il gessetto
+iot.chalkClass("Yes");
 
 /**
  * 
