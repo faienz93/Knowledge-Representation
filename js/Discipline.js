@@ -145,13 +145,14 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
      * ******************************************************************************************
      */
     this.checkExistPreference = function (key) {
+        var exist = false;
         for (var i = 0; i < preference.length; i++) {
             if (key in preference[i]) {
-                return true;
-            } else {
-                return false;
+                exist = true;
             }
         }
+        return exist;
+        
     }
 
     /**
@@ -201,6 +202,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
 
     /**
      * Delete from preference the avoid lesson day
+     * DA USARAE PER ALESSIO
      */
     this.deleteAvoidLessonDay = function () {
         for (var i = 0; i < preference.length; i++) {
@@ -231,6 +233,11 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
      * Set the period of day into preference
      */
     this.setPeriodOfDay = function (d) {
+        if (this.checkExistPreference("setperiodofday")) {
+            for (var i = 0; i < preference.length; i++) {
+                preference.splice(i.setperiodofday, 1);
+            }
+        }
         var pDay = { "setperiodofday": d };
         preference.push(pDay);
     }
@@ -294,7 +301,12 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
      * Set the preference that for this discipline 
      * that classroom has the chalk
      */
-    this.chalkClass = function (d="No") {
+    this.chalkClass = function (d) {
+        if (this.checkExistPreference("chalkclass")) {
+            for (var i = 0; i < preference.length; i++) {
+                preference.splice(i.chalkclass, 1);
+            }
+        }
         var chalkBool = { "chalkclass": d };
         preference.push(chalkBool);
     }
@@ -303,14 +315,11 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     /**
      * Return based on key the value that i find
      */
-    this.getChalkClass = function () {
-        var obj = preference.find(o => o.chalkclass);
-        console.log(obj);
-        if (obj != undefined) {            
-            return obj.chalkclass;
-        }
-        else {
-            return undefined;
+    this.getChalkClass = function (v) {
+        if (preference.some(e => e.chalkclass === v)) {
+            return true;
+        } else {
+            return false;
         }
     }
      

@@ -63,19 +63,18 @@ reactor.createRule("swapDay", -1, { l: Lesson },
 /**
 * RULE: Assign Classroom based on number subscription
 */
-// reactor.createRule("assignClassroom", 0, { l: Lesson },
-//     function (l) {
+reactor.createRule("assignClassroom", 0, { l: Lesson },
+    function (l) {
+        return l.getDiscipline().getNumStudent() > l.getClassroom().getCapacity();
+    },
+    function (l) {
+        printForDebug("ASSIGNCLASSROOM " + l.getDiscipline().getName() + " " + l.getDiscipline().getNumStudent() + " -- " + l.getClassroom().toString());
+        var compatibilityClassroom = checkCapacityClassroom(l.getDiscipline().getNumStudent());
+        var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
+        l.setClassroom(newClassRoom);
+        assert(l);
 
-//         return l.getDiscipline().getNumStudent() > l.getClassroom().getCapacity();
-//     },
-//     function (l) {
-//         printForDebug("ASSIGNCLASSROOM " + l.getDiscipline().getName() + " " + l.getDiscipline().getNumStudent() + " -- " + l.getClassroom().toString());
-//         var compatibilityClassroom = checkCapacityClassroom(l.getDiscipline().getNumStudent());
-//         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
-//         l.setClassroom(newClassRoom);
-//         assert(l);
-
-//     });
+    });
 
 
 
@@ -182,22 +181,21 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
     });
 
 
-    /**
-     * 
-     */
-    reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
+/**
+ * Avoid that the same lesson is taught in the same day
+ */
+reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
 
         return l1 != l2 &&
-             l1.getDiscipline().getName() == l2.getDiscipline().getName() && l1.getDay() == l2.getDay();
+            l1.getDiscipline().getName() == l2.getDiscipline().getName() && l1.getDay() == l2.getDay();
     },
     function (l1, l2) {
 
-       // printForDebug("NOSameLessonSameDay " + l1.toString() + " " + l2.toString(), "white", "pink");
-
+        printForDebug("NOSameLessonSameDay " + l1.toString() + " " + l2.toString(), "white", "pink");
         var actualDayToAvoid = l2.getDay();
         l1.setDay(generateDayByExcludingOne(actualDayToAvoid));
-        // assert(timetable);
+        assert(timetable);
     });
 
 /**
@@ -211,135 +209,64 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
 /**
  * RULE: split lessons in days consecutive 
  */
-reactor.createRule("consecutiveLessons", -2, { l1: Lesson, l2 : Lesson },
-    function (l1, l2) {
-        // check if exist preference with specific key
-        var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveDay");
-        var actuallyConsecutive = false;
-        if( Math.abs(defineDayNumber(l1.getDay())-(defineDayNumber(l2.getDay())) == 1)){
-            actuallyConsecutive = true;
-        }  
-        return l1.getDiscipline()==l2.getDiscipline() && 
-        existConsecutiveDay && 
-        !actuallyConsecutive &&
-        l1.getDiscipline().getSplitDuration() == null;
-    }, function (l1,l2) {
-        
-        var minDay=Math.min(defineDayNumber(l1.getDay()),defineDayNumber(l2.getDay()));
-        l1.setDay(defineDayString(minDay));
-        l2.setDay(defineDayString(minDay+1));        
-        
-    });
+// reactor.createRule("consecutiveLessons", -2, { l1: Lesson, l2 : Lesson },
+//     function (l1, l2) {
+//         // check if exist preference with specific key
+//         var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveDay");
+//         var actuallyConsecutive = false;
+//         if( Math.abs(defineDayNumber(l1.getDay())-(defineDayNumber(l2.getDay())) == 1)){
+//             actuallyConsecutive = true;
+//         }  
+//         return l1.getDiscipline()==l2.getDiscipline() && 
+//         existConsecutiveDay && 
+//         !actuallyConsecutive &&
+//         l1.getDiscipline().getSplitDuration() == null;
+//     }, function (l1,l2) {
+
+//         var minDay=Math.min(defineDayNumber(l1.getDay()),defineDayNumber(l2.getDay()));
+//         l1.setDay(defineDayString(minDay));
+//         l2.setDay(defineDayString(minDay+1));        
+
+//     });
 
 /**
- * RULE: split lessons in days consecutive special case :6 hours and preference 2-2-2
+ * RULE: split lessons into consecutive days :6 hours and preference 2-2-2
  * (NB. VEN - LUN- MAR è considerato consecutivo)
  */
-    reactor.createRule("consecutiveLessons6h222", -2, { l1: Lesson, l2 : Lesson, l3:Lesson},
-    function (l1, l2,l3) {
-        // check if exist preference with specific key
-        var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveDay");
-        var actuallyConsecutive = false;
-        if((defineDayNumber(l1.getDay())+defineDayNumber(l2.getDay())+(defineDayNumber(l3.getDay())) % 3) == 0){
-            actuallyConsecutive = true;
-        }  
-        return l1.getDiscipline()==l2.getDiscipline() && 
-        l2.getDiscipline()==l3.getDiscipline() &&
-        existConsecutiveDay && 
-        !actuallyConsecutive &&
-        l1.getDiscipline().getSplitDuration() == 2;
-    }, function (l1,l2,l3) {
-        
-        var minDay=Math.min(defineDayNumber(l1.getDay()),defineDayNumber(l2.getDay()),defineDayNumber(l3.getDay()))
-            l1.setDay(defineDayString(minDay));
-            l2.setDay(defineDayString(minDay+1));        
-            l3.setDay(defineDayString(minDay+2));     
-        
-    });
+// reactor.createRule("consecutiveLessons6h222", -2, { l1: Lesson, l2 : Lesson, l3:Lesson},
+// function (l1, l2,l3) {
+//     // check if exist preference with specific key
+//     var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveDay");
+//     var actuallyConsecutive = false;
+//     if((defineDayNumber(l1.getDay())+defineDayNumber(l2.getDay())+(defineDayNumber(l3.getDay())) % 3) == 0){
+//         actuallyConsecutive = true;
+//     }  
+//     return l1.getDiscipline()==l2.getDiscipline() && 
+//     l2.getDiscipline()==l3.getDiscipline() &&
+//     existConsecutiveDay && 
+//     !actuallyConsecutive &&
+//     l1.getDiscipline().getSplitDuration() == 2;
+// }, function (l1,l2,l3) {
 
-/**
- * RULE: Professor preferences a classroom with chalk
- * 
- */
-    reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
-    function (l) {
-        console.log(l.getDiscipline().getChalkClass()+"<>"+l.getClassroom().getChalk())
-        return  l.getClassroom().getChalk()!= l.getDiscipline().getChalkClass();
-    },
-    function (l) {
-        
-        var compatibilityRooms=[];
-        for (var i=0;i<classrooms.length;i++){
-            if(classrooms[i].getChalk() == l.getDiscipline().getChalkClass()){
-                compatibilityRooms.push(classrooms[i]);
-                    }}
-        var randomClassroom = compatibilityRooms[Math.floor(Math.random() * compatibilityRooms.length)];       
-        l.setClassroom(randomClassroom);
+//     var minDay=Math.min(defineDayNumber(l1.getDay()),defineDayNumber(l2.getDay()),defineDayNumber(l3.getDay()))
+//         l1.setDay(defineDayString(minDay));
+//         l2.setDay(defineDayString(minDay+1));        
+//         l3.setDay(defineDayString(minDay+2));     
 
-    });
+// });
+
+
+
+
+
+
+
 
 
 /**
- * RULE: split the duration lessons of 5 h into two days 
- */
-// reactor.createRule("spliDurationLesson5H", -2, { l: Lesson },
-//     function (l) {
-//         if (l.getDurationLesson() == 5) return true;
-//     }, function (l) {
-//         var randomD = randomIntFromInterval(2, 3);
-//         var newL = new Lesson(generateDayByExcludingOne(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + randomD, l.getClassroom());
-//         l.setDurationLesson(5 - randomD);
-//         timetable.tt.push(newL);
-//     });
-
-/**
- * RULE: split the duration lessons of 5 h into two days consecutive 
- */
-// reactor.createRule("spliDurationLesson5HConsecutive", -1, { l: Lesson },
-//     function (l) {
-//         // check if exist preference with specific key
-//         var existConsecutiveDay = l.getDiscipline().checkExistPreference("consecutiveDay");
-//         return existConsecutiveDay && l.getDurationLesson() == 5;
-//     }, function (l) {
-
-//         printForDebug("5HCONSECUTIVE: " + l.toString(), "red");
-
-//         var newL = new Lesson(generateDayConsecutive(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom());
-//         l.setDurationLesson(2);
-//         timetable.tt.push(newL);
-//         assert(timetable);
-//     });
-
-/**
- * split the duration lessons of 6 h .
- * The solution are two:  
- *  - split lesson in three days (2 - 2 - 2)
- *  - split lesson in two days (4 - 2) for laboratory.
- *    This case is inclused into the first. In fact the function @generateDayByExcludingOne 
- *    exlude alway the same day and for this can be the case 2 2 2 or 4 2
- *  
- */
-// reactor.createRule("spliDurationLesson6H", -2, { l: Lesson },
-//     function (l) {
-//         return l.getDurationLesson() == 6;
-//     },
-//     function (l) {
-//         // new Lesson(generateDayByExcludingOne(l.getDay()), l.getDiscipline(),l.getProfessor(), START_LESSONS, START_LESSONS + randomD, l.getClassroom(), l.getCourse(), l.getNumStudent());
-//         var newL = new Lesson(generateDayByExcludingOne(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom());
-//         var newL2 = new Lesson(generateDayByExcludingOne(l.getDay()), l.getDiscipline(), START_LESSONS, START_LESSONS + 2, l.getClassroom());
-//         l.setDurationLesson(2);
-//         if (newL.getDay() == newL2.getDay()) {
-//             newL2.setClassroom(newL.getClassroom());
-//         }
-//         timetable.tt.push(newL);
-//         timetable.tt.push(newL2);
-
-//     });
-
-/**
- * ***********************************************************************
- * ***************************** PRIORITY -3 *****************************
- * *********************************************************************** 
+ * ********************************************************************************
+ * ***************************** PREFERENCE PROFESSOR *****************************
+ * ******************************************************************************** 
  */
 
 /**
@@ -370,12 +297,10 @@ reactor.createRule("avoidLessonProfessor", -1, { l: Lesson },
 */
 reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
     function (l) {
-
         var setPreference;
         if (l.getDiscipline().checkExistPreference("setperiodofday")) {
             setPreference = l.getDiscipline().getPeriodOfDay("PM");
         }
-
         return setPreference == "PM" && l.getStartLesson() < 13;
     },
     function (l) {
@@ -384,7 +309,6 @@ reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
         l.setStartLesson(13);
         l.setEndLesson(13 + dL);
         assert(timetable);
-
     });
 
 /**
@@ -392,18 +316,14 @@ reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
 */
 reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
     function (l) {
-
         var setPreference;
         if (l.getDiscipline().checkExistPreference("setperiodofday")) {
             setPreference = l.getDiscipline().getPeriodOfDay("AM");
         }
-
         return setPreference == "AM" && l.getStartLesson() >= 13;
     },
     function (l) {
         printForDebug("SETPERIODOFDAY_AM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "red");
-
-
         if (l.getStartLesson() == 13) {
             var actualDay = l.getDay();
             l.setNewDay(actualDay, 1);
@@ -412,7 +332,34 @@ reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
         var dL = l.getDurationLesson();
         l.setStartLesson(START_LESSONS);
         l.setEndLesson(START_LESSONS + dL);
+        assert(timetable);
+    });
 
+/**
+ * RULE: Professor preferences a classroom with chalk
+ * 
+ */
+reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
+    function (l) {
+        return l.getDiscipline().checkExistPreference("chalkclass") &&
+             l.getDiscipline().getChalkClass("yes") &&
+             l.getClassroom().getChalk() == "no";
+    },
+    function (l) {
+
+        // console.log(l.getDiscipline().getName() + " " +l.getDiscipline().getPreference());
+        // console.log(l.getDiscipline().getPreference());
+        var compatibilityRooms = [];
+        for (var i = 0; i < classrooms.length; i++) {
+            
+            if (classrooms[i].getChalk() == "yes") {
+                compatibilityRooms.push(classrooms[i]);
+            }
+        }
+   
+        var randomClassroom = compatibilityRooms[Math.floor(Math.random() * compatibilityRooms.length)];
+        l.setClassroom(randomClassroom);
+        printForDebug("CHECKCLASSROOMCHALK " + randomClassroom, "yellow", "black");
         assert(timetable);
     });
 
@@ -468,7 +415,7 @@ var timetable = new TimetableArray();
 for (var i = 0; i < subject.length; i++) {
     var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
     // var subjectWeeksHours=subject[i].getWeeksHours();
-    var subjectWeeksHours=DURATION_LESSON;
+    var subjectWeeksHours = DURATION_LESSON;
     if (subjectWeeksHours < 4) {
         timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
     }
@@ -483,17 +430,17 @@ for (var i = 0; i < subject.length; i++) {
     if (subjectWeeksHours == 6) {
 
         if (subject[i].getSplitDuration(2)) {
-            
+
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
         }
         else if (subject[i].getSplitDuration(3)) {
-            
+
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
         }
-        else{
+        else {
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
         }

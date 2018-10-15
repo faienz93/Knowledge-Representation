@@ -13,7 +13,7 @@ function TimetableArray() {
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 6;
+var DURATION_LESSON = 2;
 
 // end lessons
 var END_LESSONS = 18;
@@ -31,16 +31,16 @@ var events = [];
 // var classrooms = ['Aula Ercolani 1', 'Aula Ercolani 2', 'Aula Ercolani 3', 'Lab Ercolani', 'Ranzani', 'Vitali'];
 // var classrooms = ['Aula Ercolani 1', 'Aula Ercolani 2'];
 var classrooms = [];
-classrooms.push(new Classroom(12347, "E1", "Ercolani", 40, "No", false));
-classrooms.push(new Classroom(12348, "E2", "Ercolani", 40, "No", false));
-classrooms.push(new Classroom(12349, "E3", "Ercolani", 30, "No", false));
-classrooms.push(new Classroom(51200, "Enriquez", "Matematica", 30, "No", false));
-classrooms.push(new Classroom(51201, "Pincherle", "Matematica", 30, "No", false));
-classrooms.push(new Classroom(51202, "Cremona", "Matematica", 30, "No", false));
-classrooms.push(new Classroom(51203, "Tonelli", "Matematica", 30, "No", false));
-classrooms.push(new Classroom(51204, "Sem8", "Matematica", 30, "No", false));
-classrooms.push(new Classroom(44981, "C1 Ranzani", "Ranzani", 30, "No", false));
-classrooms.push(new Classroom(44982, "Lab Ranzani", "Ranzani", 30, "Yes", true));
+classrooms.push(new Classroom(12347, "E1", "Ercolani", 40, "no", false));
+classrooms.push(new Classroom(12348, "E2", "Ercolani", 40, "no", false));
+classrooms.push(new Classroom(12349, "E3", "Ercolani", 30, "no", false));
+classrooms.push(new Classroom(51200, "Enriquez", "Matematica", 30, "no", false));
+classrooms.push(new Classroom(51201, "Pincherle", "Matematica", 30, "no", false));
+classrooms.push(new Classroom(51202, "Cremona", "Matematica", 30, "no", false));
+classrooms.push(new Classroom(51203, "Tonelli", "Matematica", 30, "no", false));
+classrooms.push(new Classroom(51204, "Sem8", "Matematica", 30, "no", false));
+classrooms.push(new Classroom(44981, "C1 Ranzani", "Ranzani", 30, "no", false));
+classrooms.push(new Classroom(44982, "Lab Ranzani", "Ranzani", 30, "yes", true));
 
 
 
@@ -214,9 +214,10 @@ subject.push(siswir)
 
 
 //Preferenze di default 
-for(var i=0;i<subject.length;i++){
+for(var i=0;i<subject.length;i++){    
     subject[i].splitDurationLessons6h(3);
-    subject[i].chalkClass();
+    subject[i].chalkClass("no");
+    
 }
 
 
@@ -244,58 +245,5 @@ iot.splitDurationLessons6h(2);
 sismob.splitDurationLessons6h(4);
 
 //GESSETTO solo Ranzani ha il gessetto
-iot.chalkClass("Yes");
+iot.chalkClass("yes");
 
-/**
- * 
- * 
- */
-// function splitLessons(arrayLesson){
-//     var subName="";
-//     var subHours=0;
-//     var result=[];
-//     for (var i=0;i<arrayLesson.length;i++){
-//             subHours=arrayLesson[i].getWeeksHours();
-//             subName=arrayLesson[i].getName();
-//             console.log("-------"+subName+"   "+subHours+"------------");
-//             var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
-//             if(subHours<4){
-//                 var newL=new Lesson("Monday", subName, 9, 9+DURATION_LESSON, randomClassroom);
-//                 result.push(newL);
-//             }
-//             else if(subHours==4){
-//                 var newL1=new Lesson("Monday", subName, 9, 11, randomClassroom);
-//                 var newL2=new Lesson("Monday", subName, 9, 11, randomClassroom);
-//                 result.push(newL1);
-//                 result.push(newL2);
-//             }else if(subHours==5){
-//                 var newL1=new Lesson("Monday", subName, 9, 11, randomClassroom);
-//                 var newL2=new Lesson("Monday", subName, 9, 12, randomClassroom);
-//                 result.push(newL1);
-//                 result.push(newL2);
-//             }
-//             else{
-//                 if(arrayLesson[i].getSplitDuration()==2){
-//                 var newL1=new Lesson("Monday", subName, 9, 11, randomClassroom);
-//                 var newL2=new Lesson("Monday", subName, 9, 11, randomClassroom);
-//                 var newL3=new Lesson("Monday", subName, 9, 11, randomClassroom);
-//                 result.push(newL1);
-//                 result.push(newL2);
-//                 result.push(newL3);
-//                 }else if(arrayLesson[i].getSplitDuration()==3){
-//                 var newL1=new Lesson("Monday", subName, 9, 12, randomClassroom);
-//                 var newL2=new Lesson("Monday", subName, 9, 12, randomClassroom);
-//                 result.push(newL1);
-//                 result.push(newL2);
-//                 }
-//                 else{
-//                 var newL1=new Lesson("Monday", subName, 9, 11, randomClassroom);
-//                 var newL2=new Lesson("Monday", subName, 9, 13, randomClassroom);
-//                 result.push(newL1);
-//                 result.push(newL2);
-//                 }
-//             }
-//           }
-
-//         return result;
-//     }
