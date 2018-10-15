@@ -171,24 +171,6 @@ cn.setProfessor(giuCas);
 
 
 
-// Preferenze di Marco di Felice
-// iot.avoidLessonDay("Monday");
-// iot.avoidLessonDay("Tuesday");
-// sismob.avoidLessonDay("Monday");
-// sismob.avoidLessonDay("Tuesday");
-// bd.avoidLessonDay("Monday");
-// bd.avoidLessonDay("Tuesday");
-
-//GIORNI CONSECUTIVI
-
-// iot.consecutiveDay(true);
-// sismob.consecutiveDay(true);
-// bd.consecutiveDay(true);
-
-// iot.setPeriodOfDay("AM");
-// sismob.setPeriodOfDay("AM");
-// bd.setPeriodOfDay("AM");
-
 
 
 var subject = [];

@@ -64,6 +64,14 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         return professor;
     }
 
+    this.getAllProfessor = function() {
+        var allProfessor = '';
+        for(var i = 0; i < professor.length; i++){
+            allProfessor += professor[i].getCompleteName() + " ";
+        }
+        return allProfessor;
+    }
+
     /**
      * Return an Array of Professor of this discipline in JSON Format
      */
@@ -277,9 +285,9 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     }
 
     /**
-     * ****************************
-     * ***** CHALK CLASS *****
-     * ****************************
+     * *****************************
+     * ******** CHALK CLASS ********
+     * *****************************
      */
 
     /**

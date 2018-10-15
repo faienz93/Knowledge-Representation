@@ -467,8 +467,8 @@ var timetable = new TimetableArray();
 
 for (var i = 0; i < subject.length; i++) {
     var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
-    var subjectWeeksHours=subject[i].getWeeksHours();
-    //var subjectWeeksHours=DURATION_LESSON;
+    // var subjectWeeksHours=subject[i].getWeeksHours();
+    var subjectWeeksHours=DURATION_LESSON;
     if (subjectWeeksHours < 4) {
         timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
     }
@@ -525,7 +525,7 @@ reactor.run(Infinity, true, function () {
             title: timetable.tt[i].getDiscipline().getName() + ' - ' + timetable.tt[i].getClassroom().getName(),
             content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
                 "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
-                "PROFESSORE " + timetable.tt[i].getDiscipline().getProfessor()[0].getCompleteName(),//'Hello World! <br> <p>Foo Bar</p>',
+                "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
             category: timetable.tt[i].getDiscipline().getCourse()
         }
         events.push(newEvent);

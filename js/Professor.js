@@ -63,7 +63,7 @@ function Professor(name, surname, id, role) {
      * Return the main information about the professor and preference
      */
     this.toString = function () {
-        return this.name + " " + this.surname;
+        return this.id + " " + this.name + " " + this.surname + " " + this.role;
     }
 
     
