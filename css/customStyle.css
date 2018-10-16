@@ -41,3 +41,31 @@
   height:60px;   
   background:#6cf;
 } */
+
+
+.mainbutton{
+  margin:auto;
+  display:block;
+
+}
+
+/* BUTTON STYLES */
+.mainbutton{
+  padding:16px 32px;
+  font-family:helvetica;
+  font-size:32px;
+  font-weight:100;
+  color:#fff;
+  background: #7e4b83;
+  border:10px;
+  font-weight:100;
+  width: 350px;
+  height: 350px;
+  margin-top: 70px;
+  border-radius: 50%;
+  border: 5px solid #4c2b4f;
+
+}
+.mainbutton:hover{
+  background: #4c2b4f;
+}

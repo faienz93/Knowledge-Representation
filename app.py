@@ -19,6 +19,10 @@ def index():
 def test():
     return render_template("test.html")
 
+# @app.route('/ciao')
+# def ciao():
+#     return render_template("index.html")
+
 
 # ======================================================
 # I indicate where load the static file (lib) instead static directory
@@ -181,9 +185,9 @@ def findClassRoom():
 
 
 if __name__ == '__main__':
-    app.run()
+    # app.run()
     # If debug = TRUE
-    # app.run(debug = True)
+    app.run(debug = True)
     # Bind to PORT if defined, otherwise default to 5000.
     # port = int(os.environ.get('PORT', 6000))
     # app.run(host='0.0.0.0', port=port)

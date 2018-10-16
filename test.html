@@ -9,32 +9,24 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- <script src="lib/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script> -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" crossorigin="anonymous">
+    <!-- Other CSS -->
     <link rel="stylesheet" href="lib/chosen/chosen.css">
+    <link rel="stylesheet" href="css/customStyle.css">
 
 </head>
 
 <body>
+    
+    <div>
+            <!-- onclick="location.href = 'http://127.0.0.1:5000/ciao'" -->
+        <button class="mainbutton"><a href="#"><img src="assets/img/database.png"></a><br>Aggiungi al Database</button>
+        <button class="mainbutton"><a href="#"><img src="assets/img/link.png"></a><br>Aggiungi Vincolo</button>
+    </div>
+    
 
-    <form action="http://httpbin.org/post" method="post">
-        <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select" name="test" tabindex="4">
-          <option value=""></option>
-          <option>American Black Bear</option>
-          <option>Asiatic Black Bear</option>
-          <option>Brown Bear</option>
-          <option>Giant Panda</option>
-          <option>Sloth Bear</option>
-          <option>Sun Bear</option>
-          <option>Polar Bear</option>
-          <option>Spectacled Bear</option>
-        </select>
-        <input type="submit">
-      </form>
-
-      <script src="lib/jquery-3.3.1.min.js" type="text/javascript"></script>
-      <script src="js/init.js" type="text/javascript"></script>
-      <script src="lib/chosen/chosen.jquery.js" type="text/javascript"></script>
-      
- 
 </body>
 
 </html>
