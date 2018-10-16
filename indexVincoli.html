@@ -23,18 +23,18 @@
     -->
     <div class="card card-outline-secondary">
         <div class="top card-header">
-            <h1 class="mb-0"><img src="assets/img/books-stack-of-three.png"> Vincolo</h1>
+            <h1 class="mb-0"><img src="assets/img/constraint.png"> Vincolo</h1>
         </div>
         <div class="card-header" id="headerConstraint">
-            <h3 class="mb-0"><a href="#"><img src="assets/img/add-circular-button.png"></a> Aggiungi</h3>
+            <h3 class="mb-0"><a href="#"><img src="assets/img/policy.png"></a> Gestione</h3>
         </div>
         <div class="card-body" id="cardBodyConstraint">
             <!--  -->
             <!--  -->
             <form class="form" id="constraintForm" role="form" autocomplete="off" action="#" method="POST">
-                <input type="hidden" id="weekHours">
+                <!-- <input type="hidden" id="weekHours"> -->
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Nome Professore</label>
+                    <label class="col-lg-3 col-form-label form-control-label">Scelta Professore</label>
                     <div class="col-lg-9">
                         <select id="findProfessor" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
                                     tabindex="4" size="0" name="selectProfessor" required>
@@ -42,7 +42,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group row">
+
+                <!-- <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome Disciplina</label>
                     <div class="col-lg-9">
                         <select id="findDiscipline" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
@@ -50,52 +51,64 @@
                             <option value=""></option>
                         </select>
                     </div>
-                </div>
-                <div class="form-group row" id="RowDiscipline6H">
-                    <label class="col-lg-3 col-form-label form-control-label">Con quale formato di ore si vuole suddividere la disciplina da 6 ore settimanali?</label>
-                    <div class="col-lg-9">
-                        <fieldset id="Discipline6H">
-                            <input type="radio" value="2" name="Discipline6H">2h 2h 2h<br/>
-                            <input type="radio" value="3" name="Discipline6H">3h 3h<br/>
-                            <input type="radio" value="4" name="Discipline6H">4h 2h<br/>
-                        </fieldset>
-                    </div>
-                </div>
-                <div class="form-group row" id="RowConsecutiveDays">
-                    <label class="col-lg-3 col-form-label form-control-label">Si vuole svolgere le lezioni in giorni consecutivi?</label>
-                    <div class="col-lg-9">
-                        <fieldset id="ConsecutiveDays">
-                            <input type="radio" value="1" name="ConsecutiveDays">Si
-                            <input type="radio" value="0" name="ConsecutiveDays">No<br/>
-                        </fieldset>                        
-                    </div>    
-                </div>
-                <div class="form-group row" id="RowWhichConsecutiveDays">
-                        <label class="col-lg-3 col-form-label form-control-label">In quali giorni?</label>
+                </div> -->
+                
+                <div id="DivVincoli">
+
+                    <div class="form-group row" id="RowDiscipline6H">
+                        <label class="col-lg-3 col-form-label form-control-label">Con quale formato di ore si vuole svolgere le discipline da 6 ore settimanali? (default 3h 3h)</label>
                         <div class="col-lg-9">
-                            <fieldset id="3ConsacutiveDays">
-                                <input type="radio" value="LUN" name="3ConsacutiveDays">Lunedi/Martedi/Mercoledi<br/>
-                                <input type="radio" value="MAR" name="3ConsacutiveDays">Martedi/Mercoledi/Giovedi<br/>
-                                <input type="radio" value="MER" name="3ConsacutiveDays">Mercoledi/Giovedi/Venerdi<br/>
-                            </fieldset>
-                            <fieldset id="2ConsacutiveDays">
-                                <input type="radio" value="LUN" name="2ConsacutiveDays">Lunedi/Martedi<br/>
-                                <input type="radio" value="MAR" name="2ConsacutiveDays">Martedi/Mercoledi<br/>
-                                <input type="radio" value="MER" name="2ConsacutiveDays">Mercoledi/Giovedi<br/>
-                                <input type="radio" value="GIO" name="2ConsacutiveDays">Giovedi/Venerdi<br/>
+                            <fieldset id="Discipline6H">
+                                <input type="checkbox" class="checkDisc" value="2" name="Discipline6H" required>2h 2h 2h<br/>
+                                <input type="checkbox" class="checkDisc" value="4" name="Discipline6H">4h 2h<br/>
                             </fieldset>
                         </div>
-                </div>
+                    </div>
 
+                    <div class="form-group row" id="RowConsecutiveDays">
+                        <label class="col-lg-3 col-form-label form-control-label">Se si vuole svolgere lezioni in giorni consecutivi lo si preferisce quando?</label>
+                        <div class="col-lg-9">
+                            <fieldset id="ConsecutiveDays">
+                                <input type="checkbox" class="checkConse" value="0" name="ConsecutiveDays">Inizio settimana<br/>
+                                <input type="checkbox" class="checkConse" value="1" name="ConsecutiveDays">Inizio settimana<br/>                                
+                            </fieldset>
+                        </div>
+                    </div>
 
+                    <div class="form-group row" id="RowSelectDays">
+                        <label class="col-lg-3 col-form-label form-control-label">Non svolegere lezioni in quali giorni? (massimo di due giorni a settimana)</label>
+                        <div class="col-lg-4">
+                            <select id="ChooseDay1" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                                    tabindex="4" size="0" name="selectDay1">
+                            </select>              
+                        </div>
+                        <div class="col-lg-4" id="DivSelectDay2">
+                            <select id="ChooseDay2" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                                    tabindex="4" size="0" name="selectDay2">
+                            </select>              
+                        </div>
+                    </div>
+    
+                    <div class="form-group row" id="RowChalksRoom">
+                        <label class="col-lg-3 col-form-label form-control-label">Preferenza di aula con</label>
+                        <div class="col-lg-9">
+                            <fieldset id="ChalksRoom">
+                                <input type="checkbox" class="checkChalks" value="1" name="ChalksRoom">Gessetti<br/>
+                                <input type="checkbox" class="checkChalks" value="0" name="ChalksRoom">Pennarelli<br/>
+                            </fieldset>                        
+                        </div>    
+                    </div>
 
-              <div class="form-group row">
-                  <label class="col-lg-3 col-form-label form-control-label"></label>
-                  <div class="col-lg-9">
-                      <input type="button" id="resetConstraint" class="btn btn-secondary" value="Cancella">
-                      <input type="submit" class="btn btn-success" value="Conferma Vincoli">
-                  </div>
-              </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                        <div class="col-lg-9">
+                            <input type="button" id="resetConstraint" class="btn btn-info" value="Pulisci">
+                            <input type="button" id="deleteConstraint" class="btn btn-danger" value="Elimina Vincoli">
+                            <input type="submit" class="btn btn-success" value="Aggiorna Vincoli">
+                        </div>
+                    </div>
+                </div>               
+                
           </form>
       </div>
   </div>

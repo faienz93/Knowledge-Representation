@@ -265,9 +265,10 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
     for row in t[1:]:
         teacher = row[0]
         consecutiveDays = row[1]
-        cabledRoom = row[2]
-        chalksRoom = row[3]
-        sixHourSplit = row[4]
+        whichConsecutiveDays = row[2]
+        cabledRoom = row[3]
+        chalksRoom = row[4]
+        sixHourSplit = row[5]
 
         # Create a new Query
         query = '''
@@ -278,6 +279,7 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
         GRAPH <'''+graph_preferences+'''>{
         uni:'''+ teacher +''' a uni:isPreferenceOf;
                                 uni:consecutiveDays "'''+consecutiveDays+'''"; 
+                                uni:whichConsecutiveDays "'''+whichConsecutiveDays+'''"; 
                                 uni:cabledRoom "'''+cabledRoom+'''"; 
                                 uni:chalksRoom "'''+chalksRoom+'''"; 
                                 uni:sixHourSplit "'''+sixHourSplit+'''"                               
@@ -299,9 +301,8 @@ with open('../assets/csv/dayPreferences.csv', 'rb') as csvfile:
     for row in t[1:]:
         teacher = row[0]
         day = row[1]
-        fromHour = row[2]
-        toHour = row[3]
-        noLesson = row[4]
+        noMorning = row[2]
+        noAfternoon = row[3]
 
         # Create a new Query
         query = '''
@@ -312,9 +313,8 @@ with open('../assets/csv/dayPreferences.csv', 'rb') as csvfile:
         GRAPH <'''+graph_dayPreferences+'''>{
         uni:'''+ teacher +''' a uni:isDayPreferenceOf;
                                 uni:day "'''+day+'''"; 
-                                uni:fromHour "'''+fromHour+'''"; 
-                                uni:toHour "'''+toHour+'''"; 
-                                uni:noLesson "'''+noLesson+'''"                               
+                                uni:noMorning "'''+noMorning+'''"; 
+                                uni:noAfternoon "'''+noAfternoon+'''"                           
             }
         }
         '''

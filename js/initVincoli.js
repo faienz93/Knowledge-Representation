@@ -1,79 +1,52 @@
 $(document).ready(function () {
-    // InitRuleReactor(); 
     chosenPlugin();
  
     slideDownAndUp();
     setResetBtns();
     
     selectProfessors();
-    // selectDisciplines();
-    // selectClassrooms();
 
     setShowHideCards();
-    setHideConstraintsRows();
+
+    $('#DivVincoli').hide();
+    $('#DivSelectDay2').hide();
+
+    var ddl1 = $("#ChooseDay1");
+    var ddl2 = $("#ChooseDay2");
+    generateChooseDays(ddl1);
+    generateChooseDays(ddl2);
 
     $('#findProfessor').change(function() {
-        // reset values
-        setHideConstraintsRows();
-        $('input[name=Discipline6H]', '#constraintForm').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#constraintForm').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#3ConsacutiveDays').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#2ConsacutiveDays').prop('checked', false);
-        $('#weekHours').val("0");  
-
-        // get disciplines of this professor
-        var prof = $('#findProfessor').val();
-        selectDisciplines(prof);
+        $('#DivVincoli').show();
+        //TODO get constraints from db
     });
 
-    $('#findDiscipline').change(function() {
-        $('#RowWhichConsecutiveDays').hide();      
-        $('input[name=Discipline6H]', '#constraintForm').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#constraintForm').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#3ConsacutiveDays').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#2ConsacutiveDays').prop('checked', false);
-        $('#weekHours').val("0"); 
-
-        var id = $('#findDiscipline').val();
-        selectSingleDiscipline(id);
+    $('.checkDisc').click(function() {
+        $('.checkDisc').not(this).prop('checked', false);
+    });
+    $('.checkConse').click(function() {
+        $('.checkConse').not(this).prop('checked', false);
+    });
+    $('.checkChalks').click(function() {
+        $('.checkChalks').not(this).prop('checked', false);
     });
 
-    $('#Discipline6H input[type=radio]').change(function() {
-        var consecutive = $('input[name=ConsecutiveDays]:checked', '#constraintForm').val();
-        var TwoHoursSplit = $('input[name=Discipline6H]:checked', '#constraintForm').val();
-        if (consecutive=="1" && TwoHoursSplit == "2"){
-            $('#3ConsacutiveDays').show();
-            $('#2ConsacutiveDays').hide();
+    $('#ConsecutiveDays input[type=checkbox]').change(function() {
+        if ($(this).is(':checked')) {            
+            $('#RowSelectDays').hide();
         }
         else{
-            $('#3ConsacutiveDays').hide();
-            $('#2ConsacutiveDays').show();
+            $('#RowSelectDays').show();
         }
     });
 
-    $('#ConsecutiveDays input[type=radio]').change(function() {
-        var consecutive = $('input[name=ConsecutiveDays]:checked', '#constraintForm').val();
-        if (consecutive=="1"){
-            $('#RowWhichConsecutiveDays').show();
-            if($('#weekHours').val() == "6"){
-                var TwoHoursSplit = $('input[name=Discipline6H]:checked', '#constraintForm').val();
-                if(TwoHoursSplit == "2"){
-                    $('#3ConsacutiveDays').show();
-                    $('#2ConsacutiveDays').hide();
-                }
-                else{
-                    $('#3ConsacutiveDays').hide();
-                    $('#2ConsacutiveDays').show();
-                }
-                
-            }
-            else{
-                $('#3ConsacutiveDays').hide();
-                $('#2ConsacutiveDays').show();
-            }
+    $('#ChooseDay1').change(function() {
+        var day1 = $('#ChooseDay1').val();
+        if(day1=="0"){
+            $('#DivSelectDay2').hide();
         }
         else{
-            $('#RowWhichConsecutiveDays').hide();
+            $('#DivSelectDay2').show();
         }
     });
 
@@ -86,17 +59,7 @@ $(document).ready(function () {
  */
 function setShowHideCards(){
     $('#cardBodyConstraint').hide();
-
-    
-}
-
-function setHideConstraintsRows(){
-    $('#RowDiscipline6H').hide();
-
-    $('#RowConsecutiveDays').hide();
-    $('#RowWhichConsecutiveDays').hide();
-    $('#3ConsacutiveDays').hide();
-    $('#2ConsacutiveDays').hide();
+   
 }
 
 /**
@@ -139,6 +102,20 @@ function chosenPlugin() {
     for (var selector in config) {
         $(selector).chosen(config[selector]);
     }
+}
+
+/**
+ * Genera la lista dei giorni della settimana
+ */
+function generateChooseDays(ddl){
+    ddl.append("<option value='0'>Nessuna Preferenza</option>");
+    ddl.append("<option value='1'>Lunedì</option>");
+    ddl.append("<option value='2'>Martedì</option>");
+    ddl.append("<option value='3'>Mercoledì</option>");
+    ddl.append("<option value='4'>Giovedì</option>");
+    ddl.append("<option value='5'>Venerdì</option>");
+
+    ddl.trigger("chosen:updated");
 }
 
 /**

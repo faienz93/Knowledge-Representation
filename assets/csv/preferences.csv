@@ -1,4 +1,4 @@
-teacher,consecutiveDays,cabledRoom,chalksRoom,sixHourSplit
-211832,true,false,false,2
-150348,false,true,true,3
-000001,true,true,true,4
+teacher,consecutiveDays,whichConsecutiveDays,cabledRoom,chalksRoom,sixHourSplit
+211832,true,LUN,false,false,2
+150348,false,,true,true,3
+000001,true,MER,true,true,4
