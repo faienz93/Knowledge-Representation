@@ -12,9 +12,7 @@ $(document).ready(function () {
     $('#DivSelectDay2').hide();
 
     var ddl1 = $("#ChooseDay1");
-    var ddl2 = $("#ChooseDay2");
     generateChooseDays(ddl1);
-    generateChooseDays(ddl2);
 
     $('#findProfessor').change(function() {
         $('#DivVincoli').show();
@@ -30,23 +28,42 @@ $(document).ready(function () {
     $('.checkChalks').click(function() {
         $('.checkChalks').not(this).prop('checked', false);
     });
+    $('.checkAMPM').click(function() {
+        $('.checkAMPM').not(this).prop('checked', false);
+    });
 
     $('#ConsecutiveDays input[type=checkbox]').change(function() {
         if ($(this).is(':checked')) {            
-            $('#RowSelectDays').hide();
+            $('#RowNoLessonDays').hide();
+            var ddl1 = $("#ChooseDay1");
+            generateChooseDays(ddl1);
+
+            $('#RowNoLessonAMPM').hide();
+            $('.checkAMPM').not(this).prop('checked', false);
         }
         else{
-            $('#RowSelectDays').show();
+            $('#RowNoLessonDays').show();
+            $('#RowNoLessonAMPM').show();
         }
     });
 
     $('#ChooseDay1').change(function() {
         var day1 = $('#ChooseDay1').val();
-        if(day1=="0"){
+        if(day1 == ''){
             $('#DivSelectDay2').hide();
+
+            $('#RowConsecutiveDays').show();
         }
         else{
+            $('#RowConsecutiveDays').hide();
+            $('.checkConse').not(this).prop('checked', false);
+
             $('#DivSelectDay2').show();
+            var ddl2 = $("#ChooseDay2");
+            generateChooseDays(ddl2);
+            $("#ChooseDay2 option[value='" + day1 + "']").remove();
+            $("#ChooseDay2  option[value='']");
+            ddl2.trigger("chosen:updated");
         }
     });
 
@@ -108,13 +125,13 @@ function chosenPlugin() {
  * Genera la lista dei giorni della settimana
  */
 function generateChooseDays(ddl){
-    ddl.append("<option value='0'>Nessuna Preferenza</option>");
-    ddl.append("<option value='1'>Lunedì</option>");
-    ddl.append("<option value='2'>Martedì</option>");
-    ddl.append("<option value='3'>Mercoledì</option>");
-    ddl.append("<option value='4'>Giovedì</option>");
-    ddl.append("<option value='5'>Venerdì</option>");
-
+    ddl.empty();
+    ddl.append("<option value='' selected>Nessuna Preferenza</option>");
+    ddl.append("<option value='monday'>Lunedì</option>");
+    ddl.append("<option value='tuesday'>Martedì</option>");
+    ddl.append("<option value='wednesday'>Mercoledì</option>");
+    ddl.append("<option value='thursday'>Giovedì</option>");
+    ddl.append("<option value='friday'>Venerdì</option>"); 
     ddl.trigger("chosen:updated");
 }
 

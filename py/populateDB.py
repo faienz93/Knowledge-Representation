@@ -264,11 +264,12 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
    
     for row in t[1:]:
         teacher = row[0]
-        consecutiveDays = row[1]
-        whichConsecutiveDays = row[2]
-        cabledRoom = row[3]
-        chalksRoom = row[4]
-        sixHourSplit = row[5]
+        sixHourSplit = row[1]
+        consecutiveDays = row[2]
+        noLessonDay1 = row[3]
+        noLessonDay2 = row[4]
+        noLessonAMPM = row[5]
+        writeMethodRoom = row[6]
 
         # Create a new Query
         query = '''
@@ -278,11 +279,12 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
         { 
         GRAPH <'''+graph_preferences+'''>{
         uni:'''+ teacher +''' a uni:isPreferenceOf;
+                                uni:sixHourSplit "'''+sixHourSplit+'''"; 
                                 uni:consecutiveDays "'''+consecutiveDays+'''"; 
-                                uni:whichConsecutiveDays "'''+whichConsecutiveDays+'''"; 
-                                uni:cabledRoom "'''+cabledRoom+'''"; 
-                                uni:chalksRoom "'''+chalksRoom+'''"; 
-                                uni:sixHourSplit "'''+sixHourSplit+'''"                               
+                                uni:noLessonDay1 "'''+noLessonDay1+'''"; 
+                                uni:noLessonDay2 "'''+noLessonDay2+'''"; 
+                                uni:noLessonAMPM "'''+noLessonAMPM+'''"; 
+                                uni:writeMethodRoom "'''+writeMethodRoom+'''"                               
             }
         }
         '''
@@ -292,40 +294,6 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
         sparql.setMethod('POST') 
         #print query
         q = sparql.query()
-
-# Insert into graph day preferences the day preferences written inside csv file "dayPpreferences.csv"
-with open('../assets/csv/dayPreferences.csv', 'rb') as csvfile:
-    testReader = csv.reader(csvfile, skipinitialspace=False, delimiter=',')
-    t = list(testReader)
-   
-    for row in t[1:]:
-        teacher = row[0]
-        day = row[1]
-        noMorning = row[2]
-        noAfternoon = row[3]
-
-        # Create a new Query
-        query = '''
-        PREFIX uni: <http://www.rdfproject.com/>
-        PREFIX un: <http://www.w3.org/2007/ont/unit#>
-        INSERT DATA
-        { 
-        GRAPH <'''+graph_dayPreferences+'''>{
-        uni:'''+ teacher +''' a uni:isDayPreferenceOf;
-                                uni:day "'''+day+'''"; 
-                                uni:noMorning "'''+noMorning+'''"; 
-                                uni:noAfternoon "'''+noAfternoon+'''"                           
-            }
-        }
-        '''
-        # uni:hasCourseof 
-        # Run the query and print the result
-        sparql.setQuery(query)
-        sparql.setMethod('POST') 
-        #print query
-        q = sparql.query()
-
-
 
 
 print "ok inserimento"
