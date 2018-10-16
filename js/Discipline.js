@@ -48,7 +48,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     this.getObligatory = function () {
         return this.obligatory;
     };
-    
+
     /**
      * Set a new Professor insiede an array becaure for an discipline can
      * be taught by multiple professor
@@ -64,9 +64,9 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         return professor;
     }
 
-    this.getAllProfessor = function() {
+    this.getAllProfessor = function () {
         var allProfessor = '';
-        for(var i = 0; i < professor.length; i++){
+        for (var i = 0; i < professor.length; i++) {
             allProfessor += professor[i].getCompleteName() + " ";
         }
         return allProfessor;
@@ -152,7 +152,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
             }
         }
         return exist;
-        
+
     }
 
     /**
@@ -176,14 +176,30 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
      * Set the preference of consecutive day as true
      */
     this.consecutiveDay = function (d) {
-        if (this.checkExistPreference("consecutiveDay")) {
+        if (this.checkExistPreference("consecutiveday")) {
             for (var i = 0; i < preference.length; i++) {
-                preference.splice(i.consecutiveDay, 1);
+                preference.splice(i.consecutiveday, 1);
             }
         }
-        var consday = { "consecutiveDay": d }
+        var consday = { "consecutiveday": d }
         preference.push(consday);
     }
+
+    /**
+     * Return the choice between two:
+     * - startweek
+     * - endweek
+     */
+    this.getChoiceConsecutiveDay = function (p) {
+        var obj = preference.find(o => o.consecutiveday === p);
+        if (obj != undefined) {
+            return obj.consecutiveday;
+        }
+        else {
+            return undefined;
+        }
+    }
+
 
     /**
      * ****************************
@@ -219,7 +235,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         var inDay = false;
         if (preference.some(e => e.avoidLessonDay === v)) {
             inDay = true;
-        } 
+        }
         return inDay;
     }
 
@@ -273,7 +289,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         if (this.checkExistPreference("splitdurationlessons6h")) {
             for (var i = 0; i < preference.length; i++) {
                 preference.splice(i.splitdurationlessons6h, 1);
-            }
+            }            
         }
         var splitD = { "splitdurationlessons6h": d };
         preference.push(splitD);
@@ -311,7 +327,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         var chalkBool = { "chalkclass": d };
         preference.push(chalkBool);
     }
-    
+
 
     /**
      * Return based on key the value that i find
@@ -323,7 +339,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
             return false;
         }
     }
-     
+
 
 
     /**

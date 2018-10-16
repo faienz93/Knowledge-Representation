@@ -72,7 +72,7 @@ reactor.createRule("assignClassroom", 0, { l: Lesson },
         var compatibilityClassroom = checkCapacityClassroom(l.getDiscipline().getNumStudent());
         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
         l.setClassroom(newClassRoom);
-        assert(l);
+        assert(timetable);
 
     });
 
@@ -184,7 +184,7 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
 /**
  * Avoid that the same lesson is taught in the same day
  */
-reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
+reactor.createRule("NOSameLessonSameDay", -2, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
 
         return l1 != l2 &&
@@ -195,73 +195,9 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
         printForDebug("NOSameLessonSameDay " + l1.toString() + " " + l2.toString(), "white", "pink");
         var actualDayToAvoid = l2.getDay();
         l1.setDay(generateDayByExcludingOne(actualDayToAvoid));
+        // l2.setNewDay(l1.getDay(),2);
         assert(timetable);
     });
-
-/**
- * ***********************************************************************
- * ***************************** PRIORITY -2 *****************************
- * *********************************************************************** 
- */
-
-
-
-/**
- * RULE: split lessons in days consecutive 
- */
-// reactor.createRule("consecutiveLessons", -2, { l1: Lesson, l2 : Lesson },
-//     function (l1, l2) {
-//         // check if exist preference with specific key
-//         var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveDay");
-//         var actuallyConsecutive = false;
-//         if( Math.abs(defineDayNumber(l1.getDay())-(defineDayNumber(l2.getDay())) == 1)){
-//             actuallyConsecutive = true;
-//         }  
-//         return l1.getDiscipline()==l2.getDiscipline() && 
-//         existConsecutiveDay && 
-//         !actuallyConsecutive &&
-//         l1.getDiscipline().getSplitDuration() == null;
-//     }, function (l1,l2) {
-
-//         var minDay=Math.min(defineDayNumber(l1.getDay()),defineDayNumber(l2.getDay()));
-//         l1.setDay(defineDayString(minDay));
-//         l2.setDay(defineDayString(minDay+1));        
-
-//     });
-
-/**
- * RULE: split lessons into consecutive days :6 hours and preference 2-2-2
- * (NB. VEN - LUN- MAR è considerato consecutivo)
- */
-// reactor.createRule("consecutiveLessons6h222", -2, { l1: Lesson, l2 : Lesson, l3:Lesson},
-// function (l1, l2,l3) {
-//     // check if exist preference with specific key
-//     var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveDay");
-//     var actuallyConsecutive = false;
-//     if((defineDayNumber(l1.getDay())+defineDayNumber(l2.getDay())+(defineDayNumber(l3.getDay())) % 3) == 0){
-//         actuallyConsecutive = true;
-//     }  
-//     return l1.getDiscipline()==l2.getDiscipline() && 
-//     l2.getDiscipline()==l3.getDiscipline() &&
-//     existConsecutiveDay && 
-//     !actuallyConsecutive &&
-//     l1.getDiscipline().getSplitDuration() == 2;
-// }, function (l1,l2,l3) {
-
-//     var minDay=Math.min(defineDayNumber(l1.getDay()),defineDayNumber(l2.getDay()),defineDayNumber(l3.getDay()))
-//         l1.setDay(defineDayString(minDay));
-//         l2.setDay(defineDayString(minDay+1));        
-//         l3.setDay(defineDayString(minDay+2));     
-
-// });
-
-
-
-
-
-
-
-
 
 /**
  * ********************************************************************************
@@ -281,7 +217,7 @@ reactor.createRule("avoidLessonProfessor", -1, { l: Lesson },
 
     },
     function (l) {
-        printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "blue");
+        printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDay(), "white", "blue");
 
         var actualDayToAvoid = l.getDay();
         var dL = l.getDurationLesson();
@@ -336,14 +272,13 @@ reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
     });
 
 /**
- * RULE: Professor preferences a classroom with chalk
- * 
+ * RULE: Professor preferences a classroom with chalk 
  */
 reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
     function (l) {
         return l.getDiscipline().checkExistPreference("chalkclass") &&
-             l.getDiscipline().getChalkClass("yes") &&
-             l.getClassroom().getChalk() == "no";
+            l.getDiscipline().getChalkClass("yes") &&
+            l.getClassroom().getChalk() == "no";
     },
     function (l) {
 
@@ -351,17 +286,84 @@ reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
         // console.log(l.getDiscipline().getPreference());
         var compatibilityRooms = [];
         for (var i = 0; i < classrooms.length; i++) {
-            
+
             if (classrooms[i].getChalk() == "yes") {
                 compatibilityRooms.push(classrooms[i]);
             }
         }
-   
+
         var randomClassroom = compatibilityRooms[Math.floor(Math.random() * compatibilityRooms.length)];
         l.setClassroom(randomClassroom);
         printForDebug("CHECKCLASSROOMCHALK " + randomClassroom, "yellow", "black");
         assert(timetable);
     });
+
+/**
+ * RULE: split lessons in days consecutive - Start Week. 
+ */
+reactor.createRule("consecutiveLessonsStartWeek", 1, { l1: Lesson },
+    function (l1) {
+
+        var middleday;
+        if(l1.getDurationLesson()==2 && l1.getDiscipline().getWeeksHours() == 6){  middleday = defineDayNumber("Wednesday"); }
+        else {middleday = defineDayNumber("Tuesday");}
+      
+        var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveday");
+        var periodOfWeek = l1.getDiscipline().getChoiceConsecutiveDay("startweek");
+     
+        var dayNumber = defineDayNumber(l1.getDay());
+        return existConsecutiveDay && (periodOfWeek == "startweek") && dayNumber > middleday;
+        // return false;
+    },
+    function (l1) {
+        printForDebug("consecutiveLessons " + l1.toString(), "black", "pink");
+        l1.setDay("Monday");
+        assert(timetable);
+
+       
+    });
+
+/**
+ * RULE: split lessons in days consecutive - End Week. 
+ */
+reactor.createRule("consecutiveLessonsEndWeek", 1, { l1: Lesson },
+    function (l1) {
+
+        var middleday;
+        if(l1.getDurationLesson()==2 && l1.getDiscipline().getWeeksHours() == 6){  middleday = defineDayNumber("Wednesday"); }
+        else {middleday = defineDayNumber("Thursday");}
+      
+        var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveday");
+        var periodOfWeek = l1.getDiscipline().getChoiceConsecutiveDay("endweek");
+     
+        var dayNumber = defineDayNumber(l1.getDay());
+        return existConsecutiveDay && (periodOfWeek == "endweek") && dayNumber < middleday;
+        
+    },
+    function (l1) {
+        printForDebug("consecutiveLessons " + l1.toString(), "black", "pink");
+        console.log(l1.getDiscipline().getName() + " " + JSON.stringify(l1.getDiscipline().getPreference()));
+        console.log(l1.getDurationLesson());
+        console.log(l1.getDiscipline().getWeeksHours());
+        if(l1.getDurationLesson()==2 && l1.getDiscipline().getWeeksHours() == 6) {
+            // alert("VA QUA");
+            l1.setDay("Wednesday");
+        }
+        else 
+        {
+            l1.setDay("Thursday");
+        }
+        // l1.setDay("Thursday");
+        assert(timetable);
+
+       
+    });
+
+
+
+
+
+
 
 
 

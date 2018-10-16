@@ -13,7 +13,7 @@ function TimetableArray() {
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 2;
+var DURATION_LESSON = 6;
 
 // end lessons
 var END_LESSONS = 18;
@@ -216,7 +216,7 @@ subject.push(siswir)
 //Preferenze di default 
 for(var i=0;i<subject.length;i++){    
     subject[i].splitDurationLessons6h(3);
-    subject[i].chalkClass("no");
+   
     
 }
 
@@ -230,11 +230,11 @@ for(var i=0;i<subject.length;i++){
 // bd.avoidLessonDay("Monday");
 // bd.avoidLessonDay("Tuesday");
 
-//GIORNI CONSECUTIVI
 
-// iot.consecutiveDay(true);
-// sismob.consecutiveDay(true);
-// bd.consecutiveDay(true);
+
+iot.consecutiveDay("startweek");
+sismob.consecutiveDay("startweek");
+bd.consecutiveDay("endweek");
 
 // iot.setPeriodOfDay("AM");
 // sismob.setPeriodOfDay("AM");
@@ -243,7 +243,7 @@ for(var i=0;i<subject.length;i++){
 //SPLIT Lessons
 iot.splitDurationLessons6h(2);
 sismob.splitDurationLessons6h(4);
-
+// bd.splitDurationLessons6h(2);
 //GESSETTO solo Ranzani ha il gessetto
 iot.chalkClass("yes");
 
