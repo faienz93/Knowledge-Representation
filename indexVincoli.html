@@ -23,10 +23,10 @@
     -->
     <div class="card card-outline-secondary">
         <div class="top card-header">
-            <h1 class="mb-0"><img src="assets/img/constraint.png"> Vincolo</h1>
+            <h1 class="mb-0"><img src="assets/img/constraint.png"> Gestione vincoli</h1>
         </div>
         <div class="card-header" id="headerConstraint">
-            <h3 class="mb-0"><a href="#"><img src="assets/img/policy.png"></a> Gestione</h3>
+            <h3 class="mb-0"><a href="#"><img src="assets/img/policy.png"></a> Professore</h3>
         </div>
         <div class="card-body" id="cardBodyConstraint">
             <!--  -->
@@ -35,7 +35,7 @@
                 <!-- <input type="hidden" id="weekHours"> -->
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Scelta Professore</label>
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
                         <select id="findProfessor" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
                                     tabindex="4" size="0" name="selectProfessor" required>
                             <option value=""></option>
@@ -70,13 +70,13 @@
                         <div class="col-lg-9">
                             <fieldset id="ConsecutiveDays">
                                 <input type="checkbox" class="checkConse" value="startweek" name="ConsecutiveDays">Inizio settimana<br/>
-                                <input type="checkbox" class="checkConse" value="endweek" name="ConsecutiveDays">Inizio settimana<br/>                                
+                                <input type="checkbox" class="checkConse" value="endweek" name="ConsecutiveDays">Fine settimana<br/>                                
                             </fieldset>
                         </div>
                     </div>
 
                     <div class="form-group row" id="RowNoLessonDays">
-                        <label class="col-lg-3 col-form-label form-control-label">NON svolegere lezioni in quali giorni? (massimo due giorni a settimana)</label>
+                        <label class="col-lg-3 col-form-label form-control-label">NON svolgere lezioni in quali giorni? (massimo due giorni a settimana)</label>
                         <div class="col-lg-4">
                             Giorno 1:
                             <select id="ChooseDay1" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
