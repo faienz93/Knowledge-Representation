@@ -301,62 +301,53 @@ reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
 /**
  * RULE: split lessons in days consecutive - Start Week. 
  */
-reactor.createRule("consecutiveLessonsStartWeek", 1, { l1: Lesson },
-    function (l1) {
+reactor.createRule("consecutiveLessonsStartWeek", 1, { l: Lesson },
+    function (l) {
 
         var middleday;
-        if(l1.getDurationLesson()==2 && l1.getDiscipline().getWeeksHours() == 6){  middleday = defineDayNumber("Wednesday"); }
-        else {middleday = defineDayNumber("Tuesday");}
-      
-        var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveday");
-        var periodOfWeek = l1.getDiscipline().getChoiceConsecutiveDay("startweek");
-     
-        var dayNumber = defineDayNumber(l1.getDay());
+        if (l.getDurationLesson() == 2 && l.getDiscipline().getWeeksHours() == 6) { middleday = defineDayNumber("Wednesday"); }
+        else { middleday = defineDayNumber("Tuesday"); }
+
+        var existConsecutiveDay = l.getDiscipline().checkExistPreference("consecutiveday");
+        var periodOfWeek = l.getDiscipline().getChoiceConsecutiveDay("startweek");
+
+        var dayNumber = defineDayNumber(l.getDay());
         return existConsecutiveDay && (periodOfWeek == "startweek") && dayNumber > middleday;
         // return false;
     },
-    function (l1) {
-        printForDebug("consecutiveLessons " + l1.toString(), "black", "pink");
-        l1.setDay("Monday");
+    function (l) {
+        printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
+        l.setDay("Monday");
         assert(timetable);
 
-       
+
     });
 
 /**
  * RULE: split lessons in days consecutive - End Week. 
  */
-reactor.createRule("consecutiveLessonsEndWeek", 1, { l1: Lesson },
-    function (l1) {
+reactor.createRule("consecutiveLessonsEndWeek", 1, { l: Lesson },
+    function (l) {
 
         var middleday;
-        if(l1.getDurationLesson()==2 && l1.getDiscipline().getWeeksHours() == 6){  middleday = defineDayNumber("Wednesday"); }
-        else {middleday = defineDayNumber("Thursday");}
-      
-        var existConsecutiveDay = l1.getDiscipline().checkExistPreference("consecutiveday");
-        var periodOfWeek = l1.getDiscipline().getChoiceConsecutiveDay("endweek");
-     
-        var dayNumber = defineDayNumber(l1.getDay());
+        if (l.getDurationLesson() == 2 && l.getDiscipline().getWeeksHours() == 6) { middleday = defineDayNumber("Wednesday"); }
+        else { middleday = defineDayNumber("Thursday"); }
+
+        var existConsecutiveDay = l.getDiscipline().checkExistPreference("consecutiveday");
+        var periodOfWeek = l.getDiscipline().getChoiceConsecutiveDay("endweek");
+
+        var dayNumber = defineDayNumber(l.getDay());
         return existConsecutiveDay && (periodOfWeek == "endweek") && dayNumber < middleday;
-        
+
     },
-    function (l1) {
-        printForDebug("consecutiveLessons " + l1.toString(), "black", "pink");
-        console.log(l1.getDiscipline().getName() + " " + JSON.stringify(l1.getDiscipline().getPreference()));
-        console.log(l1.getDurationLesson());
-        console.log(l1.getDiscipline().getWeeksHours());
-        if(l1.getDurationLesson()==2 && l1.getDiscipline().getWeeksHours() == 6) {
-            // alert("VA QUA");
-            l1.setDay("Wednesday");
-        }
-        else 
-        {
-            l1.setDay("Thursday");
-        }
+    function (l) {
+        printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
+        if (l.getDurationLesson() == 2 && l.getDiscipline().getWeeksHours() == 6) { l.setDay("Wednesday"); }
+        else { l.setDay("Thursday"); }
         // l1.setDay("Thursday");
         assert(timetable);
 
-       
+
     });
 
 
