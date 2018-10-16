@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    InitRuleReactor(); 
+    InitRuleReactor();
     chosenPlugin();
- 
+
     slideDownAndUp();
     setResetBtns();
-    
+
     selectProfessors();
     selectDisciplines();
     selectClassrooms();
@@ -16,27 +16,42 @@ $(document).ready(function () {
  * This function aims to set cards view
  * @method setShowHideCards
  */
-function setShowHideCards(){
-    $('#cardBodyProfessor').hide();
-    $('#cardBodyProfessorDelete').hide();
-    if($('#nameProfessorUpdate').val() == null){    //TODO: non fa quello che ci aspettiamo
-        $('#cardBodyProfessorUpdate').hide();
-    }   
+function setShowHideCards() {
+    // $('#cardBodyProfessor').hide();
+    // $('#cardBodyProfessorDelete').hide();
+    // if($('#nameProfessorUpdate').val() == null){    //TODO: non fa quello che ci aspettiamo
+    //     $('#cardBodyProfessorUpdate').hide();
+    // }   
 
-    $('#cardBodyDiscipline').hide();
-    $('#cardBodyDisciplineDelete').hide();
-    $('#cardBodyDisciplineUpdate').hide(); 
+    // $('#cardBodyDiscipline').hide();
+    // $('#cardBodyDisciplineDelete').hide();
+    // $('#cardBodyDisciplineUpdate').hide(); 
 
-    $('#cardBodyClassRoom').hide();   
-    $('#cardBodyClassRoomDelete').hide(); 
-    $('#cardBodyClassRoomUpdate').hide(); 
+    // $('#cardBodyClassRoom').hide();   
+    // $('#cardBodyClassRoomDelete').hide(); 
+    // $('#cardBodyClassRoomUpdate').hide(); 
+
+    // setTimeout(function () {
+    //     $('#cardBodyProfessor').hide();
+    //     $('#cardBodyProfessorDelete').hide();
+    //     if ($('#nameProfessorUpdate').val() == null) {    //TODO: non fa quello che ci aspettiamo
+    //         $('#cardBodyProfessorUpdate').hide();
+    //     }
+    //     $('#cardBodyDiscipline').hide();
+    //     $('#cardBodyDisciplineDelete').hide();
+    //     $('#cardBodyDisciplineUpdate').hide();
+
+    //     $('#cardBodyClassRoom').hide();
+    //     $('#cardBodyClassRoomDelete').hide();
+    //     $('#cardBodyClassRoomUpdate').hide();
+    // }, 5000);
 }
 
 /**
  * This function aims to bind event to reset buttons
  * @method setResetBtns
  */
-function setResetBtns(){
+function setResetBtns() {
     // Reset value of form Add Professor 
     $('#resetAddProfessor').click(function () {
         $('#professorForm')[0].reset();
@@ -50,7 +65,7 @@ function setResetBtns(){
     // Reset value of form Discipline 
     $('#resetDisciplineBbtn').click(function () {
         $('#disciplineForm')[0].reset();
-    }); 
+    });
     // Reset value of form Update Discipline 
     $('#resetUpdateDiscipline').click(function () {
         $('#disciplineFormUpdate')[0].reset();
@@ -65,7 +80,7 @@ function setResetBtns(){
     $('#resetUpdateClassRoom').click(function () {
         $('#classRoomFormUpdate')[0].reset();
     });
-    
+
 }
 
 /**
@@ -73,45 +88,45 @@ function setResetBtns(){
  * @method slideDownUp
  * REF: https://www.khanacademy.org/computer-programming/jquery-example-slideup-slidedown-and-slidetoggle/4722237555474432
  */
-function slideDownAndUp(){
+function slideDownAndUp() {
     // slideToggle Professor
-    $('#headerProfessor').click(function(){
+    $('#headerProfessor').click(function () {
         $('#cardBodyProfessor').slideToggle("slow");
     });
     // slideToggle Delete Professor
-    $('#headerProfessorDelete').click(function(){
+    $('#headerProfessorDelete').click(function () {
         $('#cardBodyProfessorDelete').slideToggle("slow");
     });
     // slideToggle Update Professor
-    $('#headerProfessorUpdate').click(function(){
+    $('#headerProfessorUpdate').click(function () {
         $('#cardBodyProfessorUpdate').slideToggle("slow");
     });
 
 
     // slideToggle Discipline
-    $('#headerDiscipline').click(function(){
+    $('#headerDiscipline').click(function () {
         $('#cardBodyDiscipline').slideToggle("slow");
     });
     // slideToggle Delete Discipline
-    $('#headerDisciplineDelete').click(function(){
+    $('#headerDisciplineDelete').click(function () {
         $('#cardBodyDisciplineDelete').slideToggle("slow");
     });
     // slideToggle Update Professor
-    $('#headerDisciplineUpdate').click(function(){
+    $('#headerDisciplineUpdate').click(function () {
         $('#cardBodyDisciplineUpdate').slideToggle("slow");
     });
 
 
     // slideToggle ClassRoom
-    $('#headerClassRoom').click(function(){
+    $('#headerClassRoom').click(function () {
         $('#cardBodyClassRoom').slideToggle("slow");
     });
     // slideToggle Delete ClassRoom
-    $('#headerClassRoomDelete').click(function(){
+    $('#headerClassRoomDelete').click(function () {
         $('#cardBodyClassRoomDelete').slideToggle("slow");
     });
     // slideToggle Update ClassRoom
-    $('#headerUpdateClassRoom').click(function(){
+    $('#headerUpdateClassRoom').click(function () {
         $('#cardBodyClassRoomUpdate').slideToggle("slow");
     });
 

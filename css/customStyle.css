@@ -34,13 +34,12 @@
 .mb-0 {
   color: #fff;
 }
-/* footer {
-  position:absolute;
-  bottom:0;
-  width:100%;
-  height:60px;   
-  background:#6cf;
-} */
+
+#cardBodyProfessor,  #cardBodyProfessorDelete, #cardBodyProfessorUpdate,
+#cardBodyDiscipline, #cardBodyDisciplineDelete, #cardBodyDisciplineUpdate,  
+#cardBodyClassRoom,  #cardBodyClassRoomDelete,  #cardBodyClassRoomUpdate {
+  display: none;
+}
 
 
 .mainbutton{
