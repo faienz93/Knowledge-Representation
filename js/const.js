@@ -76,9 +76,9 @@ var ap = new Discipline("81668", "AA", "ALGORITMI PARALLELI", "1", true, 60, 6, 
 var isos = new Discipline("77803", "ISOS", "INGEGNERIA DEL SOFTWARE ORIENTATA AI SERVIZI", "1", false, 50, 5, 6, 1, 29);
 var fsc = new Discipline("23762", "FSC", "FISICA DEI SISTEMI COMPLESSI", "1", false, 50, 5, 6, 1, 29);
 var sds = new Discipline("37760", "SDS", "SIMULAZIONE DI SISTEMI", "1", false, 50, 5, 6, 1, 39);
-var iot =  new Discipline("37760", "IoT", "INTERNET OF THING", "1", false, 50, 6, 6, 1, 10);
+var iot =  new Discipline("37760", "IoT", "INTERNET OF THING", "1", false, 50, 6, 6, 1, 39);
 var sismob =  new Discipline("37760", "SM", "SISTEMI MOBILI", "1", false, 50, 5, 6, 1, 29);
-var siswir = new Discipline("37760", "SW", "SISTEMI WIRELESS", "1", false, 50, 5, 6, 1, 29);
+var siswir = new Discipline("37760", "SW", "SISTEMI WIRELESS", "1", false, 50, 5, 6, 1, 39);
 
 
 cbd.addCurriculum(currA);
