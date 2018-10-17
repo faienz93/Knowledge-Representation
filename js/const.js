@@ -31,16 +31,16 @@ var events = [];
 // var classrooms = ['Aula Ercolani 1', 'Aula Ercolani 2', 'Aula Ercolani 3', 'Lab Ercolani', 'Ranzani', 'Vitali'];
 // var classrooms = ['Aula Ercolani 1', 'Aula Ercolani 2'];
 var classrooms = [];
-classrooms.push(new Classroom(12347, "E1", "Ercolani", 40, "no", false));
-classrooms.push(new Classroom(12348, "E2", "Ercolani", 40, "no", false));
-classrooms.push(new Classroom(12349, "E3", "Ercolani", 30, "no", false));
-classrooms.push(new Classroom(51200, "Enriquez", "Matematica", 30, "no", false));
-classrooms.push(new Classroom(51201, "Pincherle", "Matematica", 30, "no", false));
-classrooms.push(new Classroom(51202, "Cremona", "Matematica", 30, "no", false));
-classrooms.push(new Classroom(51203, "Tonelli", "Matematica", 30, "no", false));
-classrooms.push(new Classroom(51204, "Sem8", "Matematica", 30, "no", false));
-classrooms.push(new Classroom(44981, "C1 Ranzani", "Ranzani", 30, "no", false));
-classrooms.push(new Classroom(44982, "Lab Ranzani", "Ranzani", 30, "yes", true));
+classrooms.push(new Classroom(12347, "E1", "Ercolani", 40, "Chalk", false));
+classrooms.push(new Classroom(12348, "E2", "Ercolani", 40, "Chalk", false));
+classrooms.push(new Classroom(12349, "E3", "Ercolani", 30, "Chalk", false));
+classrooms.push(new Classroom(51200, "Enriquez", "Matematica", 30, "Markers", false));
+classrooms.push(new Classroom(51201, "Pincherle", "Matematica", 30, "Markers", false));
+classrooms.push(new Classroom(51202, "Cremona", "Matematica", 30, "Markers", false));
+classrooms.push(new Classroom(51203, "Tonelli", "Matematica", 30, "Markers", false));
+classrooms.push(new Classroom(51204, "Sem8", "Matematica", 30, "Markers", false));
+classrooms.push(new Classroom(44981, "C1 Ranzani", "Ranzani", 30, "Markers", false));
+classrooms.push(new Classroom(44982, "Lab Ranzani", "Ranzani", 30, "Markers", true));
 
 
 
@@ -245,5 +245,7 @@ iot.splitDurationLessons6h(2);
 sismob.splitDurationLessons6h(4);
 // bd.splitDurationLessons6h(2);
 //GESSETTO solo Ranzani ha il gessetto
-iot.chalkClass("yes");
+iot.chalkClass("Chalk");
+sismob.chalkClass("Chalk");
+fsc.chalkClass("Markers");
 

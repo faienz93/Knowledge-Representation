@@ -149,6 +149,25 @@ function checkCapacityClassroom(numSub) {
 }
 
 /**
+ * Function that counts number of hours of a specific course in a specific day until a specific hour
+ * mod
+ */
+function countHoursBetween(course, day, startHour, endHour) {
+    var result = 0;
+    // console.log(timetable.tt[0].getCourse().getId());
+    for (var i = 0; i < timetable.tt.length; i++) {
+        if (timetable.tt[i].getDiscipline().getCourse() == course
+            && timetable.tt[i].getDay() == day
+            && startHour <= timetable.tt[i].getStartLesson()
+            && timetable.tt[i].getStartLesson() <= endHour
+        ) {
+            result += timetable.tt[i].getDurationLesson();
+        }
+    }
+    return result;
+}
+
+/**
  * Function for print somethings
  * @param {Object} toPrint - Object to print i.e String/Integer/array etc.
  */
@@ -158,63 +177,5 @@ function printForDebug(toPrint, color = "black", background = "yellow") {
     console.log("%c ==========================================", "color:" + color + "; background:" + background)
 }
 
-/**
- * Function that counts number of hours of a specific course in a specific day
- * 
- */
-function countHours(course, day) {
-    var result = 0;
-    // console.log(timetable.tt[0].getCourse().getId());
-    for (var i = 0; i < timetable.tt.length; i++) {
-        if (timetable.tt[i].getDiscipline().getCourse().getId() == course && timetable.tt[i].getDay() == day) {
-            result += timetable.tt[i].getDurationLesson();
-        }
-    }
-    return result;
-}
-/**
- * Function that return the day with the min hour for a specific course
- * 
- */
-function minCountHours(course) {
-    var hourForDay = [];
-    for (var i = 0; i < days.length; i++) {
-        hourForDay[i] = countHours(course, days[i]);
-    }
-    var minIndex = hourForDay.indexOf(Math.min(...hourForDay));
-    var result = days[minIndex];
-    return result;
-}
-/**
- * Function that return the day with the max hour for a specific course
- * 
- */
-function maxCountHours(course) {
-    var hourForDay = [];
-    for (var i = 0; i < days.length; i++) {
-        hourForDay[i] = countHours(course, days[i]);
-    }
-    var maxIndex = hourForDay.indexOf(Math.max(...hourForDay));
-    var result = days[maxIndex];
-    return result;
-}
 
-// function printPreferences(d){
-//     console.log("=============INIZIO PREFERENZE=================");
-//     var disciplineName="";
-//     var disciplinePreference= "";
-//     var preferenceKey=null;
-//     for(var i=0;i<d.length;i++){
-//         discipline=d[i].getDiscipline();
-//         disciplineName= discipline.getName();
-//     for(var j=0;j<d.length;j++){          
-//         disciplinePreference = discipline.getPreference();
-//         preferenceKey = Object.keys(disciplinePreference); 
-//         if(disciplinePreference!=undefined){
-//             console.log(disciplinePreference);
-//        // console.log(disciplineName+" "+preferenceKey +" " + disciplinePreference[j].preferenceKey);
-//         }
-//     }
-// }
-// console.log("=============FINE PREFERENZE=================");
-// }
+

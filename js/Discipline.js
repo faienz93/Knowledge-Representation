@@ -332,11 +332,13 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     /**
      * Return based on key the value that i find
      */
-    this.getChalkClass = function (v) {
-        if (preference.some(e => e.chalkclass === v)) {
-            return true;
-        } else {
-            return false;
+    this.getChalkClass = function () {
+        var obj = preference.find(o => o.chalkclass);
+        if (obj != undefined) {            
+            return obj.chalkclass;
+        }
+        else {
+            return undefined;
         }
     }
 
