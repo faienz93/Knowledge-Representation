@@ -148,6 +148,30 @@ function checkCapacityClassroom(numSub) {
     return result;
 }
 
+function updateCalendar(calendar,e) {
+    // var result = [];
+    // for (let e of timetable.tt) 
+    {
+
+        var numDay = defineDayNumber(e.getDay());
+        var newEvent = {
+            start: now.startOf('week').add(numDay, 'days').add(e.getStartLesson(), 'h').add(00, 'm').format('X'),
+            end: now.startOf('week').add(numDay, 'days').add(e.getEndLesson(), 'h').format('X'),
+            title: e.getDiscipline().getName() + ' - ' + e.getClassroom().getName(),
+            content: "AULA:" + e.getClassroom() + "<br>" +
+                "CORSO: " + e.getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
+                "PROFESSORE " + e.getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
+            category: e.getDiscipline().getCourse()
+        }
+        calendar.addEvents(newEvent);
+        
+        // result.push(newEvent);
+    }
+    // calendar.setEventCategoriesColors([{ category: "Personnal", color: "#AD1457" }]);
+    calendar.init();
+    
+    
+}
 /**
  * Function for print somethings
  * @param {Object} toPrint - Object to print i.e String/Integer/array etc.

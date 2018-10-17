@@ -57,7 +57,7 @@ $(document).ready(function () {
     },
     events: events,
     daynotes: daynotes
-  });
+  }).init();
 
   
   /**
@@ -104,5 +104,15 @@ $(document).ready(function () {
     //   console.log(evt);
   });
 
+  // calendar.setEventCategoriesColors([{category:"Personnal", color: "#AD1457"}]);
+  // var eve = [{
+  //       start: now.startOf('week').add(9, 'h').format('X'),
+  //       end: now.startOf('week').add(10, 'h').format('X'),
+  //       title: '1',
+  //       content: 'Hello World! <br> <p>Foo Bar</p>',
+  //       category:'Personnal'
+  //     }];
+  //     calendar.setEvents(eve);
+  // calendar.init()
 
 });
