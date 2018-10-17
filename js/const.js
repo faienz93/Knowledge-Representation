@@ -215,9 +215,7 @@ subject.push(siswir)
 
 //Preferenze di default 
 for(var i=0;i<subject.length;i++){    
-    subject[i].splitDurationLessons6h(3);
-   
-    
+    subject[i].splitDurationLessons6h(3);    
 }
 
 
@@ -232,20 +230,21 @@ for(var i=0;i<subject.length;i++){
 
 
 
-iot.consecutiveDay("startweek");
-sismob.consecutiveDay("startweek");
-bd.consecutiveDay("endweek");
+// iot.consecutiveDay("startweek");
+// sismob.consecutiveDay("startweek");
+// bd.consecutiveDay("endweek");
 
-// iot.setPeriodOfDay("AM");
-// sismob.setPeriodOfDay("AM");
-// bd.setPeriodOfDay("AM");
-iot.setPeriodOfDay("PM");
-sismob.setPeriodOfDay("PM");
-bd.setPeriodOfDay("PM");
+iot.setPeriodOfDay("AM");
+sismob.setPeriodOfDay("AM");
+bd.setPeriodOfDay("AM");
+// bd.setPeriodOfDay("PM");
+// iot.setPeriodOfDay("PM");
+// sismob.setPeriodOfDay("PM");
+
 
 //SPLIT Lessons
-iot.splitDurationLessons6h(2);
-// sismob.splitDurationLessons6h(4);
+iot.splitDurationLessons6h(2);   
+sismob.splitDurationLessons6h(4);
 // bd.splitDurationLessons6h(2);
 //GESSETTO solo Ranzani ha il gessetto
 iot.chalkClass("Chalk");

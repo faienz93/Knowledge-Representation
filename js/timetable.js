@@ -194,9 +194,9 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
 
         printForDebug("NOSameLessonSameDay " + l1.toString() + " " + l2.toString(), "white", "pink");
-        var actualDayToAvoid = l2.getDay();
-        l1.setDay(generateDayByExcludingOne(actualDayToAvoid));
-        // l2.setNewDay(l1.getDay(),2);
+        // var actualDayToAvoid = l2.getDay();
+        // l1.setDay(generateDayByExcludingOne(actualDayToAvoid));
+        l2.setNewDay(l1.getDay(),1);
         assert(timetable);
     });
 
@@ -225,25 +225,25 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
 // /**
 //  * RULE: Break hour for a course if it has more of 5 hours consecutive (function in util) * 
 //  */
-// reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
-//     function (l1, l2) {
-//         var count = 0;
-//         if (l1 != l2 &&
-//             l1.getDay() == l2.getDay() &&
-//             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-//             l1.getEndLesson() == l2.getStartLesson()) {
-//             count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
-//         }
-//         return count > 5;
+reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var count = 0;
+        if (l1 != l2 &&
+            l1.getDay() == l2.getDay() &&
+            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getEndLesson() == l2.getStartLesson()) {
+            count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
+        }
+        return count > 5;
 
-//     },
-//     function (l2) {
-//         var dL = l2.getDurationLesson();
-//         var newStart = l2.getStartLesson() + 1;
-//         l2.setStartLesson(newStart);
-//         l2.setEndLesson(newStart + dL);
-//         assert(timetable);
-//     });
+    },
+    function (l2) {
+        var dL = l2.getDurationLesson();
+        var newStart = l2.getStartLesson() + 1;
+        l2.setStartLesson(newStart);
+        l2.setEndLesson(newStart + dL);
+        assert(timetable);
+    });
 
 /**
  * ********************************************************************************
@@ -289,7 +289,7 @@ reactor.createRule("consecutiveLessonsStartWeek", -1, { l: Lesson },
 
         var dayNumber = defineDayNumber(l.getDay());
         return existConsecutiveDay && (periodOfWeek == "startweek") && dayNumber > middleday;
-        // return false;
+        
     },
     function (l) {
         printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
@@ -331,14 +331,16 @@ reactor.createRule("consecutiveLessonsEndWeek", -1, { l: Lesson },
 reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
     function (l) {
         var setPreference;
+        
         if (l.getDiscipline().checkExistPreference("setperiodofday")) {
             setPreference = l.getDiscipline().getPeriodOfDay("AM");
         }
-        return setPreference == "AM" && l.getStartLesson() >= 13;
+        return setPreference == "AM" && l.getStartLesson() > 12;
     },
     function (l) {
         printForDebug("SETPERIODOFDAY_AM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "red");
-        if (l.getStartLesson() == 13) {
+       
+        if (l.getStartLesson() > 12) { 
             var actualDay = l.getDay();
             l.setNewDay(actualDay, 1);
         }
@@ -365,7 +367,7 @@ reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
         var dL = l.getDurationLesson();
         l.setStartLesson(13);
         l.setEndLesson(13 + dL);
-        assert(timetable);
+        // assert(timetable);
     });
 
 
