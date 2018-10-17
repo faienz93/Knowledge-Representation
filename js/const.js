@@ -16,7 +16,7 @@ var START_LESSONS = 9;
 var DURATION_LESSON = 6;
 
 // end lessons
-var END_LESSONS = 18;
+var END_LESSONS = 19;
 
 // Global calendar
 var calendar;
