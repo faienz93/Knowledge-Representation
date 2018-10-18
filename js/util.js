@@ -166,6 +166,32 @@ function countHoursBetween(course, day, startHour, endHour) {
     }
     return result;
 }
+    /**
+     * Return the professor by Id
+     */
+    function getProfessorById (idProf) {
+        var result;
+        $( document ).ajaxComplete(function() {
+            // console.log(professors);
+            for (var i=0;i<professors.length;i++){
+                // console.log(professors[i]);
+                if(professors[i].getId()==idProf){
+                    
+                    result = professors[i];
+                    // console.log(result);
+                }
+            }
+            // console.log(professors.length);
+            // console.log("Non esiste alcun professor con id "+idProf);
+            
+            }
+          );    
+        //   console.log(result);         
+        // return result;
+        
+    }
+
+
 
 /**
  * Function for print somethings

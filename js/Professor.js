@@ -45,6 +45,7 @@ function Professor(name, surname, id, role) {
         return this.name + " " + this.surname;
     }
 
+   
     /**
      * Check if exist the same professor from array based on ID 
      * @param {array} arr array of other professor

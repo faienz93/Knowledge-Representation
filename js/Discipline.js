@@ -64,6 +64,17 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         return professor;
     }
 
+    /**
+    * Function to set discipline's teacher
+    */
+    // this.setDisciplineProfessor=function() {
+    //     var subjectProfessor = queryDisciplineProfessor(this.id);
+    //     for (var i = 0; i < subjectProfessor; i++) {
+            
+    //     }
+
+    // }
+
     this.getAllProfessor = function () {
         var allProfessor = '';
         for (var i = 0; i < professor.length; i++) {
