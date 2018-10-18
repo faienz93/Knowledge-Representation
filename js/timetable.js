@@ -405,7 +405,9 @@ reactor.createRule("stop", -100, {},
             function (timetable) { return timetable.tt == null; }));
     },
     function () {
-        reactor.stop();
+            reactor.stop();
+            //console.log(queryDisciplineProfessor("77803"));
+           
     });
 
 
@@ -471,6 +473,8 @@ for (var i = 0; i < subject.length; i++) {
 
 }
 
+getProfessorById("000001");
+// console.log(professors);
 
 // var o = JSON.stringify({ timetable }, null, " ");
 // console.log(o);

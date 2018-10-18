@@ -64,6 +64,17 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         return professor;
     }
 
+    /**
+    * Function to set discipline's teacher
+    */
+    // this.setDisciplineProfessor=function() {
+    //     var subjectProfessor = queryDisciplineProfessor(this.id);
+    //     for (var i = 0; i < subjectProfessor; i++) {
+            
+    //     }
+
+    // }
+
     this.getAllProfessor = function () {
         var allProfessor = '';
         for (var i = 0; i < professor.length; i++) {
@@ -289,7 +300,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         if (this.checkExistPreference("splitdurationlessons6h")) {
             for (var i = 0; i < preference.length; i++) {
                 preference.splice(i.splitdurationlessons6h, 1);
-            }            
+            }
         }
         var splitD = { "splitdurationlessons6h": d };
         preference.push(splitD);
@@ -334,7 +345,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
      */
     this.getChalkClass = function () {
         var obj = preference.find(o => o.chalkclass);
-        if (obj != undefined) {            
+        if (obj != undefined) {
             return obj.chalkclass;
         }
         else {
