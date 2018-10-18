@@ -1,4 +1,5 @@
 teacher,sixHourSplit,consecutiveDays,noLessonDay1,noLessonDay2,noLessonAMPM,writeMethodRoom
 211832,2,startweek,,,,markers
-150348,3,,monday,friday,PM,chalks
+150348,4,,monday,friday,,chalks
 000001,,endweek,,,,
+000002,,,,,PM,markers

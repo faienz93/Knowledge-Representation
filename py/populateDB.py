@@ -19,8 +19,7 @@ graph_professor = "http://www.rdcproject.com/graph/professor"
 graph_disciplines = "http://www.rdcproject.com/graph/disciplines"
 graph_classrooms = "http://www.rdcproject.com/graph/classrooms" 
 graph_courses = "http://www.rdcproject.com/graph/course"
-graph_preferences = "http://www.rdcproject.com/graph/Preference"
-graph_dayPreferences = "http://www.rdcproject.com/graph/DayPreference"
+graph_preferences = "http://www.rdcproject.com/graph/preferences"
 
 # Create a query Informatica Triennale 
 queryInformaticaTriennale = '''
@@ -170,7 +169,7 @@ with open('../assets/csv/professors.csv', 'rb') as csvfile:
         # Run the query and print the result
         sparql.setQuery(query)
         sparql.setMethod('POST') 
-        # print query
+        #print query
         q = sparql.query()
 
 # Insert into graph classrooms the class written inside csv file "classrooms.csv"
@@ -245,7 +244,7 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
                                 uni:year "'''+year+'''";
                                 uni:idDiscipline "'''+id_discipline+'''";
                                 uni:hasCourseof uni:'''+course+''';
-                                uni:isTaughtBy uni:'''+teacher+'''
+                                uni:isTaughtBy uni:'''+teacher+'''.
                                 
             }
         }
@@ -278,13 +277,14 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
         INSERT DATA
         { 
         GRAPH <'''+graph_preferences+'''>{
-        uni:'''+ teacher +''' a uni:isPreferenceOf;
+        uni:'''+ teacher +''' a uni:Preference;
                                 uni:sixHourSplit "'''+sixHourSplit+'''"; 
                                 uni:consecutiveDays "'''+consecutiveDays+'''"; 
                                 uni:noLessonDay1 "'''+noLessonDay1+'''"; 
                                 uni:noLessonDay2 "'''+noLessonDay2+'''"; 
                                 uni:noLessonAMPM "'''+noLessonAMPM+'''"; 
-                                uni:writeMethodRoom "'''+writeMethodRoom+'''"                               
+                                uni:isPreferenceOf "'''+teacher+'''"; 
+                                uni:writeMethodRoom "'''+writeMethodRoom+'''".                            
             }
         }
         '''
@@ -294,7 +294,6 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
         sparql.setMethod('POST') 
         #print query
         q = sparql.query()
-
 
 print "ok inserimento"
 
