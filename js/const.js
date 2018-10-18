@@ -83,9 +83,8 @@ console.log(courses);
 // var iot =  new Discipline("37760", "IoT", "INTERNET OF THING", "1", false, 50, 6, 6, 1, 39);
 // var sismob =  new Discipline("37760", "SM", "SISTEMI MOBILI", "1", false, 50, 5, 6, 1, 29);
 // var siswir = new Discipline("37760", "SW", "SISTEMI WIRELESS", "1", false, 50, 5, 6, 1, 39);
-var discipline = queryDisciplines();
-console.log(discipline);
-console.log(discipline[0].getProfessor());
+
+
 
 // cbd.addCurriculum(currA);
 // cbd.addCurriculum(currB);
@@ -100,7 +99,31 @@ console.log(discipline[0].getProfessor());
 var professors=queryProfessors();
 console.log(professors);
 
-
+var discipline = queryDisciplines();
+console.log(discipline);
+$(document).ajaxStop(function(){
+    // console.log(discipline);
+    // console.log(discipline[0].getProfessor());
+    // console.log(professors[0]);
+    for(var i = 0; i < discipline.length; i++){
+        if(discipline[i].getName() == "SISTEMI MOBILI"){
+            console.log(discipline.getProfessor());
+        }
+        var pr = discipline[i].getProfessor();
+        pr.forEach(function(entry) {
+            var obj = professors.find(o => o.id === entry);
+            if(obj!=undefined){
+                discipline[i].setProfessor(obj)
+            }
+            
+        });        
+    }
+    
+    console.log("PORCO IL DIO");
+    for(var i = 0; i < discipline.length; i++){
+        console.log(discipline[i].getProfessor());
+    }
+});
 // firstName,surName,id_professor,role
 // var dm = new Professor("Danilo", "Montesi", "211832", "ordinario");
 // var fv = new Professor("Fabio", "Vitali", "5", "ordinario");
