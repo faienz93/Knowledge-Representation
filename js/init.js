@@ -95,24 +95,32 @@ function slideDownAndUp() {
     });
     // slideToggle Delete Professor
     $('#headerProfessorDelete').click(function () {
+        $('#findProfessorDelete_chosen').css("width", "100%");
         $('#cardBodyProfessorDelete').slideToggle("slow");
     });
     // slideToggle Update Professor
-    $('#headerProfessorUpdate').click(function () {
+    $('#headerProfessorUpdate').click(function () {        
+        $('#findProfessorUpdate_chosen').css("width", "100%");
         $('#cardBodyProfessorUpdate').slideToggle("slow");
     });
 
 
     // slideToggle Discipline
     $('#headerDiscipline').click(function () {
+        
+        $('#assignProfessor_chosen').css("width", "100%");
+        $('#findDisciplineCourse_chosen').css("width", "100%");
         $('#cardBodyDiscipline').slideToggle("slow");
     });
     // slideToggle Delete Discipline
     $('#headerDisciplineDelete').click(function () {
+        $('#findDisciplineDelete_chosen').css("width", "100%");
         $('#cardBodyDisciplineDelete').slideToggle("slow");
     });
-    // slideToggle Update Professor
+    // slideToggle Update Discipline
     $('#headerDisciplineUpdate').click(function () {
+        $('#findDisciplineUpdate_chosen').css("width", "100%");        
+        $('#assignProfessorUpdate_chosen').css("width", "100%");
         $('#cardBodyDisciplineUpdate').slideToggle("slow");
     });
 
@@ -122,11 +130,13 @@ function slideDownAndUp() {
         $('#cardBodyClassRoom').slideToggle("slow");
     });
     // slideToggle Delete ClassRoom
-    $('#headerClassRoomDelete').click(function () {
+    $('#headerClassRoomDelete').click(function () {        
+        $('#findClassRoomDelete_chosen').css("width", "100%"); 
         $('#cardBodyClassRoomDelete').slideToggle("slow");
     });
     // slideToggle Update ClassRoom
-    $('#headerUpdateClassRoom').click(function () {
+    $('#headerUpdateClassRoom').click(function () {        
+        $('#findClassRoomUpdate_chosen').css("width", "100%"); 
         $('#cardBodyClassRoomUpdate').slideToggle("slow");
     });
 
