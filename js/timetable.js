@@ -21,6 +21,11 @@ reactor.trace(0);
  * ********************************************************************** 
  */
 
+/**
+ * Check if exist overlapping lessons for the same day. In this case call assert and check if
+ * respect the other rule 
+ * REF: https://stackoverflow.com/a/30735838
+ */
 reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
     function (l) {
         var valueArr = l.tt.map(function (item) { return item.day });
@@ -35,6 +40,11 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
         }
     });
 
+/**
+ * ***********************************************************************
+ * ***************************** PRIORITY -1 *****************************
+ * *********************************************************************** 
+ */
 
 /**
  * If lesson start after the 18:00 then swap to next Day
@@ -106,11 +116,7 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
 
 
 
-/**
- * ***********************************************************************
- * ***************************** PRIORITY -1 *****************************
- * *********************************************************************** 
- */
+
 
 
 
@@ -200,50 +206,7 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
         assert(timetable);
     });
 
-/**
- * Rule for the end lesson over 19 
- */
 
-// reactor.createRule("maxLessonEnd", -1, { l: Lesson },
-//     function (l) {
-//         var slotLesson = l.getStartLesson() + l.getDurationLesson();
-//         return slotLesson >= 20;
-//     },
-//     function (l) {
-//         var dL = l.getDurationLesson();
-//         printForDebug(l, "white", "blue");
-//         l.getStartLesson()
-//         l.setDay(generateDayByExcludingOne(l.getDay()));
-//         l.setStartLesson(9);
-//         l.setEndLesson(9 + dL);
-//         //   printForDebug(l,"white","black");
-//         assert(timetable);
-//     });
-
-
-
-// /**
-//  * RULE: Break hour for a course if it has more of 5 hours consecutive (function in util) * 
-//  */
-reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
-    function (l1, l2) {
-        var count = 0;
-        if (l1 != l2 &&
-            l1.getDay() == l2.getDay() &&
-            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-            l1.getEndLesson() == l2.getStartLesson()) {
-            count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
-        }
-        return count > 5;
-
-    },
-    function (l2) {
-        var dL = l2.getDurationLesson();
-        var newStart = l2.getStartLesson() + 1;
-        l2.setStartLesson(newStart);
-        l2.setEndLesson(newStart + dL);
-        assert(timetable);
-    });
 
 /**
  * ********************************************************************************
@@ -254,7 +217,7 @@ reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
 /**
 * RULE: Check From Preference if exist a particular day where the professor doesn't want doing a lesson
 */
-reactor.createRule("avoidLessonProfessor", -1, { l: Lesson },
+reactor.createRule("avoidLessonDay", -1, { l: Lesson },
     function (l) {
         // check if exist preference with specific key
         var existLessotToAvoid = l.getDiscipline().checkExistPreference("avoidLessonDay");
@@ -264,7 +227,7 @@ reactor.createRule("avoidLessonProfessor", -1, { l: Lesson },
     },
     function (l) {
         printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDay(), "white", "blue");
-
+        
         var actualDayToAvoid = l.getDay();
         var dL = l.getDurationLesson();
         l.setStartLesson(START_LESSONS);
@@ -340,7 +303,7 @@ reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
     function (l) {
         printForDebug("SETPERIODOFDAY_AM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "red");
        
-        if (l.getStartLesson() > 12) { 
+        if (l.getStartLesson() >= 12) { 
             var actualDay = l.getDay();
             l.setNewDay(actualDay, 1);
         }
@@ -393,6 +356,51 @@ reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
     });
 
 
+
+/**
+ * Rule for the end lesson over 19 
+ */
+
+reactor.createRule("maxLessonEnd", -2, { l: Lesson },
+    function (l) {
+        var slotLesson = l.getStartLesson() + l.getDurationLesson();
+        return slotLesson >= 20;
+    },
+    function (l) {
+        var dL = l.getDurationLesson();
+        printForDebug(l, "blue", "white");
+        l.getStartLesson()
+        l.setDay(generateDayByExcludingOne(l.getDay()));
+        l.setStartLesson(9);
+        l.setEndLesson(9 + dL);
+        //   printForDebug(l,"white","black");
+        assert(timetable);
+    });
+
+
+
+/**
+ * RULE: Break hour for a course if it has more of 5 hours consecutive (function in util) * 
+ */
+reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var count = 0;
+        if (l1 != l2 &&
+            l1.getDay() == l2.getDay() &&
+            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getEndLesson() == l2.getStartLesson()) {
+            count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
+        }
+        return count > 5;
+
+    },
+    function (l2) {
+        var dL = l2.getDurationLesson();
+        var newStart = l2.getStartLesson() + 1;
+        l2.setStartLesson(newStart);
+        l2.setEndLesson(newStart + dL);
+        assert(timetable);
+    });
 /**
  * *********************************************************************
  * ***************************** STOP RULE *****************************
@@ -435,36 +443,36 @@ var timetable = new TimetableArray();
 
 for (var i = 0; i < subject.length; i++) {
     var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
-    var randomDay = days[Math.floor(Math.random() * days.length)];
+    // var randomDay = days[Math.floor(Math.random() * days.length)];
     // var subjectWeeksHours=subject[i].getWeeksHours();
     var subjectWeeksHours = DURATION_LESSON;
     if (subjectWeeksHours < 4) {
-        timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
     }
     if (subjectWeeksHours == 4) {
-        timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-        timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
     }
     if (subjectWeeksHours == 5) {
-        timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
-        timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
     }
     if (subjectWeeksHours == 6) {
 
         if (subject[i].getSplitDuration(2)) {
 
-            timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-            timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-            timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+            timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+            timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+            timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
         }
         else if (subject[i].getSplitDuration(3)) {
 
-            timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
-            timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+            timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+            timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
         }
         else {
-            timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-            timetable.tt.push(new Lesson(randomDay, subject[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
+            timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+            timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
         }
 
     }

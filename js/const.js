@@ -221,12 +221,12 @@ for(var i=0;i<subject.length;i++){
 
 
 // Preferenze di Marco di Felice
-// iot.avoidLessonDay("Monday");
-// iot.avoidLessonDay("Tuesday");
-// sismob.avoidLessonDay("Monday");
-// sismob.avoidLessonDay("Tuesday");
-// bd.avoidLessonDay("Monday");
-// bd.avoidLessonDay("Tuesday");
+iot.avoidLessonDay("Monday");
+iot.avoidLessonDay("Tuesday");
+sismob.avoidLessonDay("Monday");
+sismob.avoidLessonDay("Tuesday");
+bd.avoidLessonDay("Monday");
+bd.avoidLessonDay("Tuesday");
 
 
 
@@ -234,9 +234,10 @@ for(var i=0;i<subject.length;i++){
 // sismob.consecutiveDay("startweek");
 // bd.consecutiveDay("endweek");
 
-iot.setPeriodOfDay("AM");
-sismob.setPeriodOfDay("AM");
-bd.setPeriodOfDay("AM");
+// iot.setPeriodOfDay("AM");
+// sismob.setPeriodOfDay("AM");
+// bd.setPeriodOfDay("AM");
+
 // bd.setPeriodOfDay("PM");
 // iot.setPeriodOfDay("PM");
 // sismob.setPeriodOfDay("PM");
