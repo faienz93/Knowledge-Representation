@@ -1,6 +1,15 @@
-// 
-// Query Professors
-// 
+/**
+ * ===========================================================================
+ * File: query.js 
+ * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
+ * This file make a query from db for create a different Entities
+ * ===========================================================================
+ */
+
+
+/***********************************
+ * Query Professors
+ ************************************/
 function queryProfessors() {
     var result = [];
     var endpointURL = "http://localhost:3030/ds/query";
@@ -44,12 +53,13 @@ function queryProfessors() {
         }
 
     });
-    
+
     return result;
 }
-// 
-// Query Classes
-// 
+
+/***********************************
+ * Query Classes
+ ************************************/
 function queryClassrooms() {
     var result = [];
     var endpointURL = "http://localhost:3030/ds/query";
@@ -100,9 +110,10 @@ function queryClassrooms() {
     return result;
 }
 
-// 
-// Query Course
-// 
+
+/***********************************
+ * Query Course
+ ************************************/
 function queryCourses() {
     var result = [];
     var endpointURL = "http://localhost:3030/ds/query";
@@ -146,9 +157,10 @@ function queryCourses() {
     return result;
 }
 
-// 
-// Query Discipline
-// 
+
+/***********************************
+ * Query Discipline
+ ************************************/
 function queryDisciplines() {
     var result = [];
     var endpointURL = "http://localhost:3030/ds/query";
@@ -212,9 +224,10 @@ function queryDisciplines() {
     return result;
 }
 
-//
-// Query professor teaches a subject
-//
+
+/***********************************
+ * Query Professors teacher a subject
+ ************************************/
 function queryDisciplineProfessor(idDiscipline) {
     var result = [];
     var endpointURL = "http://localhost:3030/ds/query";

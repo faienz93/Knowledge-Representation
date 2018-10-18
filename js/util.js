@@ -187,7 +187,7 @@ function countHoursBetween(course, day, startHour, endHour) {
             }
           );    
         //   console.log(result);         
-        // return result;
+        return result;
         
     }
 

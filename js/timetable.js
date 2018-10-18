@@ -481,8 +481,8 @@ for (var i = 0; i < subject.length; i++) {
 
 }
 
-getProfessorById("000001");
-// console.log(professors);
+// var ciao = getProfessorById("000001");
+// console.log(ciao);
 
 // var o = JSON.stringify({ timetable }, null, " ");
 // console.log(o);
