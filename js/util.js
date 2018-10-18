@@ -148,7 +148,34 @@ function checkCapacityClassroom(numSub) {
     return result;
 }
 
-function updateCalendar(calendar,e) {
+function updateEventCalendar(l) {
+   
+    var numDay = defineDayNumber(l.getDay());
+    var prova = now.startOf('week').add(numDay, 'days').add(l.getStartLesson(), 'h').add(00, 'm').format('X');
+    
+    var findEvents = calendar.getEvents().find(o => o.start == prova);    
+    if (findEvents != undefined) {
+        calendar.getEvents().splice(findEvents, 1);
+        // console.log("Lo ha trovato");
+    } else {
+        var numDay = defineDayNumber(l.getDay());
+        var newEvent = {
+            start: now.startOf('week').add(numDay, 'days').add(l.getStartLesson(), 'h').add(00, 'm').format('X'),
+            end: now.startOf('week').add(numDay, 'days').add(l.getEndLesson(), 'h').format('X'),
+            title: l.getDiscipline().getName(),
+            content: "AULA:" + l.getClassroom() + "<br>" +
+                "CORSO: " + l.getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
+                "PROFESSORE " + l.getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
+            category: l.getDiscipline().getCourse()
+        }
+        calendar.addEvents(newEvent);
+    }
+    // console.log(events);
+    // console.log(calendar);
+    calendar.init()
+}
+
+function updateCalendar(calendar, e) {
     // var result = [];
     // for (let e of timetable.tt) 
     {
@@ -164,13 +191,13 @@ function updateCalendar(calendar,e) {
             category: e.getDiscipline().getCourse()
         }
         calendar.addEvents(newEvent);
-        
+
         // result.push(newEvent);
     }
     // calendar.setEventCategoriesColors([{ category: "Personnal", color: "#AD1457" }]);
     calendar.init();
-    
-    
+
+
 }
 /**
  * Function for print somethings

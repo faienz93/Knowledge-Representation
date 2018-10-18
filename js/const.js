@@ -215,9 +215,7 @@ subject.push(siswir)
 
 //Preferenze di default 
 for(var i=0;i<subject.length;i++){    
-    subject[i].splitDurationLessons6h(3);
-   
-    
+    subject[i].splitDurationLessons6h(3);   
 }
 
 

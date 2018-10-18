@@ -30,6 +30,7 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
     },
     function (l) {
         for (var i = 0; i <= l.tt.length - 1; i++) {
+            // updateEventCalendar(l.tt[i]);
             assert(l.tt[i]);
         }
     });
@@ -57,7 +58,8 @@ reactor.createRule("swapDay", -1, { l: Lesson },
         // della condizione l1.getStartLesson() > 18) che si ripete
         var actualDay = l.getDay();
         l.setNewDay(actualDay, 1);
-        
+        updateEventCalendar(l);
+
     });
 
 
@@ -73,6 +75,7 @@ reactor.createRule("assignClassroom", 0, { l: Lesson },
         var compatibilityClassroom = checkCapacityClassroom(l.getDiscipline().getNumStudent());
         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
         l.setClassroom(newClassRoom);
+        updateEventCalendar(l);
         assert(timetable);
 
     });
@@ -120,6 +123,8 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
             l1.setStartLesson(l2.getEndLesson());
             l1.setEndLesson(l1.getStartLesson() + dL);
         }
+        updateEventCalendar(l1);
+        updateEventCalendar(l2);
         assert(timetable);
     });
 
@@ -151,7 +156,9 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
             l1.setStartLesson(l2.getEndLesson());
             l1.setEndLesson(l1.getStartLesson() + dL);
         }
-        
+        updateEventCalendar(l1);
+        updateEventCalendar(l2);
+
     });
 
 /**
@@ -178,6 +185,8 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
         l2.setStartLesson(l1.getEndLesson());
         l2.setEndLesson(l2.getStartLesson() + dL);
         // assert([l1, l2]); 
+        updateEventCalendar(l1);
+        updateEventCalendar(l2);
         assert(timetable);
     });
 
@@ -197,7 +206,8 @@ reactor.createRule("NOSameLessonSameDay", -2, { l1: Lesson, l2: Lesson },
         var actualDayToAvoid = l2.getDay();
         l1.setDay(generateDayByExcludingOne(actualDayToAvoid));
         // l2.setNewDay(l1.getDay(),2);
-        
+        updateEventCalendar(l1);
+        updateEventCalendar(l2);
         assert(timetable);
     });
 
@@ -226,6 +236,8 @@ reactor.createRule("avoidLessonProfessor", -1, { l: Lesson },
         l.setStartLesson(START_LESSONS);
         l.setEndLesson(START_LESSONS + dL);
         l.setDay(generateDayByExcludingOne(actualDayToAvoid));
+        
+        updateEventCalendar(l);
         assert(timetable);
 
     });
@@ -246,6 +258,7 @@ reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
         var dL = l.getDurationLesson();
         l.setStartLesson(13);
         l.setEndLesson(13 + dL);
+        updateEventCalendar(l);
         assert(timetable);
     });
 
@@ -270,6 +283,7 @@ reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
         var dL = l.getDurationLesson();
         l.setStartLesson(START_LESSONS);
         l.setEndLesson(START_LESSONS + dL);
+        updateEventCalendar(l);
         assert(timetable);
     });
 
@@ -297,6 +311,7 @@ reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
         var randomClassroom = compatibilityRooms[Math.floor(Math.random() * compatibilityRooms.length)];
         l.setClassroom(randomClassroom);
         printForDebug("CHECKCLASSROOMCHALK " + randomClassroom, "yellow", "black");
+        updateEventCalendar(l);
         assert(timetable);
     });
 
@@ -320,6 +335,7 @@ reactor.createRule("consecutiveLessonsStartWeek", 1, { l: Lesson },
     function (l) {
         printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
         l.setDay("Monday");
+        updateEventCalendar(l);
         assert(timetable);
 
 
@@ -346,7 +362,8 @@ reactor.createRule("consecutiveLessonsEndWeek", 1, { l: Lesson },
         printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
         if (l.getDurationLesson() == 2 && l.getDiscipline().getWeeksHours() == 6) { l.setDay("Wednesday"); }
         else { l.setDay("Thursday"); }
-        // l1.setDay("Thursday");
+        
+        updateEventCalendar(l);
         assert(timetable);
 
 
@@ -354,7 +371,17 @@ reactor.createRule("consecutiveLessonsEndWeek", 1, { l: Lesson },
 
 
 
+reactor.createRule("executeAfterChanges", 0, {},
+    function () {
+        // perhaps poll some external data here
+        return true;
+    },
+    function () {
+        if (calendar != undefined) {
+            calendar.init();
+        }
 
+    });
 
 
 
@@ -379,7 +406,6 @@ reactor.createRule("stop", -100, {},
             function (timetable) { return timetable.tt == null; }));
     },
     function () {
-        
         reactor.stop();
     });
 
@@ -477,10 +503,10 @@ reactor.run(Infinity, true, function () {
     // calendar.init();
 
     for (let e of timetable.tt) {
-        updateCalendar(calendar, e);
+        updateEventCalendar(e);
     }
-    
-    
+
+
 });
 
 
