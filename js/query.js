@@ -189,38 +189,44 @@ function queryDisciplines() {
 
     var encodedquery = encodeURIComponent(myquery);
 
-
-    $.ajax({
-        dataType: "jsonp",
-        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
-        success: function (results) {
-            $.each(results, function (index, element) {
-                var bindings = element.bindings;
-                // REF: https://www.w3.org/TR/rdf-sparql-json-res/
-                for (i in bindings) {
-                    var id = bindings[i].id.value;
-                    var abbreviation = bindings[i].abbreviation.value;//TODO aggiungere abbreviation
-                    var name = bindings[i].disciplineName.value;
-                    var semester = bindings[i].semester.value;
-                    var obligatory = bindings[i].obligatory.value;
-                    var totalHours = bindings[i].totalhours.value;
-                    var weeksHours = bindings[i].weekhours.value;
-                    var cfu = bindings[i].cfu.value;
-                    var year = bindings[i].year.value;
-                    var numStudents = 29;//TODO aggiungere numstudents
-
-                    var course = bindings[i].hasCourseof.value;//TODO eliminare corsi curriculum
-                    var teacher = bindings[i].isTaughtBy.value;//
-
-                    var discipline = new Discipline(id, abbreviation, name, semester, obligatory, totalHours, weeksHours, cfu, year, numStudents);
-                    result.push(discipline);
-                }
-
-            });
-
-        }
-
-    });
+    
+        $.ajax({
+            dataType: "jsonp",
+            url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+            success: function (results) {
+                $.each(results, function (index, element) {
+                    var bindings = element.bindings;
+                    // REF: https://www.w3.org/TR/rdf-sparql-json-res/
+                    for (i in bindings) {
+                        var id = bindings[i].id.value;
+                        var abbreviation = bindings[i].abbreviation.value;//TODO aggiungere abbreviation
+                        var name = bindings[i].disciplineName.value;
+                        var semester = bindings[i].semester.value;
+                        var obligatory = bindings[i].obligatory.value;
+                        var totalHours = bindings[i].totalhours.value;
+                        var weeksHours = bindings[i].weekhours.value;
+                        var cfu = bindings[i].cfu.value;
+                        var year = bindings[i].year.value;
+                        var numStudents = 29;//TODO aggiungere numstudents
+    
+                        var course = bindings[i].hasCourseof.value;//TODO eliminare corsi curriculum
+                        var teacher = bindings[i].isTaughtBy.value;//
+    
+                        var discipline = new Discipline(id, abbreviation, name, semester, obligatory, totalHours, weeksHours, cfu, year, numStudents);
+                        result.push(discipline);
+                    }
+    
+                });
+    
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("ATTENZIONE - ERRORE: Assicurarsi che il server sia attivo ");
+                console.log(jqXHR);
+                // console.log(textStatus + " " + errorThrown);
+            }
+        });
+   
+    
     return result;
 }
 
