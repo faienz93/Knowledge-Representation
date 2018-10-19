@@ -69,6 +69,7 @@ function setResetBtns() {
     // Reset value of form Update ClassRoom 
     $('#resetUpdateClassRoom').click(function () {
         $('#classRoomFormUpdate')[0].reset();
+        $('#findClassRoomUpdate').val("").trigger("chosen:updated");
     });
 
 }
