@@ -33,6 +33,7 @@ var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 // var classrooms = ['Aula Ercolani 1', 'Aula Ercolani 2', 'Aula Ercolani 3', 'Lab Ercolani', 'Ranzani', 'Vitali'];
 // var classrooms = ['Aula Ercolani 1', 'Aula Ercolani 2'];
+console.log("--------- CLASSROOM ---------");
 var classrooms = queryClassrooms();
 console.log(classrooms);
 // classrooms.push(new Classroom(12347, "E1", "Ercolani", 40, "Chalk", false));
@@ -46,8 +47,9 @@ console.log(classrooms);
 // classrooms.push(new Classroom(44981, "C1 Ranzani", "Ranzani", 30, "Markers", false));
 // classrooms.push(new Classroom(44982, "Lab Ranzani", "Ranzani", 30, "Markers", true));
 
-
-
+console.log("--------- DISCIPLINE PROFESSOR ---------");
+var queryDisciplineProfessor = queryDisciplineProfessor();
+console.log(queryDisciplineProfessor);
 
 
 
@@ -70,8 +72,12 @@ console.log(classrooms);
 // var currB = new Curriculum("B", "Informatica per il Management");
 // var currC = new Curriculum("C", "Sistemi e Reti");
 
-var courses=queryCourses();
-console.log(courses);
+// var courses=queryCourses();
+// console.log(courses);
+
+
+
+
 // Discipline(id, abbreviation ,name, semester, obligatory, totalHours, weeksHours, cfu, year) {
 // var cbd = new Discipline("28796", "CBD", "COMPLEMENTI DI BASI DI DATI", "1", true, 60, 5, 6, 1, 29);
 // var uux = new Discipline("81670", "UUX", "USABILITA E USER EXPERIENCE", "1", true, 60, 6, 6, 1, 29);
@@ -83,9 +89,9 @@ console.log(courses);
 // var iot =  new Discipline("37760", "IoT", "INTERNET OF THING", "1", false, 50, 6, 6, 1, 39);
 // var sismob =  new Discipline("37760", "SM", "SISTEMI MOBILI", "1", false, 50, 5, 6, 1, 29);
 // var siswir = new Discipline("37760", "SW", "SISTEMI WIRELESS", "1", false, 50, 5, 6, 1, 39);
-var discipline = queryDisciplines();
-console.log(discipline);
-console.log(discipline[0].getProfessor());
+// var discipline = queryDisciplines();
+// // console.log(discipline);
+// console.log(discipline[0].getProfessor());
 
 // cbd.addCurriculum(currA);
 // cbd.addCurriculum(currB);
@@ -97,8 +103,8 @@ console.log(discipline[0].getProfessor());
 // ap.addCurriculum(currA);
 // ap.addCurriculum(currC);
 
-var professors=queryProfessors();
-console.log(professors);
+// var professors=queryProfessors();
+// console.log(professors);
 
 
 // firstName,surName,id_professor,role
