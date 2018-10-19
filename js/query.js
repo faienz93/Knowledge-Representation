@@ -161,74 +161,65 @@ function queryClassrooms() {
 /***********************************
  * Query Discipline
  ************************************/
-// function queryDisciplines() {
-//     var result = [];
-//     var endpointURL = "http://localhost:3030/ds/query";
+function queryDisciplines() {
+    var result = [];
+    var endpointURL = "http://localhost:3030/ds/query";
 
-//     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
-//     PREFIX un: <http://www.w3.org/2007/ont/unit#>
+    var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
+    PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-//     SELECT  ?id ?abbreviation ?disciplineName ?cfu ?hasCourseof ?isTaughtBy ?obligatory ?semester ?totalhours ?weekhours ?year
-//     FROM <http://www.rdcproject.com/graph/disciplines>
-//     WHERE
-//     {   ?x  a uni:Discipline;
-//         uni:idDiscipline ?id;
-//         uni:disciplinename ?disciplineName;
-//         uni:disciplineAbbreviation ?abbreviation;
-//         uni:cfu ?cfu;
-//         uni:hasCourseof ?hasCourseof;
-//         uni:isTaughtBy ?isTaughtBy;
-//         uni:obligatory ?obligatory;
-//         uni:semester ?semester;
-//         uni:totalhours ?totalhours;
-//         uni:weekhours ?weekhours;
-//         uni:year ?year.                      
+    SELECT  ?id ?abbreviation ?disciplineName ?cfu ?hasCourseof ?isTaughtBy ?obligatory ?semester ?totalhours ?weekhours ?year ?teacher
+    FROM <http://www.rdcproject.com/graph/disciplines>
+    FROM <http://www.rdcproject.com/graph/professor>
+    WHERE
+    {   ?x  a uni:Discipline;
+        uni:idDiscipline ?id;
+        uni:disciplinename ?disciplineName;
+        uni:disciplineAbbreviation ?abbreviation;
+        uni:cfu ?cfu;
+        uni:hasCourseof ?hasCourseof;
+        uni:isTaughtBy ?isTaughtBy;
+        uni:obligatory ?obligatory;
+        uni:semester ?semester;
+        uni:totalhours ?totalhours;
+        uni:weekhours ?weekhours;
+        uni:year ?year.
+        ?isTaughtBy a uni:Teacher;
+        uni:idProfessor ?teacher.
+
+
         
 //     }
 //                     `;
 
 //     var encodedquery = encodeURIComponent(myquery);
 
-    
-//         $.ajax({
-//             dataType: "jsonp",
-//             url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
-//             success: function (results) {
-//                 $.each(results, function (index, element) {
-//                     var bindings = element.bindings;
-//                     // REF: https://www.w3.org/TR/rdf-sparql-json-res/
-//                     for (i in bindings) {
-//                         var id = bindings[i].id.value;
-//                         var abbreviation = bindings[i].abbreviation.value;//TODO aggiungere abbreviation
-//                         var name = bindings[i].disciplineName.value;
-//                         var semester = bindings[i].semester.value;
-//                         var obligatory = bindings[i].obligatory.value;
-//                         var totalHours = bindings[i].totalhours.value;
-//                         var weeksHours = bindings[i].weekhours.value;
-//                         var cfu = bindings[i].cfu.value;
-//                         var year = bindings[i].year.value;
-//                         var numStudents = 29;//TODO aggiungere numstudents
-    
-//                         var course = bindings[i].hasCourseof.value;//TODO eliminare corsi curriculum
-//                         var teacher = bindings[i].isTaughtBy.value;//
-    
-//                         var discipline = new Discipline(id, abbreviation, name, semester, obligatory, totalHours, weeksHours, cfu, year, numStudents);
-//                         result.push(discipline);
-//                     }
-    
-//                 });
-    
-//             },
-//             error: function (jqXHR, textStatus, errorThrown) {
-//                 console.log("ATTENZIONE - ERRORE: Assicurarsi che il server sia attivo ");
-//                 console.log(jqXHR);
-//                 // console.log(textStatus + " " + errorThrown);
-//             }
-//         });
-   
-    
-//     return result;
-// }
+    $.ajax({
+        dataType: "jsonp",
+        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+        success: function (results) {
+            $.each(results, function (index, element) {
+                var bindings = element.bindings;
+                // REF: https://www.w3.org/TR/rdf-sparql-json-res/
+                for (i in bindings) {
+                    var id = bindings[i].id.value;
+                    var abbreviation = bindings[i].abbreviation.value;//TODO aggiungere abbreviation
+                    var name = bindings[i].disciplineName.value;
+                    var semester = bindings[i].semester.value;
+                    var obligatory = bindings[i].obligatory.value;
+                    var totalHours = bindings[i].totalhours.value;
+                    var weeksHours = bindings[i].weekhours.value;
+                    var cfu = bindings[i].cfu.value;
+                    var year = bindings[i].year.value;
+                    var numStudents = 29;//TODO aggiungere numstudents
+
+                    var course = bindings[i].hasCourseof.value;//TODO eliminare corsi curriculum
+                    var teacher = bindings[i].teacher.value;//
+                    // console.log(teacher)
+                    var discipline = new Discipline(id, abbreviation, name, semester, obligatory, totalHours, weeksHours, cfu, year, numStudents);
+                    discipline.setProfessor(teacher);
+                    result.push(discipline);
+                }
 
 
 /***********************************
@@ -340,3 +331,36 @@ function queryDisciplineProfessor(idDiscipline) {
     });
     return result;
 }
+
+
+
+
+
+
+//MEMO
+// PREFIX uni: <http://www.rdfproject.com/>
+//     PREFIX un: <http://www.w3.org/2007/ont/unit#>
+
+//     SELECT ?id ?abbreviation ?disciplineName ?cfu ?hasCourseof ?isTaughtBy ?obligatory ?semester ?totalhours ?weekhours ?year ?teacher ?teacher2
+//     FROM <http://www.rdcproject.com/graph/disciplines>
+//     FROM <http://www.rdcproject.com/graph/professor>
+//     WHERE
+//     {   ?x  a uni:Discipline;
+//         uni:idDiscipline ?id;
+//         uni:disciplinename  ?disciplineName;
+//         uni:disciplineAbbreviation ?abbreviation;
+//         uni:cfu ?cfu;
+//         uni:hasCourseof ?hasCourseof;
+//         uni:isTaughtBy ?isTaughtBy;
+//         uni:obligatory ?obligatory;
+//         uni:semester ?semester;
+//         uni:totalhours ?totalhours;
+//         uni:weekhours ?weekhours;
+//         uni:year ?year.
+//         ?isTaughtBy a uni:Teacher;                    
+//         uni:idProfessor ?teacher.
+//         OPTIONAL { ?isTaughtBy a uni:Teacher;
+//          uni:idProfessor  ?teacher2 .FILTER (?teacher != ?teacher2) }
+
+        
+//     }GROUP BY ?id ?abbreviation ?disciplineName ?cfu ?hasCourseof ?isTaughtBy ?obligatory ?semester ?totalhours ?weekhours ?year ?teacher ?teacher2
