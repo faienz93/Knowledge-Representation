@@ -41,30 +41,64 @@
   display: none;
 }
 
+.maindiv {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  height: 270px;
+  background-color: #4b3b4d;
+}
 
+.referenceproject {
+  font-family:helvetica;
+  font-size:20px;
+  color:#fff;
+  
+}
 .mainbutton{
   margin:auto;
-  display:block;
-
+  /* display:block; */
+  display:inline-block;
 }
 
 /* BUTTON STYLES */
 .mainbutton{
-  padding:16px 32px;
+  /* padding:16px 32px; */
   font-family:helvetica;
-  font-size:32px;
+  font-size:25px;
   font-weight:100;
   color:#fff;
   background: #7e4b83;
   border:10px;
   font-weight:100;
-  width: 350px;
-  height: 350px;
-  margin-top: 70px;
+  width: 240px;
+  height: 240px;
+  /* margin-top: 1px; */
+  margin-right: 20px;
   border-radius: 50%;
   border: 5px solid #4c2b4f;
 
 }
 .mainbutton:hover{
   background: #4c2b4f;
+}
+
+.calendarbutton {
+  font-family:helvetica;
+  font-size:30px;
+  font-weight:100;
+  color:#fff;
+  background: #6e80e6;
+  border:10px;
+  font-weight:100;
+  width: 300px;
+  height: 300px;
+  margin-top: 10px;
+  margin-right: 20px;
+  border-radius: 50%;
+  border: 5px solid #00137e;
+}
+
+.calendarbutton:hover{
+  background: #00137e;
 }
