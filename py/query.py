@@ -92,28 +92,28 @@ def cancelProfessor(id_professor):
 # @param
 #   - id_professor
 # ======================================================================
-def searchProfessor(id_professor):   
-    query = '''
-                PREFIX uni: <http://www.rdfproject.com/>
-                PREFIX un: <http://www.w3.org/2007/ont/unit#>
+# def searchProfessor(id_professor):   
+#     query = '''
+#                 PREFIX uni: <http://www.rdfproject.com/>
+#                 PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                SELECT ?idProfessor ?lastName ?firstName ?role
-                FROM <http://www.rdcproject.com/graph/professor>
-                WHERE{
-  						?x a uni:Teacher;
-                         uni:idProfessor "'''+id_professor+'''";
-                         uni:idProfessor ?idProfessor;
-                         uni:firstName ?firstName;
-                         uni:lastName ?lastName;
-                         uni:role ?role;
+#                 SELECT ?idProfessor ?lastName ?firstName ?role
+#                 FROM <http://www.rdcproject.com/graph/professor>
+#                 WHERE{
+#   						?x a uni:Teacher;
+#                          uni:idProfessor "'''+id_professor+'''";
+#                          uni:idProfessor ?idProfessor;
+#                          uni:firstName ?firstName;
+#                          uni:lastName ?lastName;
+#                          uni:role ?role;
                         
-                }
-                '''
+#                 }
+#                 '''
 
-    sparqlQuery.setQuery(query)
-    sparqlQuery.setMethod('POST') 
-    print query
-    return sparqlQuery.query().convert()
+#     sparqlQuery.setQuery(query)
+#     sparqlQuery.setMethod('POST') 
+#     print query
+#     return sparqlQuery.query().convert()
 
 # ======================================================================
 # Modify Professor
@@ -255,40 +255,7 @@ def cancelDiscipline(id_discipline):
     print query
     sparql.query()
 
-# ======================================================================
-# Search Discipline
-# @param
-#   - id_discipline
-# ======================================================================
-def searchDiscipline(id_discipline):   
-    query = '''
-                PREFIX uni: <http://www.rdfproject.com/>
-                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                    SELECT ?idDiscipline ?disciplineAbbreviation ?disciplinename ?semester ?obligatory ?totalhours ?weekhours ?cfu ?year ?isTaughtBy ?hasCourseof
-                    FROM <http://www.rdcproject.com/graph/disciplines>
-                    WHERE
-                    { ?x  a uni:Discipline;
-                            uni:idDiscipline ?"'''+ id_discipline +'''";
-                            uni:idDiscipline ?idDiscipline;
-                            uni:disciplineAbbreviation ?disciplineAbbreviation; 
-                            uni:disciplinename ?disciplinename;
-                            uni:semester ?semester;
-                            uni:obligatory ?obligatory;
-                            uni:totalhours ?totalhours;
-                            uni:weekhours ?weekhours;
-                            uni:cfu ?cfu;
-                            uni:year ?year;
-                            uni:isTaughtBy ?isTaughtBy;
-                            uni:hasCourseof ?hasCourseof;
-                        }
-                    ORDER BY ?idDiscipline
-                '''
-
-    sparqlQuery.setQuery(query)
-    sparqlQuery.setMethod('POST') 
-    print query
-    return sparqlQuery.query().convert()
 
 # ======================================================================
 # Modify ClassRoom
@@ -428,35 +395,7 @@ def cancelClassRoom(id_room):
     print query
     sparql.query()
 
-# ======================================================================
-# Search ClassRoom
-# @param
-#   - idRoom
-# ======================================================================
-def searchClassRoom(idRoom):   
-    query = '''
-                PREFIX uni: <http://www.rdfproject.com/>
-                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                    SELECT ?idRoom ?classroomname ?address ?capacity ?wifi ?wired
-                    FROM <http://www.rdcproject.com/graph/classrooms>
-                    WHERE
-                    { ?x  a uni:Classroom;
-                            uni:idRoom ?"'''+ idRoom +'''";
-                            uni:idRoom ?idRoom;
-                            uni:classroomname ?classroomname;
-                            uni:address ?address;
-                            uni:capacity ?capacity;
-                            uni:wifi ?wifi;
-                            uni:wired ?wired;
-                        }
-                    ORDER BY ?idRoom
-                '''
-
-    sparqlQuery.setQuery(query)
-    sparqlQuery.setMethod('POST') 
-    print query
-    return sparqlQuery.query().convert()
 
 # ======================================================================
 # Modify ClassRoom

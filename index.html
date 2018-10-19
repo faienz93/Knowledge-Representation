@@ -138,26 +138,23 @@
         <div class="card-body" id="cardBodyProfessorUpdate">
             <!--  -->
             <!--  -->
-            <form class="form" id="findProfessorFormUpdate" role="form" autocomplete="off" action="http://127.0.0.1:5000/findProfessor"
-                method="POST">
-                <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Nome</label>
-                    <div class="col-lg-9">
-                        <select id="findProfessorUpdate" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
-                            tabindex="4" size="0" name="updateTeacher" required>
-                            <option value=""></option>
-                            <!-- the otpion tag are fullied in javasctipt file init.js -->
-                        </select>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Nome</label>
+                <div class="col-lg-9">
+                    <select id="findProfessorUpdate" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                        tabindex="4" size="0" name="updateTeacher" required>
+                        <option value=""></option>
+                        <!-- the otpion tag are fullied in javasctipt file init.js -->
+                    </select>
 
-                    </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label"></label>
-                    <div class="col-lg-9">
-                        <input type="submit" class="btn btn-primary" value="Cerca">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label"></label>
+                <div class="col-lg-9">
+                    <button id="buttonFindProfessor" type="button" class="btn btn-primary" value="Cerca">Cerca</button>
                 </div>
-            </form>
+            </div>
             <!--  -->
             <!--  -->
             <form class="form" id="professorFormUpdate" role="form" autocomplete="off" action="http://127.0.0.1:5000/updateProfessor"
@@ -165,46 +162,28 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text" name="nameProfessorUpdate" value="{% if professor!=null %}{{professor['firstName']}}{% endif %}" required>
+                        <input class="form-control" type="text" name="nameProfessorUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Cognome</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text" name="surnameProfessorUpdate" value="{% if professor!=null %}{{professor['lastName']}}{% endif %}" required>
+                        <input class="form-control" type="text" name="surnameProfessorUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Matricola</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" name="idProfessorUpdate" value="{% if professor!=null %}{{professor['idProfessor']}}{% endif %}" required>
+                        <input class="form-control" type="numeric" name="idProfessorUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Tipo di Contratto</label>
                     <div class="col-lg-9">
                         <select id="user_time_zone" class="form-control" size="0" name="roleProfessorUpdate">
-                            {% if professor==null %} 
-                                <option value="contratto" >Professore a contratto</option>
-                                <option value="associato">Professore Associato</option>
-                                <option value="ordinario">Professore Ordinario</option>
-                            {% else %}
-                                {% if professor['role']=="contratto" %}
-                                    <option value="contratto" selected>Professore a contratto</option>
-                                    <option value="associato">Professore Associato</option>
-                                    <option value="ordinario">Professore Ordinario</option>
-                                {% endif %}
-                                {% if professor['role']=="associato" %}
-                                    <option value="contratto" >Professore a contratto</option>
-                                    <option value="associato" selected>Professore Associato</option>
-                                    <option value="ordinario">Professore Ordinario</option>
-                                {% endif %}
-                                {% if professor['role']=="ordinario" %}
-                                    <option value="contratto" >Professore a contratto</option>
-                                    <option value="associato">Professore Associato</option>
-                                    <option value="ordinario" selected>Professore Ordinario</option>
-                                {% endif %}
-                            {% endif %}                          
+                            <option value="contratto">Professore a contratto</option>
+                            <option value="associato">Professore Associato</option>
+                            <option value="ordinario">Professore Ordinario</option>
                         </select>
                     </div>
                 </div>
@@ -279,9 +258,9 @@
                     <label class="col-lg-3 col-form-label form-control-label">Corso di laurea</label>
                     <div class="col-lg-9">
 
-                        
-                        <select id="findDisciplineCourse" data-placeholder="Scegli l'anno in riferimento al corso" class="form-control chosen-select"
-                            tabindex="5" name="degree" required>
+
+                        <select id="findDisciplineCourse" data-placeholder="Scegli l'anno in riferimento al corso"
+                            class="form-control chosen-select" tabindex="5" name="degree" required>
                             <option value=""></option>
                             <optgroup label="Informatica Triennale">
                                 <option value="8009 1">Primo Anno</option>
@@ -360,34 +339,34 @@
     ///////////////////////////////////////////////////////////////////////////////////////
     -->
     <div class="card card-outline-secondary">
-            <div class="card-header" id="headerDisciplineDelete">
-                <h3 class="mb-0"><a href="#"><img src="assets/img/delete.png"></a> Elimina</h3>
-            </div>
-            <div class="card-body" id="cardBodyDisciplineDelete">
-                <!-- <div id="prova">PRova</div> -->
-                <form class="form" id="disciplineFormDelete" role="form" autocomplete="off" action="http://127.0.0.1:5000/deleteDiscipline"
-                    method="POST">
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Nome Materia</label>
-                        <div class="col-lg-9">
-                            <select id="findDisciplineDelete" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
-                                tabindex="4" size="0" name="deleteDiscipline" required>
-                                <option value=""></option>
-                                <!-- the otpion tag are fullied in javasctipt file init.js -->
-                            </select>
-    
-                        </div>
+        <div class="card-header" id="headerDisciplineDelete">
+            <h3 class="mb-0"><a href="#"><img src="assets/img/delete.png"></a> Elimina</h3>
+        </div>
+        <div class="card-body" id="cardBodyDisciplineDelete">
+            <!-- <div id="prova">PRova</div> -->
+            <form class="form" id="disciplineFormDelete" role="form" autocomplete="off" action="http://127.0.0.1:5000/deleteDiscipline"
+                method="POST">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Nome Materia</label>
+                    <div class="col-lg-9">
+                        <select id="findDisciplineDelete" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                            tabindex="4" size="0" name="deleteDiscipline" required>
+                            <option value=""></option>
+                            <!-- the otpion tag are fullied in javasctipt file init.js -->
+                        </select>
+
                     </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label"></label>
-                        <div class="col-lg-9">
-                            <input type="submit" class="btn btn-danger" value="Cancella">
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input type="submit" class="btn btn-danger" value="Cancella">
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
+        </div>
     </div>
-        <!-- 
+    <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
     // Update Materia
@@ -401,26 +380,23 @@
         <div class="card-body" id="cardBodyDisciplineUpdate">
             <!--  -->
             <!--  -->
-            <form class="form" id="findDisciplineFormUpdate" role="form" autocomplete="off" action="http://127.0.0.1:5000/findDiscipline"
-                method="POST">
-                <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Nome</label>
-                    <div class="col-lg-9">
-                        <select id="findDisciplineUpdate" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
-                            tabindex="4" size="0" name="updateDiscipline" required>
-                            <option value=""></option>
-                            <!-- the otpion tag are fullied in javasctipt file init.js -->
-                        </select>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Nome</label>
+                <div class="col-lg-9">
+                    <select id="findDisciplineUpdate" data-placeholder="Begin typing a name to filter..." class="form-control chosen-select"
+                        tabindex="4" size="0" name="updateDiscipline" required>
+                        <option value=""></option>
+                        <!-- the otpion tag are fullied in javasctipt file init.js -->
+                    </select>
 
-                    </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label"></label>
-                    <div class="col-lg-9">
-                        <input type="submit" class="btn btn-primary" value="Cerca">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label"></label>
+                <div class="col-lg-9">
+                    <button id="buttonFindDiscipline" type="button" class="btn btn-primary" value="Cerca">Cerca</button>
                 </div>
-            </form>
+            </div>
             <!--  -->
             <!--  -->
             <form class="form" id="disciplineFormUpdate" role="form" autocomplete="off" action="http://127.0.0.1:5000/updateDiscipline"
@@ -428,49 +404,43 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome Materia</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text" name="discipline_nameUpdate" value="{% if disci!=null %}{{disci['disciplinename']}}{% endif %}" required>
+                        <input class="form-control" type="text" name="discipline_nameUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Sigla Materia</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text" name="discipline_abbUpdate" value="{% if disci!=null %}{{disci['disciplineAbbreviation']}}{% endif %}" required>
+                        <input class="form-control" type="text" name="discipline_abbUpdate"required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Obbligatorio</label>
-                    <div class="col-lg-9">
-                        {% if disci==null %}
-                            <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="true" required>Si </label>
-                            <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="false">No </label>
-                        {% else %}
-                            {% if disci['obligatory']=="true" %}
-                                <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="true" checked required>Si </label>
-                                <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="false">No </label>                                                    
-                                {% else %}
-                                    <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="true" required>Si </label>
-                                    <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="false" checked>No </label>  
-                            {% endif %}
-                        {% endif %}                      
+                    <div class="col-lg-9">                        
+                        <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="true" required>Si
+                        </label>
+                        <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="false">No
+                        </label>
+                        
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">CFU</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" min="1" max="18" value="{% if disci!=null %}{{disci['cfu']}}{% endif %}" name="cfuUpdate" required>
+                        <input class="form-control" type="numeric" min="1" max="18" value="{% if disci!=null %}{{disci['cfu']}}{% endif %}"
+                            name="cfuUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Codice Identificativo</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" name="id_disciplineUpdate" value="{% if disci!=null %}{{disci['idDiscipline']}}{% endif %}" required>
+                        <input class="form-control" type="numeric" name="id_disciplineUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Corso di laurea</label>
                     <div class="col-lg-9">
-                        <select id="determinateCourseDisciplineUpdate" data-placeholder="Scegli l'anno in riferimento al corso" class="form-control chosen-select"
-                            tabindex="5" name="degreeUpdate" required>
+                        <select id="determinateCourseDisciplineUpdate" data-placeholder="Scegli l'anno in riferimento al corso"
+                            class="form-control chosen-select" tabindex="5" name="degreeUpdate" required>
                             <option value=""></option>
                             <optgroup label="Informatica Triennale">
                                 <option value="8009 1">Primo Anno</option>
@@ -500,43 +470,32 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Periodo</label>
                     <div class="col-lg-9">
-                        <select id="user_time_zone" class="form-control" size="0" name="semesterUpdate" required>
-                            {% if disci==null %} 
-                                <option value="1" >Primo Semestre</option>
-                                <option value="2">Secondo Semestre</option>
-                            {% else %}
-                                {% if disci['semester']=="1" %}
-                                    <option value="1" selected>Primo Semestre</option>
-                                    <option value="2">Secondo Semestre</option>
-                                    {%else%}
-                                        <option value="1" >Primo Semestre</option>
-                                        <option value="2" selected>Secondo Semestre</option>
-                                {% endif %}
-                            {% endif %}                             
+                        <select id="user_time_zone" class="form-control" size="0" name="semesterUpdate" required>                            
+                            <option value="1">Primo Semestre</option>
+                            <option value="2">Secondo Semestre</option>                            
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Ore Totali</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" name="totalHoursUpdate" value="{% if disci!=null %}{{disci['totalhours']}}{% endif %}" required>
+                        <input class="form-control" type="numeric" name="totalHoursUpdate" value="{% if disci!=null %}{{disci['totalhours']}}{% endif %}"
+                            required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Ore Settimanali</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" name="weeksHoursUpdate" value="{% if disci!=null %}{{disci['weekhours']}}{% endif %}" required>
+                        <input class="form-control" type="numeric" name="weeksHoursUpdate" value="{% if disci!=null %}{{disci['weekhours']}}{% endif %}"
+                            required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Titolare materia</label>
                     <div class="col-lg-9">
-                        <select id="assignProfessorUpdate" data-placeholder="Begin typing a name to filter..." multiple class="form-control chosen-select"
-                            tabindex="4" size="0" name="teacherUpdate" required>
+                        <select id="assignProfessorUpdate" data-placeholder="Begin typing a name to filter..." multiple
+                            class="form-control chosen-select" tabindex="4" size="0" name="teacherUpdate" required>
                             <option value=""></option>
-                            <script>
-                                selectProfessorsLoading();
-                            </script>
                             <!-- the otpion tag are fullied in javasctipt file init.js -->
                         </select>
                     </div>
@@ -667,15 +626,13 @@
     //
     ///////////////////////////////////////////////////////////////////////////////////////
     -->
-     <div class="card card-outline-secondary">
+    <div class="card card-outline-secondary">
         <div class="card-header" id="headerUpdateClassRoom">
             <h3 class="mb-0"> <a href="#"><img src="assets/img/rotate.png"></a> Aggiorna</h3>
         </div>
         <div class="card-body" id="cardBodyClassRoomUpdate">
             <!--  -->
             <!--  -->
-            <form class="form" id="findClassRoomFormUpdate" role="form" autocomplete="off" action="http://127.0.0.1:5000/findClassRoom"
-                method="POST">
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome</label>
                     <div class="col-lg-9">
@@ -684,16 +641,15 @@
                             <option value=""></option>
                             <!-- the otpion tag are fullied in javasctipt file init.js -->
                         </select>
-
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label"></label>
                     <div class="col-lg-9">
-                        <input type="submit" class="btn btn-primary" value="Cerca">
+                            <button id="buttonFindClassroom" type="button" class="btn btn-primary" value="Cerca">Cerca</button>                        
                     </div>
                 </div>
-            </form>
+           
             <!--  -->
             <!--  -->
             <form id="classRoomFormUpdate" class="form" role="form" autocomplete="off" action="http://127.0.0.1:5000/updateClassRoom"
@@ -701,60 +657,42 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Nome</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text" name="classNameUpdate" value="{% if classRoom!=null %}{{classRoom['classroomname']}}{% endif %}" required>
+                        <input class="form-control" type="text" name="classNameUpdate" value="{% if classRoom!=null %}{{classRoom['classroomname']}}{% endif %}"
+                            required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Numero di posti</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" min="1" name="capacityUpdate" value="{% if classRoom!=null %}{{classRoom['capacity']}}{% endif %}" required>
+                        <input class="form-control" type="numeric" min="1" name="capacityUpdate" value="{% if classRoom!=null %}{{classRoom['capacity']}}{% endif %}"
+                            required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Cablata</label>
-                    <div class="col-lg-9">
-                        {% if classRoom==null %} 
-                            <label class="radio-inline"><input type="radio" name="wiredUpdate" value="true" required>Si </label>
-                            <label class="radio-inline"><input type="radio" name="wiredUpdate" value="false">No </label>
-                        {% else %}
-                            {% if classRoom['wired']=="true" %}
-                                <label class="radio-inline"><input type="radio" name="wiredUpdate" value="true" checked required>Si </label>
-                                <label class="radio-inline"><input type="radio" name="wiredUpdate" value="false">No </label>
-                                {%else%}
-                                    <label class="radio-inline"><input type="radio" name="wiredUpdate" value="true" required>Si </label>
-                                    <label class="radio-inline"><input type="radio" name="wiredUpdate" value="false" checked>No </label>
-                            {% endif %}
-                        {% endif %}                     
+                    <div class="col-lg-9">                        
+                        <label class="radio-inline"><input type="radio" name="wiredUpdate" value="true" required>Si</label>
+                        <label class="radio-inline"><input type="radio" name="wiredUpdate" value="false">No </label>                       
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">WiFii</label>
-                    <div class="col-lg-9">
-                        {% if classRoom==null %} 
-                            <label class="radio-inline"><input type="radio" name="wifiUpdate" value="true" required>Si </label>
-                            <label class="radio-inline"><input type="radio" name="wifiUpdate" value="false">No </label>
-                        {% else %}
-                            {% if classRoom['wifi']=="true" %}
-                                <label class="radio-inline"><input type="radio" name="wifiUpdate" value="true" checked required>Si </label>
-                                <label class="radio-inline"><input type="radio" name="wifiUpdate" value="false">No </label>
-                                {%else%}
-                                    <label class="radio-inline"><input type="radio" name="wifiUpdate" value="true" required>Si </label>
-                                    <label class="radio-inline"><input type="radio" name="wifiUpdate" value="false" checked>No </label>
-                            {% endif %}
-                        {% endif %}
+                    <div class="col-lg-9">                       
+                        <label class="radio-inline"><input type="radio" name="wifiUpdate" value="true" required>Si</label>
+                        <label class="radio-inline"><input type="radio" name="wifiUpdate" value="false">No </label>                        
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Codice Identificativo</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" name="id_roomUpdate" value="{% if classRoom!=null %}{{classRoom['idRoom']}}{% endif %}" required>
+                        <input class="form-control" type="numeric" name="id_roomUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Indirizzo</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text" name="addressUpdate" value="{% if classRoom!=null %}{{classRoom['address']}}{% endif %}" required>
+                        <input class="form-control" type="text" name="addressUpdate" required>
                     </div>
                 </div>
 
@@ -778,13 +716,13 @@
     </footer> -->
 
 
-    
+
 
     <!-- Rule Reactor library -->
     <script src="lib/rule-reactor.js"></script>
 
     <!-- Test Rules -->
-    <script src="js/test/rules.js"></script>
+    <!-- <script src="js/test/rules.js"></script> -->
 
     <!-- Custom Javascript file -->
     <script src="js/init.js"></script>

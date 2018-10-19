@@ -1,51 +1,37 @@
 $(document).ready(function () {
-    InitRuleReactor();
+    // InitRuleReactor();
     chosenPlugin();
 
     slideDownAndUp();
     setResetBtns();
 
-    selectProfessors();
-    selectDisciplines();
-    selectClassrooms();
+    selectAllProfessors();
+    selectAllDisciplines();
+    selectAllClassrooms();
 
-    // setShowHideCards();
+    
+    // When click for update professor....
+    $("#buttonFindProfessor").click(function () {
+        var mySelectId = $('select[name=updateTeacher]').val();
+        fillFieldProfessorById(mySelectId);
+    });
+
+     // When click for update Discipline....
+    $("#buttonFindDiscipline").click(function () {
+        var mySelectId = $('select[name=updateDiscipline]').val();
+        fillFieldDisciplineById(mySelectId);
+    });
+
+    // When click for update Classroom....
+    $("#buttonFindClassroom").click(function () {
+        var mySelectId = $('select[name=updateClassRoom]').val();
+        fillFieldClassroomById(mySelectId);
+    });
+
+    
 });
 
-/**
- * This function aims to set cards view
- * @method setShowHideCards
- */
-function setShowHideCards() {
-    // $('#cardBodyProfessor').hide();
-    // $('#cardBodyProfessorDelete').hide();
-    // if($('#nameProfessorUpdate').val() == null){    //TODO: non fa quello che ci aspettiamo
-    //     $('#cardBodyProfessorUpdate').hide();
-    // }   
 
-    // $('#cardBodyDiscipline').hide();
-    // $('#cardBodyDisciplineDelete').hide();
-    // $('#cardBodyDisciplineUpdate').hide(); 
-
-    // $('#cardBodyClassRoom').hide();   
-    // $('#cardBodyClassRoomDelete').hide(); 
-    // $('#cardBodyClassRoomUpdate').hide(); 
-
-    // setTimeout(function () {
-    //     $('#cardBodyProfessor').hide();
-    //     $('#cardBodyProfessorDelete').hide();
-    //     if ($('#nameProfessorUpdate').val() == null) {    //TODO: non fa quello che ci aspettiamo
-    //         $('#cardBodyProfessorUpdate').hide();
-    //     }
-    //     $('#cardBodyDiscipline').hide();
-    //     $('#cardBodyDisciplineDelete').hide();
-    //     $('#cardBodyDisciplineUpdate').hide();
-
-    //     $('#cardBodyClassRoom').hide();
-    //     $('#cardBodyClassRoomDelete').hide();
-    //     $('#cardBodyClassRoomUpdate').hide();
-    // }, 5000);
-}
 
 /**
  * This function aims to bind event to reset buttons
@@ -59,6 +45,7 @@ function setResetBtns() {
     // Reset value of form Update Professor 
     $('#resetUpdateProfessor').click(function () {
         $('#professorFormUpdate')[0].reset();
+        $('#findProfessorUpdate').val("").trigger("chosen:updated");
     });
 
 
@@ -69,6 +56,9 @@ function setResetBtns() {
     // Reset value of form Update Discipline 
     $('#resetUpdateDiscipline').click(function () {
         $('#disciplineFormUpdate')[0].reset();
+        $('#findDisciplineUpdate').val("").trigger("chosen:updated");
+        $('#assignProfessorUpdate').val("").trigger("chosen:updated");
+        $('#determinateCourseDisciplineUpdate').val("").trigger("chosen:updated");
     });
 
 
@@ -99,7 +89,7 @@ function slideDownAndUp() {
         $('#cardBodyProfessorDelete').slideToggle("slow");
     });
     // slideToggle Update Professor
-    $('#headerProfessorUpdate').click(function () {        
+    $('#headerProfessorUpdate').click(function () {
         $('#findProfessorUpdate_chosen').css("width", "100%");
         $('#cardBodyProfessorUpdate').slideToggle("slow");
     });
@@ -107,7 +97,7 @@ function slideDownAndUp() {
 
     // slideToggle Discipline
     $('#headerDiscipline').click(function () {
-        
+
         $('#assignProfessor_chosen').css("width", "100%");
         $('#findDisciplineCourse_chosen').css("width", "100%");
         $('#cardBodyDiscipline').slideToggle("slow");
@@ -119,8 +109,8 @@ function slideDownAndUp() {
     });
     // slideToggle Update Discipline
     $('#headerDisciplineUpdate').click(function () {
-        $('#findDisciplineUpdate_chosen').css("width", "100%");        
-        $('#assignProfessorUpdate_chosen').css("width", "100%");        
+        $('#findDisciplineUpdate_chosen').css("width", "100%");
+        $('#assignProfessorUpdate_chosen').css("width", "100%");
         $('#determinateCourseDisciplineUpdate_chosen').css("width", "100%");
         $('#cardBodyDisciplineUpdate').slideToggle("slow");
     });
@@ -131,13 +121,13 @@ function slideDownAndUp() {
         $('#cardBodyClassRoom').slideToggle("slow");
     });
     // slideToggle Delete ClassRoom
-    $('#headerClassRoomDelete').click(function () {        
-        $('#findClassRoomDelete_chosen').css("width", "100%"); 
+    $('#headerClassRoomDelete').click(function () {
+        $('#findClassRoomDelete_chosen').css("width", "100%");
         $('#cardBodyClassRoomDelete').slideToggle("slow");
     });
     // slideToggle Update ClassRoom
-    $('#headerUpdateClassRoom').click(function () {        
-        $('#findClassRoomUpdate_chosen').css("width", "100%"); 
+    $('#headerUpdateClassRoom').click(function () {
+        $('#findClassRoomUpdate_chosen').css("width", "100%");
         $('#cardBodyClassRoomUpdate').slideToggle("slow");
     });
 
@@ -170,7 +160,7 @@ function chosenPlugin() {
  *  - surname
  * @method selectProfessors
  */
-function selectProfessors() {
+function selectAllProfessors() {
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -211,6 +201,7 @@ function selectProfessors() {
                     ddl1.append("<option value='" + id + "'>" + surname + " " + name + "</option>");
                     ddl2.append("<option value='" + id + "'>" + surname + " " + name + "</option>");
                     ddl3.append("<option value='" + id + "'>" + surname + " " + name + "</option>");
+
                 }
 
                 ddl.trigger("chosen:updated");
@@ -231,7 +222,7 @@ function selectProfessors() {
  *  - name
  * @method selectDisciplines
  */
-function selectDisciplines() {
+function selectAllDisciplines() {
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -285,7 +276,7 @@ function selectDisciplines() {
  *  - name
  * @method selectClassrooms
  */
-function selectClassrooms() {
+function selectAllClassrooms() {
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -328,60 +319,206 @@ function selectClassrooms() {
 
     });
 }
+
+
 /**
- * Query selected classroom
- * It returns all the data
- * @method findClassRoom
+ * **********************************************************************************************************************
+ * **********************************************************************************************************************
+ * ******************************************************* UPDATE *******************************************************
+ * **********************************************************************************************************************
+ * **********************************************************************************************************************
  */
-// function findClassRoom(){
-//     var endpointURL = "http://localhost:3030/ds/query";
 
-//     var roomId = $('#findClassRoomUpdate').val();
-//     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
-//                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-//                     SELECT ?idRoom ?classroomname ?address ?capacity ?wifi ?wired
-//                     FROM <http://www.rdcproject.com/graph/classrooms>
-//                     WHERE
-//                     { ?x  a uni:Classroom;
-//                             uni:idRoom ?"`+ roomId +`";
-//                             uni:idRoom ?idRoom;
-//                             uni:classroomname ?classroomname;
-//                             uni:address ?address;
-//                             uni:capacity ?capacity;
-//                             uni:wifi ?wifi;
-//                             uni:wired ?wired;
-//                         }
-//                     ORDER BY ?idRoom`;
 
-//     var encodedquery = encodeURIComponent(myquery);
+/**
+ * Query selected professor base on ID
+ * @method fillFieldProfessorById
+ */
+function fillFieldProfessorById(id) {
+    var endpointURL = "http://localhost:3030/ds/query";
 
-//     $.ajax({
-//         dataType: "jsonp",
-//         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
-//         success: function (results) {
-//             alert("ci sono")
-//             $.each(results, function (index, element) {
-//                 var bindings = element.bindings;
-//                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
-//                 for (i in bindings) {
-//                     var idRoom = bindings[i].idRoom.value
-//                     var classroomname = bindings[i].classroomname.value
-//                     var address = bindings[i].address.value
-//                     var capacity = bindings[i].capacity.value
-//                     var wifi = bindings[i].wifi.value
-//                     var wired = bindings[i].wired.value
-//                     $('#findClassRoomUpdate').val(idRoom)
-//                     $('#classNameUpdate').val(classroomname)
-//                     $('#findClassRoomUpdate').val(address)
-//                     $('#capacityUpdate').val(capacity)
-//                     $('#findClassRoomUpdate').val(wifi)
-//                     $('#findClassRoomUpdate').val(wired)
-//                 }
-//             });
 
-//         }
+    var myquery = ` 
+                PREFIX uni: <http://www.rdfproject.com/>
+                PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-//     });
-// }
+                SELECT ?idProfessor ?lastName ?firstName ?role
+                FROM <http://www.rdcproject.com/graph/professor>
+                WHERE{
+                        ?x a uni:Teacher;
+                        uni:idProfessor ?"`+ id + `";
+                        uni:idProfessor ?idProfessor;
+                        uni:firstName ?firstName;
+                        uni:lastName ?lastName;
+                        uni:role ?role;
+                }
+                    `;
 
+    var encodedquery = encodeURIComponent(myquery);
+
+    $.ajax({
+        dataType: "jsonp",
+        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+        success: function (results) {
+
+            $.each(results, function (index, element) {
+                var bindings = element.bindings;
+                // REF: https://www.w3.org/TR/rdf-sparql-json-res/
+                for (i in bindings) {
+                    console.log(bindings[i]);
+
+
+                    $('input[name=nameProfessorUpdate]').val(bindings[i].firstName.value);
+                    $('input[name=surnameProfessorUpdate]').val(bindings[i].lastName.value);
+                    $('input[name=idProfessorUpdate]').val(bindings[i].idProfessor.value);
+                    $('select[name=roleProfessorUpdate]').val(bindings[i].role.value);
+
+                }
+            });
+
+        }
+
+    });
+}
+
+/**
+ * Query selected discipline base on ID
+ * @method fillFieldDisciplineById
+ */
+function fillFieldDisciplineById(id) {
+    var endpointURL = "http://localhost:3030/ds/query";
+
+
+    var myquery = ` 
+                        PREFIX uni: <http://www.rdfproject.com/>
+                        PREFIX un: <http://www.w3.org/2007/ont/unit#>
+
+                        SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year 
+                               (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors)
+
+                        FROM <http://www.rdcproject.com/graph/disciplines>
+                        FROM <http://www.rdcproject.com/graph/professor>
+                        WHERE
+                        { 
+                                {       
+                                ?x  a uni:Discipline;
+                                uni:disciplinename ?disciplineName;
+                                uni:idDiscipline ?"`+ id + `";
+                                uni:idDiscipline ?idDiscipline;
+                                uni:disciplineAbbreviation ?sigleDiscipline;
+                                uni:cfu ?cfu;
+                                uni:hasCourseof ?hasCourseof;
+                                uni:obligatory ?obligatory;
+                                uni:semester ?semester;
+                                uni:totalhours ?totalhours;
+                                uni:weekhours ?weekhours;
+                                uni:year ?year;
+                                uni:isTaughtBy ?isTaughtBy.
+                                    ?isTaughtBy a uni:Teacher;
+                                    uni:idProfessor ?idProf;
+                                    uni:firstName ?firstName;
+                                    uni:lastName ?lastName;
+                                    uni:role ?role.
+                                    
+                                }
+
+                            BIND(CONCAT(?idProf,'-',?firstName,'-',?lastName,'-',?role) AS ?prof_str)
+
+                        }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year                               
+                    `;
+
+    var encodedquery = encodeURIComponent(myquery);
+
+    $.ajax({
+        dataType: "jsonp",
+        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+        success: function (results) {
+
+            $.each(results, function (index, element) {
+                var bindings = element.bindings;
+                // REF: https://www.w3.org/TR/rdf-sparql-json-res/
+                for (i in bindings) {
+                    var result = bindings[i].professors.value.split(",");                    
+                    $('input[name=discipline_nameUpdate]').val(bindings[i].disciplineName.value);
+                    $('input[name=discipline_abbUpdate]').val(bindings[i].sigleDiscipline.value);
+                    $('input[name=obligatoryUpdate]').prop('checked',(bindings[i].obligatory.value)); // RADIO BUTTON
+                    $('input[name=cfuUpdate]').val(bindings[i].cfu.value);
+                    $('input[name=id_disciplineUpdate]').val(bindings[i].idDiscipline.value);
+                    $('select[name=degreeUpdate]').val(bindings[i].year.value).trigger("chosen:updated");
+                    $('select[name=semesterUpdate]').val(bindings[i].semester.value);
+                    $('input[name=totalHoursUpdate]').val(bindings[i].totalhours.value);
+                    $('input[name=weeksHoursUpdate]').val(bindings[i].weekhours.value);
+                  
+                    var updateChosenProfessor = []; 
+                    for(var i = 0; i < result.length; i++){
+                        var singleProfessorID = result[i].split("-");                       
+                        updateChosenProfessor.push(singleProfessorID[0]);
+                    }
+                    $('#assignProfessorUpdate').val(updateChosenProfessor).trigger("chosen:updated"); 
+                }
+            });
+
+        }
+
+    });
+
+}
+
+/**
+ * Query selected Classroom base on ID
+ * @method fillFieldClassroomById
+ */
+function fillFieldClassroomById(id) {
+    var endpointURL = "http://localhost:3030/ds/query";
+
+
+    var myquery = ` 
+                    PREFIX uni: <http://www.rdfproject.com/>
+                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+
+                    SELECT ?idRoom ?classroomname ?address ?capacity ?wifi ?wired
+                    FROM <http://www.rdcproject.com/graph/classrooms>
+                    WHERE
+                    { ?x  a uni:Classroom;
+                            uni:idRoom ?"`+ id + `";
+                            uni:idRoom ?idRoom;
+                            uni:classroomname ?classroomname;
+                            uni:address ?address;
+                            uni:capacity ?capacity;
+                            uni:wifi ?wifi;
+                            uni:wired ?wired;
+                        }
+                    ORDER BY ?idRoom                               
+                    `;
+
+    var encodedquery = encodeURIComponent(myquery);
+
+    $.ajax({
+        dataType: "jsonp",
+        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+        success: function (results) {
+
+            $.each(results, function (index, element) {
+                var bindings = element.bindings;
+                // REF: https://www.w3.org/TR/rdf-sparql-json-res/
+                for (i in bindings) {
+                    console.log(bindings[i]);
+
+                    $('input[name=classNameUpdate]').val(bindings[i].classroomname.value);
+                    $('input[name=capacityUpdate]').val(bindings[i].capacity.value);
+                    // TODO i radio button non vengono aggiornati ma poco male devoono essere cambiati
+                    // --------------------------------------------------------------------------
+                    $('input[name=wiredUpdate]').prop('checked',(bindings[i].wifi.value)); // RADIO BUTTON
+                    $('input[name=wifiUpdate]').prop('checked',(bindings[i].wired.value)); // RADIO BUTTON
+                    // --------------------------------------------------------------------------
+                    $('input[name=id_roomUpdate]').val(bindings[i].idRoom.value);
+                    $('input[name=addressUpdate]').val(bindings[i].address.value);
+                }
+            });
+
+        }
+
+    });
+
+}

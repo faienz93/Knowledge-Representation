@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from flask import Flask, render_template, redirect, send_from_directory, request
-from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, cancelDiscipline, cancelClassRoom, searchProfessor, getAllProfessors, searchClassRoom, searchDiscipline, modifyProfessor, modifyDiscipline, modifyClassRoom
+from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, cancelDiscipline, cancelClassRoom, getAllProfessors, modifyProfessor, modifyDiscipline, modifyClassRoom
 import os
 
 template_dir = os.path.abspath('./')
@@ -50,7 +50,7 @@ def send_img(path):
 
 
 # =====================================
-# Create RDF Professor Query
+# Add Professor
 # =====================================
 @app.route('/addProfessor', methods = ['POST', 'GET'])
 def addProfessor():
@@ -73,22 +73,6 @@ def deleteProfessor():
     return redirect("/", code=302)
 
 # =====================================
-# Find Professor
-# =====================================
-@app.route('/findProfessor', methods = ['POST', 'GET'])
-def findProfessor():
-    teacher = request.form['updateTeacher'].strip()
-    result = searchProfessor(teacher)
-
-    prof ={}
-    for entry in result['results']['bindings']:
-        for key in entry:
-            prof[key] = str(entry[key]['value']).strip()
-            #print prof[key] + " count: " + str(len(prof[key]))
-
-    return render_template("index.html", professor = prof)
-
-# =====================================
 # Update Professor
 # =====================================
 @app.route('/updateProfessor', methods = ['POST', 'GET'])
@@ -106,7 +90,7 @@ def updateProfessor():
 
 
 # =====================================
-# Create RDF Discipline Query
+# Add Discipline
 # =====================================
 @app.route('/addDiscipline', methods = ['POST', 'GET'])
 def addDiscipline():
@@ -141,32 +125,6 @@ def deleteDiscipline():
     return redirect("/", code=302)
 
 # =====================================
-# Find Discipline
-# =====================================
-@app.route('/findDiscipline', methods = ['POST', 'GET'])
-def findDiscipline():
-    di = request.form['updateDiscipline'].strip()
-    result = searchDiscipline(di)
-
-    disc ={}
-    for entry in result['results']['bindings']:
-        for key in entry:
-            disc[key] = str(entry[key]['value']).strip()
-            #print disc[key] + " count: " + str(len(disc[key]))
-
-    # result = getAllProfessors()
-    # profs = {}
-    # print result
-    # for entry in result['results']['bindings']:
-    #     print entry
-    #     for i in entry
-
-    #     for key in entry:
-    #         profs[key] = str(entry[key]['value']).strip()
-
-    return render_template("index.html", disci= disc)
-
-# =====================================
 # Update Discipline
 # =====================================
 @app.route('/updateDiscipline', methods = ['POST', 'GET'])
@@ -193,7 +151,7 @@ def updateDiscipline():
 
 
 # =====================================
-# Create RDF ClassRoom Query
+# Add Classroom
 # =====================================
 @app.route('/addClassRoom', methods = ['POST', 'GET'])
 def addClassRoom():
@@ -217,22 +175,6 @@ def deleteClassRoom():
     classroom = request.form['deleteClassRoom']
     cancelClassRoom(classroom)
     return redirect("/", code=302)
-
-# =====================================
-# Find ClassRoom
-# =====================================
-@app.route('/findClassRoom', methods = ['POST', 'GET'])
-def findClassRoom():
-    classRoom = request.form['updateClassRoom'].strip()
-    result = searchClassRoom(classRoom)
-
-    room ={}
-    for entry in result['results']['bindings']:
-        for key in entry:
-            room[key] = str(entry[key]['value']).strip()
-            print room[key] + " count: " + str(len(room[key]))
-
-    return render_template("index.html", classRoom = room)
 
 # =====================================
 # Update ClassRoom
