@@ -6,12 +6,12 @@
  * and some information optional that can be added with specifi method as addProfessor
  * ===========================================================================
  */
-function Discipline(id, abbreviation, name, semester, obligatory, totalHours, weeksHours, cfu, year, numStudents) {
+function Discipline(id, abbreviation, name, semester, obligatory, curriculum, totalHours, weeksHours, cfu, year, numStudents) {
     this.id = id;
     this.abbreviation = abbreviation;
     this.name = name;
     this.semester = semester;
-    this.obligatory = obligatory; // convert string to Boolan
+    this.obligatory = obligatory; 
     this.totalHours = totalHours;
     this.weeksHours = weeksHours;
     this.cfu = cfu;
@@ -19,7 +19,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     this.numStudents = numStudents;
     var professor = [];
     this.course = null;
-    var curriculum = [];
+    this.curriculum = curriculum;
     var preference = [];
 
 
@@ -141,6 +141,20 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     //     }
     // }
 
+    
+    /**
+     * Compare two array of curriculum and return response by Boolean
+     */
+    this.getExistCurriculum = function (otherDisciplineCurriculum) {
+        
+        if(this.curriculum != undefined && otherDisciplineCurriculum!=undefined) {
+            return this.curriculum.some(r=> otherDisciplineCurriculum.includes(r));
+        }else {
+            // if is undefined it means that is facoltative and for this can be overlap 
+            return false;
+        }
+        
+    }
 
     /**
      * Set a new Course

@@ -165,10 +165,12 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
  */
 reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
+
+        var hasSameCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
             l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson());
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) && hasSameCurriculum;
 
     },
     function (l1, l2) {
@@ -365,7 +367,7 @@ reactor.createRule("avoidOverlapObbligatoryCourse", -3, { l1: Lesson, l2: Lesson
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
             l1.getDay() == l2.getDay() &&
             (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
-            l1.getDiscipline().getObligatory() && l2.getDiscipline().getObligatory();        
+            l1.getDiscipline().getObligatory() && l2.getDiscipline().getObligatory()==false;        
 
     },
     function (l1, l2) {
@@ -471,16 +473,18 @@ reactor.createRule("stop", -100, {},
  ******************************************************************
  */
 var timetable = new TimetableArray();
-$( document ).ajaxComplete(function() {
+// $( document ).ajaxComplete(function() 
+// {
    
 
 
 for (var i = 0; i < subject.length; i++) {
     
+   
     var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
     // var randomDay = days[Math.floor(Math.random() * days.length)];
-    var subjectWeeksHours=subject[i].getWeeksHours();
-    // var subjectWeeksHours = DURATION_LESSON;
+    // var subjectWeeksHours=subject[i].getWeeksHours();
+    var subjectWeeksHours = DURATION_LESSON;
     if (subjectWeeksHours < 4) {
         timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
     }
@@ -546,7 +550,7 @@ reactor.run(Infinity, true, function () {
     }
     calendar.init();
 });
-  });
+//   });
 
 
 

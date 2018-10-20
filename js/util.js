@@ -116,7 +116,7 @@ function generateClassroom(toRemove = undefined) {
  * @param {String} str - string to split
  */
 function splitCurriculum(str) {   
-    if(str != "NONE"){
+    if(str != "NO"){
         return str.split("");
     }
     
