@@ -12,6 +12,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
     this.name = name;
     this.semester = semester;
     this.obligatory = obligatory; // convert string to Boolan
+    this.curriculum = curriculum;
     this.totalHours = totalHours;
     this.weeksHours = weeksHours;
     this.cfu = cfu;
@@ -19,7 +20,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
     this.numStudents = numStudents;
     var professor = [];
     this.course = null;
-    var curriculum = [];
+    
     var preference = [];
 
 
@@ -36,12 +37,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
     this.getObligatory = function () {
         return this.obligatory;
     }
-     /**
-     * Return the curriculum obligatory
-     */
-    this.getCurriculum = function () {
-        return this.curriculum;
-    }
+   
     /**
      * Return the WeeksHours of Course
      */
@@ -117,20 +113,24 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
     }
 
     /**
-     * Set a new Curriculum insiede an array becaure for an discipline can
-     * be belong by multiple Curriculum
-     */
-    this.addCurriculum = function (cur) {
-        curriculum.push(cur);
-    }
-
-    /**
     * Return an Array of Curriculum of this discipline
     */
     this.getCurriculum = function () {
         return curriculum;
     }
-
+    /**
+     * Compare two array of curriculum and return response by Boolean
+     */
+    this.getExistCurriculum = function (otherDisciplineCurriculum) {
+        
+        if(this.curriculum != undefined && otherDisciplineCurriculum!=undefined) {
+            return this.curriculum.some(r=> otherDisciplineCurriculum.includes(r));
+        }else {
+            // if is undefined it means that is facoltative and for this can be overlap 
+            return false;
+        }
+        
+    }
     /**
     * Return an Array of Curriculum of this discipline in JSON Format
     */

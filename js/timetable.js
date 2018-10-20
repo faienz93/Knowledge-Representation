@@ -165,10 +165,12 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
  */
 reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
+
+        var hasSameCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
             l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson());
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) && hasSameCurriculum;
 
     },
     function (l1, l2) {
@@ -185,7 +187,6 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
         }
         
     });
-
 
 
 

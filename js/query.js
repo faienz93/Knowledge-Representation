@@ -325,15 +325,16 @@ function queryDiscipline() {
         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
         success: function (results) {
             $.each(results, function (index, element) {
-                var bindings = element.bindings;
-               
+                var bindings = element.bindings;                
+                
                 for (i in bindings) {
-                    var d = new Discipline(bindings[i].idDiscipline.value,
-                         bindings[i].sigleDiscipline.value,
+                          var d = new Discipline(
+                          bindings[i].idDiscipline.value,
+                          bindings[i].sigleDiscipline.value,
                           bindings[i].disciplineName.value,
                           bindings[i].semester.value,
                           bindings[i].obligatory.value, 
-                          bindings[i].curriculum.value, 
+                          splitCurriculum(bindings[i].curriculum.value), 
                           bindings[i].totalhours.value, 
                           bindings[i].weekhours.value, 
                           bindings[i].cfu.value, 
