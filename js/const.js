@@ -97,8 +97,25 @@ $(document).ajaxComplete(function () {
 });
 
 
+// Giochi e modelli booleani Curriculum
+var exampleGMBCurriculum = "B";
 
+// Algoritmi Parallili Curriculum
+var exampleAPCurriculum = "AC";
 
+// Compilatori e Interpreti
+var exampleCEICurriculum = "ABC";
+
+var exampleIngegneriaDel = "NONE";
+
+var prova = splitCurriculum(exampleGMBCurriculum);
+console.log(prova);
+var prova =splitCurriculum(exampleAPCurriculum);
+console.log(prova);
+var prova =splitCurriculum(exampleCEICurriculum);
+console.log(prova);
+var prova = splitCurriculum(exampleIngegneriaDel);
+console.log(prova);
 
 // var nomiMaterie = ['RDC', 'SM', 'IOT', 'MSC', 'MAT', 'COM', 'UUX'];
 // var nomiMaterie = ['RDC', 'SM', 'IOT', 'MAT'];
@@ -115,9 +132,7 @@ $(document).ajaxComplete(function () {
 // var infoman = new Course(8014, "Informatica per il Management");
 // var info = new Course(8009, "Informatica Triennale");
 // var infolm = new Course(8028, "Informatica Magistrale");
-// var currA = new Curriculum("A", "Tecniche del Software");
-// var currB = new Curriculum("B", "Informatica per il Management");
-// var currC = new Curriculum("C", "Sistemi e Reti");
+
 
 // var courses=queryCourses();
 // console.log(courses);
@@ -126,11 +141,11 @@ $(document).ajaxComplete(function () {
 
 
 // Discipline(id, abbreviation ,name, semester, obligatory, totalHours, weeksHours, cfu, year) {
-// var cbd = new Discipline("28796", "CBD", "COMPLEMENTI DI BASI DI DATI", "1", true, 60, 5, 6, 1, 29);
-// var uux = new Discipline("81670", "UUX", "USABILITA E USER EXPERIENCE", "1", true, 60, 6, 6, 1, 29);
-// var gmb = new Discipline("81960", "TG", "GIOCHI E MODELLI BOOLEANI", "1", true, 60, 6, 6, 1, 29);
-// var ap = new Discipline("81668", "AA", "ALGORITMI PARALLELI", "1", true, 60, 6, 6, 1, 29);
-// var isos = new Discipline("77803", "ISOS", "INGEGNERIA DEL SOFTWARE ORIENTATA AI SERVIZI", "1", false, 50, 5, 6, 1, 29);
+var cbd = new Discipline("28796", "CBD", "COMPLEMENTI DI BASI DI DATI", "1", true, 60, 5, 6, 1, 29);
+var uux = new Discipline("81670", "UUX", "USABILITA E USER EXPERIENCE", "1", true, 60, 6, 6, 1, 29);
+var gmb = new Discipline("81960", "TG", "GIOCHI E MODELLI BOOLEANI", "1", true, 60, 6, 6, 1, 29);
+var ap = new Discipline("81668", "AA", "ALGORITMI PARALLELI", "1", true, 60, 6, 6, 1, 29);
+var isos = new Discipline("77803", "ISOS", "INGEGNERIA DEL SOFTWARE ORIENTATA AI SERVIZI", "1", false, 50, 5, 6, 1, 29);
 // var fsc = new Discipline("23762", "FSC", "FISICA DEI SISTEMI COMPLESSI", "1", false, 50, 5, 6, 1, 29);
 // var sds = new Discipline("37760", "SDS", "SIMULAZIONE DI SISTEMI", "1", false, 50, 5, 6, 1, 39);
 // var iot =  new Discipline("37760", "IoT", "INTERNET OF THING", "1", false, 50, 6, 6, 1, 39);

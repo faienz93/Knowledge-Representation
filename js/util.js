@@ -111,6 +111,17 @@ function generateClassroom(toRemove = undefined) {
 }
 
 
+/**
+ * Function that spli the string into array and determinate the curriculum of discipline;
+ * @param {String} str - string to split
+ */
+function splitCurriculum(str) {   
+    if(str != "NONE"){
+        return str.split("");
+    }
+    
+    
+}
 
 
 
