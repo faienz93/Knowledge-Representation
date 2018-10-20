@@ -370,6 +370,8 @@ function selectPreference(prof) {
                     var noLessonAMPM = bindings[0].noLessonAMPM.value
                     var writeMethodRoom = bindings[0].writeMethodRoom.value
 
+                    $('#constraintForm').attr('action', 'http://127.0.0.1:5000/updatePreference');
+
                     // set new values
                     $("#ChooseDay1 option[value='" + noLessonDay1 + "']").prop('selected', true).change();
                     ddl1.trigger("chosen:updated");

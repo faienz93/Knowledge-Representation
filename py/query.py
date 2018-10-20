@@ -517,7 +517,37 @@ def modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, ad
 
 
 # ======================================================================
-# Insert/Update Preference
+# Insert Preference
+# ======================================================================
+def insertPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2, NoLessonAMPM,writeMethodRoom):
+    graph_preferences = "http://www.rdcproject.com/graph/preferences"
+    # Create a new Query
+    query = '''
+        PREFIX uni: <http://www.rdfproject.com/>
+        PREFIX un: <http://www.w3.org/2007/ont/unit#>
+        INSERT DATA
+        { 
+        GRAPH <'''+graph_preferences+'''>{
+        uni:'''+ prof +''' a uni:Preference;
+                                uni:sixHourSplit "'''+Discipline6H+'''"; 
+                                uni:consecutiveDays "'''+ConsecutiveDays+'''"; 
+                                uni:noLessonDay1 "'''+selectDay1+'''"; 
+                                uni:noLessonDay2 "'''+selectDay2+'''"; 
+                                uni:noLessonAMPM "'''+NoLessonAMPM+'''"; 
+                                uni:isPreferenceOf "'''+prof+'''"; 
+                                uni:writeMethodRoom "'''+writeMethodRoom+'''".                            
+            }
+        }
+        '''
+    # Run the query and print the result
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    sparql.query()
+
+
+# ======================================================================
+# Update Preference
 # ======================================================================
 def modifyPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2, NoLessonAMPM,writeMethodRoom): 
     isPreferenceOf = "uni:isPreferenceOf uni:" + prof + ";"

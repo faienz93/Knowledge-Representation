@@ -31,7 +31,7 @@
         <div class="card-body" id="cardBodyConstraint">
             <!--  -->
             <!--  -->
-            <form class="form" id="constraintForm" role="form" autocomplete="off" action="http://127.0.0.1:5000/updatePreference" method="POST">
+            <form class="form" id="constraintForm" role="form" autocomplete="off" action="http://127.0.0.1:5000/addPreference" method="POST">
                 <!-- <input type="hidden" id="weekHours"> -->
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Scelta Professore</label>
@@ -59,7 +59,6 @@
                         <label class="col-lg-3 col-form-label form-control-label">Con quale formato di ore si vuole svolgere le discipline da 6 ore settimanali? (default 3h 3h)</label>
                         <div class="col-lg-9">
                             <fieldset id="Discipline6H">
-                                <input type="hidden" class="checkDisc" value="" name="Discipline6H">
                                 <input type="checkbox" class="checkDisc" value="2" name="Discipline6H"> 2h 2h 2h<br/>
                                 <input type="checkbox" class="checkDisc" value="4" name="Discipline6H"> 4h 2h<br/>
                             </fieldset>
@@ -70,7 +69,6 @@
                         <label class="col-lg-3 col-form-label form-control-label">Si vuole svolgere lezioni in giorni consecutivi, se si quando?</label>
                         <div class="col-lg-9">
                             <fieldset id="ConsecutiveDays">
-                                <input type="hidden" class="checkConse" value="" name="ConsecutiveDays">
                                 <input type="checkbox" class="checkConse" value="startweek" name="ConsecutiveDays"> Inizio settimana<br/>
                                 <input type="checkbox" class="checkConse" value="endweek" name="ConsecutiveDays"> Fine settimana<br/>                                
                             </fieldset>
@@ -97,7 +95,6 @@
                         <label class="col-lg-3 col-form-label form-control-label">Nei giorni di insegnamento quando si preferisce NON svolgere lezione?</label>
                         <div class="col-lg-9">
                             <fieldset id="NoLessonAMPM">
-                                <input type="hidden" class="checkAMPM" value="" name="NoLessonAMPM">
                                 <input type="checkbox" class="checkAMPM" value="AM" name="NoLessonAMPM"> Mattino<br/>
                                 <input type="checkbox" class="checkAMPM" value="PM" name="NoLessonAMPM"> Pomeriggio<br/>                                
                             </fieldset>            
@@ -108,7 +105,6 @@
                         <label class="col-lg-3 col-form-label form-control-label">Preferenza di aula con</label>
                         <div class="col-lg-9">
                             <fieldset id="writeMethodRoom">
-                                <input type="hidden" class="checkChalks" value="" name="writeMethodRoom">
                                 <input type="checkbox" class="checkChalks" value="chalks" name="writeMethodRoom"> Gessetti<br/>
                                 <input type="checkbox" class="checkChalks" value="markers" name="writeMethodRoom"> Pennarelli<br/>
                             </fieldset>                        

@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from flask import Flask, render_template, redirect, send_from_directory, request
-from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, cancelDiscipline, cancelClassRoom, searchProfessor,cancelPreference, getAllProfessors, searchClassRoom, searchDiscipline, modifyProfessor, modifyDiscipline, modifyClassRoom, modifyPreference
+from py.query import insertProfessor, insertDiscipline, insertClassRoom, insertPreference, cancelProfessor, cancelDiscipline, cancelClassRoom,cancelPreference, searchProfessor, getAllProfessors, searchClassRoom, searchDiscipline, modifyProfessor, modifyDiscipline, modifyClassRoom, modifyPreference
 import os
 
 template_dir = os.path.abspath('./')
@@ -247,18 +247,68 @@ def updateClassRoom():
     return redirect("/", code=302)
 
 
+# =====================================
+# Create RDF Discipline Query
+# =====================================
+@app.route('/addPreference', methods = ['POST', 'GET'])
+def addPreference():
+    prof = request.form['selectProfessor']
+    
+    if "Discipline6H" in request.form:
+        Discipline6H = request.form["Discipline6H"]
+    else:
+        Discipline6H = ""
+  
+    if "ConsecutiveDays" in request.form:
+        ConsecutiveDays = request.form["ConsecutiveDays"]     
+    else:
+        ConsecutiveDays = ""
+    
+    if "NoLessonAMPM" in request.form:
+        NoLessonAMPM = request.form["NoLessonAMPM"]
+    else:
+        NoLessonAMPM = ""
+
+    if "writeMethodRoom" in request.form:
+        writeMethodRoom = request.form["writeMethodRoom"]
+    else:
+        writeMethodRoom = ""
+
+    selectDay1 = request.form['selectDay1']
+    selectDay2 = request.form['selectDay2']
+
+    insertPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2, NoLessonAMPM, writeMethodRoom)
+
+    return redirect("/", code=302)
+
 
 # =====================================
 # Create RDF Preference Query
 # =====================================
 @app.route('/updatePreference', methods = ['POST', 'GET'])
 def updatePreference():
-
     prof = request.form['selectProfessor']
-    Discipline6H = request.form["Discipline6H"]
-    ConsecutiveDays = request.form["ConsecutiveDays"]
-    NoLessonAMPM = request.form["NoLessonAMPM"]
-    writeMethodRoom = request.form["writeMethodRoom"]
+    
+    if "Discipline6H" in request.form:
+        Discipline6H = request.form["Discipline6H"]
+    else:
+        Discipline6H = ""
+  
+    if "ConsecutiveDays" in request.form:
+        ConsecutiveDays = request.form["ConsecutiveDays"]     
+    else:
+        ConsecutiveDays = ""
+    
+    if "NoLessonAMPM" in request.form:
+        NoLessonAMPM = request.form["NoLessonAMPM"]
+    else:
+        NoLessonAMPM = ""
+
+    if "writeMethodRoom" in request.form:
+        writeMethodRoom = request.form["writeMethodRoom"]
+    else:
+        writeMethodRoom = ""
+
     selectDay1 = request.form['selectDay1']
     selectDay2 = request.form['selectDay2']
 

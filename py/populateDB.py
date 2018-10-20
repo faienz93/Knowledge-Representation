@@ -272,22 +272,22 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
 
         # Create a new Query
         query = '''
-        PREFIX uni: <http://www.rdfproject.com/>
-        PREFIX un: <http://www.w3.org/2007/ont/unit#>
-        INSERT DATA
-        { 
-        GRAPH <'''+graph_preferences+'''>{
-        uni:'''+ teacher +''' a uni:Preference;
-                                uni:sixHourSplit "'''+sixHourSplit+'''"; 
-                                uni:consecutiveDays "'''+consecutiveDays+'''"; 
-                                uni:noLessonDay1 "'''+noLessonDay1+'''"; 
-                                uni:noLessonDay2 "'''+noLessonDay2+'''"; 
-                                uni:noLessonAMPM "'''+noLessonAMPM+'''"; 
-                                uni:isPreferenceOf "'''+teacher+'''"; 
-                                uni:writeMethodRoom "'''+writeMethodRoom+'''".                            
+            PREFIX uni: <http://www.rdfproject.com/>
+            PREFIX un: <http://www.w3.org/2007/ont/unit#>
+            INSERT DATA
+            { 
+            GRAPH <'''+graph_preferences+'''>{
+            uni:'''+ teacher +''' a uni:Preference;
+                                    uni:sixHourSplit "'''+sixHourSplit+'''"; 
+                                    uni:consecutiveDays "'''+consecutiveDays+'''"; 
+                                    uni:noLessonDay1 "'''+noLessonDay1+'''"; 
+                                    uni:noLessonDay2 "'''+noLessonDay2+'''"; 
+                                    uni:noLessonAMPM "'''+noLessonAMPM+'''"; 
+                                    uni:isPreferenceOf "'''+teacher+'''"; 
+                                    uni:writeMethodRoom "'''+writeMethodRoom+'''".                            
+                }
             }
-        }
-        '''
+            '''
         # uni:hasCourseof 
         # Run the query and print the result
         sparql.setQuery(query)
