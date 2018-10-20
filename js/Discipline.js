@@ -6,7 +6,7 @@
  * and some information optional that can be added with specifi method as addProfessor
  * ===========================================================================
  */
-function Discipline(id, abbreviation, name, semester, obligatory, totalHours, weeksHours, cfu, year, numStudents) {
+function Discipline(id, abbreviation, name, semester, obligatory, curriculum, totalHours, weeksHours, cfu, year, numStudents) {
     this.id = id;
     this.abbreviation = abbreviation;
     this.name = name;
@@ -35,6 +35,12 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
      */
     this.getObligatory = function () {
         return this.obligatory;
+    }
+     /**
+     * Return the curriculum obligatory
+     */
+    this.getCurriculum = function () {
+        return this.curriculum;
     }
     /**
      * Return the WeeksHours of Course

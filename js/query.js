@@ -279,7 +279,7 @@ function queryDiscipline() {
                     PREFIX uni: <http://www.rdfproject.com/>
                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                    SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?semester ?totalhours ?weekhours ?year 
+                    SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year 
                             (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors)
 
                     FROM <http://www.rdcproject.com/graph/disciplines>
@@ -295,6 +295,7 @@ function queryDiscipline() {
                             uni:cfu ?cfu;
                             uni:hasCourseof ?hasCourseof;
                             uni:obligatory ?obligatory;
+                            uni:curriculum ?curriculum;
                             uni:semester ?semester;
                             uni:totalhours ?totalhours;
                             uni:weekhours ?weekhours;
@@ -313,7 +314,7 @@ function queryDiscipline() {
 
                         BIND(CONCAT(?idProf) AS ?prof_str)
 
-                    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?semester ?totalhours ?weekhours ?year  	
+                    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year  	
                     `;
 
     var encodedquery = encodeURIComponent(myquery);
@@ -327,8 +328,16 @@ function queryDiscipline() {
                 var bindings = element.bindings;
                
                 for (i in bindings) {
-                    var d = new Discipline(bindings[i].idDiscipline.value, bindings[i].sigleDiscipline.value, bindings[i].disciplineName.value, bindings[i].semester.value,
-                                           bindings[i].obligatory.value, bindings[i].totalhours.value, bindings[i].weekhours.value, bindings[i].cfu.value, bindings[i].year.value, 29);
+                    var d = new Discipline(bindings[i].idDiscipline.value,
+                         bindings[i].sigleDiscipline.value,
+                          bindings[i].disciplineName.value,
+                          bindings[i].semester.value,
+                          bindings[i].obligatory.value, 
+                          bindings[i].curriculum.value, 
+                          bindings[i].totalhours.value, 
+                          bindings[i].weekhours.value, 
+                          bindings[i].cfu.value, 
+                          bindings[i].year.value, 29);
                     d.setCourse(bindings[i].idCourse.value);
                     var idProfs = bindings[i].professors.value.split(",");
                     for(var p = 0; p < idProfs.length;p++){

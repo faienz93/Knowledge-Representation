@@ -218,12 +218,13 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
         discipline_name = row[2]
         semester = row[3]
         obligatory = row[4]
-        totalHours = row[5]
-        weeksHours = row[6]
-        cfu = row[7]
-        year = row[8]
-        course = row[9]
-        teacher=row[10]
+        curriculum = row[5]
+        totalHours = row[6]
+        weeksHours = row[7]
+        cfu = row[8]
+        year = row[9]
+        course = row[10]
+        teacher=row[11]
 
         # Create a new Query
         query = '''
@@ -236,7 +237,8 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
                                 uni:disciplineAbbreviation "'''+discipline_abb+'''"; 
                                 uni:disciplinename "'''+discipline_name+'''"; 
                                 uni:semester "'''+semester+'''"; 
-                                uni:obligatory "'''+obligatory+'''"; 
+                                uni:obligatory "'''+obligatory+'''";
+                                uni:curriculum "'''+curriculum+'''";
                                 uni:totalhours "'''+totalHours+'''";
                                 uni:weekhours "'''+weeksHours+'''";
                                 uni:cfu "'''+cfu+'''";
