@@ -382,25 +382,25 @@ reactor.createRule("maxLessonEnd", -2, { l: Lesson },
 /**
  * RULE: Break hour for a course if it has more of 5 hours consecutive (function in util) * 
  */
-reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
-    function (l1, l2) {
-        var count = 0;
-        if (l1 != l2 &&
-            l1.getDay() == l2.getDay() &&
-            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-            l1.getEndLesson() == l2.getStartLesson()) {
-            count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
-        }
-        return count > 5;
+// reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
+//     function (l1, l2) {
+//         var count = 0;
+//         if (l1 != l2 &&
+//             l1.getDay() == l2.getDay() &&
+//             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+//             l1.getEndLesson() == l2.getStartLesson()) {
+//             count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
+//         }
+//         return count > 5;
 
-    },
-    function (l2) {
-        var dL = l2.getDurationLesson();
-        var newStart = l2.getStartLesson() + 1;
-        l2.setStartLesson(newStart);
-        l2.setEndLesson(newStart + dL);
-        assert(timetable);
-    });
+//     },
+//     function (l2) {
+//         var dL = l2.getDurationLesson();
+//         var newStart = l2.getStartLesson() + 1;
+//         l2.setStartLesson(newStart);
+//         l2.setEndLesson(newStart + dL);
+//         assert(timetable);
+//     });
 /**
  * *********************************************************************
  * ***************************** STOP RULE *****************************
@@ -439,15 +439,17 @@ reactor.createRule("stop", -100, {},
 /**
  ******************************************************************
  */
-
 var timetable = new TimetableArray();
+$( document ).ajaxComplete(function() {
+   
 
 
 for (var i = 0; i < subject.length; i++) {
+    
     var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
     // var randomDay = days[Math.floor(Math.random() * days.length)];
-    // var subjectWeeksHours=subject[i].getWeeksHours();
-    var subjectWeeksHours = DURATION_LESSON;
+    var subjectWeeksHours=subject[i].getWeeksHours();
+    // var subjectWeeksHours = DURATION_LESSON;
     if (subjectWeeksHours < 4) {
         timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
     }
@@ -513,5 +515,7 @@ reactor.run(Infinity, true, function () {
     }
     calendar.init();
 });
+  });
+
 
 

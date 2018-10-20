@@ -50,6 +50,20 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     };
 
     /**
+     * Return the Year of Discipline
+     */
+    this.getYear = function () {
+        return this.year;
+    };
+
+    /**
+     * Return the Semester of Discipline
+     */
+    this.getSemester = function () {
+        return this.semester;
+    };
+
+    /**
      * Set a new Professor insiede an array becaure for an discipline can
      * be taught by multiple professor
      */
@@ -125,7 +139,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     /**
      * Set a new Course
      */
-    this.addCourse = function (c) {
+    this.setCourse = function (c) {
         this.course = c;
     }
 
@@ -393,7 +407,10 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
         var t = JSON.stringify({ professor }, null, " ");
         var cur = JSON.stringify({ curriculum }, null, " ");
         var p = JSON.stringify({ preference }, null, " ");
-        return this.name + " " + t + " " + course + " " + cur + " " + p;
+       
+        return this.name + " " + t + " " + this.course + " " + cur + " " + p;
+        
+        
     }
 
 

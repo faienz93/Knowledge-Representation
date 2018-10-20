@@ -13,7 +13,7 @@ function TimetableArray() {
 // start lessons
 var START_LESSONS = 9;
 
-var DURATION_LESSON = 6;
+var DURATION_LESSON = 2;
 
 // end lessons
 var END_LESSONS = 19;
@@ -27,6 +27,8 @@ var now = moment();
 
 // Events of calendar
 var events = [];
+
+var subject = [];
 
 // Days of week
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -47,9 +49,54 @@ console.log(classrooms);
 // classrooms.push(new Classroom(44981, "C1 Ranzani", "Ranzani", 30, "Markers", false));
 // classrooms.push(new Classroom(44982, "Lab Ranzani", "Ranzani", 30, "Markers", true));
 
-console.log("--------- DISCIPLINE PROFESSOR ---------");
-var queryDisciplineProfessor = queryDisciplineProfessor();
-console.log(queryDisciplineProfessor);
+console.log("--------- PROFESSOR ---------");
+var professors = queryProfessors();
+console.log(professors);
+
+console.log("--------- COURSE ---------");
+var courses = queryCourses();
+console.log(courses);
+
+console.log("--------- DISCIPLINE ---------");
+var disciplines = queryDiscipline();
+console.log(disciplines);
+
+
+$(document).ajaxComplete(function () {
+    for (var i = 0; i < disciplines.length; i++) {
+
+        var prof = disciplines[i].getProfessor();
+        // Set Professors
+        for (var index = 0; index < prof.length; index++) {
+            prof[index] = professors.find(o => o.id === prof[index]);
+        }
+
+        // SET Course
+        disciplines[i].setCourse(courses.find(o => o.id === disciplines[i].getCourse()));
+
+    }
+
+
+
+    for (var i = 0; i < disciplines.length; i++) {
+        if (disciplines[i].getYear() == "1" && disciplines[i].getSemester() == "1") {
+            // fill array for calendar
+            subject.push(disciplines[i]);
+        }
+
+    }
+
+    //Preferenze di default 
+    for (var i = 0; i < subject.length; i++) {
+        subject[i].splitDurationLessons6h(3);
+    }
+
+
+
+
+});
+
+
 
 
 
@@ -108,31 +155,7 @@ console.log(queryDisciplineProfessor);
 // var professors=queryProfessors();
 // console.log(professors);
 
-var discipline = queryDisciplines();
-console.log(discipline);
-$(document).ajaxStop(function(){
-    // console.log(discipline);
-    // console.log(discipline[0].getProfessor());
-    // console.log(professors[0]);
-    for(var i = 0; i < discipline.length; i++){
-        if(discipline[i].getName() == "SISTEMI MOBILI"){
-            console.log(discipline.getProfessor());
-        }
-        var pr = discipline[i].getProfessor();
-        pr.forEach(function(entry) {
-            var obj = professors.find(o => o.id === entry);
-            if(obj!=undefined){
-                discipline[i].setProfessor(obj)
-            }
-            
-        });        
-    }
-    
-    console.log("PORCO IL DIO");
-    for(var i = 0; i < discipline.length; i++){
-        console.log(discipline[i].getProfessor());
-    }
-});
+// var prova = queryDisciplineProfessor();
 // firstName,surName,id_professor,role
 // var dm = new Professor("Danilo", "Montesi", "211832", "ordinario");
 // var fv = new Professor("Fabio", "Vitali", "5", "ordinario");
@@ -218,7 +241,7 @@ $(document).ajaxStop(function(){
 
 
 
-var subject = [];
+
 
 
 // TRIENNALE
@@ -255,7 +278,7 @@ var subject = [];
 //===============PREFERENZE==========================
 
 
-//Preferenze di default 
+// //Preferenze di default 
 // for(var i=0;i<subject.length;i++){    
 //     subjects[i].splitDurationLessons6h(3);    
 // }
