@@ -22,8 +22,9 @@ $(document).ready(function () {
     });
 
     $('#deleteConstraint').click(function() {
-        var prof = $('#findProfessor').val();
-        deletePreference(prof)
+        // var prof = $('#findProfessor').val();
+        // deletePreference(prof)
+        $('#constraintForm').attr('action', 'http://127.0.0.1:5000/deletePreference');
     });
 
     $('.checkDisc').click(function() {
@@ -345,6 +346,8 @@ function selectPreference(prof) {
         success: function (results) {
 
             // reset values
+            $('#constraintForm').attr('action', 'http://127.0.0.1:5000/addPreference');
+
             var ddl1 = $("#ChooseDay1");
             generateChooseDays(ddl1);
             var day1 = $('#ChooseDay1').val();

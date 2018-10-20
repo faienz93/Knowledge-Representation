@@ -600,13 +600,13 @@ def modifyPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2
 # ======================================================================
 # Delete Preference
 # ======================================================================
-def cancelPreference(prof):   
+def cancelPreference(prof):  
     query = '''
                 PREFIX uni: <http://www.rdfproject.com/>
                 PREFIX un: <http://www.w3.org/2007/ont/unit#>
                 DELETE WHERE { 
                 GRAPH <http://www.rdcproject.com/graph/preferences> {
-                        ?object uni:isPreferenceOf ? uni:"'''+prof+'''";
+                        ?object uni:isPreferenceOf "'''+prof+'''";
                          ?property  ?value 
                 }
                 }
@@ -616,4 +616,20 @@ def cancelPreference(prof):
     sparql.setMethod('POST') 
     print query
     sparql.query()
+
+    # query = '''
+    #             PREFIX uni: <http://www.rdfproject.com/>
+    #             PREFIX un: <http://www.w3.org/2007/ont/unit#>
+    #             DELETE WHERE { 
+    #             GRAPH <http://www.rdcproject.com/graph/preferences> {
+    #                     ?object uni:isPreferenceOf ? "'''+prof+'''";
+    #                      ?property  ?value 
+    #             }
+    #             }
+    #             '''
+
+    # sparql.setQuery(query)
+    # sparql.setMethod('POST') 
+    # print query
+    # sparql.query()
 
