@@ -11,7 +11,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
     this.abbreviation = abbreviation;
     this.name = name;
     this.semester = semester;
-    this.obligatory = obligatory;
+    this.obligatory = obligatory; // convert string to Boolan
     this.totalHours = totalHours;
     this.weeksHours = weeksHours;
     this.cfu = cfu;
@@ -46,7 +46,13 @@ function Discipline(id, abbreviation, name, semester, obligatory, totalHours, we
      * Return the obligatory of Course
      */
     this.getObligatory = function () {
-        return this.obligatory;
+        var isTrueSet;
+        if(this.obligatory == 'true'){
+           isTrueSet = true; 
+        }else if(this.obligatory == 'false'){
+            isTrueSet = false; 
+        }        
+        return isTrueSet;
     };
 
     /**

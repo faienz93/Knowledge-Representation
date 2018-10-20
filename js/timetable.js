@@ -183,6 +183,7 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
             l1.setStartLesson(l2.getEndLesson());
             l1.setEndLesson(l1.getStartLesson() + dL);
         }
+        
     });
 
 
@@ -288,7 +289,6 @@ reactor.createRule("consecutiveLessonsEndWeek", -1, { l: Lesson },
     });
 
 /**
- * TODO: NON VA BENE
 * RULE: Set the lesson in the morning
 */
 reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
@@ -356,6 +356,35 @@ reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
     });
 
 
+/**
+ * RULE: check if there are overlapping at THE END OF RULE from two discipline of same course OBLIGATORY
+ */
+reactor.createRule("avoidOverlapObbligatoryCourse", -3, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        return l1 != l2 &&
+            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getDay() == l2.getDay() &&
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
+            l1.getDiscipline().getObligatory() && l2.getDiscipline().getObligatory();        
+
+    },
+    function (l1, l2) {
+
+        printForDebug("OVERLAPPINGOBLIGATORYCOURSE " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "yellow", "red");
+        if (l1.getStartLesson() < l2.getStartLesson()) {
+
+            var dL = l2.getDurationLesson();
+            l2.setStartLesson(l1.getEndLesson());
+            l2.setEndLesson(l2.getStartLesson() + dL);
+        }
+        else {
+            var dL = l1.getDurationLesson();
+            l1.setStartLesson(l2.getEndLesson());
+            l1.setEndLesson(l1.getStartLesson() + dL);
+        }
+       
+        
+    });
 
 /**
  * Rule for the end lesson over 19 
@@ -382,25 +411,27 @@ reactor.createRule("maxLessonEnd", -2, { l: Lesson },
 /**
  * RULE: Break hour for a course if it has more of 5 hours consecutive (function in util) * 
  */
-// reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
-//     function (l1, l2) {
-//         var count = 0;
-//         if (l1 != l2 &&
-//             l1.getDay() == l2.getDay() &&
-//             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-//             l1.getEndLesson() == l2.getStartLesson()) {
-//             count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
-//         }
-//         return count > 5;
+reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var count = 0;
+        if (l1 != l2 &&
+            l1.getDay() == l2.getDay() &&
+            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getEndLesson() == l2.getStartLesson()) {
+            count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
+        }
+        return count > 6;
 
-//     },
-//     function (l2) {
-//         var dL = l2.getDurationLesson();
-//         var newStart = l2.getStartLesson() + 1;
-//         l2.setStartLesson(newStart);
-//         l2.setEndLesson(newStart + dL);
-//         assert(timetable);
-//     });
+    },
+    function (l2) {
+        var dL = l2.getDurationLesson();
+        var newStart = l2.getStartLesson() + 1;
+        l2.setStartLesson(newStart);
+        l2.setEndLesson(newStart + dL);
+        assert(timetable);
+    });
+
+
 /**
  * *********************************************************************
  * ***************************** STOP RULE *****************************

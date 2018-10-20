@@ -49,17 +49,17 @@ console.log(classrooms);
 // classrooms.push(new Classroom(44981, "C1 Ranzani", "Ranzani", 30, "Markers", false));
 // classrooms.push(new Classroom(44982, "Lab Ranzani", "Ranzani", 30, "Markers", true));
 
-console.log("--------- PROFESSOR ---------");
+// console.log("--------- PROFESSOR ---------");
 var professors = queryProfessors();
-console.log(professors);
+// console.log(professors);
 
 console.log("--------- COURSE ---------");
 var courses = queryCourses();
-console.log(courses);
+// console.log(courses);
 
-console.log("--------- DISCIPLINE ---------");
+// console.log("--------- DISCIPLINE ---------");
 var disciplines = queryDiscipline();
-console.log(disciplines);
+// console.log(disciplines);
 
 
 $(document).ajaxComplete(function () {

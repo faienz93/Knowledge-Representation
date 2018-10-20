@@ -143,8 +143,6 @@ function queryCourses() {
                 for (i in bindings) {
                     var id = bindings[i].id.value;
                     var courseName = bindings[i].courseName.value;
-
-
                     var course = new Course(id, courseName);
                     result.push(course);
                 }
