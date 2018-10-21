@@ -101,6 +101,8 @@ function slideDownAndUp() {
 
         $('#assignProfessor_chosen').css("width", "100%");
         $('#findDisciplineCourse_chosen').css("width", "100%");
+        $('#findDisciplineYear_chosen').css("width", "100%");
+        $('#findCurriculum_chosen').css("width", "100%");
         $('#cardBodyDiscipline').slideToggle("slow");
     });
     // slideToggle Delete Discipline
@@ -110,7 +112,9 @@ function slideDownAndUp() {
     });
     // slideToggle Update Discipline
     $('#headerDisciplineUpdate').click(function () {
-        $('#findDisciplineUpdate_chosen').css("width", "100%");
+        $('#findDisciplineCourseUpdate_chosen').css("width", "100%");
+        $('#findDisciplineYearUpdate_chosen').css("width", "100%");
+        $('#findCurriculumUpdate_chosen').css("width", "100%");
         $('#assignProfessorUpdate_chosen').css("width", "100%");
         $('#determinateCourseDisciplineUpdate_chosen').css("width", "100%");
         $('#cardBodyDisciplineUpdate').slideToggle("slow");
