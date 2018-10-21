@@ -100,17 +100,18 @@ def addDiscipline():
     cfu = request.form['cfu']
     id_discipline = request.form['id_discipline']
 
-    degree = request.form['degree'].split()
-    course = degree[0]
-    year = degree[1]
+    course = request.form['degreeCourse']
+    year = request.form['yearCourse']
+    curriculum = request.form['curriculumCourse']
 
     semester = request.form['semester']
     totalHours = request.form['totalHours']
     weeksHours = request.form['weeksHours']
+    students = request.form['numberStudents']
     teacher = request.form.getlist('teacher')
     print teacher
 
-    insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
+    insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, curriculum, course, students, teacher)
 
 
     return redirect("/", code=302)
@@ -131,20 +132,22 @@ def deleteDiscipline():
 def updateDiscipline():
     discipline_abb = request.form['discipline_abbUpdate'].strip()
     discipline_name = request.form['discipline_nameUpdate'].strip()
-    obligatory = request.form['obligatoryUpdate'].strip()
+    obligatory = request.form['obligatoryUpdate']
+
     cfu = request.form['cfuUpdate'].strip()
     id_discipline = request.form['id_disciplineUpdate'].strip()
 
-    degree = request.form['degreeUpdate']
-    course = degree[0]
-    year = degree[1]
+    course = request.form['degreeCourse']
+    year = request.form['yearCourse']
+    curriculum = request.form['curriculumCourseUpdate']
 
     semester = request.form['semesterUpdate'].strip()
     totalHours = request.form['totalHoursUpdate'].strip()
     weeksHours = request.form['weeksHoursUpdate'].strip()
+    students = request.form['numberStudents']
     teacher = request.form.getlist('teacherUpdate')
 
-    modifyDiscipline(id_discipline,discipline_abb,discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher)
+    modifyDiscipline(id_discipline,discipline_abb,discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, curriculum, course, students, teacher)
     return redirect("/", code=302)
 
 

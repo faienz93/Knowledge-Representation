@@ -395,8 +395,8 @@ function fillFieldDisciplineById(id) {
                         PREFIX uni: <http://www.rdfproject.com/>
                         PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                        SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year 
-                               (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors)
+                        SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year ?students
+                               ?curriculum (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors)
 
                         FROM <http://www.rdcproject.com/graph/disciplines>
                         FROM <http://www.rdcproject.com/graph/professor>
@@ -415,6 +415,8 @@ function fillFieldDisciplineById(id) {
                                 uni:totalhours ?totalhours;
                                 uni:weekhours ?weekhours;
                                 uni:year ?year;
+                                uni:curriculum ?curriculum;
+                                uni:students ?students
                                 uni:isTaughtBy ?isTaughtBy.
                                     ?isTaughtBy a uni:Teacher;
                                     uni:idProfessor ?idProf;
@@ -446,11 +448,14 @@ function fillFieldDisciplineById(id) {
                     $('input[name=obligatoryUpdate]').prop('checked',(bindings[i].obligatory.value)); // RADIO BUTTON
                     $('input[name=cfuUpdate]').val(bindings[i].cfu.value);
                     $('input[name=id_disciplineUpdate]').val(bindings[i].idDiscipline.value);
-                    $('select[name=degreeUpdate]').val(bindings[i].year.value).trigger("chosen:updated");
+                    $('select[name=degreeCourseUpdate]').val(bindings[i].hasCourseof.value).trigger("chosen:updated");
+                    $('select[name=yearCourseUpdate]').val(bindings[i].year.value).trigger("chosen:updated");
+                    $('select[name=curriculumCourseUpdate]').val(bindings[i].curriculum.value).trigger("chosen:updated");
                     $('select[name=semesterUpdate]').val(bindings[i].semester.value);
                     $('input[name=totalHoursUpdate]').val(bindings[i].totalhours.value);
                     $('input[name=weeksHoursUpdate]').val(bindings[i].weekhours.value);
-                  
+                    $('input[name=numberStudentsUpdate]').val(bindings[i].students.value);
+
                     var updateChosenProfessor = []; 
                     for(var i = 0; i < result.length; i++){
                         var singleProfessorID = result[i].split("-");                       

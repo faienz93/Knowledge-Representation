@@ -195,7 +195,7 @@ def getAllProfessors():
 #   - course
 #   - teacher
 # ======================================================================
-def insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):
+def insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, curriculum, course, students, teacher):
 
     isTaughtBy = ""
     for t in teacher:          
@@ -219,7 +219,9 @@ def insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
                             uni:weekhours "'''+weeksHours+'''";
                             uni:cfu "'''+cfu+'''";
                             uni:year "'''+year+'''";
+                            uni:curriculum "'''+curriculum+'''";
                             uni:idDiscipline "'''+id_discipline+'''";
+                            uni:students "'''+students+'''";
                             '''+isTaughtBy+'''
                             uni:hasCourseof uni:'''+course+'''.
                             
@@ -258,7 +260,7 @@ def cancelDiscipline(id_discipline):
 
 
 # ======================================================================
-# Modify ClassRoom
+# Modify Discipline
 # @param
 #   - id_discipline
 #   - discipline_name
@@ -271,7 +273,7 @@ def cancelDiscipline(id_discipline):
 #   - course
 #   - teacher
 # ======================================================================
-def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):   
+def modifyDiscipline(id_discipline, discipline_abb, discipline_name, semester,obligatory, totalHours, weeksHours, cfu, year, course, curriculum, students, teacher):   
     isTaughtBy = ""
     for t in teacher:          
         isTaughtBy += "uni:isTaughtBy uni:" + t + ";"
@@ -291,6 +293,8 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
                 uni:weekhours ?oldweekhours;
                 uni:cfu ?oldcfu;
                 uni:year ?oldwyear;
+                uni:curriculum ?oldcurriculum;
+                uni:students ?oldstudents;
                 uni:isTaughtBy ?oldisTaughtBy;
                 uni:hasCourseof ?oldhasCourseof;
             }
@@ -300,11 +304,13 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
                 uni:disciplineAbbreviation "'''+discipline_abb+'''"; 
                 uni:disciplinename "'''+discipline_name+'''";
                 uni:semester "'''+semester+'''";
-                uni:obligatory "'''+obligatory+'''";
+                uni:obligatory '''+obligatory+''';
                 uni:totalhours "'''+totalHours+'''";
                 uni:weekhours "'''+weeksHours+'''";
                 uni:cfu "'''+cfu+'''";
                 uni:year "'''+year+'''";
+                uni:curriculum "'''+curriculum+'''";
+                uni:students "'''+students+'''";
                 '''+isTaughtBy+''';
                 uni:hasCourseof "'''+course+'''";
             }
@@ -322,6 +328,8 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
                         uni:weekhours ?oldweekhours;
                         uni:cfu ?oldcfu;
                         uni:year ?oldwyear;
+                        uni:curriculum ?oldcurriculum;
+                        uni:students ?oldstudents;
                         uni:isTaughtBy ?oldisTaughtBy;
                         uni:hasCourseof ?oldhasCourseof;
                 }

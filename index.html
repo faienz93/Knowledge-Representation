@@ -257,38 +257,41 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Corso di laurea</label>
                     <div class="col-lg-9">
-
-
-                        <select id="findDisciplineCourse" data-placeholder="Scegli l'anno in riferimento al corso"
-                            class="form-control chosen-select" tabindex="5" name="degree" required>
-                            <option value=""></option>
-                            <optgroup label="Informatica Triennale">
-                                <option value="8009 1">Primo Anno</option>
-                                <option value="8009 2">Secondo Anno</option>
-                                <option value="8009 3">Terzo Anno</option>
-                            </optgroup>
-                            <optgroup label="Informatica per il Management">
-                                <option value="8014 1">Primo Anno</option>
-                                <option value="8014 2">Secondo Anno</option>
-                                <option value="8014 3">Terzo Anno</option>
-                            </optgroup>
-                            <optgroup label="Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE">
-                                <option value="8028A 1">Primo Anno</option>
-                                <option value="8028A 2">Secondo Anno</option>
-                            </optgroup>
-                            <optgroup label="Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT">
-                                <option value="8028B 1">Primo Anno</option>
-                                <option value="8028B 2">Secondo Anno</option>
-                            </optgroup>
-                            <optgroup label="Informatica Magistrale - CURRICULUM C: SISTEMI E RETI">
-                                <option value="8028C 1">Primo Anno</option>
-                                <option value="8028C 2">Secondo Anno</option>
-                            </optgroup>
-
-                        </select>
-
+                        <select id="findDisciplineCourse" data-placeholder="Scegli il corso di laurea"
+                                class="form-control chosen-select" name="degreeCourse" required>
+                            <option value="8009"> Informatica Triennale</option>
+                            <option value="8014"> Informatica per il Managemenr</option>
+                            <option value="8028"> Informatica Magistrale</option>
+                        </select>  
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Anno del corso di laurea</label>
+                    <div class="col-lg-9">
+                        <select id="findDisciplineYear" data-placeholder="Scegli l'anno di corso"
+                                class="form-control chosen-select" name="yearCourse" required>
+                            <option value="1">Primo</option>
+                            <option value="2">Secondo</option>
+                            <option value="3">Terzo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Curriculum del corso</label>
+                    <div class="col-lg-9">
+                        <select id="findCurriculum" data-placeholder="Scegli il curriculum"
+                                class="form-control chosen-select" name="curriculumCourse" required>
+                            <option value="">Nessun curriculum</option>
+                            <option value="ABC">Insegnamento comune</option>
+                            <option value="A">Tecniche Software</option>
+                            <option value="B">Management</option>
+                            <option value="C">Sistemi e Reti</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Periodo</label>
                     <div class="col-lg-9">
@@ -308,6 +311,12 @@
                     <label class="col-lg-3 col-form-label form-control-label">Ore Settimanali</label>
                     <div class="col-lg-9">
                         <input class="form-control" type="number" value="2" name="weeksHours" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Numero di Studenti</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="number" value="10" name="numberStudents" required>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -394,7 +403,7 @@
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label form-control-label"></label>
                 <div class="col-lg-9">
-                    <button id="buttonFindDiscipline" type="button" class="btn btn-primary" value="Cerca">Cerca</button>
+                    <button id="buttonFindDiscipline" type="button" class="btn btn-primary" value="Cerca"> Cerca</button>
                 </div>
             </div>
             <!--  -->
@@ -402,36 +411,32 @@
             <form class="form" id="disciplineFormUpdate" role="form" autocomplete="off" action="http://127.0.0.1:5000/updateDiscipline"
                 method="POST">
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Nome Materia</label>
+                    <label class="col-lg-3 col-form-label form-control-label"> Nome Materia</label>
                     <div class="col-lg-9">
                         <input class="form-control" type="text" name="discipline_nameUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Sigla Materia</label>
+                    <label class="col-lg-3 col-form-label form-control-label"> Sigla Materia</label>
                     <div class="col-lg-9">
                         <input class="form-control" type="text" name="discipline_abbUpdate"required>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Obbligatorio</label>
+                    <label class="col-lg-3 col-form-label form-control-label"> Obbligatorio</label>
                     <div class="col-lg-9">                        
-                        <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="true" required>Si
-                        </label>
-                        <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="false">No
-                        </label>
-                        
+                        <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="true" required> Si </label>
+                        <label class="radio-inline"><input type="radio" name="obligatoryUpdate" value="false"> No </label>   
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">CFU</label>
+                    <label class="col-lg-3 col-form-label form-control-label"> CFU</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" min="1" max="18" value="{% if disci!=null %}{{disci['cfu']}}{% endif %}"
-                            name="cfuUpdate" required>
+                        <input class="form-control" type="numeric" min="1" max="18" name="cfuUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Codice Identificativo</label>
+                    <label class="col-lg-3 col-form-label form-control-label"> Codice Identificativo</label>
                     <div class="col-lg-9">
                         <input class="form-control" type="numeric" name="id_disciplineUpdate" required>
                     </div>
@@ -439,59 +444,70 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Corso di laurea</label>
                     <div class="col-lg-9">
-                        <select id="determinateCourseDisciplineUpdate" data-placeholder="Scegli l'anno in riferimento al corso"
-                            class="form-control chosen-select" tabindex="5" name="degreeUpdate" required>
-                            <option value=""></option>
-                            <optgroup label="Informatica Triennale">
-                                <option value="8009 1">Primo Anno</option>
-                                <option value="8009 2">Secondo Anno</option>
-                                <option value="8009 3">Terzo Anno</option>
-                            </optgroup>
-                            <optgroup label="Informatica per il Management">
-                                <option value="8014 1">Primo Anno</option>
-                                <option value="8014 2">Secondo Anno</option>
-                                <option value="8014 3">Terzo Anno</option>
-                            </optgroup>
-                            <optgroup label="Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE">
-                                <option value="8028A 1">Primo Anno</option>
-                                <option value="8028A 2">Secondo Anno</option>
-                            </optgroup>
-                            <optgroup label="Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT">
-                                <option value="8028B 1">Primo Anno</option>
-                                <option value="8028B 2">Secondo Anno</option>
-                            </optgroup>
-                            <optgroup label="Informatica Magistrale - CURRICULUM C: SISTEMI E RETI">
-                                <option value="8028C 1">Primo Anno</option>
-                                <option value="8028C 2">Secondo Anno</option>
-                            </optgroup>
+                        <select id="findDisciplineCourseUpdate" data-placeholder="Scegli il corso di laurea"
+                                class="form-control chosen-select" name="degreeCourseUpdate" required>
+                            <option value="8009"> Informatica Triennale</option>
+                            <option value="8014"> Informatica per il Managemenr</option>
+                            <option value="8028"> Informatica Magistrale</option>
+                        </select>  
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"> Anno del corso di laurea</label>
+                    <div class="col-lg-9">
+                        <select id="findDisciplineYearUpdate" data-placeholder="Scegli l'anno di corso"
+                                class="form-control chosen-select" name="yearCourseUpdate" required>
+                            <option value="1"> Primo</option>
+                            <option value="2"> Secondo</option>
+                            <option value="3"> Terzo</option>
                         </select>
                     </div>
                 </div>
+
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Periodo</label>
+                    <label class="col-lg-3 col-form-label form-control-label">Curriculum del corso</label>
+                    <div class="col-lg-9">
+                        <select id="findCurriculumUpdate" data-placeholder="Scegli il curriculum"
+                                class="form-control chosen-select" name="curriculumCourseUpdate" required>
+                            <option value="">Nessun curriculum</option>
+                            <option value="ABC">Insegnamento comune</option>
+                            <option value="A">Tecniche Software</option>
+                            <option value="B">Management</option>
+                            <option value="C">Sistemi e Reti</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"> Periodo</label>
                     <div class="col-lg-9">
                         <select id="user_time_zone" class="form-control" size="0" name="semesterUpdate" required>                            
-                            <option value="1">Primo Semestre</option>
-                            <option value="2">Secondo Semestre</option>                            
+                            <option value="1"> Primo Semestre</option>
+                            <option value="2"> Secondo Semestre</option>                            
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Ore Totali</label>
+                    <label class="col-lg-3 col-form-label form-control-label"> Ore Totali</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" name="totalHoursUpdate" value="{% if disci!=null %}{{disci['totalhours']}}{% endif %}"
-                            required>
+                        <input class="form-control" type="numeric" name="totalHoursUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Ore Settimanali</label>
+                    <label class="col-lg-3 col-form-label form-control-label"> Ore Settimanali</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="numeric" name="weeksHoursUpdate" value="{% if disci!=null %}{{disci['weekhours']}}{% endif %}"
-                            required>
+                        <input class="form-control" type="numeric" name="weeksHoursUpdate" required>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Titolare materia</label>
+                    <label class="col-lg-3 col-form-label form-control-label"> Numero di Studenti</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="numeric" value="10" name="numberStudentsUpdate" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"> Titolare materia</label>
                     <div class="col-lg-9">
                         <select id="assignProfessorUpdate" data-placeholder="Begin typing a name to filter..." multiple
                             class="form-control chosen-select" tabindex="4" size="0" name="teacherUpdate" required>
