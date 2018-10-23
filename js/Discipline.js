@@ -362,34 +362,34 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
 
     /**
      * *****************************
-     * ******** CHALK CLASS ********
+     * ******** BLACKBOARD ********
      * *****************************
      */
 
     /**
      * Set the preference that for this discipline 
-     * that classroom has the chalk
+     * that classroom has the blackboard preference
      */
-    this.chalkClass = function (d) {
-        if (this.checkExistPreference("chalkclass")) {
+    this.blackboard = function (d) {
+        if (this.checkExistPreference("blackboard")) {
             for (var i = 0; i < preference.length; i++) {
-                delete preference[i].chalkclass;
+                delete preference[i].blackboard;
             }
             var filtered = preference.filter(value => Object.keys(value).length != 0);
             preference = filtered;
         }
-        var chalkBool = { "chalkclass": d };
-        preference.push(chalkBool);
+        var blackboardBool = { "blackboard": d };
+        preference.push(blackboardBool);
     }
 
 
     /**
      * Return based on key the value that i find
      */
-    this.getChalkClass = function () {
-        var obj = preference.find(o => o.chalkclass);
+    this.getBlackboard = function () {
+        var obj = preference.find(o => o.blackboard);
         if (obj != undefined) {
-            return obj.chalkclass;
+            return obj.blackboard;
         }
         else {
             return undefined;

@@ -329,7 +329,7 @@ $(document).ajaxComplete(function () {
 // sismob.splitDurationLessons6h(4);
 // bd.splitDurationLessons6h(2);
 //GESSETTO solo Ranzani ha il gessetto
-// iot.chalkClass("Chalk");
-// sismob.chalkClass("Chalk");
-// fsc.chalkClass("Markers");
+// iot.blackboard("Chalk");
+// sismob.blackboard("Chalk");
+// fsc.blackboard("Markers");
 

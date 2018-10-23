@@ -412,18 +412,18 @@ reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
 
 
 /**
-* RULE: Professor set a classroom preference with chalk    * 
+* RULE: Professor set a classroom preference with blackboard  
 */
-reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
+reactor.createRule("checkClassroomBlackboard", -1, { l: Lesson },
     function (l) {
-        return l.getClassroom().getChalk() != l.getDiscipline().getChalkClass() &&
-            l.getDiscipline().checkExistPreference("chalkclass");
+        return l.getClassroom().getBlackboard() != l.getDiscipline().getBlackboard() &&
+            l.getDiscipline().checkExistPreference("blackboard");
     },
     function (l) {
 
         var compatibilityRooms = [];
         for (var i = 0; i < classrooms.length; i++) {
-            if (classrooms[i].getChalk() == l.getDiscipline().getChalkClass()) {
+            if (classrooms[i].getBlackboard() == l.getDiscipline().getBlackboard()) {
                 compatibilityRooms.push(classrooms[i]);
             }
         }
