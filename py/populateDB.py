@@ -78,62 +78,6 @@ sparql.setMethod('POST')
 q = sparql.query()
 
 
-# ---------------------------------------------------------------------------
-# Create a query Informatica Magistrale CURRICULUM A, B, C
-
-queryCurrA = '''
-PREFIX uni: <http://www.rdfproject.com/>
-PREFIX un: <http://www.w3.org/2007/ont/unit#>
-INSERT DATA
-{ 
-   GRAPH <'''+graph_courses+'''>{
-                        uni:8028A a uni:8028;
-                        uni:idCourse "8028A"; 
-  						uni:courseName "Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE".
-    }
-}
-'''
-
-
-sparql.setQuery(queryCurrA)
-sparql.setMethod('POST') 
-q = sparql.query()
-
-queryCurrB = '''
-PREFIX uni: <http://www.rdfproject.com/>
-PREFIX un: <http://www.w3.org/2007/ont/unit#>
-INSERT DATA
-{ 
-   GRAPH <'''+graph_courses+'''>{
-                        uni:8028B a uni:8028;
-                        uni:idCourse "8028B"; 
-  						uni:courseName "Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT".
-    }
-}
-'''
-
-
-sparql.setQuery(queryCurrB)
-sparql.setMethod('POST') 
-q = sparql.query()
-
-queryCurrC = '''
-PREFIX uni: <http://www.rdfproject.com/>
-PREFIX un: <http://www.w3.org/2007/ont/unit#>
-INSERT DATA
-{ 
-   GRAPH <'''+graph_courses+'''>{
-                        uni:8028C a uni:8028;
-                        uni:idCourse "8028C"; 
-  						uni:courseName "Informatica Magistrale - CURRICULUM C: SISTEMI E RETI".
-    }
-}
-'''
-
-
-sparql.setQuery(queryCurrC)
-sparql.setMethod('POST') 
-q = sparql.query()
 
 # ===========================================================================================
 # READ FROM CSV
@@ -181,7 +125,7 @@ with open('../assets/csv/classrooms.csv', 'rb') as csvfile:
         className = row[1]
         address = row[2]
         capacity = row[3]
-        wifi = row[4]
+        blackboard = row[4]
         wired = row[5]
 
         # Create a new Query
@@ -195,7 +139,7 @@ with open('../assets/csv/classrooms.csv', 'rb') as csvfile:
                                 uni:classroomname "'''+className+'''"; 
                                 uni:address "'''+address+'''";
                                 uni:capacity "'''+capacity+'''";
-                                uni:wifi "'''+wifi+'''";
+                                uni:blackboard "'''+blackboard+'''";
                                 uni:idRoom "'''+id_room+'''"; 
                                 uni:wired "'''+wired+'''".
             }
@@ -225,6 +169,7 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
         year = row[9]
         course = row[10]
         teacher=row[11]
+        numStudents=row[12]
 
         # Create a new Query
         query = '''
@@ -245,7 +190,8 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
                                 uni:year "'''+year+'''";
                                 uni:idDiscipline "'''+id_discipline+'''";
                                 uni:hasCourseof uni:'''+course+''';
-                                uni:isTaughtBy uni:'''+teacher+'''
+                                uni:isTaughtBy uni:'''+teacher+''';
+                                uni:numStudents "'''+numStudents+'''".
                                 
             }
         }
