@@ -5,14 +5,14 @@ $(document).ready(function () {
     
     selectProfessors();
 
-    $('#DivVincoli').hide();
+    $('#divConstraint').hide();
     $('#DivSelectDay2').hide();
 
     var ddl1 = $("#ChooseDay1");
     generateChooseDays(ddl1);
 
     $('#findProfessor').change(function() {
-        $('#DivVincoli').show();
+        $('#divConstraint').show();
         var prof = $('#findProfessor').val();
         selectPreference(prof)
     });

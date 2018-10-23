@@ -37,7 +37,7 @@
 
 #cardBodyProfessor,  #cardBodyProfessorDelete, #cardBodyProfessorUpdate,
 #cardBodyDiscipline, #cardBodyDisciplineDelete, #cardBodyDisciplineUpdate,  
-#cardBodyClassRoom,  #cardBodyClassRoomDelete,  #cardBodyClassRoomUpdate {
+#cardBodyClassRoom,  #cardBodyClassRoomDelete,  #cardBodyClassRoomUpdate, #divConstraint {
   display: none;
 }
 
