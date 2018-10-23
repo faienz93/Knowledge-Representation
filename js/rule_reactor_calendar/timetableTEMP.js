@@ -1,10 +1,6 @@
 
-
-// DOMAIN= Come primo parametro prende quelle che sono le classi che devono essere prese
-// BOOST = Questo può aumentare le prestazioni fino al 25%; tuttavia, i punti di interruzione impostati nelle condizioni delle regole non funzioneranno più.
-//  Quindi, questo dovrebbe essere un passo finale nello sviluppo.
 // var reactor = new RuleReactor();
-var reactor = new RuleReactor();
+var reactor = new RuleReactor({Lesson:Lesson},true);
 
 function assert() { return reactor.assert.apply(reactor, arguments); }
 function not() { return reactor.not.apply(reactor, arguments); }
@@ -530,7 +526,8 @@ reactor.createRule("stop", -100, {},
  ******************************************************************
  */
 var timetable = new TimetableArray();
-$(document).ajaxComplete(function () {
+// $(document).ajaxComplete(function () 
+// {
 
 
 
@@ -605,7 +602,7 @@ $(document).ajaxComplete(function () {
         }
         calendar.init();
     });
-});
+// });
 
 
 

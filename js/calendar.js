@@ -52,7 +52,7 @@ $(document).ready(function () {
       timeline: {
         intervalMinutes: 30,
         fromHour: 8,
-        toHour: 23
+        toHour: 19
       }
     },
     events: events,
