@@ -67,7 +67,7 @@ function queryClassrooms() {
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                    SELECT  ?id ?classroomname ?address ?capacity ?wifi ?wired
+                    SELECT  ?id ?classroomname ?address ?capacity ?blackboard ?wired
                     FROM <http://www.rdcproject.com/graph/classrooms>
                     WHERE
                     { ?x  a uni:Classroom.
@@ -75,7 +75,7 @@ function queryClassrooms() {
                         ?x uni:classroomname ?classroomname.
                         ?x uni:address ?address.
                         ?x uni:capacity ?capacity.
-                        ?x uni:wifi ?wifi.
+                        ?x uni:blackboard ?blackboard.
                         ?x uni:wired ?wired.
                         }
                     `;
@@ -95,10 +95,10 @@ function queryClassrooms() {
                     var name = bindings[i].classroomname.value;
                     var address = bindings[i].address.value;
                     var capacity = bindings[i].capacity.value;
-                    var chalk = bindings[i].wifi.value;//TODO cambiare in chalk
-                    var wired = bindings[i].wired.value;//TODO eliminare?
+                    var blackboard = bindings[i].blackboard.value;//TODO cambiare in chalk
+                    var wired = bindings[i].wired.value;
 
-                    var room = new Classroom(id, name, address, capacity, chalk, wired);
+                    var room = new Classroom(id, name, address, capacity, blackboard, wired);
                     result.push(room);
                 }
 
@@ -276,45 +276,46 @@ function queryDiscipline() {
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = `
-                    PREFIX uni: <http://www.rdfproject.com/>
-                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+    PREFIX uni: <http://www.rdfproject.com/>
+    PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                    SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year 
-                            (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors)
+    SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year 
+            (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors) ?numStudents
 
-                    FROM <http://www.rdcproject.com/graph/disciplines>
-                    FROM <http://www.rdcproject.com/graph/professor>
-                    FROM <http://www.rdcproject.com/graph/course>
-                    WHERE
-                    { 
-                            {       
-                            ?x  a uni:Discipline;
-                            uni:disciplinename ?disciplineName;
-                            uni:idDiscipline ?idDiscipline;
-                            uni:disciplineAbbreviation ?sigleDiscipline;
-                            uni:cfu ?cfu;
-                            uni:hasCourseof ?hasCourseof;
-                            uni:obligatory ?obligatory;
-                            uni:curriculum ?curriculum;
-                            uni:semester ?semester;
-                            uni:totalhours ?totalhours;
-                            uni:weekhours ?weekhours;
-                            uni:year ?year;
-                            uni:isTaughtBy ?isTaughtBy.
-                                ?isTaughtBy a uni:Teacher;
-                                uni:idProfessor ?idProf;
-                                uni:firstName ?firstName;
-                                uni:lastName ?lastName;
-                                uni:role ?role.
-                            ?hasCourseof a uni:Course;
-                                uni:idCourse ?idCourse.
-                                
-                                
-                            }
+    FROM <http://www.rdcproject.com/graph/disciplines>
+    FROM <http://www.rdcproject.com/graph/professor>
+    FROM <http://www.rdcproject.com/graph/course>
+    WHERE
+    { 
+            {       
+            ?x  a uni:Discipline;
+            uni:disciplinename ?disciplineName;
+            uni:idDiscipline ?idDiscipline;
+            uni:disciplineAbbreviation ?sigleDiscipline;
+            uni:cfu ?cfu;
+            uni:hasCourseof ?hasCourseof;
+            uni:obligatory ?obligatory;
+            uni:curriculum ?curriculum;
+            uni:semester ?semester;
+            uni:totalhours ?totalhours;
+            uni:weekhours ?weekhours;
+            uni:year ?year;
+            uni:numStudents  ?numStudents;
+            uni:isTaughtBy ?isTaughtBy.
+                ?isTaughtBy a uni:Teacher;
+                uni:idProfessor ?idProf;
+                uni:firstName ?firstName;
+                uni:lastName ?lastName;
+                uni:role ?role.
+            ?hasCourseof a uni:Course;
+                uni:idCourse ?idCourse.
+             
+                
+            }
 
-                        BIND(CONCAT(?idProf) AS ?prof_str)
+        BIND(CONCAT(?idProf) AS ?prof_str)
 
-                    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year  	
+    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year ?numStudents 	
                     `;
 
     var encodedquery = encodeURIComponent(myquery);
@@ -338,7 +339,9 @@ function queryDiscipline() {
                           bindings[i].totalhours.value, 
                           bindings[i].weekhours.value, 
                           bindings[i].cfu.value, 
-                          bindings[i].year.value, 29);
+                          bindings[i].year.value, 
+                          bindings[i].numStudents.value
+                          );
                     d.setCourse(bindings[i].idCourse.value);
                     var idProfs = bindings[i].professors.value.split(",");
                     for(var p = 0; p < idProfs.length;p++){

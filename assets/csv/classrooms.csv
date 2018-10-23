@@ -1,11 +1,19 @@
-id_room,className,address,capacity,wifi,wired
-12347,E1,Ercolani,40,true,true
-12348,E2,Ercolani,35,true,true
-12349,E3,Ercolani,20,true,true
-51200,Enriquez,Matematica,30,false,false
-51201,Pincherle,Matematica,30,false,false
-51202,Cremona,Matematica,30,false,false
-51203,Tonelli,Matematica,30,true,false
-51204,Sem8,Matematica,30,true,false
-44981,C1 Ranzani,Ranzani,30,false,false
-44982,Lab Ranzani,Ranzani,30,true,true
+id_room,className,address,capacity,blackboard,wired
+12347,E1,Ercolani,100,Markers,true
+12348,E2,Ercolani,100,Markers,true
+12349,E3,Ercolani,30,Markers,true
+44981,C1 Ranzani,Ranzani,130,Markers,true
+44982,Lab Ranzani,Ranzani,50,Markers,true
+20000,Arzela,Matematica,48,Chalk,true
+20001,Bombelli,Matematica,40,Chalk,true
+20002,Cremona,Matematica,210,Chalk,true
+20003,Enriques,Matematica,55,Chalk,true
+20004,Pincherle,Matematica,235,Chalk,true
+20005,Seminario,Matematica,20,Chalk,true
+20006,VIII piano,Matematica,38,Chalk,true
+20007,Tonelli,Matematica,170,Chalk,true
+20008,VII piano,Matematica,115,Chalk,true
+20009,Vitali,Matematica,75,Chalk,true
+30001,Aula1,Fisica,70,Chalk,true
+30002,Aula2,Fisica,20,Chalk,true
+30003,Aula3,Fisica,20,Chalk,true
