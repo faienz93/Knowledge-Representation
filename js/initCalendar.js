@@ -1,62 +1,46 @@
 $(document).ready(function () {
+    
+    queryClassrooms(classrooms, (value) => classrooms = value);
+    queryProfessors(professors, (value) => professors = value);
+    queryCourses(courses, (value) => courses = value);
+    queryDiscipline(disciplines, (value) => disciplines = value);
 
-
-
-    var classR = queryClassrooms();
-    var professors = queryProfessors();
-    var courses = queryCourses();
-    var disciplines = queryDiscipline();
-
-
-
-    $(document).ajaxComplete(function () 
-    {
-        for (var i = 0; i < classR.length; i++) {
-            // console.log(classR[i]);
-            classroom.push(classR[i]);
+    for (var i = 0; i < disciplines.length; i++) {
+        var prof = disciplines[i].getProfessor();
+        // Set Professors
+        for (var index = 0; index < prof.length; index++) {
+            prof[index] = professors.find(o => o.id === prof[index]);
         }
+        // SET Course
+        disciplines[i].setCourse(courses.find(o => o.id === disciplines[i].getCourse()));
+    }
 
-        console.log(classroom)
 
-        for (var i = 0; i < disciplines.length; i++) {
-            var prof = disciplines[i].getProfessor();
-            // Set Professors
-            for (var index = 0; index < prof.length; index++) {
-                prof[index] = professors.find(o => o.id === prof[index]);
-            }
-            // SET Course
-            disciplines[i].setCourse(courses.find(o => o.id === disciplines[i].getCourse()));
+    for (var i = 0; i < disciplines.length; i++) {
+        if (disciplines[i].getYear() == "1" && disciplines[i].getSemester() == "1") {
+            // console.log(disciplines[i]);
+            // fill array for calendar
+            subject.push(disciplines[i]);
         }
+    }
 
+    //Preferenze di default 
+    for (var i = 0; i < subject.length; i++) {
+        subject[i].splitDurationLessons6h(3);
+    }
 
-        for (var i = 0; i < disciplines.length; i++) {
-            if (disciplines[i].getYear() == "1" && disciplines[i].getSemester() == "1") {
-                // console.log(disciplines[i]);
-                // fill array for calendar
-                subject.push(disciplines[i]);
-            }
-        }
+    console.log(subject);
 
-        //Preferenze di default 
-        for (var i = 0; i < subject.length; i++) {
-            subject[i].splitDurationLessons6h(3);
-        }
-
-    });
-
-    $("#generateCalendar").click(function () {
-        startGenerationCalendar();
+    $("#generateCalendar").click(function () {        
+        startGenerationCalendar();        
     });
 });
 
 
+
 function startGenerationCalendar() {
 
-    var timetable = new TimetableArray();
-    // $(document).ajaxComplete(function () 
-    // {
-
-    console.log(subject);
+    
     for (var i = 0; i < subject.length; i++) {
 
         var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
@@ -128,7 +112,7 @@ function startGenerationCalendar() {
         }
         calendar.init();
     });
-    // });
+    
 
 }
 

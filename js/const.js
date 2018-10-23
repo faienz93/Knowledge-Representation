@@ -5,10 +5,24 @@
  * Desc: This file contains global variable
  * ===========================================================================
  */
-;
+
 function TimetableArray() {
     this.tt = [];
 }
+
+var timetable = new TimetableArray();
+
+// Rooms returned by query
+var classrooms = undefined;
+
+// Professors returned by query
+var professors = undefined;
+
+// Courses returned by query
+var courses = undefined;
+
+// Disciplines returned by query
+var disciplines = undefined;
 
 // start lessons
 var START_LESSONS = 8.30

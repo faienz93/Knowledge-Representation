@@ -10,8 +10,8 @@
 /***********************************
  * Query Professors
  ************************************/
-function queryProfessors() {
-    var result = [];
+function queryProfessors(returnValue, callback) {
+    
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -36,6 +36,7 @@ function queryProfessors() {
         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
         success: function (results) {
             $.each(results, function (index, element) {
+                var result = [];
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
@@ -48,20 +49,22 @@ function queryProfessors() {
                     result.push(professor);
                 }
 
+                callback(result);
+
             });
 
         }
 
     });
 
-    return result;
+    
 }
 
 /***********************************
  * Query Classes
  ************************************/
-function queryClassrooms() {
-    var result = [];
+function queryClassrooms(returnValue, callback) {
+    
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -88,6 +91,7 @@ function queryClassrooms() {
         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
         success: function (results) {
             $.each(results, function (index, element) {
+                var result = [];
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
@@ -101,21 +105,22 @@ function queryClassrooms() {
                     var room = new Classroom(id, name, address, capacity, blackboard, wired);
                     result.push(room);
                 }
+                callback(result);
 
             });
 
         }
 
     });
-    return result;
+    
 }
 
 
 /***********************************
  * Query Course
  ************************************/
-function queryCourses() {
-    var result = [];
+function queryCourses(returnValue, callback) {
+   
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -138,6 +143,7 @@ function queryCourses() {
         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
         success: function (results) {
             $.each(results, function (index, element) {
+                var result = [];
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
@@ -146,13 +152,13 @@ function queryCourses() {
                     var course = new Course(id, courseName);
                     result.push(course);
                 }
-
+                callback(result);
             });
 
         }
 
     });
-    return result;
+   
 }
 
 
@@ -161,8 +167,8 @@ function queryCourses() {
  * REF: https://stackoverflow.com/a/18214142/4700162
  * @method queryDiscipline
  ************************************/
-function queryDiscipline() {
-    var result = [];
+function queryDiscipline(returnValue, callback) {
+    
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = `
@@ -216,6 +222,7 @@ function queryDiscipline() {
         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
         success: function (results) {
             $.each(results, function (index, element) {
+                var result = [];
                 var bindings = element.bindings;                
                 
                 for (i in bindings) {
@@ -240,12 +247,14 @@ function queryDiscipline() {
                     result.push(d);
                 }
 
+                callback(result);
+
             });
 
         }
 
     });
-    return result;
+   
 }
 
 
