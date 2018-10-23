@@ -133,18 +133,17 @@ def updateDiscipline():
     discipline_abb = request.form['discipline_abbUpdate'].strip()
     discipline_name = request.form['discipline_nameUpdate'].strip()
     obligatory = request.form['obligatoryUpdate']
-
     cfu = request.form['cfuUpdate'].strip()
     id_discipline = request.form['id_disciplineUpdate'].strip()
 
-    course = request.form['degreeCourse']
-    year = request.form['yearCourse']
+    course = request.form['degreeCourseUpdate']
+    year = request.form['yearCourseUpdate']
     curriculum = request.form['curriculumCourseUpdate']
 
     semester = request.form['semesterUpdate'].strip()
     totalHours = request.form['totalHoursUpdate'].strip()
     weeksHours = request.form['weeksHoursUpdate'].strip()
-    students = request.form['numberStudents']
+    students = request.form['numberStudentsUpdate']
     teacher = request.form.getlist('teacherUpdate')
 
     modifyDiscipline(id_discipline,discipline_abb,discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, curriculum, course, students, teacher)
@@ -159,16 +158,18 @@ def updateDiscipline():
 @app.route('/addClassRoom', methods = ['POST', 'GET'])
 def addClassRoom():
 
+    id_room = request.form['id_room']
     className = request.form['className']
+    address = request.form['address']
     capacity = request.form['capacity']
     wired = request.form['wired']
-    wifi = request.form['wifi']
-    id_room = request.form['id_room']
-    address = request.form['address']
+    blackboard = request.form['blackboard']
+    
+    
 
-    insertClassRoom(id_room,className, address, capacity, wifi, wired)
+    insertClassRoom(id_room,className, address, capacity, blackboard, wired)
 
-    return redirect("/updateProfessor", code=302)
+    return redirect("/", code=302)
 
 # =====================================
 # Delete ClassRoom
@@ -187,12 +188,13 @@ def updateClassRoom():
 
     id_room = request.form['id_roomUpdate'].strip()
     name_room = request.form['classNameUpdate'].strip()
-    capacity_room = request.form['capacityUpdate'].strip()
-    wired_room = request.form['wiredUpdate'].strip()
-    wifi_room = request.form['wifiUpdate'].strip()
     address_room = request.form['addressUpdate'].strip()
+    capacity_room = request.form['capacityUpdate'].strip()
+    wired_room = request.form['wiredUpdate']
+    blackboardUpdate = request.form['blackboardUpdate']
+    
 
-    modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, address_room)
+    modifyClassRoom(id_room, name_room, capacity_room, wired_room, blackboardUpdate, address_room)
     return redirect("/", code=302)
 
 

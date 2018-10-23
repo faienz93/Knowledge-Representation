@@ -41,17 +41,24 @@ function setResetBtns() {
     // Reset value of form Add Professor 
     $('#resetAddProfessor').click(function () {
         $('#professorForm')[0].reset();
+        $('#roleProfessorForm').val("").trigger("chosen:updated");
     });
     // Reset value of form Update Professor 
     $('#resetUpdateProfessor').click(function () {
         $('#professorFormUpdate')[0].reset();
         $('#findProfessorUpdate').val("").trigger("chosen:updated");
+        $('#roleProfessorUpdate').val("").trigger("chosen:updated");
     });
 
 
     // Reset value of form Discipline 
     $('#resetDisciplineBbtn').click(function () {
         $('#disciplineForm')[0].reset();
+        $('#semester').val("").trigger("chosen:updated");
+        $('#findCurriculum').val("").trigger("chosen:updated");
+        $('#findDisciplineYear').val("").trigger("chosen:updated");
+        $('#findDisciplineCourse').val("").trigger("chosen:updated");
+        $('#assignProfessor').val("").trigger("chosen:updated");
     });
     // Reset value of form Update Discipline 
     $('#resetUpdateDiscipline').click(function () {
@@ -59,17 +66,23 @@ function setResetBtns() {
         $('#findDisciplineUpdate').val("").trigger("chosen:updated");
         $('#assignProfessorUpdate').val("").trigger("chosen:updated");
         $('#determinateCourseDisciplineUpdate').val("").trigger("chosen:updated");
+        $('#semesterUpdate').val("").trigger("chosen:updated");
+        $('#findCurriculumUpdate').val("").trigger("chosen:updated");
+        $('#findDisciplineYearUpdate').val("").trigger("chosen:updated");
+        $('#findDisciplineCourseUpdate').val("").trigger("chosen:updated");
     });
 
 
     // Reset value of form ClassRoom 
     $('#resetClassRoomBbtn').click(function () {
         $('#classRoomForm')[0].reset();
+        $('#blackboard').val("").trigger("chosen:updated");
     });
     // Reset value of form Update ClassRoom 
     $('#resetUpdateClassRoom').click(function () {
         $('#classRoomFormUpdate')[0].reset();
         $('#findClassRoomUpdate').val("").trigger("chosen:updated");
+        $('#blackboardUpdate').val("").trigger("chosen:updated");
     });
 
 }
@@ -98,7 +111,6 @@ function slideDownAndUp() {
 
     // slideToggle Discipline
     $('#headerDiscipline').click(function () {
-
         $('#assignProfessor_chosen').css("width", "100%");
         $('#findDisciplineCourse_chosen').css("width", "100%");
         $('#findDisciplineYear_chosen').css("width", "100%");
@@ -125,6 +137,7 @@ function slideDownAndUp() {
     // slideToggle ClassRoom
     $('#headerClassRoom').click(function () {
         $('#cardBodyClassRoom').slideToggle("slow");
+        $('#blackboard_chosen').css("width", "100%");
     });
     // slideToggle Delete ClassRoom
     $('#headerClassRoomDelete').click(function () {
@@ -135,6 +148,7 @@ function slideDownAndUp() {
     $('#headerUpdateClassRoom').click(function () {
         $('#findClassRoomUpdate_chosen').css("width", "100%");
         $('#cardBodyClassRoomUpdate').slideToggle("slow");
+        $('#blackboardUpdate_chosen').css("width", "100%");
     });
 
 }
@@ -372,9 +386,6 @@ function fillFieldProfessorById(id) {
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
-                    console.log(bindings[i]);
-
-
                     $('input[name=nameProfessorUpdate]').val(bindings[i].firstName.value);
                     $('input[name=surnameProfessorUpdate]').val(bindings[i].lastName.value);
                     $('input[name=idProfessorUpdate]').val(bindings[i].idProfessor.value);
@@ -395,12 +406,11 @@ function fillFieldProfessorById(id) {
 function fillFieldDisciplineById(id) {
     var endpointURL = "http://localhost:3030/ds/query";
 
-
     var myquery = ` 
                         PREFIX uni: <http://www.rdfproject.com/>
                         PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                        SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year ?students
+                        SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year ?numStudents 
                                ?curriculum (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors)
 
                         FROM <http://www.rdcproject.com/graph/disciplines>
@@ -421,7 +431,7 @@ function fillFieldDisciplineById(id) {
                                 uni:weekhours ?weekhours;
                                 uni:year ?year;
                                 uni:curriculum ?curriculum;
-                                uni:students ?students
+                                uni:numStudents  ?numStudents 
                                 uni:isTaughtBy ?isTaughtBy.
                                     ?isTaughtBy a uni:Teacher;
                                     uni:idProfessor ?idProf;
@@ -459,7 +469,7 @@ function fillFieldDisciplineById(id) {
                     $('select[name=semesterUpdate]').val(bindings[i].semester.value);
                     $('input[name=totalHoursUpdate]').val(bindings[i].totalhours.value);
                     $('input[name=weeksHoursUpdate]').val(bindings[i].weekhours.value);
-                    $('input[name=numberStudentsUpdate]').val(bindings[i].students.value);
+                    $('input[name=numberStudentsUpdate]').val(bindings[i].numStudents .value);
 
                     var updateChosenProfessor = []; 
                     for(var i = 0; i < result.length; i++){
@@ -488,7 +498,7 @@ function fillFieldClassroomById(id) {
                     PREFIX uni: <http://www.rdfproject.com/>
                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                    SELECT ?idRoom ?classroomname ?address ?capacity ?wifi ?wired
+                    SELECT ?idRoom ?classroomname ?address ?capacity ?blackboard  ?wired
                     FROM <http://www.rdcproject.com/graph/classrooms>
                     WHERE
                     { ?x  a uni:Classroom;
@@ -497,7 +507,7 @@ function fillFieldClassroomById(id) {
                             uni:classroomname ?classroomname;
                             uni:address ?address;
                             uni:capacity ?capacity;
-                            uni:wifi ?wifi;
+                            uni:blackboard  ?blackboard ;
                             uni:wired ?wired;
                         }
                     ORDER BY ?idRoom                               
@@ -518,11 +528,8 @@ function fillFieldClassroomById(id) {
 
                     $('input[name=classNameUpdate]').val(bindings[i].classroomname.value);
                     $('input[name=capacityUpdate]').val(bindings[i].capacity.value);
-                    // TODO i radio button non vengono aggiornati ma poco male devoono essere cambiati
-                    // --------------------------------------------------------------------------
-                    $('input[name=wiredUpdate]').prop('checked',(bindings[i].wifi.value)); // RADIO BUTTON
-                    $('input[name=wifiUpdate]').prop('checked',(bindings[i].wired.value)); // RADIO BUTTON
-                    // --------------------------------------------------------------------------
+                    $('input[name=wiredUpdate]').prop('checked',(bindings[i].wired.value)); // RADIO BUTTON
+                    $('input[name=blackboard Update]').val(bindings[i].blackboard .value).trigger("chosen:updated"); 
                     $('input[name=id_roomUpdate]').val(bindings[i].idRoom.value);
                     $('input[name=addressUpdate]').val(bindings[i].address.value);
                 }
