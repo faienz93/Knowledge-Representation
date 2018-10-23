@@ -37,6 +37,11 @@ def send_lib(path):
 def send_js(path):
     return send_from_directory('js', path)
 
+# I indicate where load the static file (js) instead static directory
+@app.route('/node_modules/<path:path>')
+def send_node(path):
+    return send_from_directory('node_modules', path)
+
 # I indicate where load the static file (css) instead static directory
 @app.route('/css/<path:path>')
 def send_css(path):
