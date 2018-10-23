@@ -1,9 +1,6 @@
 $(document).ready(function () {
-<<<<<<< HEAD
     // InitRuleReactor();
-=======
     
->>>>>>> Curriculum_rule
     chosenPlugin();
 
     slideDownAndUp();
