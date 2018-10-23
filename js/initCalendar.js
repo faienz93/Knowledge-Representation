@@ -3,24 +3,34 @@ $(document).ready(function () {
     queryClassrooms(classrooms, (value) => classrooms = value);
     queryProfessors(professors, (value) => professors = value);
     queryCourses(courses, (value) => courses = value);
-    queryDiscipline(disciplines, (value) => disciplines = value);
+    queryDiscipline(returnDiscipline);
 
-    for (var i = 0; i < disciplines.length; i++) {
-        var prof = disciplines[i].getProfessor();
+    
+
+    $("#generateCalendar").click(function () {   
+        events.splice(0,events.length);
+        calendar.init();
+        startGenerationCalendar();        
+    });
+});
+
+function returnDiscipline(disc) {
+    for (var i = 0; i < disc.length; i++) {
+        var prof = disc[i].getProfessor();
         // Set Professors
         for (var index = 0; index < prof.length; index++) {
             prof[index] = professors.find(o => o.id === prof[index]);
         }
         // SET Course
-        disciplines[i].setCourse(courses.find(o => o.id === disciplines[i].getCourse()));
+        disc[i].setCourse(courses.find(o => o.id === disc[i].getCourse()));
     }
 
 
-    for (var i = 0; i < disciplines.length; i++) {
-        if (disciplines[i].getYear() == "1" && disciplines[i].getSemester() == "1") {
+    for (var i = 0; i < disc.length; i++) {
+        if (disc[i].getYear() == "1" && disc[i].getSemester() == "1") {
             // console.log(disciplines[i]);
             // fill array for calendar
-            subject.push(disciplines[i]);
+            subject.push(disc[i]);
         }
     }
 
@@ -31,16 +41,6 @@ $(document).ready(function () {
 
     console.log(subject);
 
-    $("#generateCalendar").click(function () {        
-        startGenerationCalendar();        
-    });
-});
-
-
-
-function startGenerationCalendar() {
-
-    
     for (var i = 0; i < subject.length; i++) {
 
         var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
@@ -79,6 +79,12 @@ function startGenerationCalendar() {
         }
 
     }
+}
+
+function startGenerationCalendar() {
+
+    
+    
 
     // var ciao = getProfessorById("000001");
     // console.log(ciao);

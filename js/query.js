@@ -167,7 +167,7 @@ function queryCourses(returnValue, callback) {
  * REF: https://stackoverflow.com/a/18214142/4700162
  * @method queryDiscipline
  ************************************/
-function queryDiscipline(returnValue, callback) {
+function queryDiscipline(callback) {
     
     var endpointURL = "http://localhost:3030/ds/query";
 
