@@ -198,7 +198,7 @@ def getAllProfessors():
 #   - course
 #   - teacher
 # ======================================================================
-def insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):
+def insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, curriculum, course, students, teacher):
 
     isTaughtBy = ""
     for t in teacher:          
@@ -222,7 +222,9 @@ def insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
                             uni:weekhours "'''+weeksHours+'''";
                             uni:cfu "'''+cfu+'''";
                             uni:year "'''+year+'''";
+                            uni:curriculum "'''+curriculum+'''";
                             uni:idDiscipline "'''+id_discipline+'''";
+                            uni:numStudents "'''+students+'''";
                             '''+isTaughtBy+'''
                             uni:hasCourseof uni:'''+course+'''.
                             
@@ -372,7 +374,7 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
 
 
 # ======================================================================
-# Modify ClassRoom
+# Modify Discipline
 # @param
 #   - id_discipline
 #   - discipline_name
@@ -385,7 +387,7 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
 #   - course
 #   - teacher
 # ======================================================================
-def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):   
+def modifyDiscipline(id_discipline, discipline_abb, discipline_name, semester,obligatory, totalHours, weeksHours, cfu, year, course, curriculum, students, teacher):   
     isTaughtBy = ""
     for t in teacher:          
         isTaughtBy += "uni:isTaughtBy uni:" + t + ";"
@@ -405,6 +407,8 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
                 uni:weekhours ?oldweekhours;
                 uni:cfu ?oldcfu;
                 uni:year ?oldwyear;
+                uni:curriculum ?oldcurriculum;
+                uni:numStudents ?oldnumStudents;
                 uni:isTaughtBy ?oldisTaughtBy;
                 uni:hasCourseof ?oldhasCourseof;
             }
@@ -414,11 +418,13 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
                 uni:disciplineAbbreviation "'''+discipline_abb+'''"; 
                 uni:disciplinename "'''+discipline_name+'''";
                 uni:semester "'''+semester+'''";
-                uni:obligatory "'''+obligatory+'''";
+                uni:obligatory '''+obligatory+''';
                 uni:totalhours "'''+totalHours+'''";
                 uni:weekhours "'''+weeksHours+'''";
                 uni:cfu "'''+cfu+'''";
                 uni:year "'''+year+'''";
+                uni:curriculum "'''+curriculum+'''";
+                uni:numStudents "'''+students+'''";
                 '''+isTaughtBy+''';
                 uni:hasCourseof "'''+course+'''";
             }
@@ -436,6 +442,8 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
                         uni:weekhours ?oldweekhours;
                         uni:cfu ?oldcfu;
                         uni:year ?oldwyear;
+                        uni:curriculum ?oldcurriculum;
+                        uni:numStudents ?oldnumStudents;
                         uni:isTaughtBy ?oldisTaughtBy;
                         uni:hasCourseof ?oldhasCourseof;
                 }
@@ -457,10 +465,10 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
 #   - className
 #   - address
 #   - capacity
-#   - wifi
+#   - blackboard
 #   - wired
 # ======================================================================
-def insertClassRoom(id_room,className, address, capacity, wifi, wired):
+def insertClassRoom(id_room,className, address, capacity, blackboard, wired):
     graph_classrooms = "http://www.rdcproject.com/graph/classrooms" 
 
     # Create a new Query
@@ -474,7 +482,7 @@ def insertClassRoom(id_room,className, address, capacity, wifi, wired):
                                     uni:classroomname "'''+className+'''"; 
                                     uni:address "'''+address+'''";
                                     uni:capacity "'''+capacity+'''";
-                                    uni:wifi "'''+wifi+'''";
+                                    uni:blackboard "'''+blackboard+'''";
                                     uni:idRoom "'''+id_room+'''"; 
                                     uni:wired "'''+wired+'''".
                 }
@@ -518,10 +526,10 @@ def cancelClassRoom(id_room):
 #   - name_room, 
 #   - capacity_room, 
 #   - wired_room,
-#   - wifi_room,
+#   - blackboard,
 #   - address_room
 # ======================================================================
-def modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, address_room):   
+def modifyClassRoom(id_room, name_room, capacity_room, wired_room, blackboard, address_room):   
     query = '''
             PREFIX uni: <http://www.rdfproject.com/>
             PREFIX un: <http://www.w3.org/2007/ont/unit#>
@@ -532,7 +540,7 @@ def modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, ad
                 uni:classroomname ?oldclassroomname;
                 uni:address ?oldaddress;
                 uni:capacity ?oldcapacity;
-                uni:wifi ?oldwifi;
+                uni:blackboard ?oldblackboard;
                 uni:wired ?oldwired;
             }
             INSERT {  
@@ -541,7 +549,7 @@ def modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, ad
                 uni:classroomname "'''+name_room+'''";
                 uni:address "'''+address_room+'''";
                 uni:capacity "'''+capacity_room+'''";
-                uni:wifi "'''+wifi_room+'''";
+                uni:blackboard "'''+blackboard+'''";
                 uni:wired "'''+wired_room+'''";
             }
             WHERE { 
@@ -553,7 +561,7 @@ def modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, ad
                         uni:classroomname ?oldclassroomname;
                         uni:address ?oldaddress;
                         uni:capacity ?oldcapacity;
-                        uni:wifi ?oldwifi;
+                        uni:blackboard ?oldblackboard;
                         uni:wired ?oldwired;
                 }
             }
