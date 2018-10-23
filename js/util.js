@@ -120,10 +120,23 @@ function splitCurriculum(str) {
         return str.split("");
     }
     
-    
 }
 
-
+/**
+ * Function that counts number of hours of a specific course in a specific day
+ * 
+ */
+function countHours(course,day){
+    var result=0;
+   // console.log(timetable.tt[0].getCourse().getId());
+    for(var i=0;i<timetable.tt.length;i++){        
+        if(timetable.tt[i].getDiscipline().getCourse().getId() == course && 
+        timetable.tt[i].getDay() == day){
+           result+=timetable.tt[i].getDurationLesson();
+               }       
+}   
+   return result;
+}
 
 /**
  * Return random nnumber between two value

@@ -32,6 +32,14 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
     };
 
     /**
+     * Return abbreviation of discipline 
+     */
+    this.getAbbreviation = function () {
+        return this.abbreviation;
+    };
+
+    
+    /**
      * Return the obligatory of Course
      */
     this.getObligatory = function () {

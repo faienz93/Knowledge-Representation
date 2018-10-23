@@ -242,20 +242,22 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
 
     });
 
-reactor.createRule("overlapTimeSlot4", -2, { l1: Lesson },
+reactor.createRule("refactorLesson", -2, { l1: Lesson },
     function (l1) {
-        var getCurriculumL1 = l1.getDiscipline().getCurriculum();
+        // var getCurriculumL1 = l1.getDiscipline().getCurriculum();
         
-        var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
+        // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
         
-        return getCurriculumL1 == undefined && 
-            l1.getDiscipline().getObligatory()==false  &&
-            slotLesson1 >= END_LESSONS;
+        // return getCurriculumL1 == undefined && 
+        //     l1.getDiscipline().getObligatory()==false  &&
+        //     slotLesson1 >= END_LESSONS;
+        var res = countHours(l1.getDiscipline().getCourse().getId(), l1.getDay())
+        return res >= 10 && l1.getEndLesson() > END_LESSONS;
 
     },
     function (l1) {
 
-        printForDebug("OVERLAPTIMESLOT4 " + l1.getDiscipline().getName(), "red", "yellow");
+        printForDebug("refactorLesson " + l1.getDiscipline().getName(), "red", "yellow");
        
         // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
         var dL = l1.getDurationLesson();
@@ -593,7 +595,7 @@ $(document).ajaxComplete(function () {
             var newEvent = {
                 start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
                 end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
-                title: timetable.tt[i].getDiscipline().getName() + ' - ' + timetable.tt[i].getClassroom().getName(),
+                title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
                 content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
                     "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
                     "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
