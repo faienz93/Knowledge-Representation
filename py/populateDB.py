@@ -19,6 +19,7 @@ graph_professor = "http://www.rdcproject.com/graph/professor"
 graph_disciplines = "http://www.rdcproject.com/graph/disciplines"
 graph_classrooms = "http://www.rdcproject.com/graph/classrooms" 
 graph_courses = "http://www.rdcproject.com/graph/course"
+graph_preferences = "http://www.rdcproject.com/graph/preferences"
 
 # Create a query Informatica Triennale 
 queryInformaticaTriennale = '''
@@ -137,8 +138,9 @@ q = sparql.query()
 
 # ===========================================================================================
 # READ FROM CSV
-# Insert into graph professor the professor written inside csv file "professors.csv"
 # ===========================================================================================
+
+# Insert into graph professor the professor written inside csv file "professors.csv"
 with open('../assets/csv/professors.csv', 'rb') as csvfile:
     testReader = csv.reader(csvfile, skipinitialspace=False, delimiter=',')
     t = list(testReader)
@@ -167,9 +169,8 @@ with open('../assets/csv/professors.csv', 'rb') as csvfile:
         # Run the query and print the result
         sparql.setQuery(query)
         sparql.setMethod('POST') 
-        # print query
+        #print query
         q = sparql.query()
-
 
 # Insert into graph classrooms the class written inside csv file "classrooms.csv"
 with open('../assets/csv/classrooms.csv', 'rb') as csvfile:
@@ -214,15 +215,16 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
    
     for row in t[1:]:
         id_discipline = row[0]
-        discipline_name = row[1]
-        semester = row[2]
-        obligatory = row[3]
-        totalHours = row[4]
-        weeksHours = row[5]
-        cfu = row[6]
-        year = row[7]
-        course = row[8]
-        teacher=row[9]
+        discipline_abb = row[1]
+        discipline_name = row[2]
+        semester = row[3]
+        obligatory = row[4]
+        totalHours = row[5]
+        weeksHours = row[6]
+        cfu = row[7]
+        year = row[8]
+        course = row[9]
+        teacher=row[10]
 
         # Create a new Query
         query = '''
@@ -232,6 +234,7 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
         { 
         GRAPH <'''+graph_disciplines+'''>{
         uni:'''+id_discipline +''' a uni:Discipline;
+                                uni:disciplineAbbreviation "'''+discipline_abb+'''"; 
                                 uni:disciplinename "'''+discipline_name+'''"; 
                                 uni:semester "'''+semester+'''"; 
                                 uni:obligatory "'''+obligatory+'''"; 
@@ -241,7 +244,7 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
                                 uni:year "'''+year+'''";
                                 uni:idDiscipline "'''+id_discipline+'''";
                                 uni:hasCourseof uni:'''+course+''';
-                                uni:isTaughtBy uni:'''+teacher+'''
+                                uni:isTaughtBy uni:'''+teacher+'''.
                                 
             }
         }
@@ -250,11 +253,49 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
         # Run the query and print the result
         sparql.setQuery(query)
         sparql.setMethod('POST') 
-        print query
+        #print query
         q = sparql.query()
 
+# Insert into graph preferences the preferences written inside csv file "preferences.csv"
+with open('../assets/csv/preferences.csv', 'rb') as csvfile:
+    testReader = csv.reader(csvfile, skipinitialspace=False, delimiter=',')
+    t = list(testReader)
+   
+    for row in t[1:]:
+        teacher = row[0]
+        sixHourSplit = row[1]
+        consecutiveDays = row[2]
+        noLessonDay1 = row[3]
+        noLessonDay2 = row[4]
+        noLessonAMPM = row[5]
+        writeMethodRoom = row[6]
 
+        # Create a new Query
+        query = '''
+            PREFIX uni: <http://www.rdfproject.com/>
+            PREFIX un: <http://www.w3.org/2007/ont/unit#>
+            INSERT DATA
+            { 
+            GRAPH <'''+graph_preferences+'''>{
+            uni:'''+ teacher +''' a uni:Preference;
+                                    uni:sixHourSplit "'''+sixHourSplit+'''"; 
+                                    uni:consecutiveDays "'''+consecutiveDays+'''"; 
+                                    uni:noLessonDay1 "'''+noLessonDay1+'''"; 
+                                    uni:noLessonDay2 "'''+noLessonDay2+'''"; 
+                                    uni:noLessonAMPM "'''+noLessonAMPM+'''"; 
+                                    uni:isPreferenceOf "'''+teacher+'''"; 
+                                    uni:writeMethodRoom "'''+writeMethodRoom+'''".                            
+                }
+            }
+            '''
+        # uni:hasCourseof 
+        # Run the query and print the result
+        sparql.setQuery(query)
+        sparql.setMethod('POST') 
+        #print query
+        q = sparql.query()
 
+print "ok inserimento"
 
 
 

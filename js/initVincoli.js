@@ -1,84 +1,103 @@
 $(document).ready(function () {
-    // InitRuleReactor(); 
     chosenPlugin();
  
     slideDownAndUp();
     setResetBtns();
     
     selectProfessors();
-    // selectDisciplines();
-    // selectClassrooms();
 
     setShowHideCards();
-    setHideConstraintsRows();
+
+    $('#DivVincoli').hide();
+    $('#DivSelectDay2').hide();
+
+    var ddl1 = $("#ChooseDay1");
+    generateChooseDays(ddl1);
 
     $('#findProfessor').change(function() {
-        // reset values
-        setHideConstraintsRows();
-        $('input[name=Discipline6H]', '#constraintForm').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#constraintForm').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#3ConsacutiveDays').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#2ConsacutiveDays').prop('checked', false);
-        $('#weekHours').val("0");  
-
-        // get disciplines of this professor
+        $('#DivVincoli').show();
+        //TODO get constraints from db
         var prof = $('#findProfessor').val();
-        selectDisciplines(prof);
+        selectPreference(prof)
     });
 
-    $('#findDiscipline').change(function() {
-        $('#RowWhichConsecutiveDays').hide();      
-        $('input[name=Discipline6H]', '#constraintForm').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#constraintForm').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#3ConsacutiveDays').prop('checked', false);
-        $('input[name=ConsecutiveDays]', '#2ConsacutiveDays').prop('checked', false);
-        $('#weekHours').val("0"); 
-
-        var id = $('#findDiscipline').val();
-        selectSingleDiscipline(id);
+    $('#deleteConstraint').click(function() {
+        // var prof = $('#findProfessor').val();
+        // deletePreference(prof)
+        $('#constraintForm').attr('action', 'http://127.0.0.1:5000/deletePreference');
     });
 
-    $('#Discipline6H input[type=radio]').change(function() {
-        var consecutive = $('input[name=ConsecutiveDays]:checked', '#constraintForm').val();
-        var TwoHoursSplit = $('input[name=Discipline6H]:checked', '#constraintForm').val();
-        if (consecutive=="1" && TwoHoursSplit == "2"){
-            $('#3ConsacutiveDays').show();
-            $('#2ConsacutiveDays').hide();
+    $('.checkDisc').click(function() {
+        $('.checkDisc').not(this).prop('checked', false);
+    });
+    $('.checkConse').click(function() {
+        $('.checkConse').not(this).prop('checked', false);
+    });
+    $('.checkChalks').click(function() {
+        $('.checkChalks').not(this).prop('checked', false);
+    });
+    $('.checkAMPM').click(function() {
+        $('.checkAMPM').not(this).prop('checked', false);
+    });
+
+    $('#ConsecutiveDays input[type=checkbox]').change(function() {
+        if ($(this).is(':checked')) {                       
+            $('#RowNoLessonDays').hide();
+            var ddl1 = $("#ChooseDay1");
+            generateChooseDays(ddl1);
+
+            $('#RowNoLessonAMPM').hide();
+            $('.checkAMPM').not(this).prop('checked', false);
         }
         else{
-            $('#3ConsacutiveDays').hide();
-            $('#2ConsacutiveDays').show();
+            $('#RowNoLessonDays').show();
+            $('#RowNoLessonAMPM').show();
         }
     });
 
-    $('#ConsecutiveDays input[type=radio]').change(function() {
-        var consecutive = $('input[name=ConsecutiveDays]:checked', '#constraintForm').val();
-        if (consecutive=="1"){
-            $('#RowWhichConsecutiveDays').show();
-            if($('#weekHours').val() == "6"){
-                var TwoHoursSplit = $('input[name=Discipline6H]:checked', '#constraintForm').val();
-                if(TwoHoursSplit == "2"){
-                    $('#3ConsacutiveDays').show();
-                    $('#2ConsacutiveDays').hide();
-                }
-                else{
-                    $('#3ConsacutiveDays').hide();
-                    $('#2ConsacutiveDays').show();
-                }
-                
-            }
-            else{
-                $('#3ConsacutiveDays').hide();
-                $('#2ConsacutiveDays').show();
-            }
+    $('#ChooseDay1').change(function() {
+        var day1 = $('#ChooseDay1').val();
+        if(day1 == ''){
+            $('#DivSelectDay2').hide();
+            $('#RowConsecutiveDays').show();
+            $('#RowNoLessonAMPM').show();
         }
         else{
-            $('#RowWhichConsecutiveDays').hide();
+            $('#RowConsecutiveDays').hide();
+            $('.checkConse').not(this).prop('checked', false);
+
+            $('#DivSelectDay2').show();
+            var ddl2 = $("#ChooseDay2");
+            generateChooseDays(ddl2);
+            $("#ChooseDay2 option[value='" + day1 + "']").remove();
+            $("#ChooseDay2  option[value='']");
+            ddl2.trigger("chosen:updated");
+
+            $('#RowNoLessonAMPM').hide();
+            $('.checkAMPM').not(this).prop('checked', false);
+        }
+    });
+
+    $('#NoLessonAMPM input[type=checkbox]').change(function() {
+        if ($(this).is(':checked')) {            
+            $('#RowNoLessonDays').hide();
+            var ddl1 = $("#ChooseDay1");
+            generateChooseDays(ddl1);
+
+            $('#RowConsecutiveDays').hide();
+            $('.checkConse').not(this).prop('checked', false);
+        }
+        else{
+            $('#RowNoLessonDays').show();
+            $('#RowConsecutiveDays').show();
         }
     });
 
 
 });
+
+
+
 
 /**
  * This function aims to set cards view
@@ -86,17 +105,7 @@ $(document).ready(function () {
  */
 function setShowHideCards(){
     $('#cardBodyConstraint').hide();
-
-    
-}
-
-function setHideConstraintsRows(){
-    $('#RowDiscipline6H').hide();
-
-    $('#RowConsecutiveDays').hide();
-    $('#RowWhichConsecutiveDays').hide();
-    $('#3ConsacutiveDays').hide();
-    $('#2ConsacutiveDays').hide();
+   
 }
 
 /**
@@ -139,6 +148,20 @@ function chosenPlugin() {
     for (var selector in config) {
         $(selector).chosen(config[selector]);
     }
+}
+
+/**
+ * Genera la lista dei giorni della settimana
+ */
+function generateChooseDays(ddl){
+    ddl.empty();
+    ddl.append("<option value='' selected>Nessuna Preferenza</option>");
+    ddl.append("<option value='monday'>Lunedì</option>");
+    ddl.append("<option value='tuesday'>Martedì</option>");
+    ddl.append("<option value='wednesday'>Mercoledì</option>");
+    ddl.append("<option value='thursday'>Giovedì</option>");
+    ddl.append("<option value='friday'>Venerdì</option>"); 
+    ddl.trigger("chosen:updated");
 }
 
 /**
@@ -289,111 +312,114 @@ function selectSingleDiscipline(id) {
     });
 }
 
-
 /**
- * Query for select all classrooms
- * It returns: 
- *  - id
- *  - name
- * @method selectClassrooms
+ * Query for select all preferences of a professor
+ * @method selectDisciplines
  */
-function selectClassrooms() {
+function selectPreference(prof) {
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                    SELECT ?idRoom ?classroomname
-                    FROM <http://www.rdcproject.com/graph/classrooms>
+                    SELECT ?sixHourSplit ?consecutiveDays ?noLessonDay1 ?noLessonDay2 ?noLessonAMPM ?writeMethodRoom
+                    FROM <http://www.rdcproject.com/graph/preferences>
                     WHERE
-                    { ?x  a uni:Classroom.
-                        ?x uni:idRoom ?idRoom.
-                        ?x uni:classroomname ?classroomname.
+                    { ?x  a uni:Preference.
+                        ?x uni:sixHourSplit ?sixHourSplit.
+                        ?x uni:consecutiveDays ?consecutiveDays.
+                        ?x uni:noLessonDay1 ?noLessonDay1.
+                        ?x uni:noLessonDay2 ?noLessonDay2.
+                        ?x uni:noLessonAMPM ?noLessonAMPM.
+                        ?x uni:writeMethodRoom ?writeMethodRoom.
+                        ?x uni:isPreferenceOf ? uni:`+ prof +`;
                         }
-                    ORDER BY ?idRoom`;
+                    ORDER BY ?isPreferenceOf`;
 
     var encodedquery = encodeURIComponent(myquery);
+
+    console.log(myquery);
 
     $.ajax({
         dataType: "jsonp",
         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
         success: function (results) {
 
-            // ChosenJS Select Dropdown List
-            var ddl = $('#findClassRoomDelete');
-            var ddl1 = $('#findClassRoomUpdate');
+            // reset values
+            $('#constraintForm').attr('action', 'http://127.0.0.1:5000/addPreference');
+
+            var ddl1 = $("#ChooseDay1");
+            generateChooseDays(ddl1);
+            var day1 = $('#ChooseDay1').val();
+            var ddl2 = $("#ChooseDay2");
+            generateChooseDays(ddl2);
+            $("#ChooseDay2 option[value='" + day1 + "']").remove();
+            $("#ChooseDay2  option[value='']");
+            ddl2.trigger("chosen:updated");
+
+            $('.checkDisc').prop('checked', false).change();
+            $('.checkConse').prop('checked', false).change();           
+            $('.checkAMPM').prop('checked', false).change();
+            $('.checkChalks').prop('checked', false).change();
+
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
-                    var id = bindings[i].idRoom.value
-                    var name = bindings[i].classroomname.value
-                    ddl.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
-                    ddl1.append("<option value='" + id + "'>" + id + " - " + name + "</option>");
-                }
+                    var sixHourSplit = bindings[0].sixHourSplit.value
+                    var consecutiveDays = bindings[0].consecutiveDays.value
+                    var noLessonDay1 = bindings[0].noLessonDay1.value
+                    var noLessonDay2 = bindings[0].noLessonDay2.value
+                    var noLessonAMPM = bindings[0].noLessonAMPM.value
+                    var writeMethodRoom = bindings[0].writeMethodRoom.value
 
-                ddl.trigger("chosen:updated");
-                ddl1.trigger("chosen:updated");
+                    $('#constraintForm').attr('action', 'http://127.0.0.1:5000/updatePreference');
+
+                    // set new values
+                    $("#ChooseDay1 option[value='" + noLessonDay1 + "']").prop('selected', true).change();
+                    ddl1.trigger("chosen:updated");
+                    $("#ChooseDay2 option[value='" + noLessonDay2 + "']").prop('selected', true).change();
+                    ddl2.trigger("chosen:updated");                    
+                    $('#Discipline6H input[type=checkbox][value="'+sixHourSplit+'"]').prop('checked', true).change();
+                    $('#ConsecutiveDays input[type=checkbox][value="'+consecutiveDays+'"]').prop('checked', true).change();                  
+                    $('#NoLessonAMPM input[type=checkbox][value="'+noLessonAMPM+'"]').prop('checked', true).change();
+                    $('#writeMethodRoom input[type=checkbox][value="'+writeMethodRoom+'"]').prop('checked', true).change();
+                }
             });
 
         }
 
     });
 }
+
 /**
- * Query selected classroom
- * It returns all the data
- * @method findClassRoom
+ * Delete all preferences of a professor
+ * @method selectDisciplines
  */
-// function findClassRoom(){
-//     var endpointURL = "http://localhost:3030/ds/query";
+function deletePreference(prof) {
+    var endpointURL = "http://localhost:3030/ds/update";
 
-//     var roomId = $('#findClassRoomUpdate').val();
-//     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
-//                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
+    var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
+                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+                    DELETE WHERE { 
+                        GRAPH <http://www.rdcproject.com/graph/preferences> {
+                                ?object uni:isPreferenceOf ? uni:`+prof+`;
+                                ?property  ?value 
+                        }
+                    }`;
 
-//                     SELECT ?idRoom ?classroomname ?address ?capacity ?wifi ?wired
-//                     FROM <http://www.rdcproject.com/graph/classrooms>
-//                     WHERE
-//                     { ?x  a uni:Classroom;
-//                             uni:idRoom ?"`+ roomId +`";
-//                             uni:idRoom ?idRoom;
-//                             uni:classroomname ?classroomname;
-//                             uni:address ?address;
-//                             uni:capacity ?capacity;
-//                             uni:wifi ?wifi;
-//                             uni:wired ?wired;
-//                         }
-//                     ORDER BY ?idRoom`;
+    var encodedquery = encodeURIComponent(myquery);
 
-//     var encodedquery = encodeURIComponent(myquery);
+    console.log(myquery);
 
-//     $.ajax({
-//         dataType: "jsonp",
-//         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
-//         success: function (results) {
-//             alert("ci sono")
-//             $.each(results, function (index, element) {
-//                 var bindings = element.bindings;
-//                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
-//                 for (i in bindings) {
-//                     var idRoom = bindings[i].idRoom.value
-//                     var classroomname = bindings[i].classroomname.value
-//                     var address = bindings[i].address.value
-//                     var capacity = bindings[i].capacity.value
-//                     var wifi = bindings[i].wifi.value
-//                     var wired = bindings[i].wired.value
-//                     $('#findClassRoomUpdate').val(idRoom)
-//                     $('#classNameUpdate').val(classroomname)
-//                     $('#findClassRoomUpdate').val(address)
-//                     $('#capacityUpdate').val(capacity)
-//                     $('#findClassRoomUpdate').val(wifi)
-//                     $('#findClassRoomUpdate').val(wired)
-//                 }
-//             });
+    $.ajax({
+        dataType: "jsonp",
+        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+        success: function (results) {
+            location.reload();
+        }
 
-//         }
+    });
+}
 
-//     });
-// }
 
