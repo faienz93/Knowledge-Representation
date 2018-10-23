@@ -13,15 +13,16 @@ app = Flask(__name__, template_folder=template_dir)
 
 @app.route('/')
 def index():
-    return render_template("indexVincoli.html")
+    return render_template("index.html")
 
-@app.route('/test')
-def test():
-    return render_template("test.html")
 
-# @app.route('/ciao')
-# def ciao():
-#     return render_template("index.html")
+@app.route('/formEntities')
+def formEntities():
+    return render_template("formEntities.html")
+
+@app.route('/constraints')
+def constraints():
+    return render_template("constraints.html")
 
 
 # ======================================================
@@ -61,7 +62,7 @@ def addProfessor():
 
     insertProfessor(id_professor, name, surname, role)
 
-    return redirect("/", code=302)
+    return redirect("/formEntities", code=302)
 
 # =====================================
 # Delete Professor
@@ -70,7 +71,7 @@ def addProfessor():
 def deleteProfessor():
     teacher = request.form['deleteTeacher']
     cancelProfessor(teacher)
-    return redirect("/", code=302)
+    return redirect("/formEntities", code=302)
 
 # =====================================
 # Update Professor
@@ -84,7 +85,7 @@ def updateProfessor():
     role = request.form['roleProfessorUpdate'].strip()
 
     modifyProfessor(id_professor, name, surname, role)
-    return redirect("/", code=302)
+    return redirect("/formEntities", code=302)
 
 
 
@@ -114,7 +115,7 @@ def addDiscipline():
     insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, curriculum, course, students, teacher)
 
 
-    return redirect("/", code=302)
+    return redirect("/formEntities", code=302)
 
 # =====================================
 # Delete Discipline
@@ -123,7 +124,7 @@ def addDiscipline():
 def deleteDiscipline():
     discipline = request.form['deleteDiscipline']
     cancelDiscipline(discipline)
-    return redirect("/", code=302)
+    return redirect("/formEntities", code=302)
 
 # =====================================
 # Update Discipline
@@ -147,7 +148,7 @@ def updateDiscipline():
     teacher = request.form.getlist('teacherUpdate')
 
     modifyDiscipline(id_discipline,discipline_abb,discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, curriculum, course, students, teacher)
-    return redirect("/", code=302)
+    return redirect("/formEntities", code=302)
 
 
 
@@ -169,7 +170,7 @@ def addClassRoom():
 
     insertClassRoom(id_room,className, address, capacity, blackboard, wired)
 
-    return redirect("/", code=302)
+    return redirect("/formEntities", code=302)
 
 # =====================================
 # Delete ClassRoom
@@ -178,7 +179,7 @@ def addClassRoom():
 def deleteClassRoom():
     classroom = request.form['deleteClassRoom']
     cancelClassRoom(classroom)
-    return redirect("/", code=302)
+    return redirect("/formEntities", code=302)
 
 # =====================================
 # Update ClassRoom
@@ -195,27 +196,13 @@ def updateClassRoom():
     
 
     modifyClassRoom(id_room, name_room, capacity_room, wired_room, blackboardUpdate, address_room)
-    return redirect("/", code=302)
+    return redirect("/formEntities", code=302)
 
-# =====================================
-# Update ClassRoom
-# =====================================
-@app.route('/updateClassRoom', methods = ['POST', 'GET'])
-def updateClassRoom():
 
-    id_room = request.form['id_roomUpdate'].strip()
-    name_room = request.form['classNameUpdate'].strip()
-    capacity_room = request.form['capacityUpdate'].strip()
-    wired_room = request.form['wiredUpdate'].strip()
-    wifi_room = request.form['wifiUpdate'].strip()
-    address_room = request.form['addressUpdate'].strip()
-
-    modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, address_room)
-    return redirect("/", code=302)
 
 
 # =====================================
-# Create RDF Discipline Query
+# Add Preference
 # =====================================
 @app.route('/addPreference', methods = ['POST', 'GET'])
 def addPreference():
@@ -246,11 +233,11 @@ def addPreference():
 
     insertPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2, NoLessonAMPM, writeMethodRoom)
 
-    return redirect("/", code=302)
+    return redirect("/constraints", code=302)
 
 
 # =====================================
-# Create RDF Preference Query
+# Update Preference
 # =====================================
 @app.route('/updatePreference', methods = ['POST', 'GET'])
 def updatePreference():
@@ -281,7 +268,7 @@ def updatePreference():
 
     modifyPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2, NoLessonAMPM, writeMethodRoom)
 
-    return redirect("/", code=302)
+    return redirect("/constraints", code=302)
 
 # =====================================
 # Delete Preference
@@ -290,7 +277,7 @@ def updatePreference():
 def deletePreference():
     prof = request.form['selectProfessor']
     cancelPreference(prof)
-    return redirect("/", code=302)
+    return redirect("/constraints", code=302)
 
 
 

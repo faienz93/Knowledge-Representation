@@ -34,11 +34,10 @@ INSERT DATA
     }
 }
 '''
-
-
 sparql.setQuery(queryInformaticaTriennale)
 sparql.setMethod('POST') 
 q = sparql.query()
+
 
 # Create a query Informatica Per Il Management
 queryInformaticaPerIlManagement = '''
@@ -53,11 +52,10 @@ INSERT DATA
     }
 }
 '''
-
-
 sparql.setQuery(queryInformaticaPerIlManagement)
 sparql.setMethod('POST') 
 q = sparql.query()
+
 
 # Create a query Informatica Magistrale
 queryInformaticaMagistrale = '''
@@ -72,8 +70,6 @@ INSERT DATA
     }
 }
 '''
-
-#
 sparql.setQuery(queryInformaticaMagistrale)
 sparql.setMethod('POST') 
 q = sparql.query()
@@ -152,6 +148,7 @@ with open('../assets/csv/classrooms.csv', 'rb') as csvfile:
         # print query
         q = sparql.query()
 
+
 # Insert into graph disciplines the subjects written inside csv file "disciplines.csv"
 with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
     testReader = csv.reader(csvfile, skipinitialspace=False, delimiter=',')
@@ -201,10 +198,8 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
         # Run the query and print the result
         sparql.setQuery(query)
         sparql.setMethod('POST') 
-        print query
+        #print query
         q = sparql.query()
-
-
 
 
 # Insert into graph preferences the preferences written inside csv file "preferences.csv"
@@ -234,7 +229,7 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
                                     uni:noLessonDay1 "'''+noLessonDay1+'''"; 
                                     uni:noLessonDay2 "'''+noLessonDay2+'''"; 
                                     uni:noLessonAMPM "'''+noLessonAMPM+'''"; 
-                                    uni:isPreferenceOf "'''+teacher+'''"; 
+                                    uni:isPreferenceOf uni:'''+teacher+'''; 
                                     uni:writeMethodRoom "'''+writeMethodRoom+'''".                            
                 }
             }
@@ -245,6 +240,9 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
         sparql.setMethod('POST') 
         #print query
         q = sparql.query()
+
+
+
 
 print "ok inserimento"
 
