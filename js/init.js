@@ -111,7 +111,8 @@ function slideDownAndUp() {
         $('#cardBodyDisciplineDelete').slideToggle("slow");
     });
     // slideToggle Update Discipline
-    $('#headerDisciplineUpdate').click(function () {
+    $('#headerDisciplineUpdate').click(function () {        
+        $('#findDisciplineUpdate_chosen').css("width", "100%");
         $('#findDisciplineCourseUpdate_chosen').css("width", "100%");
         $('#findDisciplineYearUpdate_chosen').css("width", "100%");
         $('#findCurriculumUpdate_chosen').css("width", "100%");
