@@ -4,7 +4,7 @@
 // BOOST = Questo può aumentare le prestazioni fino al 25%; tuttavia, i punti di interruzione impostati nelle condizioni delle regole non funzioneranno più.
 //  Quindi, questo dovrebbe essere un passo finale nello sviluppo.
 // var reactor = new RuleReactor();
-var reactor = new RuleReactor({ Lesson: Lesson }, true);
+var reactor = new RuleReactor();
 
 function assert() { return reactor.assert.apply(reactor, arguments); }
 function not() { return reactor.not.apply(reactor, arguments); }
@@ -46,29 +46,23 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
  * *********************************************************************** 
  */
 
+
 /**
  * If lesson start after the 18:00 then swap to next Day
  */
 reactor.createRule("swapDay", -1, { l: Lesson },
     function (l) {
-        // printForDebug(l.getDiscipline() + " " + l.getStartLesson() + " " + l.startLesson) ;
         return l.getStartLesson() >= END_LESSONS;
-
     },
     function (l) {
-
-        var dL = l.getDurationLesson();
-        // qui setto alle 9 perchè tanto poi anche se si sovrappongono due materie che iniziano entrambe alle 9
-        // allora rientra in regola la prima rule: overlapTimeSlot
+        var dL = l.getDurationLesson();        
         l.setStartLesson(START_LESSONS);
-        l.setEndLesson(START_LESSONS + dL);
-
-        // se le precendenti righe fossero commentate si avrebbe una lezione il martedi e un altra 
-        // il mercoledi. Questo risulta ovvio in quanto l'ultimo giorno sarebbe letto due volte per via 
-        // della condizione l1.getStartLesson() > 18) che si ripete
+        l.setEndLesson(START_LESSONS + dL);        
         var actualDay = l.getDay();
         l.setNewDay(actualDay, 1);
     });
+
+
 
 
 /**
@@ -155,6 +149,8 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
         assert(timetable);
     });
 
+
+
 /**
  * RULE: check if:
  * - the discipline are different
@@ -166,11 +162,11 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
 reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
 
-        var hasSameCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
+        var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
             l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) && hasSameCurriculum;
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson());
 
     },
     function (l1, l2) {
@@ -184,11 +180,92 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
             var dL = l1.getDurationLesson();
             l1.setStartLesson(l2.getEndLesson());
             l1.setEndLesson(l1.getStartLesson() + dL);
+         
         }
-        
+
     });
 
+    
+    reactor.createRule("overlapTimeSlot2", -2, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var getCurriculumL1 = l1.getDiscipline().getCurriculum();
+        var getCurriculumL2 = l2.getDiscipline().getCurriculum();
+        return l1 != l2 &&
+            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getDay() == l2.getDay() &&
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
+            getCurriculumL1 != undefined && getCurriculumL2 == undefined ;
 
+    },
+    function (l1, l2) {
+
+        printForDebug("OVERLAPTIMESLOT2 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "black", "red");
+        if (l1.getStartLesson() < l2.getStartLesson()) {
+
+            var dL = l2.getDurationLesson();
+            l2.setStartLesson(l1.getEndLesson());
+            l2.setEndLesson(l2.getStartLesson() + dL);
+        }
+        else {
+            var dL = l1.getDurationLesson();
+            l1.setStartLesson(l2.getEndLesson());
+            l1.setEndLesson(l1.getStartLesson() + dL);
+        }
+
+    });
+
+   /**
+     * RULE: Overlap curriculum that has common curriculum
+     */
+    reactor.createRule("overlapTimeSlot3", -3, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
+        return l1 != l2 &&
+            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getDay() == l2.getDay() &&
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) && hasCommonCurriculum;
+
+    },
+    function (l1, l2) {
+
+        printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
+        if (l1.getStartLesson() < l2.getStartLesson()) {
+
+            var dL = l2.getDurationLesson();
+            l2.setStartLesson(l1.getEndLesson());
+            l2.setEndLesson(l2.getStartLesson() + dL);
+        }
+        else {
+            var dL = l1.getDurationLesson();
+            l1.setStartLesson(l2.getEndLesson());
+            l1.setEndLesson(l1.getStartLesson() + dL);
+        }
+        
+
+    });
+
+reactor.createRule("overlapTimeSlot4", -2, { l1: Lesson },
+    function (l1) {
+        var getCurriculumL1 = l1.getDiscipline().getCurriculum();
+        
+        var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
+        
+        return getCurriculumL1 == undefined && 
+            l1.getDiscipline().getObligatory()==false  &&
+            slotLesson1 >= END_LESSONS;
+
+    },
+    function (l1) {
+
+        printForDebug("OVERLAPTIMESLOT4 " + l1.getDiscipline().getName(), "red", "yellow");
+       
+        // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
+        var dL = l1.getDurationLesson();
+        l1.setStartLesson(START_LESSONS);
+        l1.setEndLesson(START_LESSONS + dL);
+        
+
+    }); 
 
 /**
  * Avoid that the same lesson is taught in the same day
@@ -204,7 +281,7 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
         printForDebug("NOSameLessonSameDay " + l1.toString() + " " + l2.toString(), "white", "pink");
         // var actualDayToAvoid = l2.getDay();
         // l1.setDay(generateDayByExcludingOne(actualDayToAvoid));
-        l2.setNewDay(l1.getDay(),1);
+        l2.setNewDay(l1.getDay(), 1);
         assert(timetable);
     });
 
@@ -229,7 +306,7 @@ reactor.createRule("avoidLessonDay", -1, { l: Lesson },
     },
     function (l) {
         printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDay(), "white", "blue");
-        
+
         var actualDayToAvoid = l.getDay();
         var dL = l.getDurationLesson();
         l.setStartLesson(START_LESSONS);
@@ -254,7 +331,7 @@ reactor.createRule("consecutiveLessonsStartWeek", -1, { l: Lesson },
 
         var dayNumber = defineDayNumber(l.getDay());
         return existConsecutiveDay && (periodOfWeek == "startweek") && dayNumber > middleday;
-        
+
     },
     function (l) {
         printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
@@ -295,7 +372,7 @@ reactor.createRule("consecutiveLessonsEndWeek", -1, { l: Lesson },
 reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
     function (l) {
         var setPreference;
-        
+
         if (l.getDiscipline().checkExistPreference("setperiodofday")) {
             setPreference = l.getDiscipline().getPeriodOfDay("AM");
         }
@@ -303,8 +380,8 @@ reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
     },
     function (l) {
         printForDebug("SETPERIODOFDAY_AM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "red");
-       
-        if (l.getStartLesson() >= 12) { 
+
+        if (l.getStartLesson() >= 12) {
             var actualDay = l.getDay();
             l.setNewDay(actualDay, 1);
         }
@@ -357,56 +434,32 @@ reactor.createRule("checkClassroomChalk", -1, { l: Lesson },
     });
 
 
-/**
- * RULE: check if there are overlapping at THE END OF RULE from two discipline of same course OBLIGATORY
- */
-reactor.createRule("avoidOverlapObbligatoryCourse", -3, { l1: Lesson, l2: Lesson },
-    function (l1, l2) {
-        return l1 != l2 &&
-            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-            l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
-            l1.getDiscipline().getObligatory() && l2.getDiscipline().getObligatory();        
 
-    },
-    function (l1, l2) {
 
-        printForDebug("OVERLAPPINGOBLIGATORYCOURSE " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "yellow", "red");
-        if (l1.getStartLesson() < l2.getStartLesson()) {
 
-            var dL = l2.getDurationLesson();
-            l2.setStartLesson(l1.getEndLesson());
-            l2.setEndLesson(l2.getStartLesson() + dL);
-        }
-        else {
-            var dL = l1.getDurationLesson();
-            l1.setStartLesson(l2.getEndLesson());
-            l1.setEndLesson(l1.getStartLesson() + dL);
-        }
-       
-        
-    });
+  
 
-/**
+    /**
  * Rule for the end lesson over 19 
  */
 
 reactor.createRule("maxLessonEnd", -2, { l: Lesson },
-    function (l) {
-        var slotLesson = l.getStartLesson() + l.getDurationLesson();
-        return slotLesson >= 20;
-    },
-    function (l) {
-        var dL = l.getDurationLesson();
-        printForDebug(l, "blue", "white");
-        l.getStartLesson()
-        l.setDay(generateDayByExcludingOne(l.getDay()));
-        l.setStartLesson(9);
-        l.setEndLesson(9 + dL);
-        //   printForDebug(l,"white","black");
-        assert(timetable);
-    });
+function (l) {
+    var slotLesson = l.getStartLesson() + l.getDurationLesson();
+    return slotLesson >= END_LESSONS;
+},
+function (l) {
+    var dL = l.getDurationLesson();
+    printForDebug(l, "blue", "white");
+    // l.getStartLesson()
+    l.setDay(generateDayByExcludingOne(l.getDay()));
+    l.setStartLesson(START_LESSONS);
+    l.setEndLesson(START_LESSONS + dL);
+    //   printForDebug(l,"white","black");
 
+    
+    assert(timetable);
+});
 
 
 /**
@@ -418,19 +471,23 @@ reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
         if (l1 != l2 &&
             l1.getDay() == l2.getDay() &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-            l1.getEndLesson() == l2.getStartLesson()) {
+            l1.getEndLesson() == l2.getStartLesson() &&
+            l1.getDiscipline().getCurriculum() == undefined && l2.getDiscipline().getCurriculum() == undefined) {
             count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
         }
-        return count > 6;
+        return count > 5;
 
     },
-    function (l2) {
+    function (l1, l2) {
+        // console.log("COMMON " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName());
         var dL = l2.getDurationLesson();
         var newStart = l2.getStartLesson() + 1;
         l2.setStartLesson(newStart);
         l2.setEndLesson(newStart + dL);
         assert(timetable);
     });
+
+
 
 
 /**
@@ -445,9 +502,9 @@ reactor.createRule("stop", -100, {},
             function (timetable) { return timetable.tt == null; }));
     },
     function () {
-            reactor.stop();
-            //console.log(queryDisciplineProfessor("77803"));
-           
+        reactor.stop();
+       
+
     });
 
 
@@ -472,82 +529,82 @@ reactor.createRule("stop", -100, {},
  ******************************************************************
  */
 var timetable = new TimetableArray();
-$( document ).ajaxComplete(function() {
-   
+$(document).ajaxComplete(function () {
 
 
-for (var i = 0; i < subject.length; i++) {
-    
-    var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
-    // var randomDay = days[Math.floor(Math.random() * days.length)];
-    var subjectWeeksHours=subject[i].getWeeksHours();
-    // var subjectWeeksHours = DURATION_LESSON;
-    if (subjectWeeksHours < 4) {
-        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-    }
-    if (subjectWeeksHours == 4) {
-        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-    }
-    if (subjectWeeksHours == 5) {
-        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
-        timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-    }
-    if (subjectWeeksHours == 6) {
 
-        if (subject[i].getSplitDuration(2)) {
+    for (var i = 0; i < subject.length; i++) {
 
+        var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
+        // var randomDay = days[Math.floor(Math.random() * days.length)];
+        var subjectWeeksHours = subject[i].getWeeksHours();
+        // var subjectWeeksHours = DURATION_LESSON;
+        if (subjectWeeksHours < 4) {
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+        }
+        if (subjectWeeksHours == 4) {
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
         }
-        else if (subject[i].getSplitDuration(3)) {
-
+        if (subjectWeeksHours == 5) {
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
-            timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
-        }
-        else {
             timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-            timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
+        }
+        if (subjectWeeksHours == 6) {
+
+            if (subject[i].getSplitDuration(2)) {
+
+                timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+                timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+                timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+            }
+            else if (subject[i].getSplitDuration(3)) {
+
+                timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+                timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+            }
+            else {
+                timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+                timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
+            }
+
         }
 
     }
 
-}
+    // var ciao = getProfessorById("000001");
+    // console.log(ciao);
 
-// var ciao = getProfessorById("000001");
-// console.log(ciao);
+    // var o = JSON.stringify({ timetable }, null, " ");
+    // console.log(o);
 
-// var o = JSON.stringify({ timetable }, null, " ");
-// console.log(o);
-
-assert(timetable);
-reactor.run(Infinity, true, function () {
+    assert(timetable);
+    reactor.run(Infinity, true, function () {
 
 
-    // for (var i=0;i<courses.length;i++){
-    // printForDebug(minCountHours(courses[i].getId()),"red","white")
-    // }
-    printForDebug("END");
-    // var output = JSON.stringify({ timetable }, null, " ");
-    // console.log(output);
+        // for (var i=0;i<courses.length;i++){
+        // printForDebug(minCountHours(courses[i].getId()),"red","white")
+        // }
+        printForDebug("END");
+        // var output = JSON.stringify({ timetable }, null, " ");
+        // console.log(output);
 
-    for (var i = 0; i < timetable.tt.length; i++) {
-        var numDay = defineDayNumber(timetable.tt[i].getDay());
-        var newEvent = {
-            start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
-            end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
-            title: timetable.tt[i].getDiscipline().getName() + ' - ' + timetable.tt[i].getClassroom().getName(),
-            content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
-                "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
-                "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
-            category: timetable.tt[i].getDiscipline().getCourse()
+        for (var i = 0; i < timetable.tt.length; i++) {
+            var numDay = defineDayNumber(timetable.tt[i].getDay());
+            var newEvent = {
+                start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
+                end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
+                title: timetable.tt[i].getDiscipline().getName() + ' - ' + timetable.tt[i].getClassroom().getName(),
+                content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
+                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
+                    "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
+                category: timetable.tt[i].getDiscipline().getCourse()
+            }
+            events.push(newEvent);
         }
-        events.push(newEvent);
-    }
-    calendar.init();
+        calendar.init();
+    });
 });
-  });
 
 
 
