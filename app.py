@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from flask import Flask, render_template, redirect, send_from_directory, request
-from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, cancelDiscipline, cancelClassRoom, getAllProfessors, modifyProfessor, modifyDiscipline, modifyClassRoom
+from py.query import insertProfessor, insertDiscipline, insertClassRoom, cancelProfessor, cancelDiscipline, cancelClassRoom, getAllProfessors, modifyProfessor, modifyDiscipline, modifyClassRoom, insertPreference, modifyPreference, cancelPreference
 import os
 
 template_dir = os.path.abspath('./')
@@ -13,7 +13,7 @@ app = Flask(__name__, template_folder=template_dir)
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("indexVincoli.html")
 
 @app.route('/test')
 def test():
@@ -36,11 +36,6 @@ def send_lib(path):
 @app.route('/js/<path:path>')
 def send_js(path):
     return send_from_directory('js', path)
-
-# I indicate where load the static file (js) instead static directory
-@app.route('/node_modules/<path:path>')
-def send_node(path):
-    return send_from_directory('node_modules', path)
 
 # I indicate where load the static file (css) instead static directory
 @app.route('/css/<path:path>')
@@ -170,7 +165,7 @@ def addClassRoom():
 
     insertClassRoom(id_room,className, address, capacity, wifi, wired)
 
-    return redirect("/updateProfessor", code=302)
+    return redirect("/", code=302)
 
 # =====================================
 # Delete ClassRoom
@@ -195,6 +190,101 @@ def updateClassRoom():
     address_room = request.form['addressUpdate'].strip()
 
     modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, address_room)
+    return redirect("/", code=302)
+
+# =====================================
+# Update ClassRoom
+# =====================================
+@app.route('/updateClassRoom', methods = ['POST', 'GET'])
+def updateClassRoom():
+
+    id_room = request.form['id_roomUpdate'].strip()
+    name_room = request.form['classNameUpdate'].strip()
+    capacity_room = request.form['capacityUpdate'].strip()
+    wired_room = request.form['wiredUpdate'].strip()
+    wifi_room = request.form['wifiUpdate'].strip()
+    address_room = request.form['addressUpdate'].strip()
+
+    modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, address_room)
+    return redirect("/", code=302)
+
+
+# =====================================
+# Create RDF Discipline Query
+# =====================================
+@app.route('/addPreference', methods = ['POST', 'GET'])
+def addPreference():
+    prof = request.form['selectProfessor']
+    
+    if "Discipline6H" in request.form:
+        Discipline6H = request.form["Discipline6H"]
+    else:
+        Discipline6H = ""
+  
+    if "ConsecutiveDays" in request.form:
+        ConsecutiveDays = request.form["ConsecutiveDays"]     
+    else:
+        ConsecutiveDays = ""
+    
+    if "NoLessonAMPM" in request.form:
+        NoLessonAMPM = request.form["NoLessonAMPM"]
+    else:
+        NoLessonAMPM = ""
+
+    if "writeMethodRoom" in request.form:
+        writeMethodRoom = request.form["writeMethodRoom"]
+    else:
+        writeMethodRoom = ""
+
+    selectDay1 = request.form['selectDay1']
+    selectDay2 = request.form['selectDay2']
+
+    insertPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2, NoLessonAMPM, writeMethodRoom)
+
+    return redirect("/", code=302)
+
+
+# =====================================
+# Create RDF Preference Query
+# =====================================
+@app.route('/updatePreference', methods = ['POST', 'GET'])
+def updatePreference():
+    prof = request.form['selectProfessor']
+    
+    if "Discipline6H" in request.form:
+        Discipline6H = request.form["Discipline6H"]
+    else:
+        Discipline6H = ""
+  
+    if "ConsecutiveDays" in request.form:
+        ConsecutiveDays = request.form["ConsecutiveDays"]     
+    else:
+        ConsecutiveDays = ""
+    
+    if "NoLessonAMPM" in request.form:
+        NoLessonAMPM = request.form["NoLessonAMPM"]
+    else:
+        NoLessonAMPM = ""
+
+    if "writeMethodRoom" in request.form:
+        writeMethodRoom = request.form["writeMethodRoom"]
+    else:
+        writeMethodRoom = ""
+
+    selectDay1 = request.form['selectDay1']
+    selectDay2 = request.form['selectDay2']
+
+    modifyPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2, NoLessonAMPM, writeMethodRoom)
+
+    return redirect("/", code=302)
+
+# =====================================
+# Delete Preference
+# =====================================
+@app.route('/deletePreference', methods = ['POST', 'GET'])
+def deletePreference():
+    prof = request.form['selectProfessor']
+    cancelPreference(prof)
     return redirect("/", code=302)
 
 

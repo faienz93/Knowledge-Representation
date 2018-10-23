@@ -17,6 +17,9 @@
 # - Search ClassRoom
 # - Modify ClassRoom
 
+# - Insert/Update Preference
+# - Delete Preference
+
 
 from SPARQLWrapper import SPARQLWrapper
 import rdflib
@@ -255,6 +258,117 @@ def cancelDiscipline(id_discipline):
     print query
     sparql.query()
 
+# ======================================================================
+# Search Discipline
+# @param
+#   - id_discipline
+# ======================================================================
+def searchDiscipline(id_discipline):   
+    query = '''
+                PREFIX uni: <http://www.rdfproject.com/>
+                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+
+                    SELECT ?idDiscipline ?disciplineAbbreviation ?disciplinename ?semester ?obligatory ?totalhours ?weekhours ?cfu ?year ?isTaughtBy ?hasCourseof
+                    FROM <http://www.rdcproject.com/graph/disciplines>
+                    WHERE
+                    { ?x  a uni:Discipline;
+                            uni:idDiscipline ?"'''+ id_discipline +'''";
+                            uni:idDiscipline ?idDiscipline;
+                            uni:disciplineAbbreviation ?disciplineAbbreviation; 
+                            uni:disciplinename ?disciplinename;
+                            uni:semester ?semester;
+                            uni:obligatory ?obligatory;
+                            uni:totalhours ?totalhours;
+                            uni:weekhours ?weekhours;
+                            uni:cfu ?cfu;
+                            uni:year ?year;
+                            uni:isTaughtBy ?isTaughtBy;
+                            uni:hasCourseof ?hasCourseof;
+                        }
+                    ORDER BY ?idDiscipline
+                '''
+
+    sparqlQuery.setQuery(query)
+    sparqlQuery.setMethod('POST') 
+    print query
+    return sparqlQuery.query().convert()
+
+# ======================================================================
+# Modify ClassRoom
+# @param
+#   - id_discipline
+#   - discipline_name
+#   - semester
+#   - obligatory
+#   - totalHours
+#   - weeksHours
+#   - cfu
+#   - year
+#   - course
+#   - teacher
+# ======================================================================
+def modifyDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, course, teacher):   
+    isTaughtBy = ""
+    for t in teacher:          
+        isTaughtBy += "uni:isTaughtBy uni:" + t + ";"
+
+    query = '''
+            PREFIX uni: <http://www.rdfproject.com/>
+            PREFIX un: <http://www.w3.org/2007/ont/unit#>
+            WITH <http://www.rdcproject.com/graph/disciplines>
+            DELETE { 
+            ?x a uni:Discipline;
+                uni:idDiscipline ?oldidDiscipline;
+                uni:disciplineAbbreviation ?olddisciplineAbb;
+                uni:disciplinename ?olddisciplinename;
+                uni:semester ?oldsemester
+                uni:obligatory ?oldobligatory;
+                uni:totalhours ?oldtotalhours;
+                uni:weekhours ?oldweekhours;
+                uni:cfu ?oldcfu;
+                uni:year ?oldwyear;
+                uni:isTaughtBy ?oldisTaughtBy;
+                uni:hasCourseof ?oldhasCourseof;
+            }
+            INSERT {  
+            ?x a uni:Discipline;
+                uni:idDiscipline "'''+id_discipline+'''";
+                uni:disciplineAbbreviation "'''+discipline_abb+'''"; 
+                uni:disciplinename "'''+discipline_name+'''";
+                uni:semester "'''+semester+'''";
+                uni:obligatory "'''+obligatory+'''";
+                uni:totalhours "'''+totalHours+'''";
+                uni:weekhours "'''+weeksHours+'''";
+                uni:cfu "'''+cfu+'''";
+                uni:year "'''+year+'''";
+                '''+isTaughtBy+''';
+                uni:hasCourseof "'''+course+'''";
+            }
+            WHERE { 
+            ?x a uni:Discipline;
+                uni:idDiscipline "'''+id_discipline+'''";
+                OPTIONAL {
+                    ?x a uni:Discipline;
+                        uni:idDiscipline ?oldidDiscipline;
+                        uni:disciplineAbbreviation ?olddisciplineAbb;
+                        uni:disciplinename ?olddisciplinename;
+                        uni:semester ?oldsemester
+                        uni:obligatory ?oldobligatory;
+                        uni:totalhours ?oldtotalhours;
+                        uni:weekhours ?oldweekhours;
+                        uni:cfu ?oldcfu;
+                        uni:year ?oldwyear;
+                        uni:isTaughtBy ?oldisTaughtBy;
+                        uni:hasCourseof ?oldhasCourseof;
+                }
+            }
+            '''
+
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    sparql.query()
+
 
 
 # ======================================================================
@@ -448,5 +562,177 @@ def modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, ad
     sparql.setQuery(query)
     sparql.setMethod('POST') 
     print query
+    return sparqlQuery.query().convert()
+
+# ======================================================================
+# Modify ClassRoom
+# @param
+#   - id_room, 
+#   - name_room, 
+#   - capacity_room, 
+#   - wired_room,
+#   - wifi_room,
+#   - address_room
+# ======================================================================
+def modifyClassRoom(id_room, name_room, capacity_room, wired_room, wifi_room, address_room):   
+    query = '''
+            PREFIX uni: <http://www.rdfproject.com/>
+            PREFIX un: <http://www.w3.org/2007/ont/unit#>
+            WITH <http://www.rdcproject.com/graph/classrooms>
+            DELETE { 
+            ?x a uni:Classroom;
+                uni:idRoom ?oldidRoom;
+                uni:classroomname ?oldclassroomname;
+                uni:address ?oldaddress;
+                uni:capacity ?oldcapacity;
+                uni:wifi ?oldwifi;
+                uni:wired ?oldwired;
+            }
+            INSERT {  
+            ?x a uni:Classroom;
+                uni:idRoom "'''+id_room+'''";
+                uni:classroomname "'''+name_room+'''";
+                uni:address "'''+address_room+'''";
+                uni:capacity "'''+capacity_room+'''";
+                uni:wifi "'''+wifi_room+'''";
+                uni:wired "'''+wired_room+'''";
+            }
+            WHERE { 
+            ?x a uni:Classroom;
+                uni:idRoom "'''+id_room+'''";
+                OPTIONAL {
+                    ?x a uni:Classroom;
+                        uni:idRoom ?oldidRoom;
+                        uni:classroomname ?oldclassroomname;
+                        uni:address ?oldaddress;
+                        uni:capacity ?oldcapacity;
+                        uni:wifi ?oldwifi;
+                        uni:wired ?oldwired;
+                }
+            }
+            '''
+
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
     sparql.query()
+
+
+
+# ======================================================================
+# Insert Preference
+# ======================================================================
+def insertPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2, NoLessonAMPM,writeMethodRoom):
+    graph_preferences = "http://www.rdcproject.com/graph/preferences"
+    # Create a new Query
+    query = '''
+        PREFIX uni: <http://www.rdfproject.com/>
+        PREFIX un: <http://www.w3.org/2007/ont/unit#>
+        INSERT DATA
+        { 
+        GRAPH <'''+graph_preferences+'''>{
+        uni:'''+ prof +''' a uni:Preference;
+                                uni:sixHourSplit "'''+Discipline6H+'''"; 
+                                uni:consecutiveDays "'''+ConsecutiveDays+'''"; 
+                                uni:noLessonDay1 "'''+selectDay1+'''"; 
+                                uni:noLessonDay2 "'''+selectDay2+'''"; 
+                                uni:noLessonAMPM "'''+NoLessonAMPM+'''"; 
+                                uni:isPreferenceOf "'''+prof+'''"; 
+                                uni:writeMethodRoom "'''+writeMethodRoom+'''".                            
+            }
+        }
+        '''
+    # Run the query and print the result
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    sparql.query()
+
+
+# ======================================================================
+# Update Preference
+# ======================================================================
+def modifyPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2, NoLessonAMPM,writeMethodRoom): 
+    isPreferenceOf = "uni:isPreferenceOf uni:" + prof + ";"
+
+    query = '''
+            PREFIX uni: <http://www.rdfproject.com/>
+            PREFIX un: <http://www.w3.org/2007/ont/unit#>
+            WITH <http://www.rdcproject.com/graph/preferences>
+            DELETE { 
+            ?x a uni:Preference;
+                    uni:isPreferenceOf ?oldisPreferenceOf;
+                    uni:sixHourSplit ?oldsixHourSplit;
+                    uni:consecutiveDays ?oldconsecutiveDays;
+                    uni:noLessonDay1 ?oldnoLessonDay1;
+                    uni:noLessonDay2 ?oldnoLessonDay2;
+                    uni:noLessonAMPM ?oldnoLessonAMPM;
+                    uni:writeMethodRoom ?oldwriteMethodRoom;
+            }
+            INSERT {  
+            ?x a uni:Preference;
+                    uni:sixHourSplit "'''+Discipline6H+'''"; 
+                    uni:consecutiveDays "'''+ConsecutiveDays+'''"; 
+                    uni:noLessonDay1 "'''+selectDay1+'''"; 
+                    uni:noLessonDay2 "'''+selectDay2+'''"; 
+                    uni:noLessonAMPM "'''+NoLessonAMPM+'''"; 
+                    '''+isPreferenceOf+'''
+                    uni:writeMethodRoom "'''+writeMethodRoom+'''";
+            }
+            WHERE { 
+            ?x a uni:Preference;
+                uni:isPreferenceOf ? uni:''' + prof + ''';
+                OPTIONAL {
+                    ?x a uni:Preference;
+                        uni:isPreferenceOf ?oldisPreferenceOf;
+                        uni:sixHourSplit ?oldsixHourSplit;
+                        uni:consecutiveDays ?oldconsecutiveDays;
+                        uni:noLessonDay1 ?oldnoLessonDay1;
+                        uni:noLessonDay2 ?oldnoLessonDay2;
+                        uni:noLessonAMPM ?oldnoLessonAMPM;
+                        uni:writeMethodRoom ?oldwriteMethodRoom;
+                }
+            }
+            '''
+
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    sparql.query()
+
+# ======================================================================
+# Delete Preference
+# ======================================================================
+def cancelPreference(prof):  
+    query = '''
+                PREFIX uni: <http://www.rdfproject.com/>
+                PREFIX un: <http://www.w3.org/2007/ont/unit#>
+                DELETE WHERE { 
+                GRAPH <http://www.rdcproject.com/graph/preferences> {
+                        ?object uni:isPreferenceOf "'''+prof+'''";
+                         ?property  ?value 
+                }
+                }
+                '''
+
+    sparql.setQuery(query)
+    sparql.setMethod('POST') 
+    print query
+    sparql.query()
+
+    # query = '''
+    #             PREFIX uni: <http://www.rdfproject.com/>
+    #             PREFIX un: <http://www.w3.org/2007/ont/unit#>
+    #             DELETE WHERE { 
+    #             GRAPH <http://www.rdcproject.com/graph/preferences> {
+    #                     ?object uni:isPreferenceOf ? "'''+prof+'''";
+    #                      ?property  ?value 
+    #             }
+    #             }
+    #             '''
+
+    # sparql.setQuery(query)
+    # sparql.setMethod('POST') 
+    # print query
+    # sparql.query()
 
