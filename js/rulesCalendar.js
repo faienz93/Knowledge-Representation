@@ -1,6 +1,6 @@
 
 // var reactor = new RuleReactor();
-var reactor = new RuleReactor({Lesson:Lesson},true);
+var reactor = new RuleReactor({TimetableArray:TimetableArray, Lesson:Lesson},true);
 
 function assert() { return reactor.assert.apply(reactor, arguments); }
 function not() { return reactor.not.apply(reactor, arguments); }
@@ -8,7 +8,7 @@ function exists() { return reactor.exists.apply(reactor, arguments); }
 function forAll() { return reactor.forAll.apply(reactor, arguments); }
 
 // https://github.com/anywhichway/rule-reactor#debugging-and-testing
-reactor.trace(0);
+reactor.trace(1);
 
 
 /**
@@ -69,7 +69,7 @@ reactor.createRule("assignClassroom", -1, { l: Lesson },
         return l.getDiscipline().getNumStudent() > l.getClassroom().getCapacity();
     },
     function (l) {
-        printForDebug("ASSIGNCLASSROOM " + l.getDiscipline().getName() + " " + l.getDiscipline().getNumStudent() + " -- " + l.getClassroom().toString());
+        // printForDebug("ASSIGNCLASSROOM " + l.getDiscipline().getName() + " " + l.getDiscipline().getNumStudent() + " -- " + l.getClassroom().toString());
         var compatibilityClassroom = checkCapacityClassroom(l.getDiscipline().getNumStudent());
         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
         l.setClassroom(newClassRoom);
@@ -95,7 +95,7 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
 
-        printForDebug("CLASSROOMOCCUPIED " + l1.toString() + " " + l2.toString(), "white", "black");
+        // printForDebug("CLASSROOMOCCUPIED " + l1.toString() + " " + l2.toString(), "white", "black");
 
         var dL = l2.getDurationLesson();
         l2.setStartLesson(l1.getEndLesson());
@@ -130,7 +130,7 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
 
     },
     function (l1, l2) {
-        printForDebug("UBIQUITY: " + l1.toString() + " ** " + l2.toString(), "red", "white");
+        // printForDebug("UBIQUITY: " + l1.toString() + " ** " + l2.toString(), "red", "white");
         if (l1.getStartLesson() < l2.getStartLesson()) {
 
             var dL = l2.getDurationLesson();
@@ -193,7 +193,7 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
 
-        printForDebug("OVERLAPTIMESLOT2 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "black", "red");
+        // printForDebug("OVERLAPTIMESLOT2 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "black", "red");
         if (l1.getStartLesson() < l2.getStartLesson()) {
 
             var dL = l2.getDurationLesson();
@@ -222,7 +222,7 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
 
-        printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
+        // printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
         if (l1.getStartLesson() < l2.getStartLesson()) {
 
             var dL = l2.getDurationLesson();
@@ -253,7 +253,7 @@ reactor.createRule("refactorLesson", -2, { l1: Lesson },
     },
     function (l1) {
 
-        printForDebug("refactorLesson " + l1.getDiscipline().getName(), "red", "yellow");
+        // printForDebug("refactorLesson " + l1.getDiscipline().getName(), "red", "yellow");
        
         // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
         var dL = l1.getDurationLesson();
@@ -274,7 +274,7 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
 
-        printForDebug("NOSameLessonSameDay " + l1.toString() + " " + l2.toString(), "white", "pink");
+        // printForDebug("NOSameLessonSameDay " + l1.toString() + " " + l2.toString(), "white", "pink");
         // var actualDayToAvoid = l2.getDay();
         // l1.setDay(generateDayByExcludingOne(actualDayToAvoid));
         l2.setNewDay(l1.getDay(), 1);
@@ -301,7 +301,7 @@ reactor.createRule("avoidLessonDay", -1, { l: Lesson },
 
     },
     function (l) {
-        printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDay(), "white", "blue");
+        // printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDay(), "white", "blue");
 
         var actualDayToAvoid = l.getDay();
         var dL = l.getDurationLesson();
@@ -330,7 +330,7 @@ reactor.createRule("consecutiveLessonsStartWeek", -1, { l: Lesson },
 
     },
     function (l) {
-        printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
+        // printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
         l.setDay("Monday");
         assert(timetable);
     });
@@ -353,7 +353,7 @@ reactor.createRule("consecutiveLessonsEndWeek", -1, { l: Lesson },
 
     },
     function (l) {
-        printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
+        // printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
         if (l.getDurationLesson() == 2 && l.getDiscipline().getWeeksHours() == 6) { l.setDay("Wednesday"); }
         else { l.setDay("Thursday"); }
         // l1.setDay("Thursday");
@@ -375,7 +375,7 @@ reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
         return setPreference == "AM" && l.getStartLesson() > 12;
     },
     function (l) {
-        printForDebug("SETPERIODOFDAY_AM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "red");
+        // printForDebug("SETPERIODOFDAY_AM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "red");
 
         if (l.getStartLesson() >= 12) {
             var actualDay = l.getDay();
@@ -400,7 +400,7 @@ reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
         return setPreference == "PM" && l.getStartLesson() < 13;
     },
     function (l) {
-        printForDebug("SETPERIODOFDAY_PM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "green");
+        // printForDebug("SETPERIODOFDAY_PM " + l.getDiscipline().getName() + " " + l.getDiscipline().getProfessor()[0].toString(), "white", "green");
         var dL = l.getDurationLesson();
         l.setStartLesson(13);
         l.setEndLesson(13 + dL);
@@ -446,7 +446,7 @@ function (l) {
 },
 function (l) {
     var dL = l.getDurationLesson();
-    printForDebug(l, "blue", "white");
+    // printForDebug(l, "blue", "white");
     // l.getStartLesson()
     l.setDay(generateDayByExcludingOne(l.getDay()));
     l.setStartLesson(START_LESSONS);

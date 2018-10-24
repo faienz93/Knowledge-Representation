@@ -57,7 +57,7 @@ $(document).ready(function () {
     },
     events: events,
     daynotes: daynotes
-  });
+  }).init();
 
   
   /**

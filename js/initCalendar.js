@@ -3,7 +3,11 @@ $(document).ready(function () {
     queryClassrooms(classrooms, (value) => classrooms = value);
     queryProfessors(professors, (value) => professors = value);
     queryCourses(courses, (value) => courses = value);
-    queryDiscipline(returnDiscipline);
+    
+    queryDisciplineAsync().then(function(matters){
+        setDiscipline(matters);
+    });
+    
 
     
 
@@ -14,7 +18,41 @@ $(document).ready(function () {
     });
 });
 
-function returnDiscipline(disc) {
+function queryDisciplineAsync(){
+    return queryDiscipline();
+}
+
+
+function startGenerationCalendar() {
+
+    
+
+    assert(timetable);
+    reactor.run(Infinity, true, function () {
+        console.log("END");
+        // var output = JSON.stringify({ timetable }, null, " ");
+        // console.log(output);
+
+        for (var i = 0; i < timetable.tt.length; i++) {
+            var numDay = defineDayNumber(timetable.tt[i].getDay());
+            var newEvent = {
+                start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
+                end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
+                title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
+                content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
+                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
+                    "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
+                category: timetable.tt[i].getDiscipline().getCourse()
+            }
+            events.push(newEvent);
+        }
+        calendar.init();
+    });    
+
+}
+
+
+function setDiscipline(disc) {
     for (var i = 0; i < disc.length; i++) {
         var prof = disc[i].getProfessor();
         // Set Professors
@@ -39,7 +77,7 @@ function returnDiscipline(disc) {
         subject[i].splitDurationLessons6h(3);
     }
 
-    console.log(subject);
+    // console.log(subject);
 
     for (var i = 0; i < subject.length; i++) {
 
@@ -78,48 +116,5 @@ function returnDiscipline(disc) {
 
         }
 
-    }
+    }   
 }
-
-function startGenerationCalendar() {
-
-    
-    
-
-    // var ciao = getProfessorById("000001");
-    // console.log(ciao);
-
-    // var o = JSON.stringify({ timetable }, null, " ");
-    // console.log(o);
-
-    assert(timetable);
-    reactor.run(Infinity, true, function () {
-
-
-        // for (var i=0;i<courses.length;i++){
-        // printForDebug(minCountHours(courses[i].getId()),"red","white")
-        // }
-        printForDebug("END");
-        // var output = JSON.stringify({ timetable }, null, " ");
-        // console.log(output);
-
-        for (var i = 0; i < timetable.tt.length; i++) {
-            var numDay = defineDayNumber(timetable.tt[i].getDay());
-            var newEvent = {
-                start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
-                end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
-                title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
-                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
-                    "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
-                category: timetable.tt[i].getDiscipline().getCourse()
-            }
-            events.push(newEvent);
-        }
-        calendar.init();
-    });
-    
-
-}
-
-

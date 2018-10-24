@@ -167,7 +167,7 @@ function queryCourses(returnValue, callback) {
  * REF: https://stackoverflow.com/a/18214142/4700162
  * @method queryDiscipline
  ************************************/
-function queryDiscipline(callback) {
+function queryDiscipline() {
     
     var endpointURL = "http://localhost:3030/ds/query";
 
@@ -216,44 +216,48 @@ function queryDiscipline(callback) {
 
     var encodedquery = encodeURIComponent(myquery);
 
-
-    $.ajax({
-        dataType: "jsonp",
-        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
-        success: function (results) {
-            $.each(results, function (index, element) {
-                var result = [];
-                var bindings = element.bindings;                
-                
-                for (i in bindings) {
-                          var d = new Discipline(
-                          bindings[i].idDiscipline.value,
-                          bindings[i].sigleDiscipline.value,
-                          bindings[i].disciplineName.value,
-                          bindings[i].semester.value,
-                          bindings[i].obligatory.value, 
-                          splitCurriculum(bindings[i].curriculum.value), 
-                          bindings[i].totalhours.value, 
-                          bindings[i].weekhours.value, 
-                          bindings[i].cfu.value, 
-                          bindings[i].year.value, 
-                          bindings[i].numStudents.value
-                          );
-                    d.setCourse(bindings[i].idCourse.value);
-                    var idProfs = bindings[i].professors.value.split(",");
-                    for(var p = 0; p < idProfs.length;p++){
-                        d.setProfessor(idProfs[p]);
-                    }                    
-                    result.push(d);
-                }
-
-                callback(result);
-
-            });
-
-        }
-
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            dataType: "jsonp",
+            url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+            success: function (results) {
+                $.each(results, function (index, element) {
+                    
+                    var result = [];
+                    var bindings = element.bindings;                
+                    
+                    for (i in bindings) {
+                              var d = new Discipline(
+                              bindings[i].idDiscipline.value,
+                              bindings[i].sigleDiscipline.value,
+                              bindings[i].disciplineName.value,
+                              bindings[i].semester.value,
+                              bindings[i].obligatory.value, 
+                              splitCurriculum(bindings[i].curriculum.value), 
+                              bindings[i].totalhours.value, 
+                              bindings[i].weekhours.value, 
+                              bindings[i].cfu.value, 
+                              bindings[i].year.value, 
+                              bindings[i].numStudents.value
+                              );
+                        d.setCourse(bindings[i].idCourse.value);
+                        var idProfs = bindings[i].professors.value.split(",");
+                        for(var p = 0; p < idProfs.length;p++){
+                            d.setProfessor(idProfs[p]);
+                        }                    
+                        result.push(d);
+                    }   
+                    if(result.length > 0){
+                        resolve(result);
+                    }
+                        
+                });    
+            }
+    
+        });
     });
+
+    
    
 }
 
