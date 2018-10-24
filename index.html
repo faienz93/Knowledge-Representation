@@ -68,14 +68,30 @@
     <!-- DROPDOWN FOR CHOICE TIMETABLE -->
     <div class="dropdownChoiceDiscipline">
         <select id="courseDisciplineDropDown">
-            <option value="A">ALL</option>
+            <option value="ALL">ALL</option>
             <option value="Informatica Triennale">Informatica Triennale</option>
             <option value="Informatica per il Management">Informatica Per il Management</option>
             <option value="Informatica Magistrale">Informatica Magistrale</option>
         </select>
         <select id="yearDisciplineDropDown">
-            <option value="1">Primo Anno</option>
-            <option value="2">Secondo Anno</option>
+                <option value="1">Primo Anno</option>
+                <option value="2">Secondo Anno</option>
+            <script>
+                // console.log($("#courseDisciplineDropDown").val());
+                $( "#courseDisciplineDropDown" ).change(function() {
+                    // console.log($(this).val());
+                    var v = $(this).val()
+                    if(v == "Informatica Triennale" || v == "Informatica per il Management"){
+                        $("option[value='3']").remove();
+                        $('#yearDisciplineDropDown').append(
+                                $('<option></option>').val("3").html("Terzo Anno")
+                            );
+                    }else {
+                        $("option[value='3']").remove();
+                    }
+                });
+            </script>
+            
         </select>
         <select id="semesterDisciplineDropDown">
             <option value="1">Primo Semestre</option>

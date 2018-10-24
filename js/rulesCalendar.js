@@ -238,30 +238,30 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
 
     });
 
-reactor.createRule("refactorLesson", -2, { l1: Lesson },
-    function (l1) {
-        // var getCurriculumL1 = l1.getDiscipline().getCurriculum();
+// reactor.createRule("refactorLesson", -2, { l1: Lesson },
+//     function (l1) {
+//         // var getCurriculumL1 = l1.getDiscipline().getCurriculum();
         
-        // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
+//         // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
         
-        // return getCurriculumL1 == undefined && 
-        //     l1.getDiscipline().getObligatory()==false  &&
-        //     slotLesson1 >= END_LESSONS;
-        var res = countHours(l1.getDiscipline().getCourse().getId(), l1.getDay())
-        return res >= 10 && l1.getEndLesson() > END_LESSONS;
+//         // return getCurriculumL1 == undefined && 
+//         //     l1.getDiscipline().getObligatory()==false  &&
+//         //     slotLesson1 >= END_LESSONS;
+//         var res = countHours(l1.getDiscipline().getCourse().getId(), l1.getDay())
+//         return res >= 10 && l1.getEndLesson() > END_LESSONS;
 
-    },
-    function (l1) {
+//     },
+//     function (l1) {
 
-        // printForDebug("refactorLesson " + l1.getDiscipline().getName(), "red", "yellow");
+//         // printForDebug("refactorLesson " + l1.getDiscipline().getName(), "red", "yellow");
        
-        // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
-        var dL = l1.getDurationLesson();
-        l1.setStartLesson(START_LESSONS);
-        l1.setEndLesson(START_LESSONS + dL);
+//         // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
+//         var dL = l1.getDurationLesson();
+//         l1.setStartLesson(START_LESSONS);
+//         l1.setEndLesson(START_LESSONS + dL);
         
 
-    }); 
+//     }); 
 
 /**
  * Avoid that the same lesson is taught in the same day
