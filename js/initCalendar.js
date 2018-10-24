@@ -25,8 +25,6 @@ function queryDisciplineAsync(){
 
 function startGenerationCalendar() {
 
-    
-
     assert(timetable);
     reactor.run(Infinity, true, function () {
         console.log("END");
@@ -39,9 +37,10 @@ function startGenerationCalendar() {
                 start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
                 end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
-                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
-                    "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
+                content: "<strong>CORSO:</strong>: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + "<br>" +
+                    "<strong>MATERIA:</strong> " + timetable.tt[i].getDiscipline().getName() + "<br>" +
+                    "<strong>PROFESSORE:</strong> " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br>" + "<br>" +
+                    "<strong>AULA:</strong>" + timetable.tt[i].getClassroom(),
                 category: timetable.tt[i].getDiscipline().getCourse()
             }
             events.push(newEvent);

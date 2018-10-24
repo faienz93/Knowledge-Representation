@@ -103,6 +103,26 @@
   background: #00137e;
 }
 
-.calendarDiv {
-  margin-top: 200px;
+
+/* Define Drop down css */
+.dropdownChoiceDiscipline{
+  width: 100%;
+  margin:auto;  
+  display:inline-block;
+  text-align: center;
+  margin-top: 10px;
+} 
+
+/* Custom every drop down */
+.dropdownChoiceDiscipline > select {
+  height: calc(2.25rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 15px;
+  line-height: 1.5;  
+  background-color: #4c2b4f;
+  background-clip: padding-box;
+  border: 1px solid #4e555b;
+  border-radius: .25rem;
+  color: #fff;
+  background-color: #545b62;    
 }

@@ -43,7 +43,7 @@
     <script src="js/query.js" type="text/javascript"></script>
     <script src="js/calendar.js" type="text/javascript"></script>
     <script src="js/initCalendar.js" type="text/javascript"></script>
-    
+
     <!-- CSS  -->
     <link rel="stylesheet" href="css/customStyle.css">
     <script src="js/rulesCalendar.js" type="text/javascript"></script>
@@ -64,15 +64,33 @@
         <button class="mainbutton" onclick="location.href = 'http://127.0.0.1:5000/constraints'"><a href="#"><img src="assets/img/link.png"></a><br>Aggiungi
             Vincolo</button>
     </div>
-
+    <h3 style="text-align:center; margin-top: 200px;"> Scegli le materie</h3>
+    <!-- DROPDOWN FOR CHOICE TIMETABLE -->
+    <div class="dropdownChoiceDiscipline">
+        <select id="courseDisciplineDropDown">
+            <option value="A">ALL</option>
+            <option value="Informatica Triennale">Informatica Triennale</option>
+            <option value="Informatica per il Management">Informatica Per il Management</option>
+            <option value="Informatica Magistrale">Informatica Magistrale</option>
+        </select>
+        <select id="yearDisciplineDropDown">
+            <option value="1">Primo Anno</option>
+            <option value="2">Secondo Anno</option>
+        </select>
+        <select id="semesterDisciplineDropDown">
+            <option value="1">Primo Semestre</option>
+            <option value="2">Secondo Semestre</option>
+        </select>
+    </div>
+    <!-- CALENDAR -->
     <div class="container-fluid px-4 calendarDiv">
         <div class="row" id="randomcalendar"></div>
         <div class="row">
-          <div class="col-xs-12">
-            <div id="calendar" style="width:70%; height: 10%;  margin: 0 auto;"></div>
-          </div>
+            <div class="col-xs-12">
+                <div id="calendar" style="width:70%; height: 10%;  margin: 0 auto;"></div>
+            </div>
         </div>
-      </div>
+    </div>
 
 
 </body>
