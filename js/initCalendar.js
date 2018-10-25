@@ -12,12 +12,6 @@ $(document).ready(function () {
     
 
     $("#generateCalendar").click(function () {   
-        var c = $("#courseDisciplineDropDown").val();
-        var y = $("#yearDisciplineDropDown").val();
-        var sem = $("#semesterDisciplineDropDown").val();
-        console.log(c);
-        console.log(y);
-        console.log(sem);
         events.splice(0,events.length);
         calendar.init();
         startGenerationCalendar();        
@@ -45,10 +39,9 @@ function startGenerationCalendar() {
                 start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
                 end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                content: "<strong>CORSO:</strong>: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + "<br>" +
-                    "<strong>MATERIA:</strong> " + timetable.tt[i].getDiscipline().getName() + "<br>" +
-                    "<strong>PROFESSORE:</strong> " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br>" + "<br>" +
-                    "<strong>AULA:</strong>" + timetable.tt[i].getClassroom(),
+                content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
+                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
+                    "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
                 category: timetable.tt[i].getDiscipline().getCourse()
             }
             events.push(newEvent);
@@ -69,13 +62,13 @@ function setDiscipline(disc) {
         // SET Course
         disc[i].setCourse(courses.find(o => o.id === disc[i].getCourse()));
 
-        // Defaul preference
+        // Set Preference
         disc[i].splitDurationLessons6h(3);
     }
 
 
     for (var i = 0; i < disc.length; i++) {
-        if (disc[i].getYear() == "1" && disc[i].getSemester() == "1") {
+        if (disc[i].getYear() == "1" && disc[i].getSemester() == "1" && disc[i].getCourse().getName() == "Informatica Triennale") {
             // console.log(disciplines[i]);
             // fill array for calendar
             subject.push(disc[i]);

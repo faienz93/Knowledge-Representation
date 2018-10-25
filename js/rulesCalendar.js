@@ -31,6 +31,7 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
         return isDuplicate;
     },
     function (l) {
+        console.log(l.tt.toString());
         for (var i = 0; i <= l.tt.length - 1; i++) {
             assert(l.tt[i]);
         }
@@ -451,9 +452,7 @@ function (l) {
     l.setDay(generateDayByExcludingOne(l.getDay()));
     l.setStartLesson(START_LESSONS);
     l.setEndLesson(START_LESSONS + dL);
-    //   printForDebug(l,"white","black");
-
-    
+    //   printForDebug(l,"white","black");    
     assert(timetable);
 });
 
