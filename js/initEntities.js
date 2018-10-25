@@ -391,7 +391,7 @@ function fillFieldDisciplineById(id) {
                                 {       
                                 ?x  a uni:Discipline;
                                 uni:disciplinename ?disciplineName;
-                                uni:idDiscipline ?"`+ id + `";
+                                uni:idDiscipline ?'`+ id + `';
                                 uni:idDiscipline ?idDiscipline;
                                 uni:disciplineAbbreviation ?sigleDiscipline;
                                 uni:cfu ?cfu;
@@ -402,7 +402,7 @@ function fillFieldDisciplineById(id) {
                                 uni:weekhours ?weekhours;
                                 uni:year ?year;
                                 uni:curriculum ?curriculum;
-                                uni:numStudents  ?numStudents 
+                                uni:numStudents ?numStudents;
                                 uni:isTaughtBy ?isTaughtBy.
                                     ?isTaughtBy a uni:Teacher;
                                     uni:idProfessor ?idProf;
@@ -414,10 +414,12 @@ function fillFieldDisciplineById(id) {
 
                             BIND(CONCAT(?idProf,'-',?firstName,'-',?lastName,'-',?role) AS ?prof_str)
 
-                        }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year                               
+                        }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year ?numStudents ?curriculum                             
                     `;
 
     var encodedquery = encodeURIComponent(myquery);
+
+    console.log(myquery);
 
     $.ajax({
         dataType: "jsonp",
@@ -428,10 +430,12 @@ function fillFieldDisciplineById(id) {
                 var bindings = element.bindings;
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
+                    console.log(bindings[i]);
+
                     var result = bindings[i].professors.value.split(",");                    
                     $('input[name=discipline_nameUpdate]').val(bindings[i].disciplineName.value);
                     $('input[name=discipline_abbUpdate]').val(bindings[i].sigleDiscipline.value);
-                    $('input[name=obligatoryUpdate]').prop('checked',(bindings[i].obligatory.value)); // RADIO BUTTON
+                    $("input[name=obligatoryUpdate][value=" + bindings[i].obligatory.value + "]").attr('checked', 'checked');
                     $('input[name=cfuUpdate]').val(bindings[i].cfu.value);
                     $('input[name=id_disciplineUpdate]').val(bindings[i].idDiscipline.value);
                     $('select[name=degreeCourseUpdate]').val(bindings[i].hasCourseof.value).trigger("chosen:updated");
@@ -499,8 +503,12 @@ function fillFieldClassroomById(id) {
 
                     $('input[name=classNameUpdate]').val(bindings[i].classroomname.value);
                     $('input[name=capacityUpdate]').val(bindings[i].capacity.value);
-                    $('input[name=wiredUpdate]').prop('checked',(bindings[i].wired.value)); // RADIO BUTTON
-                    $('input[name=blackboard Update]').val(bindings[i].blackboard .value).trigger("chosen:updated"); 
+                    $("input[name=wiredUpdate][value=" + bindings[i].wired.value + "]").attr('checked', 'checked');
+
+                    var ddl1 = $("#blackboardUpdate");
+                    $("#blackboardUpdate option[value='" + bindings[i].blackboard.value + "']").prop('selected', true).change();
+                    ddl1.trigger("chosen:updated");
+
                     $('input[name=id_roomUpdate]').val(bindings[i].idRoom.value);
                     $('input[name=addressUpdate]').val(bindings[i].address.value);
                 }

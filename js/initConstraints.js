@@ -1,20 +1,28 @@
 $(document).ready(function () {
 
-    slideDownAndUp();
-    setResetBtns();
+    // slideDownAndUp();
+    resetFormValues();
+
+    $('#findProfessor_chosen').css("width", "100%");
+    $('#ChooseDay1_chosen').css("width", "100%");
+    $('#ChooseDay2_chosen').css("width", "100%");
     
     selectProfessors();
 
     $('#divConstraint').hide();
     $('#DivSelectDay2').hide();
 
-    var ddl1 = $("#ChooseDay1");
-    generateChooseDays(ddl1);
-
     $('#findProfessor').change(function() {
         $('#divConstraint').show();
         var prof = $('#findProfessor').val();
-        selectPreference(prof)
+        if(prof!=''){
+            selectPreference(prof)
+        }
+        else{
+            resetFormValues();
+            $('#divConstraint').hide();
+    $('#DivSelectDay2').hide();
+        }
     });
 
     $('#deleteConstraint').click(function() {
@@ -90,18 +98,6 @@ $(document).ready(function () {
 
 });
 
-
-/**
- * This function aims to bind event to reset buttons
- * @method setResetBtns
- */
-function setResetBtns(){
-    // Reset value of form Add Professor 
-    $('#resetConstraint').click(function () {
-        $('#constraintForm')[0].reset();
-    });  
-}
-
 /**
  * This function aims to slideUp and slideDown Panel
  * @method slideDownUp
@@ -109,9 +105,14 @@ function setResetBtns(){
  */
 function slideDownAndUp(){
     // slideToggle Professor
-    $('#headerConstraint').click(function(){
-        $('#cardBodyConstraint').slideToggle("slow");
-    });
+    // $('#headerConstraint').click(function(){
+    //     $('#cardBodyConstraint').slideToggle("slow");
+    // });
+
+
+    $('#findProfessor_chosen').css("width", "100%");
+    $('#ChooseDay1_chosen').css("width", "100%");
+    $('#ChooseDay2_chosen').css("width", "100%");
 }
 
 
@@ -151,7 +152,6 @@ function selectProfessors() {
 
     var encodedquery = encodeURIComponent(myquery);
 
-
     $.ajax({
         dataType: "jsonp",
         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
@@ -159,6 +159,8 @@ function selectProfessors() {
 
             // ChosenJS Select Dropdown List
             var ddl = $("#findProfessor");
+            ddl.empty();
+            ddl.append("<option value=''></option>");
 
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
@@ -210,22 +212,10 @@ function selectPreference(prof) {
         url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
         success: function (results) {
 
-            // reset values
-            $('#constraintForm').attr('action', 'http://127.0.0.1:5000/addPreference');
-
+            resetFormValues();
+            
             var ddl1 = $("#ChooseDay1");
-            generateChooseDays(ddl1);
-            var day1 = $('#ChooseDay1').val();
             var ddl2 = $("#ChooseDay2");
-            generateChooseDays(ddl2);
-            $("#ChooseDay2 option[value='" + day1 + "']").remove();
-            $("#ChooseDay2  option[value='']");
-            ddl2.trigger("chosen:updated");
-
-            $('.checkDisc').prop('checked', false).change();
-            $('.checkConse').prop('checked', false).change();           
-            $('.checkAMPM').prop('checked', false).change();
-            $('.checkChalks').prop('checked', false).change();
 
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
@@ -258,3 +248,22 @@ function selectPreference(prof) {
 }
 
 
+function resetFormValues(){
+    // reset values
+    $('#constraintForm').attr('action', 'http://127.0.0.1:5000/addPreference');
+
+    var ddl1 = $("#ChooseDay1");
+    generateChooseDays(ddl1);
+    var day1 = $('#ChooseDay1').val();
+    var ddl2 = $("#ChooseDay2");
+    generateChooseDays(ddl2);
+    $("#ChooseDay2 option[value='" + day1 + "']").remove();
+    $("#ChooseDay2  option[value='']");
+    ddl2.trigger("chosen:updated");
+
+    $('.checkDisc').prop('checked', false).change();
+    $('.checkConse').prop('checked', false).change();           
+    $('.checkAMPM').prop('checked', false).change();
+    $('.checkChalks').prop('checked', false).change();
+
+}

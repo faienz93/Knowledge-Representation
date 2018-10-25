@@ -170,8 +170,6 @@ def addClassRoom():
     capacity = request.form['capacity']
     wired = request.form['wired']
     blackboard = request.form['blackboard']
-    
-    
 
     insertClassRoom(id_room,className, address, capacity, blackboard, wired)
 

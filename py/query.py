@@ -262,7 +262,7 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name, semester,ob
                 uni:idDiscipline ?oldidDiscipline;
                 uni:disciplineAbbreviation ?olddisciplineAbb;
                 uni:disciplinename ?olddisciplinename;
-                uni:semester ?oldsemester
+                uni:semester ?oldsemester;
                 uni:obligatory ?oldobligatory;
                 uni:totalhours ?oldtotalhours;
                 uni:weekhours ?oldweekhours;
@@ -279,7 +279,7 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name, semester,ob
                 uni:disciplineAbbreviation "'''+discipline_abb+'''"; 
                 uni:disciplinename "'''+discipline_name+'''";
                 uni:semester "'''+semester+'''";
-                uni:obligatory '''+obligatory+''';
+                uni:obligatory "'''+obligatory+'''";
                 uni:totalhours "'''+totalHours+'''";
                 uni:weekhours "'''+weeksHours+'''";
                 uni:cfu "'''+cfu+'''";
@@ -287,7 +287,7 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name, semester,ob
                 uni:curriculum "'''+curriculum+'''";
                 uni:numStudents "'''+students+'''";
                 '''+isTaughtBy+''';
-                uni:hasCourseof "'''+course+'''";
+                uni:hasCourseof uni:'''+course+''';
             }
             WHERE { 
             ?x a uni:Discipline;
@@ -297,7 +297,7 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name, semester,ob
                         uni:idDiscipline ?oldidDiscipline;
                         uni:disciplineAbbreviation ?olddisciplineAbb;
                         uni:disciplinename ?olddisciplinename;
-                        uni:semester ?oldsemester
+                        uni:semester ?oldsemester;
                         uni:obligatory ?oldobligatory;
                         uni:totalhours ?oldtotalhours;
                         uni:weekhours ?oldweekhours;
