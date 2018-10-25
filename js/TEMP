@@ -12,12 +12,6 @@ $(document).ready(function () {
     
 
     $("#generateCalendar").click(function () {   
-        var c = $("#courseDisciplineDropDown").val();
-        var y = $("#yearDisciplineDropDown").val();
-        var sem = $("#semesterDisciplineDropDown").val();
-        console.log(c);
-        console.log(y);
-        console.log(sem);
         events.splice(0,events.length);
         calendar.init();
         startGenerationCalendar();        
@@ -45,10 +39,9 @@ function startGenerationCalendar() {
                 start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
                 end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                content: "<strong>CORSO:</strong>: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + "<br>" +
-                    "<strong>MATERIA:</strong> " + timetable.tt[i].getDiscipline().getName() + "<br>" +
-                    "<strong>PROFESSORE:</strong> " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br>" + "<br>" +
-                    "<strong>AULA:</strong>" + timetable.tt[i].getClassroom(),
+                content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
+                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
+                    "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
                 category: timetable.tt[i].getDiscipline().getCourse()
             }
             events.push(newEvent);
@@ -68,9 +61,6 @@ function setDiscipline(disc) {
         }
         // SET Course
         disc[i].setCourse(courses.find(o => o.id === disc[i].getCourse()));
-
-        // Defaul preference
-        disc[i].splitDurationLessons6h(3);
     }
 
 
@@ -82,7 +72,10 @@ function setDiscipline(disc) {
         }
     }
 
-  
+    //Preferenze di default 
+    for (var i = 0; i < subject.length; i++) {
+        subject[i].splitDurationLessons6h(3);
+    }
 
     // console.log(subject);
 
@@ -125,3 +118,22 @@ function setDiscipline(disc) {
 
     }   
 }
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+var c = $("#courseDisciplineDropDown").val();
+        var y = $("#yearDisciplineDropDown").val();
+        var sem = $("#semesterDisciplineDropDown").val();
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+if (disciplines[i].getYear() == y && disciplines[i].getSemester() == sem && disciplines[i].getCourse().getName() == c) {
+            // console.log(disciplines[i]);
+            // fill array for calendar
+            subject.push(disciplines[i]);
+        }
+        if (disciplines[i].getYear() == y && disciplines[i].getSemester() == sem && c == "ALL") {
+            // console.log(disciplines[i]);
+            // fill array for calendar
+            subject.push(disciplines[i]);
+        }   
