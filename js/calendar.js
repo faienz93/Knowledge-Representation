@@ -4,7 +4,7 @@ $(document).ready(function () {
   // moment.locale('en');
   // var now = moment();
 
-  /**
+  /** 
    * Many events
    */
   // events = [
