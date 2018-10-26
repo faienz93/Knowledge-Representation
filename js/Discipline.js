@@ -195,7 +195,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
              var pValue=pKeyValue[1];
             
             if(pValue!=""){
-                if(pKey=="consecutiveDay"){
+                if(pKey=="consecutivedays"){
                 this.consecutiveDay(pValue)
                 }
                 if(pKey=="avoidLessonDay1"){
