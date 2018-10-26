@@ -200,9 +200,9 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
                 }
                 if(pKey=="avoidLessonDay"){
                     var dayChosen= pValue.split("-");
-                    this.avoidLessonDay(dayChosen[1]);//prima l'ultimo
-                    if(dayChosen.length==2){
-                    this.avoidLessonDay(dayChosen[0]);                }
+                    var day1=dayChosen[0];
+                    var day2=dayChosen[1];                    
+                    this.avoidLessonDay(day1,day2);                              
                     
                     }
                 if(pKey=="splitdurationlessons6h"){
@@ -298,10 +298,15 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
      * Set the preference that for this discipline an professor
      * want to avoid a specific day
      */
-    this.avoidLessonDay = function (d) {
-        var avDay = { "avoidLessonDay": d };
+    this.avoidLessonDay = function (d1,d2) {
+        var avDay={"avoidLessonDay": [d1]};
+        if(d2!=""){ 
+        avDay = {"avoidLessonDay": [d1,d2] };  
+        }      
         preference.push(avDay);
+        
     }
+    
 
     /**
      * Delete from preference the avoid lesson day

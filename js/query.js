@@ -220,7 +220,7 @@ FROM <http://www.rdcproject.com/graph/preferences>
   		BIND(CONCAT(
       "consecutivedays:",?consecutiveDays,",",      
       "setperiodofday:",?noLessonAMPM,",",
-      "avoidLessonDay:",?noLessonDay2,"-",?noLessonDay1,",",
+      "avoidLessonDay:",?noLessonDay1,"-",?noLessonDay2,",",
       "splitdurationlessons6h:",?sixHourSplit,",",
       "blackboard:",?writeMethodRoom)
     AS ?preference_str)
