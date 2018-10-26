@@ -177,10 +177,11 @@ function queryDiscipline() {
 
     SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year 
             (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors) ?numStudents
-
+			(GROUP_CONCAT(DISTINCT ?preference_str;separator="|") AS ?preferences)
     FROM <http://www.rdcproject.com/graph/disciplines>
     FROM <http://www.rdcproject.com/graph/professor>
     FROM <http://www.rdcproject.com/graph/course>
+FROM <http://www.rdcproject.com/graph/preferences>
     WHERE
     { 
             {       
@@ -205,13 +206,27 @@ function queryDiscipline() {
                 uni:role ?role.
             ?hasCourseof a uni:Course;
                 uni:idCourse ?idCourse.
-             
-                
+    OPTIONAL{?isTaughtBy a uni:Preference;                
+				uni:consecutiveDays ?consecutiveDays;
+            	uni:noLessonAMPM ?noLessonAMPM;
+            	uni:noLessonDay1 ?noLessonDay1;
+            	uni:noLessonDay2 ?noLessonDay2;
+            	uni:sixHourSplit ?sixHourSplit;
+            	uni:writeMethodRoom ?writeMethodRoom
+    }
             }
 
         BIND(CONCAT(?idProf) AS ?prof_str)
+  		BIND(CONCAT(
+      "consecutivedays:",?consecutiveDays,",",      
+      "setperiodofday:",?noLessonAMPM,",",
+      "avoidLessonDay1:",?noLessonDay1,",",
+      "avoidLessonDay2:",?noLessonDay2,",",
+      "splitdurationlessons6h:",?sixHourSplit,",",
+      "blackboard:",?writeMethodRoom)
+    AS ?preference_str)
 
-    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year ?numStudents 	
+    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year ?numStudents ?preferences	
                     `;
 
     var encodedquery = encodeURIComponent(myquery);
@@ -244,7 +259,16 @@ function queryDiscipline() {
                         var idProfs = bindings[i].professors.value.split(",");
                         for(var p = 0; p < idProfs.length;p++){
                             d.setProfessor(idProfs[p]);
-                        }                    
+                        }
+                       
+                        var profPreferences = bindings[i].preferences; 
+                        if(profPreferences!=undefined){
+                            var profPreferencesSplit=profPreferences.value.split("|");
+                            for(var p = 0; p < profPreferencesSplit.length;p++){
+                               d.setPreferences(profPreferencesSplit[p])
+                            }
+                        }
+                                          
                         result.push(d);
                     }   
                     if(result.length > 0){

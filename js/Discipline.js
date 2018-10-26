@@ -183,6 +183,39 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
      * **********************************************************************************************
      */
 
+    this.setPreferences=function(p){
+        
+         var prefKeys=p.split(",");
+         console.log("=========="+prefKeys+"============");
+         for(var i=0;i<prefKeys.length;i++){
+            console.log("==="+prefKeys[i]);
+             var pKeyValue=prefKeys[i].split(":");
+            
+             var pKey=pKeyValue[0];
+             var pValue=pKeyValue[1];
+            
+            if(pValue!=""){
+                if(pKey=="consecutiveDay"){
+                this.consecutiveDay(pValue)
+                }
+                if(pKey=="avoidLessonDay1"){
+                this.avoidLessonDay(pValue)
+                }
+                if(pKey=="avoidLessonDay2"){
+                this.avoidLessonDay(pValue)
+                }
+                if(pKey=="splitdurationlessons6h"){
+                this.splitDurationLessons6h(pValue)
+                }            
+                if(pKey=="blackboard"){
+                this.blackboard(pValue)
+                }
+            }
+            
+         }
+         console.log("====================");
+
+    }
     /**
      * *********************************** FOR ALL PREFERENCE ***********************************
      * Check from Preference exist a particular preference named by param i.e avoidLessonDay
@@ -193,7 +226,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
         var exist = false;
         for (var i = 0; i < preference.length; i++) {
             if (key in preference[i]) {
-                exist = true;
+                    exist = true;
             }
         }
         return exist;
