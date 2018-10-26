@@ -206,7 +206,10 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
                 }
                 if(pKey=="splitdurationlessons6h"){
                 this.splitDurationLessons6h(parseInt(pValue))
-                }            
+                }  
+                if(pKey=="setperiodofday"){
+                this.setPeriodOfDay(pValue);
+                }           
                 if(pKey=="blackboard"){
                 this.blackboard(pValue)
                 }
