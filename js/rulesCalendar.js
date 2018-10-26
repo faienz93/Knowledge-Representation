@@ -8,7 +8,7 @@ function exists() { return reactor.exists.apply(reactor, arguments); }
 function forAll() { return reactor.forAll.apply(reactor, arguments); }
 
 // https://github.com/anywhichway/rule-reactor#debugging-and-testing
-reactor.trace(1);
+reactor.trace(0);
 
 
 /**

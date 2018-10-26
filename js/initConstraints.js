@@ -122,11 +122,11 @@ function slideDownAndUp(){
 function generateChooseDays(ddl){
     ddl.empty();
     ddl.append("<option value='' selected>Nessuna Preferenza</option>");
-    ddl.append("<option value='monday'>Lunedì</option>");
-    ddl.append("<option value='tuesday'>Martedì</option>");
-    ddl.append("<option value='wednesday'>Mercoledì</option>");
-    ddl.append("<option value='thursday'>Giovedì</option>");
-    ddl.append("<option value='friday'>Venerdì</option>"); 
+    ddl.append("<option value='Monday'>Lunedì</option>");
+    ddl.append("<option value='Tuesday'>Martedì</option>");
+    ddl.append("<option value='Wednesday'>Mercoledì</option>");
+    ddl.append("<option value='Thursday'>Giovedì</option>");
+    ddl.append("<option value='Friday'>Venerdì</option>"); 
     ddl.trigger("chosen:updated");
 }
 
