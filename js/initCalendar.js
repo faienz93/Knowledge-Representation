@@ -63,13 +63,16 @@ function setDiscipline(disc) {
         disc[i].setCourse(courses.find(o => o.id === disc[i].getCourse()));
 
         // Set Preference
-        disc[i].splitDurationLessons6h(3);
+        if(disc[i].checkExistPreference("splitdurationlessons6h")==false){
+            disc[i].splitDurationLessons6h(3);
+        }
+        
     }
 
 
     for (var i = 0; i < disc.length; i++) {
         if (disc[i].getYear() == "1" && disc[i].getSemester() == "1" && disc[i].getCourse().getName() == "Informatica Triennale") {
-            // console.log(disciplines[i]);
+            console.log(disc[i].getPreference());
             // fill array for calendar
             subject.push(disc[i]);
         }
@@ -99,7 +102,6 @@ function setDiscipline(disc) {
         if (subjectWeeksHours == 6) {
 
             if (subject[i].getSplitDuration(2)) {
-
                 timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
                 timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
                 timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
@@ -109,7 +111,7 @@ function setDiscipline(disc) {
                 timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
                 timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
             }
-            else {
+            else {                
                 timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
                 timetable.tt.push(new Lesson("Monday", subject[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
             }

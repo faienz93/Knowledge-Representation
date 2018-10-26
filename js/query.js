@@ -266,6 +266,8 @@ FROM <http://www.rdcproject.com/graph/preferences>
                             var profPreferencesSplit=profPreferences.value.split("|");
                             for(var p = 0; p < profPreferencesSplit.length;p++){
                                d.setPreferences(profPreferencesSplit[p])
+                               console.log("Preferenze per la materia");
+                                console.log(bindings[i].disciplineName.value);
                             }
                         }
                                           

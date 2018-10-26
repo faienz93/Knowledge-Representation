@@ -31,7 +31,7 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
         return isDuplicate;
     },
     function (l) {
-        console.log(l.tt.toString());
+        // console.log(l.tt.toString());
         for (var i = 0; i <= l.tt.length - 1; i++) {
             assert(l.tt[i]);
         }
