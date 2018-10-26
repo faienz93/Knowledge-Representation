@@ -198,12 +198,13 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
                 if(pKey=="consecutivedays"){
                 this.consecutiveDay(pValue)
                 }
-                if(pKey=="avoidLessonDay1"){
-                this.avoidLessonDay(pValue)
-                }
-                if(pKey=="avoidLessonDay2"){
-                this.avoidLessonDay(pValue)
-                }
+                if(pKey=="avoidLessonDay"){
+                    var dayChosen= pValue.split("-");
+                    this.avoidLessonDay(dayChosen[1]);//prima l'ultimo
+                    if(dayChosen.length==2){
+                    this.avoidLessonDay(dayChosen[0]);                }
+                    
+                    }
                 if(pKey=="splitdurationlessons6h"){
                 this.splitDurationLessons6h(parseInt(pValue))
                 }  
