@@ -220,13 +220,12 @@ FROM <http://www.rdcproject.com/graph/preferences>
   		BIND(CONCAT(
       "consecutivedays:",?consecutiveDays,",",      
       "setperiodofday:",?noLessonAMPM,",",
-      "avoidLessonDay1:",?noLessonDay1,",",
-      "avoidLessonDay2:",?noLessonDay2,",",
+      "avoidLessonDay:",?noLessonDay2,"-",?noLessonDay1,",",
       "splitdurationlessons6h:",?sixHourSplit,",",
       "blackboard:",?writeMethodRoom)
     AS ?preference_str)
 
-    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year ?numStudents ?preferences	
+    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year ?numStudents ?preferences		
                     `;
 
     var encodedquery = encodeURIComponent(myquery);
