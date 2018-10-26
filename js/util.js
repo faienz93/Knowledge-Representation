@@ -128,8 +128,7 @@ function splitCurriculum(str) {
  */
 function countHours(course,day){
     var result=0;
-   // console.log(timetable.tt[0].getCourse().getId());
-    for(var i=0;i<timetable.tt.length;i++){        
+     for(var i=0;i<timetable.tt.length;i++){        
         if(timetable.tt[i].getDiscipline().getCourse().getId() == course && 
         timetable.tt[i].getDay() == day){
            result+=timetable.tt[i].getDurationLesson();
@@ -173,12 +172,24 @@ function checkCapacityClassroom(numSub) {
 }
 
 /**
+ * Compare method of input chosen by professor with the blackboard of classRoom
+ * It return an array only with classroom that has more capacity respect the write method
+ * @param {Integer} numSub - number of Students subscribed to Course
+ */
+function checkBlackboardClassroom(method) {
+    var result = [];
+    for (var i = 0; i < classrooms.length; i++) {
+        if (classrooms[i].getBlackboard() == method) {
+            result.push(classrooms[i]);        }
+    }
+    return result;
+}
+/**
  * Function that counts number of hours of a specific course in a specific day until a specific hour
  * mod
  */
 function countHoursBetween(course, day, startHour, endHour) {
     var result = 0;
-    // console.log(timetable.tt[0].getCourse().getId());
     for (var i = 0; i < timetable.tt.length; i++) {
         if (timetable.tt[i].getDiscipline().getCourse() == course
             && timetable.tt[i].getDay() == day
@@ -196,21 +207,14 @@ function countHoursBetween(course, day, startHour, endHour) {
     function getProfessorById (idProf) {
         var result;
         $( document ).ajaxComplete(function() {
-            // console.log(professors);
-            for (var i=0;i<professors.length;i++){
-                // console.log(professors[i]);
-                if(professors[i].getId()==idProf){
-                    
-                    result = professors[i];
-                    // console.log(result);
-                }
-            }
-            // console.log(professors.length);
-            // console.log("Non esiste alcun professor con id "+idProf);
             
+            for (var i=0;i<professors.length;i++){                
+                if(professors[i].getId()==idProf){                    
+                    result = professors[i];                    
+                }            
+            };            
             }
-          );    
-        //   console.log(result);         
+          );                 
         return result;
         
     }

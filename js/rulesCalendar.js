@@ -66,10 +66,12 @@ reactor.createRule("swapDay", -1, { l: Lesson },
 * RULE: Assign Classroom based on number subscription
 */
 reactor.createRule("assignClassroom", -1, { l: Lesson },
-    function (l) {
+    function (l) {      
+        
         return l.getDiscipline().getNumStudent() > l.getClassroom().getCapacity();
     },
     function (l) {
+        
         // printForDebug("ASSIGNCLASSROOM " + l.getDiscipline().getName() + " " + l.getDiscipline().getNumStudent() + " -- " + l.getClassroom().toString());
         var compatibilityClassroom = checkCapacityClassroom(l.getDiscipline().getNumStudent());
         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
@@ -416,18 +418,14 @@ reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
 reactor.createRule("checkClassroomBlackboard", -1, { l: Lesson },
     function (l) {
         return l.getClassroom().getBlackboard() != l.getDiscipline().getBlackboard() &&
-            l.getDiscipline().checkExistPreference("blackboard");
+                l.getDiscipline().checkExistPreference("blackboard");
     },
     function (l) {
 
-        var compatibilityRooms = [];
-        for (var i = 0; i < classrooms.length; i++) {
-            if (classrooms[i].getBlackboard() == l.getDiscipline().getBlackboard()) {
-                compatibilityRooms.push(classrooms[i]);
-            }
-        }
-        var randomClassroom = compatibilityRooms[Math.floor(Math.random() * compatibilityRooms.length)];
-        l.setClassroom(randomClassroom);
+        var compatibilityRooms = checkBlackboardClassroom(l.getDiscipline().getBlackboard());  
+        var newClassRoom = compatibilityRooms[Math.floor(Math.random() * compatibilityRooms.length)];
+        l.setClassroom(newClassRoom);
+        assert(timetable);
     });
 
 

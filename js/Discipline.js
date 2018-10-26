@@ -183,17 +183,12 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
      * **********************************************************************************************
      */
 
-    this.setPreferences=function(p){
-        
-         var prefKeys=p.split(",");
-         console.log("=========="+prefKeys+"============");
-         for(var i=0;i<prefKeys.length;i++){
-            console.log("==="+prefKeys[i]);
-             var pKeyValue=prefKeys[i].split(":");
-            
+    this.setPreferences=function(p){        
+         var prefKeys=p.split(",");         
+         for(var i=0;i<prefKeys.length;i++){            
+             var pKeyValue=prefKeys[i].split(":");            
              var pKey=pKeyValue[0];
-             var pValue=pKeyValue[1];
-            
+             var pValue=pKeyValue[1];            
             if(pValue!=""){
                 if(pKey=="consecutivedays"){
                 this.consecutiveDay(pValue)
@@ -217,7 +212,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
             }
             
          }
-         console.log("====================");
+         
 
     }
     /**

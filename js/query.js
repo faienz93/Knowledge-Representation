@@ -99,10 +99,10 @@ function queryClassrooms(returnValue, callback) {
                     var name = bindings[i].classroomname.value;
                     var address = bindings[i].address.value;
                     var capacity = bindings[i].capacity.value;
-                    var blackboard = bindings[i].blackboard.value;//TODO cambiare in chalk
+                    var blackboard = bindings[i].blackboard.value;
                     var wired = bindings[i].wired.value;
 
-                    var room = new Classroom(id, name, address, capacity, blackboard, wired);
+                    var room = new Classroom(id, name, address, parseInt(capacity), blackboard, wired);
                     result.push(room);
                 }
                 callback(result);
@@ -252,7 +252,7 @@ FROM <http://www.rdcproject.com/graph/preferences>
                               bindings[i].weekhours.value, 
                               bindings[i].cfu.value, 
                               bindings[i].year.value, 
-                              bindings[i].numStudents.value
+                              parseInt(bindings[i].numStudents.value)
                               );
                         d.setCourse(bindings[i].idCourse.value);
                         var idProfs = bindings[i].professors.value.split(",");
@@ -264,9 +264,7 @@ FROM <http://www.rdcproject.com/graph/preferences>
                         if(profPreferences!=undefined){
                             var profPreferencesSplit=profPreferences.value.split("|");
                             for(var p = 0; p < profPreferencesSplit.length;p++){
-                               d.setPreferences(profPreferencesSplit[p])
-                               console.log("Preferenze per la materia");
-                                console.log(bindings[i].disciplineName.value);
+                               d.setPreferences(profPreferencesSplit[p])                               
                             }
                         }
                                           
