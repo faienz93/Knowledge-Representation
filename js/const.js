@@ -22,7 +22,7 @@ var professors = undefined;
 var courses = undefined;
 
 // Disciplines returned by query
-// var disciplines = undefined;
+var disciplines = undefined;
 
 // start lessons
 var START_LESSONS = 8.30
@@ -42,7 +42,7 @@ var now = moment();
 // Events of calendar
 var events = [];
 
-var subject = [];
+// var subject = [];
 
 var classroom = [];
 

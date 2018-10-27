@@ -69,9 +69,9 @@
     <div class="dropdownChoiceDiscipline">
         <select id="courseDisciplineDropDown">
             <option value="ALL">ALL</option>
-            <option value="Informatica Triennale">Informatica Triennale</option>
-            <option value="Informatica per il Management">Informatica Per il Management</option>
-            <option value="Informatica Magistrale">Informatica Magistrale</option>
+            <option value="8009">Informatica Triennale</option>
+            <option value="8014">Informatica Per il Management</option>
+            <option value="8028">Informatica Magistrale</option>
         </select>
         <select id="yearDisciplineDropDown">
                 <option value="1">Primo Anno</option>
@@ -81,7 +81,7 @@
                 $( "#courseDisciplineDropDown" ).change(function() {
                     // console.log($(this).val());
                     var v = $(this).val()
-                    if(v == "Informatica Triennale" || v == "Informatica per il Management"){
+                    if(v == "8009" || v == "8014"){
                         $("option[value='3']").remove();
                         $('#yearDisciplineDropDown').append(
                                 $('<option></option>').val("3").html("Terzo Anno")
