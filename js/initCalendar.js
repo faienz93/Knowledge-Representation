@@ -32,7 +32,7 @@ $(document).ready(function () {
     
 
     $("#generateCalendar").click(function () {   
-        events.splice(0,events.length);
+        events.length = 0;
         calendar.init();
         startGenerationCalendar(disciplines);        
     });
@@ -44,6 +44,8 @@ function queryDisciplineAsync(c,y,sem){
 
 
 function startGenerationCalendar(disc) {
+
+    timetable.tt.length = 0
 
     for (var i = 0; i < disc.length; i++) {
 

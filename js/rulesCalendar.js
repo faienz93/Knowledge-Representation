@@ -1,6 +1,6 @@
 
-// var reactor = new RuleReactor();
-var reactor = new RuleReactor({TimetableArray:TimetableArray, Lesson:Lesson},true);
+var reactor = new RuleReactor();
+// var reactor = new RuleReactor({TimetableArray:TimetableArray, Lesson:Lesson},true);
 
 function assert() { return reactor.assert.apply(reactor, arguments); }
 function not() { return reactor.not.apply(reactor, arguments); }
@@ -8,7 +8,7 @@ function exists() { return reactor.exists.apply(reactor, arguments); }
 function forAll() { return reactor.forAll.apply(reactor, arguments); }
 
 // https://github.com/anywhichway/rule-reactor#debugging-and-testing
-reactor.trace(0);
+reactor.trace(1);
 
 
 /**
@@ -66,12 +66,10 @@ reactor.createRule("swapDay", -1, { l: Lesson },
 * RULE: Assign Classroom based on number subscription
 */
 reactor.createRule("assignClassroom", -1, { l: Lesson },
-    function (l) {      
-        
+    function (l) {         
         return l.getDiscipline().getNumStudent() > l.getClassroom().getCapacity();
     },
-    function (l) {
-        
+    function (l) {        
         // printForDebug("ASSIGNCLASSROOM " + l.getDiscipline().getName() + " " + l.getDiscipline().getNumStudent() + " -- " + l.getClassroom().toString());
         var compatibilityClassroom = checkCapacityClassroom(l.getDiscipline().getNumStudent());
         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
