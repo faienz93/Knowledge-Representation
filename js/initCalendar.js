@@ -45,9 +45,12 @@ function queryDisciplineAsync(c,y,sem){
 
 function startGenerationCalendar() {
 
+    
+    $("#loader").css("display", "block");
     assert(timetable);
     reactor.run(Infinity, true, function () {
         console.log("END");
+        $("#loader").css("display", "none");
         // var output = JSON.stringify({ timetable }, null, " ");
         // console.log(output);
 
