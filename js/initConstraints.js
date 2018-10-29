@@ -1,6 +1,6 @@
 /*
  * ===========================================================================
- * File: Const.js 
+ * File: InitConstraint.js 
  * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
  * Desc: This file is used by constraint.html and create the form for add a
  * new constraint

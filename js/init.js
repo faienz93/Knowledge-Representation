@@ -1,6 +1,6 @@
 /*
  * ===========================================================================
- * File: Const.js 
+ * File: Init.js 
  * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
  * Desc: This file initializes the chosenPlugin and it used from formEntities
  * ===========================================================================

@@ -1,6 +1,6 @@
 /*
  * ===========================================================================
- * File: Const.js 
+ * File: initEntities.js 
  * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
  * Desc: This file contains is used by formEntities.html and hande the form
  * for add/update/delete classroom, professor, discipline

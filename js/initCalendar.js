@@ -1,6 +1,6 @@
 /*
  * ===========================================================================
- * File: Const.js 
+ * File: InitCalendar.js 
  * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
  * Desc: This file is used from index.html and does the followinf operation:
  * - create the query for retrieve the element based on selection of dropdown

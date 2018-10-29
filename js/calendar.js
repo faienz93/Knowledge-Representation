@@ -1,7 +1,7 @@
 
 /**
  * ===========================================================================
- * File: query.js 
+ * File: calendar.js 
  * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
  * This file instantiates the Calendar plugin
  * ===========================================================================
