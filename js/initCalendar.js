@@ -25,6 +25,8 @@ $(document).ready(function () {
 
     // make query every time the value change
     $(".dropdownChoiceDiscipline").change(function () {
+        var newTimetable = new TimetableArray();
+        timetable = newTimetable;
         var c = $("#courseDisciplineDropDown").val();
         var y = $("#yearDisciplineDropDown").val();
         var sem = $("#semesterDisciplineDropDown").val();

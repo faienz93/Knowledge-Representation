@@ -21,9 +21,6 @@ var professors = undefined;
 // Courses returned by query
 var courses = undefined;
 
-// Disciplines returned by query
-// var disciplines = undefined;
-
 // start lessons
 var START_LESSONS = 8.30
 
