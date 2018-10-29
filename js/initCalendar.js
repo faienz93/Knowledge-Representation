@@ -68,10 +68,14 @@ function startGenerationCalendar() {
         // console.log(output);
 
         for (var i = 0; i < timetable.tt.length; i++) {
+            var start = timetable.tt[i].getStartLesson().toFixed(2);
+            var arrayStart = start.split(".");
+            var end = timetable.tt[i].getEndLesson().toFixed(2);
+            var arrayEnd = end.split(".");
             var numDay = defineDayNumber(timetable.tt[i].getDay());
             var newEvent = {
-                start: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getStartLesson(), 'h').add(00, 'm').format('X'),
-                end: now.startOf('week').add(numDay, 'days').add(timetable.tt[i].getEndLesson(), 'h').format('X'),
+                start: now.startOf('week').add(numDay, 'days').add(arrayStart[0], 'h').add(arrayStart[1], 'm').format('X'),
+                end: now.startOf('week').add(numDay, 'days').add(arrayEnd[0], 'h').add(arrayEnd[1], 'm').format('X'),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
                 content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
                     "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli

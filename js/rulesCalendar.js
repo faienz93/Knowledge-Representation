@@ -1,6 +1,6 @@
 
-var reactor = new RuleReactor();
-// var reactor = new RuleReactor({TimetableArray:TimetableArray, Lesson:Lesson},true);
+// var reactor = new RuleReactor();
+var reactor = new RuleReactor({TimetableArray:TimetableArray, Lesson:Lesson},true);
 
 function assert() { return reactor.assert.apply(reactor, arguments); }
 function not() { return reactor.not.apply(reactor, arguments); }
