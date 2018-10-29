@@ -1,3 +1,11 @@
+/*
+ * ===========================================================================
+ * File: Const.js 
+ * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
+ * Desc: This file is used by constraint.html and create the form for add a
+ * new constraint
+ * ===========================================================================
+ */
 $(document).ready(function () {
 
     // slideDownAndUp();
@@ -104,12 +112,6 @@ $(document).ready(function () {
  * REF: https://www.khanacademy.org/computer-programming/jquery-example-slideup-slidedown-and-slidetoggle/4722237555474432
  */
 function slideDownAndUp(){
-    // slideToggle Professor
-    // $('#headerConstraint').click(function(){
-    //     $('#cardBodyConstraint').slideToggle("slow");
-    // });
-
-
     $('#findProfessor_chosen').css("width", "100%");
     $('#ChooseDay1_chosen').css("width", "100%");
     $('#ChooseDay2_chosen').css("width", "100%");

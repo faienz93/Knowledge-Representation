@@ -1,8 +1,15 @@
+/*
+ * ===========================================================================
+ * File: Const.js 
+ * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
+ * Desc: This file is used from index.html and does the followinf operation:
+ * - create the query for retrieve the element based on selection of dropdown
+ * - when dropdown change retrieve again the element
+ * - start the rule-reactor and print the calendar
+ * ===========================================================================
+ */
 $(document).ready(function () {
 
-   
-        
-    
     queryClassrooms(classrooms, (value) => classrooms = value);
     queryProfessors(professors, (value) => professors = value);
     queryCourses(courses, (value) => courses = value);
@@ -10,42 +17,46 @@ $(document).ready(function () {
 
     // make query the first time
     var c = $("#courseDisciplineDropDown").val();
-        var y = $("#yearDisciplineDropDown").val();
-        var sem = $("#semesterDisciplineDropDown").val();
-        queryDisciplineAsync(c,y,sem).then(function(matters){
-            setDiscipline(matters);
-        });
-    
+    var y = $("#yearDisciplineDropDown").val();
+    var sem = $("#semesterDisciplineDropDown").val();
+    queryDisciplineAsync(c, y, sem).then(function (matters) {
+        setDiscipline(matters);
+    });
+
     // make query every time the value change
-    $( ".dropdownChoiceDiscipline" ).change(function() {
+    $(".dropdownChoiceDiscipline").change(function () {
         var c = $("#courseDisciplineDropDown").val();
         var y = $("#yearDisciplineDropDown").val();
         var sem = $("#semesterDisciplineDropDown").val();
-        queryDisciplineAsync(c,y,sem).then(function(matters){
+        queryDisciplineAsync(c, y, sem).then(function (matters) {
             setDiscipline(matters);
         });
     });
 
-    
-    
-
-    
-
-    $("#generateCalendar").click(function () {   
+    $("#generateCalendar").click(function () {
         events.length = 0;
         calendar.init();
-        startGenerationCalendar();        
+        startGenerationCalendar();
     });
 });
 
-function queryDisciplineAsync(c,y,sem){
-    return queryDiscipline(c,y,sem);
+/**
+ * Return the query with Promise that has different param:
+ * - course,
+ * - year,
+ * - semester
+ * @method queryDiscipline
+ */
+function queryDisciplineAsync(c, y, sem) {
+    return queryDiscipline(c, y, sem);
 }
 
-
+/**
+ * This method start the generation of calendar called assert(timetable)
+ * For this start the rollspinner and at the end create a new Calendar
+ * @method startGenerationCalendar
+ */
 function startGenerationCalendar() {
-
-    
     $("#loader").css("display", "block");
     assert(timetable);
     reactor.run(Infinity, true, function () {
@@ -68,11 +79,15 @@ function startGenerationCalendar() {
             events.push(newEvent);
         }
         calendar.init();
-    });    
+    });
 
 }
 
-
+/**
+ * This method set the discipline that returns after query. 
+ * In this situation the timetable array has filled with the subjects
+ * @method setDiscipline
+ */
 function setDiscipline(disc) {
     for (var i = 0; i < disc.length; i++) {
         var prof = disc[i].getProfessor();
@@ -84,10 +99,10 @@ function setDiscipline(disc) {
         disc[i].setCourse(courses.find(o => o.id === disc[i].getCourse()));
 
         // Set Preference
-        if(disc[i].checkExistPreference("splitdurationlessons6h")==false){
+        if (disc[i].checkExistPreference("splitdurationlessons6h") == false) {
             disc[i].splitDurationLessons6h(3);
         }
-        
+
     }
 
     // for every query reset the timetable.length has resize
@@ -122,18 +137,12 @@ function setDiscipline(disc) {
                 timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
                 timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
             }
-            else {                
+            else {
                 timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
                 timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
             }
 
         }
 
-    }  
-
-  
-
-    // console.log(subject);
-
-    
+    }
 }

@@ -1,4 +1,11 @@
 
+/**
+ * ===========================================================================
+ * File: query.js 
+ * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
+ * This file instantiates the Calendar plugin
+ * ===========================================================================
+ */
 
 $(document).ready(function () {
   // moment.locale('en');

@@ -1,9 +1,13 @@
-$(document).ready(function () {
-    // InitRuleReactor();
-    
-    chosenPlugin();
-    
-    
+/*
+ * ===========================================================================
+ * File: Const.js 
+ * Author: Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi
+ * Desc: This file initializes the chosenPlugin and it used from formEntities
+ * ===========================================================================
+ */
+
+$(document).ready(function () {   
+    chosenPlugin();    
 });
 
 /**
