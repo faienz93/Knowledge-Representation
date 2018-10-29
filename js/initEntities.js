@@ -381,11 +381,12 @@ function fillFieldDisciplineById(id) {
                         PREFIX uni: <http://www.rdfproject.com/>
                         PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
-                        SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year ?numStudents 
+                        SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?semester ?totalhours ?weekhours ?year ?numStudents 
                                ?curriculum (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors)
 
                         FROM <http://www.rdcproject.com/graph/disciplines>
                         FROM <http://www.rdcproject.com/graph/professor>
+                        FROM <http://www.rdcproject.com/graph/course>
                         WHERE
                         { 
                                 {       
@@ -409,12 +410,13 @@ function fillFieldDisciplineById(id) {
                                     uni:firstName ?firstName;
                                     uni:lastName ?lastName;
                                     uni:role ?role.
-                                    
+                                    ?hasCourseof a uni:Course;
+                                    uni:idCourse ?idCourse.   
                                 }
 
                             BIND(CONCAT(?idProf,'-',?firstName,'-',?lastName,'-',?role) AS ?prof_str)
 
-                        }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?hasCourseof ?obligatory ?semester ?totalhours ?weekhours ?year ?numStudents ?curriculum                             
+                        }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?semester ?totalhours ?weekhours ?year ?numStudents ?curriculum                             
                     `;
 
     var encodedquery = encodeURIComponent(myquery);
