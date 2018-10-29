@@ -430,6 +430,7 @@ function fillFieldDisciplineById(id) {
 
             $.each(results, function (index, element) {
                 var bindings = element.bindings;
+                console.log(bindings);
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
                     console.log(bindings[i]);
@@ -440,7 +441,7 @@ function fillFieldDisciplineById(id) {
                     $("input[name=obligatoryUpdate][value=" + bindings[i].obligatory.value + "]").attr('checked', 'checked');
                     $('input[name=cfuUpdate]').val(bindings[i].cfu.value);
                     $('input[name=id_disciplineUpdate]').val(bindings[i].idDiscipline.value);
-                    $('select[name=degreeCourseUpdate]').val(bindings[i].hasCourseof.value).trigger("chosen:updated");
+                    $('select[name=degreeCourseUpdate]').val(bindings[i].idCourse.value).trigger("chosen:updated");
                     $('select[name=yearCourseUpdate]').val(bindings[i].year.value).trigger("chosen:updated");
                     $('select[name=curriculumCourseUpdate]').val(bindings[i].curriculum.value).trigger("chosen:updated");
                     $('select[name=semesterUpdate]').val(bindings[i].semester.value);
