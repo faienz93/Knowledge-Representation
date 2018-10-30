@@ -105,6 +105,26 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
     });
 
 
+    reactor.createRule("checkClassroomOccupied2", -2, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+
+        return l1 != l2 &&
+            l1.getDay() == l2.getDay() &&
+            (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
+            l1.getClassroom() == l2.getClassroom();
+    },
+    function (l1, l2) {
+
+        // printForDebug("CLASSROOMOCCUPIED " + l1.toString() + " " + l2.toString(), "white", "black");
+
+        var dL = l2.getDurationLesson();
+        l2.setStartLesson(l1.getEndLesson());
+        l2.setEndLesson(l2.getStartLesson() + dL);
+        // assert([l1, l2]); 
+        assert([l1,l2]);
+    });
+
+
 
 
 
@@ -154,7 +174,7 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
  * - overlap the time slot
  * In this case, switch the time slot to make it consequential
  */
-reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
+reactor.createRule("overlapTimeSlot", 0, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
@@ -447,14 +467,28 @@ reactor.createRule("checkClassroomBlackboard", -1, { l: Lesson },
 
 
 
-
+    // reactor.createRule("maxLessonEnd0", 0, { l: Lesson },
+    // function (l) {
+    //     var slotLesson = l.getStartLesson() + l.getDurationLesson();
+    //     return slotLesson >= END_LESSONS;
+    // },
+    // function (l) {
+    //     var dL = l.getDurationLesson();
+    //     // printForDebug(l, "blue", "white");
+    //     // l.getStartLesson()
+    //     l.setDay(generateDayByExcludingOne(l.getDay()));
+    //     l.setStartLesson(START_LESSONS);
+    //     l.setEndLesson(START_LESSONS + dL);
+    //     //   printForDebug(l,"white","black");    
+    //     assert(l);
+    // });
   
 
     /**
  * Rule for the end lesson over 19 
  */
 
-reactor.createRule("maxLessonEnd", -2, { l: Lesson },
+reactor.createRule("maxLessonEnd", 0, { l: Lesson },
 function (l) {
     var slotLesson = l.getStartLesson() + l.getDurationLesson();
     return slotLesson >= END_LESSONS;
