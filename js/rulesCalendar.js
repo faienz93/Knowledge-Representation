@@ -1,6 +1,6 @@
 
-// var reactor = new RuleReactor();
-var reactor = new RuleReactor({TimetableArray:TimetableArray, Lesson:Lesson},true);
+var reactor = new RuleReactor();
+// var reactor = new RuleReactor({TimetableArray:TimetableArray, Lesson:Lesson},true);
 
 function assert() { return reactor.assert.apply(reactor, arguments); }
 function not() { return reactor.not.apply(reactor, arguments); }
@@ -47,17 +47,17 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
 /**
  * If lesson start after the 18:00 then swap to next Day
  */
-reactor.createRule("swapDay", -1, { l: Lesson },
-    function (l) {
-        return l.getStartLesson() >= END_LESSONS;
-    },
-    function (l) {
-        var dL = l.getDurationLesson();        
-        l.setStartLesson(START_LESSONS);
-        l.setEndLesson(START_LESSONS + dL);        
-        var actualDay = l.getDay();
-        l.setNewDay(actualDay, 1);
-    });
+// reactor.createRule("swapDay", -1, { l: Lesson },
+//     function (l) {
+//         return l.getStartLesson() >= END_LESSONS;
+//     },
+//     function (l) {
+//         var dL = l.getDurationLesson();        
+//         l.setStartLesson(START_LESSONS);
+//         l.setEndLesson(START_LESSONS + dL);        
+//         var actualDay = l.getDay();
+//         l.setNewDay(actualDay, 1);
+//     });
 
 
 
@@ -89,7 +89,6 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
 
         return l1 != l2 &&
-            l1.getDiscipline().getCourse() != l2.getDiscipline().getCourse() &&
             l1.getDay() == l2.getDay() &&
             (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
             l1.getClassroom() == l2.getClassroom();
@@ -124,7 +123,6 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
         }
 
         return l1 != l2 &&
-            l1.getDiscipline().getCourse() != l2.getDiscipline().getCourse() &&
             l1.getDay() == l2.getDay() &&
             (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
             isTaughtBySameProfessor == true;
@@ -160,6 +158,7 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
             l1.getDay() == l2.getDay() &&
             (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson());
 
@@ -180,13 +179,24 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
 
     });
 
-    
+/**
+ * RULE: check if:
+ * - the discipline are different
+ * - is of same Course
+ * - same year
+ * - same day 
+ * - overlap lesson
+ * - one obligatory
+ * - one facultative
+ * In this case, switch the time slot to make it consequential
+ */
     reactor.createRule("overlapTimeSlot2", -2, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         var getCurriculumL1 = l1.getDiscipline().getCurriculum();
         var getCurriculumL2 = l2.getDiscipline().getCurriculum();
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
             l1.getDay() == l2.getDay() &&
             (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
             getCurriculumL1 != undefined && getCurriculumL2 == undefined ;
@@ -209,16 +219,25 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
 
     });
 
-   /**
-     * RULE: Overlap curriculum that has common curriculum
-     */
+  /**
+ * RULE: check if:
+ * - the discipline are different
+ * - is of same Course
+ * - same year
+ * - same day 
+ * - overlap lesson
+ * - hasCommonCurriculum
+ * In this case, switch the time slot to make it consequential
+ */
     reactor.createRule("overlapTimeSlot3", -3, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
             l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) && hasCommonCurriculum;
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
+            hasCommonCurriculum;
 
     },
     function (l1, l2) {
@@ -239,37 +258,13 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
 
     });
 
-// reactor.createRule("refactorLesson", -2, { l1: Lesson },
-//     function (l1) {
-//         // var getCurriculumL1 = l1.getDiscipline().getCurriculum();
-        
-//         // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
-        
-//         // return getCurriculumL1 == undefined && 
-//         //     l1.getDiscipline().getObligatory()==false  &&
-//         //     slotLesson1 >= END_LESSONS;
-//         var res = countHours(l1.getDiscipline().getCourse().getId(), l1.getDay())
-//         return res >= 10 && l1.getEndLesson() > END_LESSONS;
 
-//     },
-//     function (l1) {
-
-//         // printForDebug("refactorLesson " + l1.getDiscipline().getName(), "red", "yellow");
-       
-//         // var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
-//         var dL = l1.getDurationLesson();
-//         l1.setStartLesson(START_LESSONS);
-//         l1.setEndLesson(START_LESSONS + dL);
-        
-
-//     }); 
 
 /**
  * Avoid that the same lesson is taught in the same day
  */
 reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
-
         return l1 != l2 &&
             l1.getDiscipline().getName() == l2.getDiscipline().getName() && l1.getDay() == l2.getDay();
     },
@@ -479,28 +474,29 @@ function (l) {
 /**
  * RULE: Break hour for a course if it has more of 5 hours consecutive (function in util) * 
  */
-reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
-    function (l1, l2) {
-        var count = 0;
-        if (l1 != l2 &&
-            l1.getDay() == l2.getDay() &&
-            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-            l1.getEndLesson() == l2.getStartLesson() &&
-            l1.getDiscipline().getCurriculum() == undefined && l2.getDiscipline().getCurriculum() == undefined &&
-            l1.getDiscipline().getObligatory() && l2.getDiscipline().getObligatory()) {
-            count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
-        }
-        return count > 5;
+// reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
+//     function (l1, l2) {
+//         var count = 0;
+//         if (l1 != l2 &&
+//             l1.getDay() == l2.getDay() &&
+//             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+//             l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
+//             l1.getEndLesson() == l2.getStartLesson() &&
+//             l1.getDiscipline().getCurriculum() == undefined && l2.getDiscipline().getCurriculum() == undefined &&
+//             l1.getDiscipline().getObligatory() && l2.getDiscipline().getObligatory()) {
+//             count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
+//         }
+//         return count > 5;
 
-    },
-    function (l1, l2) {
-        // console.log("COMMON " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName());
-        var dL = l2.getDurationLesson();
-        var newStart = l2.getStartLesson() + 1;
-        l2.setStartLesson(newStart);
-        l2.setEndLesson(newStart + dL);
-        assert(timetable);
-    });
+//     },
+//     function (l1, l2) {
+//         // console.log("COMMON " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName());
+//         var dL = l2.getDurationLesson();
+//         var newStart = l2.getStartLesson() + 1;
+//         l2.setStartLesson(newStart);
+//         l2.setEndLesson(newStart + dL);
+//         assert(timetable);
+//     });
 
 
 

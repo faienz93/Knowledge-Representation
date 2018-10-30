@@ -64,35 +64,9 @@
         <button class="mainbutton" onclick="location.href = 'http://127.0.0.1:5000/constraints'"><a href="#"><img src="assets/img/link.png"></a><br>Aggiungi
             Vincolo</button>
     </div>
-    <h3 style="text-align:center; margin-top: 200px;"> Scegli le materie</h3>
+    <h3 style="text-align:center; margin-top: 200px;"> Scegli il semestre</h3>
     <!-- DROPDOWN FOR CHOICE TIMETABLE -->
-    <div class="dropdownChoiceDiscipline">
-        <select id="courseDisciplineDropDown">
-            <option value="ALL">ALL</option>
-            <option value="8009">Informatica Triennale</option>
-            <option value="8014">Informatica Per il Management</option>
-            <option value="8028">Informatica Magistrale</option>
-        </select>
-        <select id="yearDisciplineDropDown">
-                <option value="1">Primo Anno</option>
-                <option value="2">Secondo Anno</option>
-            <script>
-                // console.log($("#courseDisciplineDropDown").val());
-                $( "#courseDisciplineDropDown" ).change(function() {
-                    // console.log($(this).val());
-                    var v = $(this).val()
-                    if(v == "8009" || v == "8014"){
-                        $("option[value='3']").remove();
-                        $('#yearDisciplineDropDown').append(
-                                $('<option></option>').val("3").html("Terzo Anno")
-                            );
-                    }else {
-                        $("option[value='3']").remove();
-                    }
-                });
-            </script>
-            
-        </select>
+    <div class="dropdownChoiceDiscipline">            
         <select id="semesterDisciplineDropDown">
             <option value="1">Primo Semestre</option>
             <option value="2">Secondo Semestre</option>
@@ -106,7 +80,7 @@
         <div class="row" id="randomcalendar"></div>
         <div class="row">
             <div class="col-xs-12">
-                <div id="calendar" style="width:70%; height: 10%;  margin: 0 auto;"></div>
+                <div id="calendar" style="width:70%; height: 10%;  margin: 0 auto; margin-top: 50px;"></div>
             </div>
         </div>
     </div>

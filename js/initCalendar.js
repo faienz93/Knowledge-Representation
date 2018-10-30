@@ -14,12 +14,8 @@ $(document).ready(function () {
     queryProfessors(professors, (value) => professors = value);
     queryCourses(courses, (value) => courses = value);
 
-
-    // make query the first time
-    var c = $("#courseDisciplineDropDown").val();
-    var y = $("#yearDisciplineDropDown").val();
     var sem = $("#semesterDisciplineDropDown").val();
-    queryDisciplineAsync(c, y, sem).then(function (matters) {
+    queryDisciplineAsync(sem).then(function (matters) {
         setDiscipline(matters);
     });
 
@@ -27,10 +23,8 @@ $(document).ready(function () {
     $(".dropdownChoiceDiscipline").change(function () {
         var newTimetable = new TimetableArray();
         timetable = newTimetable;
-        var c = $("#courseDisciplineDropDown").val();
-        var y = $("#yearDisciplineDropDown").val();
         var sem = $("#semesterDisciplineDropDown").val();
-        queryDisciplineAsync(c, y, sem).then(function (matters) {
+        queryDisciplineAsync(sem).then(function (matters) {
             setDiscipline(matters);
         });
     });
@@ -40,6 +34,28 @@ $(document).ready(function () {
         calendar.init();
         startGenerationCalendar();
     });
+
+    $("#ciao").click(function () {
+        alert("ffsijfiosd");
+        console.log(timetable);
+        for (var i = 0; i < timetable.tt.length; i++) {
+            var start = timetable.tt[i].getStartLesson().toFixed(2);
+            var arrayStart = start.split(".");
+            var end = timetable.tt[i].getEndLesson().toFixed(2);
+            var arrayEnd = end.split(".");
+            var numDay = defineDayNumber(timetable.tt[i].getDay());
+            var newEvent = {
+                start: now.startOf('week').add(numDay, 'days').add(arrayStart[0], 'h').add(arrayStart[1], 'm').format('X'),
+                end: now.startOf('week').add(numDay, 'days').add(arrayEnd[0], 'h').add(arrayEnd[1], 'm').format('X'),
+                title: timetable.tt[i].getDiscipline().getName() + ' - ' + timetable.tt[i].getClassroom().getName(),
+                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear()
+            }
+            events.push(newEvent);           
+        }
+        calendar.init();
+    });
+
+
 });
 
 /**
@@ -49,9 +65,10 @@ $(document).ready(function () {
  * - semester
  * @method queryDiscipline
  */
-function queryDisciplineAsync(c, y, sem) {
-    return queryDiscipline(c, y, sem);
+function queryDisciplineAsync(sem) {
+    return queryDiscipline(sem);
 }
+
 
 /**
  * This method start the generation of calendar called assert(timetable)
@@ -59,14 +76,14 @@ function queryDisciplineAsync(c, y, sem) {
  * @method startGenerationCalendar
  */
 function startGenerationCalendar() {
-    $("#loader").css("display", "block");
+   // $("#loader").css("display", "block");
     assert(timetable);
     reactor.run(Infinity, true, function () {
         console.log("END");
         $("#loader").css("display", "none");
         // var output = JSON.stringify({ timetable }, null, " ");
         // console.log(output);
-
+       
         for (var i = 0; i < timetable.tt.length; i++) {
             var start = timetable.tt[i].getStartLesson().toFixed(2);
             var arrayStart = start.split(".");
@@ -81,11 +98,14 @@ function startGenerationCalendar() {
                     "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br>" + 
                     "CORSO:: " + timetable.tt[i].getDiscipline().getCourse() +"<br>" + "<br>" +
                     "AULA:" + timetable.tt[i].getClassroom(),
-                category: timetable.tt[i].getDiscipline().getCourse()
+                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
             }
-            events.push(newEvent);
+            events.push(newEvent);           
         }
         calendar.init();
+
+        
+        
     });
 
 }

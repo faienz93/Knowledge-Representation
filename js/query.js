@@ -167,11 +167,9 @@ function queryCourses(returnValue, callback) {
  * REF: https://stackoverflow.com/a/18214142/4700162
  * @method queryDiscipline
  ************************************/
-function queryDiscipline(c,y,sem) {   
-    var endpointURL = "http://localhost:3030/ds/query";
-    var myquery;
-    if(c=="ALL"){
-        myquery = `
+function queryDiscipline(sem) {   
+    var endpointURL = "http://localhost:3030/ds/query";    
+     var myquery = `
                     PREFIX uni: <http://www.rdfproject.com/>
                     PREFIX un: <http://www.w3.org/2007/ont/unit#>
 
@@ -198,7 +196,6 @@ function queryDiscipline(c,y,sem) {
                             uni:totalhours ?totalhours;
                             uni:weekhours ?weekhours;
                             uni:year ?year;
-                            uni:year "`+y+`";
                             uni:numStudents  ?numStudents;
                             uni:isTaughtBy ?isTaughtBy.
                                 ?isTaughtBy a uni:Teacher;
@@ -231,69 +228,7 @@ function queryDiscipline(c,y,sem) {
                     }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester 
                     ?totalhours ?weekhours ?year ?numStudents ?preferences		
                     `;
-    }else {
-        myquery = `
-                    PREFIX uni: <http://www.rdfproject.com/>
-                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
-
-                    SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year 
-                            (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors) ?numStudents
-                            (GROUP_CONCAT(DISTINCT ?preference_str;separator="|") AS ?preferences)
-                    FROM <http://www.rdcproject.com/graph/disciplines>
-                    FROM <http://www.rdcproject.com/graph/professor>
-                    FROM <http://www.rdcproject.com/graph/course>
-                    FROM <http://www.rdcproject.com/graph/preferences>
-                    WHERE
-                    { 
-                            {       
-                            ?x  a uni:Discipline;
-                            uni:disciplinename ?disciplineName;
-                            uni:idDiscipline ?idDiscipline;
-                            uni:disciplineAbbreviation ?sigleDiscipline;
-                            uni:cfu ?cfu;
-                            uni:hasCourseof ?hasCourseof;
-                            uni:obligatory ?obligatory;
-                            uni:curriculum ?curriculum;
-                            uni:semester ?semester;
-                            uni:semester "`+sem+`";
-                            uni:totalhours ?totalhours;
-                            uni:weekhours ?weekhours;
-                            uni:year ?year;
-                            uni:year "`+y+`";
-                            uni:numStudents  ?numStudents;
-                            uni:isTaughtBy ?isTaughtBy.
-                                ?isTaughtBy a uni:Teacher;
-                                uni:idProfessor ?idProf;
-                                uni:firstName ?firstName;
-                                uni:lastName ?lastName;
-                                uni:role ?role.
-                            ?hasCourseof a uni:Course;
-                                uni:idCourse ?idCourse;
-                                uni:idCourse "`+c+`".
-                    OPTIONAL{?isTaughtBy a uni:Preference;                
-                                uni:consecutiveDays ?consecutiveDays;
-                                uni:noLessonAMPM ?noLessonAMPM;
-                                uni:noLessonDay1 ?noLessonDay1;
-                                uni:noLessonDay2 ?noLessonDay2;
-                                uni:sixHourSplit ?sixHourSplit;
-                                uni:writeMethodRoom ?writeMethodRoom
-                    }
-                            }
-
-                        BIND(CONCAT(?idProf) AS ?prof_str)
-                        BIND(CONCAT(
-                    "consecutivedays:",?consecutiveDays,",",      
-                    "setperiodofday:",?noLessonAMPM,",",
-                    "avoidlessonday1:",?noLessonDay1,",",
-                    "avoidlessonday2:",?noLessonDay2,",",
-                    "splitdurationlessons6h:",?sixHourSplit,",",
-                    "blackboard:",?writeMethodRoom)
-                    AS ?preference_str)
-
-                    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester 
-                    ?totalhours ?weekhours ?year ?numStudents ?preferences		
-                    `;
-    }
+    
 
     
 
