@@ -59,7 +59,7 @@ $(document).ready(function () {
       timeline: {
         intervalMinutes: 30,
         fromHour: 8,
-        toHour: 19
+        toHour: 24
       }
     },
     events: events,

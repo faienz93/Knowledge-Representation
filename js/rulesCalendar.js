@@ -74,7 +74,7 @@ reactor.createRule("assignClassroom", -1, { l: Lesson },
         var compatibilityClassroom = checkCapacityClassroom(l.getDiscipline().getNumStudent());
         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
         l.setClassroom(newClassRoom);
-        assert(timetable);
+        assert(l);
 
     });
 
@@ -101,7 +101,7 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
         l2.setStartLesson(l1.getEndLesson());
         l2.setEndLesson(l2.getStartLesson() + dL);
         // assert([l1, l2]); 
-        assert(timetable);
+        assert([l1,l2]);
     });
 
 
@@ -141,7 +141,7 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
             l1.setStartLesson(l2.getEndLesson());
             l1.setEndLesson(l1.getStartLesson() + dL);
         }
-        assert(timetable);
+        assert([l1,l2]);
     });
 
 
@@ -274,7 +274,7 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
         // var actualDayToAvoid = l2.getDay();
         // l1.setDay(generateDayByExcludingOne(actualDayToAvoid));
         l2.setNewDay(l1.getDay(), 1);
-        assert(timetable);
+        assert([l1,l2]);
     });
 
 
@@ -304,7 +304,7 @@ reactor.createRule("avoidLessonDay1", -1, { l: Lesson },
         l.setStartLesson(START_LESSONS);
         l.setEndLesson(START_LESSONS + dL);
         l.setDay(generateDayByExcludingOne(actualDayToAvoid));
-        assert(timetable);
+        assert(l);
 
     });
 
@@ -327,7 +327,7 @@ reactor.createRule("avoidLessonDay2", -1, { l: Lesson },
         l.setStartLesson(START_LESSONS);
         l.setEndLesson(START_LESSONS + dL);
         l.setDay(generateDayByExcludingOne(actualDayToAvoid));
-        assert(timetable);
+        assert(l);
 
     });
 
@@ -351,7 +351,7 @@ reactor.createRule("consecutiveLessonsStartWeek", -1, { l: Lesson },
     function (l) {
         // printForDebug("consecutiveLessons " + l.getDiscipline().getName() + " " + JSON.stringify(l.getDiscipline().getPreference()), "black", "pink");
         l.setDay("Monday");
-        assert(timetable);
+        assert(l);
     });
 
 /**
@@ -376,7 +376,7 @@ reactor.createRule("consecutiveLessonsEndWeek", -1, { l: Lesson },
         if (l.getDurationLesson() == 2 && l.getDiscipline().getWeeksHours() == 6) { l.setDay("Wednesday"); }
         else { l.setDay("Thursday"); }
         // l1.setDay("Thursday");
-        assert(timetable);
+        assert(l);
 
 
     });
@@ -404,7 +404,7 @@ reactor.createRule("setPeriodOfDayAM", -1, { l: Lesson },
         var dL = l.getDurationLesson();
         l.setStartLesson(START_LESSONS);
         l.setEndLesson(START_LESSONS + dL);
-        assert(timetable);
+        assert(l);
     });
 
 /**
@@ -441,7 +441,7 @@ reactor.createRule("checkClassroomBlackboard", -1, { l: Lesson },
         var compatibilityRooms = checkBlackboardClassroom(l.getDiscipline().getBlackboard());  
         var newClassRoom = compatibilityRooms[Math.floor(Math.random() * compatibilityRooms.length)];
         l.setClassroom(newClassRoom);
-        assert(timetable);
+        assert(l);
     });
 
 
@@ -467,7 +467,7 @@ function (l) {
     l.setStartLesson(START_LESSONS);
     l.setEndLesson(START_LESSONS + dL);
     //   printForDebug(l,"white","black");    
-    assert(timetable);
+    assert(l);
 });
 
 

@@ -35,25 +35,6 @@ $(document).ready(function () {
         startGenerationCalendar();
     });
 
-    $("#ciao").click(function () {
-        alert("ffsijfiosd");
-        console.log(timetable);
-        for (var i = 0; i < timetable.tt.length; i++) {
-            var start = timetable.tt[i].getStartLesson().toFixed(2);
-            var arrayStart = start.split(".");
-            var end = timetable.tt[i].getEndLesson().toFixed(2);
-            var arrayEnd = end.split(".");
-            var numDay = defineDayNumber(timetable.tt[i].getDay());
-            var newEvent = {
-                start: now.startOf('week').add(numDay, 'days').add(arrayStart[0], 'h').add(arrayStart[1], 'm').format('X'),
-                end: now.startOf('week').add(numDay, 'days').add(arrayEnd[0], 'h').add(arrayEnd[1], 'm').format('X'),
-                title: timetable.tt[i].getDiscipline().getName() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear()
-            }
-            events.push(newEvent);           
-        }
-        calendar.init();
-    });
 
 
 });
@@ -81,8 +62,8 @@ function startGenerationCalendar() {
     reactor.run(Infinity, true, function () {
         console.log("END");
         $("#loader").css("display", "none");
-        // var output = JSON.stringify({ timetable }, null, " ");
-        // console.log(output);
+        var output = JSON.stringify({ timetable }, null, " ");
+        console.log(timetable);
        
         for (var i = 0; i < timetable.tt.length; i++) {
             var start = timetable.tt[i].getStartLesson().toFixed(2);
@@ -132,6 +113,7 @@ function setDiscipline(disc) {
 
     }
 
+   
     // for every query reset the timetable.length has resize
     timetable.tt.length = 0
 
@@ -139,8 +121,8 @@ function setDiscipline(disc) {
 
         var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
         // var randomDay = days[Math.floor(Math.random() * days.length)];
-        var subjectWeeksHours = disc[i].getWeeksHours();
-        // var subjectWeeksHours = DURATION_LESSON;
+        // var subjectWeeksHours = disc[i].getWeeksHours();
+        var subjectWeeksHours = DURATION_LESSON;
         if (subjectWeeksHours < 4) {
             timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
         }
