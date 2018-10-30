@@ -83,6 +83,10 @@
   background: #4c2b4f;
 }
 
+.calendar-categories {
+  height: 40px !important;
+}
+
 .calendarbutton {
   font-family:helvetica;
   font-size:30px;
