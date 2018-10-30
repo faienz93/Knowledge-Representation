@@ -20,7 +20,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
     this.numStudents = numStudents;
     var professor = [];
     this.course = null;
-    
+
     var preference = [];
 
 
@@ -38,14 +38,14 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
         return this.abbreviation;
     };
 
-    
+
     /**
      * Return the obligatory of Course
      */
     this.getObligatory = function () {
         return this.obligatory;
     }
-   
+
     /**
      * Return the WeeksHours of Course
      */
@@ -57,11 +57,11 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
      */
     this.getObligatory = function () {
         var isTrueSet;
-        if(this.obligatory == 'true'){
-           isTrueSet = true; 
-        }else if(this.obligatory == 'false'){
-            isTrueSet = false; 
-        }        
+        if (this.obligatory == 'true') {
+            isTrueSet = true;
+        } else if (this.obligatory == 'false') {
+            isTrueSet = false;
+        }
         return isTrueSet;
     };
 
@@ -100,7 +100,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
     // this.setDisciplineProfessor=function() {
     //     var subjectProfessor = queryDisciplineProfessor(this.id);
     //     for (var i = 0; i < subjectProfessor; i++) {
-            
+
     //     }
 
     // }
@@ -130,14 +130,14 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
      * Compare two array of curriculum and return response by Boolean
      */
     this.getExistCurriculum = function (otherDisciplineCurriculum) {
-        
-        if(this.curriculum != undefined && otherDisciplineCurriculum!=undefined) {
-            return this.curriculum.some(r=> otherDisciplineCurriculum.includes(r));
-        }else {
+
+        if (this.curriculum != undefined && otherDisciplineCurriculum != undefined) {
+            return this.curriculum.some(r => otherDisciplineCurriculum.includes(r));
+        } else {
             // if is undefined it means that is facoltative and for this can be overlap 
             return false;
         }
-        
+
     }
     /**
     * Return an Array of Curriculum of this discipline in JSON Format
@@ -183,36 +183,36 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
      * **********************************************************************************************
      */
 
-    this.setPreferences=function(p){        
-         var prefKeys=p.split(",");         
-         for(var i=0;i<prefKeys.length;i++){            
-             var pKeyValue=prefKeys[i].split(":");            
-             var pKey=pKeyValue[0];
-             var pValue=pKeyValue[1];            
-            if(pValue!=""){
-                if(pKey=="consecutivedays"){
-                this.consecutiveDay(pValue)
+    this.setPreferences = function (p) {
+        var prefKeys = p.split(",");
+        for (var i = 0; i < prefKeys.length; i++) {
+            var pKeyValue = prefKeys[i].split(":");
+            var pKey = pKeyValue[0];
+            var pValue = pKeyValue[1];
+            if (pValue != "") {
+                if (pKey == "consecutivedays") {
+                    this.consecutiveDay(pValue)
                 }
-                if(pKey=="avoidLessonDay"){
-                    var dayChosen= pValue.split("-");
-                    var day1=dayChosen[0];
-                    var day2=dayChosen[1];                    
-                    this.avoidLessonDay(day1,day2);                              
-                    
-                    }
-                if(pKey=="splitdurationlessons6h"){
-                this.splitDurationLessons6h(parseInt(pValue))
-                }  
-                if(pKey=="setperiodofday"){
-                this.setPeriodOfDay(pValue);
-                }           
-                if(pKey=="blackboard"){
-                this.blackboard(pValue)
+                if (pKey == "avoidlessonday1") {
+                    this.avoidLessonDay1(pValue)
+                }
+                if (pKey == "avoidlessonday2") {
+                    this.avoidLessonDay2(pValue)
+                }
+
+                if (pKey == "splitdurationlessons6h") {
+                    this.splitDurationLessons6h(parseInt(pValue))
+                }
+                if (pKey == "setperiodofday") {
+                    this.setPeriodOfDay(pValue);
+                }
+                if (pKey == "blackboard") {
+                    this.blackboard(pValue)
                 }
             }
-            
-         }
-         
+
+        }
+
 
     }
     /**
@@ -225,7 +225,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
         var exist = false;
         for (var i = 0; i < preference.length; i++) {
             if (key in preference[i]) {
-                    exist = true;
+                exist = true;
             }
         }
         return exist;
@@ -291,40 +291,61 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
 
     /**
      * Set the preference that for this discipline an professor
-     * want to avoid a specific day
+     * want to avoid a specific day1
      */
-    this.avoidLessonDay = function (d1,d2) {
-        var avDay={"avoidLessonDay": [d1]};
-        if(d2!=""){ 
-        avDay = {"avoidLessonDay": [d1,d2] };  
-        }      
-        preference.push(avDay);
-        
-    }
-    
-
-    /**
-     * Delete from preference the avoid lesson day
-     * DA USARAE PER ALESSIO
-     */
-    this.deleteAvoidLessonDay = function () {
-        for (var i = 0; i < preference.length; i++) {
-            delete preference[i].avoidLessonDay;
-        }
-        var filtered = preference.filter(value => Object.keys(value).length != 0);
-        if (filtered != undefined) {
+    this.avoidLessonDay1 = function (d) {
+        if (this.checkExistPreference("avoidlessonday1")) {
+            for (var i = 0; i < preference.length; i++) {
+                delete preference[i].avoidlessonday1;
+            }
+            var filtered = preference.filter(value => Object.keys(value).length != 0);
             preference = filtered;
         }
+        var avDay = { "avoidlessonday1": d };
+        preference.push(avDay);
+    }
+
+    /**
+     * Set the preference that for this discipline an professor
+     * want to avoid a specific day2
+     */
+    this.avoidLessonDay2 = function (d) {
+        if (this.checkExistPreference("avoidlessonday2")) {
+            for (var i = 0; i < preference.length; i++) {
+                delete preference[i].avoidlessonday2;
+            }
+            var filtered = preference.filter(value => Object.keys(value).length != 0);
+            preference = filtered;
+        }
+        var avDay = { "avoidlessonday2": d };
+        preference.push(avDay);
+    }
+
+
+
+
+    /**
+     * Check from the preference if exist a lesson day that is assigned 
+     * to a day to avoid
+     */
+    this.checkIncompatibilyDay1 = function (v) {
+
+        var inDay = false;
+        if (preference.some(e => e.avoidlessonday1 == v)) {
+            inDay = true;
+        }
+
+        return inDay;
     }
 
     /**
      * Check from the preference if exist a lesson day that is assigned 
      * to a day to avoid
      */
-    this.checkIncompatibilyDay = function (v) {
+    this.checkIncompatibilyDay2 = function (v) {
 
         var inDay = false;
-        if (preference.some(e => e.avoidLessonDay == v)) {
+        if (preference.some(e => e.avoidlessonday2 == v)) {
             inDay = true;
         }
 
@@ -384,7 +405,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
             for (var i = 0; i < preference.length; i++) {
                 delete preference[i].splitdurationlessons6h;
             }
-            
+
             var filtered = preference.filter(value => Object.keys(value).length != 0);
             preference = filtered;
         }
@@ -464,10 +485,10 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
         var t = JSON.stringify({ professor }, null, " ");
         var cur = JSON.stringify({ curriculum }, null, " ");
         var p = JSON.stringify({ preference }, null, " ");
-       
+
         return this.name + " " + t + " " + this.course + " " + cur + " " + p;
-        
-        
+
+
     }
 
 

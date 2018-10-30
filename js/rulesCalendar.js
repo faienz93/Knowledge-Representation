@@ -293,16 +293,39 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
 /**
 * RULE: Check From Preference if exist a particular day where the professor doesn't want doing a lesson
 */
-reactor.createRule("avoidLessonDay", -1, { l: Lesson },
+reactor.createRule("avoidLessonDay1", -1, { l: Lesson },
     function (l) {
         // check if exist preference with specific key
-        var existLessotToAvoid = l.getDiscipline().checkExistPreference("avoidLessonDay");
-        var existIncompatibilyDay = l.getDiscipline().checkIncompatibilyDay(l.getDay());
+        var existLessotToAvoid = l.getDiscipline().checkExistPreference("avoidlessonday1");
+        var existIncompatibilyDay = l.getDiscipline().checkIncompatibilyDay1(l.getDay());
         return existLessotToAvoid && existIncompatibilyDay;
 
     },
     function (l) {
-        // printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDay(), "white", "blue");
+        printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDay(), "white", "blue");
+
+        var actualDayToAvoid = l.getDay();
+        var dL = l.getDurationLesson();
+        l.setStartLesson(START_LESSONS);
+        l.setEndLesson(START_LESSONS + dL);
+        l.setDay(generateDayByExcludingOne(actualDayToAvoid));
+        assert(timetable);
+
+    });
+
+/**
+* RULE: Check From Preference if exist a particular day where the professor doesn't want doing a lesson
+*/
+reactor.createRule("avoidLessonDay2", -1, { l: Lesson },
+    function (l) {
+        // check if exist preference with specific key
+        var existLessotToAvoid = l.getDiscipline().checkExistPreference("avoidlessonday2");
+        var existIncompatibilyDay = l.getDiscipline().checkIncompatibilyDay2(l.getDay());
+        return existLessotToAvoid && existIncompatibilyDay;
+
+    },
+    function (l) {
+        printForDebug("AVOIDLESSON2 " + l.getDiscipline().getName() + " " + l.getDay(), "blue", "white");
 
         var actualDayToAvoid = l.getDay();
         var dL = l.getDurationLesson();

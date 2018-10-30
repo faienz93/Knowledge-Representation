@@ -222,7 +222,8 @@ function queryDiscipline(c,y,sem) {
                         BIND(CONCAT(
                     "consecutivedays:",?consecutiveDays,",",      
                     "setperiodofday:",?noLessonAMPM,",",
-                    "avoidLessonDay:",?noLessonDay1,"-",?noLessonDay2,",",
+                    "avoidlessonday1:",?noLessonDay1,",",
+                    "avoidlessonday2:",?noLessonDay2,",",
                     "splitdurationlessons6h:",?sixHourSplit,",",
                     "blackboard:",?writeMethodRoom)
                     AS ?preference_str)
@@ -283,7 +284,8 @@ function queryDiscipline(c,y,sem) {
                         BIND(CONCAT(
                     "consecutivedays:",?consecutiveDays,",",      
                     "setperiodofday:",?noLessonAMPM,",",
-                    "avoidLessonDay:",?noLessonDay1,"-",?noLessonDay2,",",
+                    "avoidlessonday1:",?noLessonDay1,",",
+                    "avoidlessonday2:",?noLessonDay2,",",
                     "splitdurationlessons6h:",?sixHourSplit,",",
                     "blackboard:",?writeMethodRoom)
                     AS ?preference_str)
