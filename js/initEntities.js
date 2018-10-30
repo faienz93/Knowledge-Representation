@@ -410,14 +410,14 @@ function fillFieldDisciplineById(id) {
                                 uni:year ?year;
                                 uni:curriculum ?curriculum;
                                 uni:numStudents ?numStudents;
-                                uni:isTaughtBy ?isTaughtBy.
-                                    ?isTaughtBy a uni:Teacher;
+                                OPTIONAL {  ?x  uni:isTaughtBy ?isTaughtBy.
+                                	?isTaughtBy a uni:Teacher;
                                     uni:idProfessor ?idProf;
                                     uni:firstName ?firstName;
                                     uni:lastName ?lastName;
-                                    uni:role ?role.
-                                    ?hasCourseof a uni:Course;
-                                    uni:idCourse ?idCourse.   
+      								uni:role ?role}.
+                                ?hasCourseof a uni:Course;
+                                uni:idCourse ?idCourse.  
                                 }
 
                             BIND(CONCAT(?idProf,'-',?firstName,'-',?lastName,'-',?role) AS ?prof_str)
@@ -440,8 +440,7 @@ function fillFieldDisciplineById(id) {
                 // REF: https://www.w3.org/TR/rdf-sparql-json-res/
                 for (i in bindings) {
                     console.log(bindings[i]);
-
-                    var result = bindings[i].professors.value.split(",");                    
+                                       
                     $('input[name=discipline_nameUpdate]').val(bindings[i].disciplineName.value);
                     $('input[name=discipline_abbUpdate]').val(bindings[i].sigleDiscipline.value);
                     $("input[name=obligatoryUpdate][value=" + bindings[i].obligatory.value + "]").attr('checked', 'checked');
@@ -455,12 +454,16 @@ function fillFieldDisciplineById(id) {
                     $('input[name=weeksHoursUpdate]').val(bindings[i].weekhours.value);
                     $('input[name=numberStudentsUpdate]').val(bindings[i].numStudents .value);
 
-                    var updateChosenProfessor = []; 
-                    for(var i = 0; i < result.length; i++){
-                        var singleProfessorID = result[i].split("-");                       
-                        updateChosenProfessor.push(singleProfessorID[0]);
+                    if(bindings[i].professors != null){
+                        var result = bindings[i].professors.value.split(","); 
+                        var updateChosenProfessor = []; 
+                        for(var i = 0; i < result.length; i++){
+                            var singleProfessorID = result[i].split("-");                       
+                            updateChosenProfessor.push(singleProfessorID[0]);
+                        }
+                        $('#assignProfessorUpdate').val(updateChosenProfessor).trigger("chosen:updated");
                     }
-                    $('#assignProfessorUpdate').val(updateChosenProfessor).trigger("chosen:updated"); 
+                     
                 }
             });
 
