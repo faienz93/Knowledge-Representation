@@ -77,9 +77,10 @@ function startGenerationCalendar() {
                 start: now.startOf('week').add(numDay, 'days').add(arrayStart[0], 'h').add(arrayStart[1], 'm').format('X'),
                 end: now.startOf('week').add(numDay, 'days').add(arrayEnd[0], 'h').add(arrayEnd[1], 'm').format('X'),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                content: "AULA:" + timetable.tt[i].getClassroom() + "<br>" +
-                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br>" + // TODO gestire i professori multipli
-                    "PROFESSORE " + timetable.tt[i].getDiscipline().getAllProfessor(),//'Hello World! <br> <p>Foo Bar</p>',
+                content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "<br>" + 
+                    "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br>" + 
+                    "CORSO:: " + timetable.tt[i].getDiscipline().getCourse() +"<br>" + "<br>" +
+                    "AULA:" + timetable.tt[i].getClassroom(),
                 category: timetable.tt[i].getDiscipline().getCourse()
             }
             events.push(newEvent);
