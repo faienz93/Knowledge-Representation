@@ -63,7 +63,7 @@ function startGenerationCalendar() {
         console.log("END");
         $("#loader").css("display", "none");
         var output = JSON.stringify({ timetable }, null, " ");
-        console.log(timetable);
+        console.log(output);
        
         for (var i = 0; i < timetable.tt.length; i++) {
             var start = timetable.tt[i].getStartLesson().toFixed(2);
@@ -76,6 +76,7 @@ function startGenerationCalendar() {
                 end: now.startOf('week').add(numDay, 'days').add(arrayEnd[0], 'h').add(arrayEnd[1], 'm').format('X'),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
                 content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "<br>" + 
+                        "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "<br>" + 
                     "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br>" + 
                     "CORSO:: " + timetable.tt[i].getDiscipline().getCourse() +"<br>" + "<br>" +
                     "AULA:" + timetable.tt[i].getClassroom(),
