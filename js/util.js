@@ -229,7 +229,14 @@ function getProfessorById(idProf) {
  */
 function switchLesson(l1,l2) {
 
-    if (l1.getStartLesson() < l2.getStartLesson()) {
+   
+    // if(l1.getStartLesson() > 22 || l2.getStartLesson() > 22){
+    //     console.log("OOOOOOOOOO " + l1.getStartLesson() + " " + l2.getStartLesson())
+    // }else {
+    //     console.log("NON INIZIA TARDI")
+    // }
+
+    if (l1.getStartLesson() <= l2.getStartLesson()) {
 
         var dL = l2.getDurationLesson();
         l2.setStartLesson(l1.getEndLesson());
@@ -240,6 +247,22 @@ function switchLesson(l1,l2) {
         l1.setStartLesson(l2.getEndLesson());
         l1.setEndLesson(l1.getStartLesson() + dL);
     }
+
+    if ((l1.getStartLesson() + l1.getDurationLesson())>= END_LESSONS) {
+
+        var dL = l1.getDurationLesson();
+        l1.setNewDay(l1.getDay(), 1);
+        l1.setStartLesson(START_LESSONS);
+        l1.setEndLesson(START_LESSONS + dL);
+    }
+    if ((l2.getStartLesson() + l2.getDurationLesson()) >= END_LESSONS) {
+
+        var dL = l2.getDurationLesson();
+        l2.setNewDay(l2.getDay(), 1);
+        l2.setStartLesson(START_LESSONS);
+        l2.setEndLesson(START_LESSONS + dL);
+    }
+    
 
 }
 
