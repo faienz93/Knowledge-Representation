@@ -24,7 +24,7 @@ var courses = undefined;
 // start lessons
 var START_LESSONS = 8.30
 
-var DURATION_LESSON = 6;
+var DURATION_LESSON = 5;
 
 // end lessons
 var END_LESSONS = 19;
