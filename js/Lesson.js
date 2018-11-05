@@ -70,9 +70,9 @@ function Lesson(day, discipline, startLesson, endLesson, classroom) {
     /**
      * Set the duration of Lessons
      */
-    this.setDurationLesson = function (dur) {
-        this.endLesson = this.startLesson + dur;
-    }
+    // this.setDurationLesson = function (dur) {
+    //     this.endLesson = this.startLesson + dur;
+    // }
 
     /**
      * Set Day

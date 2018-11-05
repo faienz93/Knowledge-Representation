@@ -10,6 +10,21 @@
  */
 $(document).ready(function () {
 
+    $('#calendar').fullCalendar({
+        // defaultView: 'basicWeek',
+        // events: events,
+        // weekends: false, // will hide Saturdays and Sundays
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,basicWeek,basicDay'
+        },
+        defaultView: 'basicWeek',
+        weekends: false,
+        events: events
+      });
+
+      
     queryClassrooms(classrooms, (value) => classrooms = value);
     queryProfessors(professors, (value) => professors = value);
     queryCourses(courses, (value) => courses = value);
@@ -31,7 +46,7 @@ $(document).ready(function () {
 
     $("#generateCalendar").click(function () {
         events.length = 0;
-        calendar.init();
+        // calendar.init();
         startGenerationCalendar();
     });
 
@@ -71,9 +86,16 @@ function startGenerationCalendar() {
             var end = timetable.tt[i].getEndLesson().toFixed(2);
             var arrayEnd = end.split(".");
             var numDay = defineDayNumber(timetable.tt[i].getDay());
+            var prova = '2018-11-0'+numDay+'T12:30:00';
+            var prova2 = '2018-11-0'+numDay+'T19:30:00';
+            console.log(prova);
             var newEvent = {
-                start: now.startOf('week').add(numDay, 'days').add(arrayStart[0], 'h').add(arrayStart[1], 'm').format('X'),
-                end: now.startOf('week').add(numDay, 'days').add(arrayEnd[0], 'h').add(arrayEnd[1], 'm').format('X'),
+                // start: now.startOf('week').add(numDay, 'days').add(10, 'h').add(arrayStart[1], 'm').format('X'),
+                // end: now.startOf('week').add(numDay, 'days').add(11, 'h').add(arrayEnd[1], 'm').format('X'),
+                // start: '2018-11-0'+numDay+'T'+ arrayStart[0] + ':'+ arrayStart[1] + ':00',
+                // end: '2018-11-'+numDay+'T'+ arrayEnd[0] + ':'+ arrayEnd[1] + ':00',
+                start: String(prova),
+                end: String(prova2),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
                 content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "<br>" + 
                         "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "<br>" + 
@@ -84,8 +106,10 @@ function startGenerationCalendar() {
             }
             events.push(newEvent);           
         }
-        calendar.init();
-
+        // calendar.init();
+        // $('#calendar').fullCalendar( 'renderEvent', event, true);
+        // $('.calendar').fullCalendar('renderEvent', events, true);
+        $('#calendar').fullCalendar('addEventSource', events);   
         
         
     });

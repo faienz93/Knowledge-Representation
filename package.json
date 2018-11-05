@@ -18,8 +18,5 @@
   "bugs": {
     "url": "https://github.com/antoniofaienza93/Knowledge-Representation/issues"
   },
-  "homepage": "https://github.com/antoniofaienza93/Knowledge-Representation#readme",
-  "dependencies": {
-    "arrobefr-jquery-calendar": "^1.0.12"
-  }
+  "homepage": "https://github.com/antoniofaienza93/Knowledge-Representation#readme"
 }
