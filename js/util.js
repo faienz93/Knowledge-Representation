@@ -115,26 +115,26 @@ function generateClassroom(toRemove = undefined) {
  * Function that spli the string into array and determinate the curriculum of discipline;
  * @param {String} str - string to split
  */
-function splitCurriculum(str) {   
-    if(str != "NO"){
+function splitCurriculum(str) {
+    if (str != "NO") {
         return str.split("");
     }
-    
+
 }
 
 /**
  * Function that counts number of hours of a specific course in a specific day
  * 
  */
-function countHours(course,day){
-    var result=0;
-     for(var i=0;i<timetable.tt.length;i++){        
-        if(timetable.tt[i].getDiscipline().getCourse().getId() == course && 
-        timetable.tt[i].getDay() == day){
-           result+=timetable.tt[i].getDurationLesson();
-               }       
-}   
-   return result;
+function countHours(course, day) {
+    var result = 0;
+    for (var i = 0; i < timetable.tt.length; i++) {
+        if (timetable.tt[i].getDiscipline().getCourse().getId() == course &&
+            timetable.tt[i].getDay() == day) {
+            result += timetable.tt[i].getDurationLesson();
+        }
+    }
+    return result;
 }
 
 /**
@@ -180,7 +180,8 @@ function checkBlackboardClassroom(method) {
     var result = [];
     for (var i = 0; i < classrooms.length; i++) {
         if (classrooms[i].getBlackboard() == method) {
-            result.push(classrooms[i]);        }
+            result.push(classrooms[i]);
+        }
     }
     return result;
 }
@@ -201,24 +202,46 @@ function countHoursBetween(course, day, startHour, endHour) {
     }
     return result;
 }
-    /**
-     * Return the professor by Id
-     */
-    function getProfessorById (idProf) {
-        var result;
-        $( document ).ajaxComplete(function() {
-            
-            for (var i=0;i<professors.length;i++){                
-                if(professors[i].getId()==idProf){                    
-                    result = professors[i];                    
-                }            
-            };            
+/**
+ * Return the professor by Id
+ */
+function getProfessorById(idProf) {
+    var result;
+    $(document).ajaxComplete(function () {
+
+        for (var i = 0; i < professors.length; i++) {
+            if (professors[i].getId() == idProf) {
+                result = professors[i];
             }
-          );                 
-        return result;
-        
+        };
+    }
+    );
+    return result;
+
+}
+
+/**
+ * This function makes two consecutive lessons
+ * @param {Lesson} l1 
+ * @param {Lesson} l2
+ * 
+ * @method switchLesson
+ */
+function switchLesson(l1,l2) {
+
+    if (l1.getStartLesson() < l2.getStartLesson()) {
+
+        var dL = l2.getDurationLesson();
+        l2.setStartLesson(l1.getEndLesson());
+        l2.setEndLesson(l2.getStartLesson() + dL);
+    }
+    else {
+        var dL = l1.getDurationLesson();
+        l1.setStartLesson(l2.getEndLesson());
+        l1.setEndLesson(l1.getStartLesson() + dL);
     }
 
+}
 
 
 /**
