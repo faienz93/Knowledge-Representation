@@ -48,7 +48,8 @@ function Lesson(day, discipline, startLesson, endLesson, classroom) {
      * Return the duration Lesson: END LESSON - START LESSON
      */
     this.getDurationLesson = function () {
-        return this.endLesson - this.startLesson;
+        var different = this.endLesson - this.startLesson;
+        return Math.round(different * 100) / 100;
     }
 
     /**
