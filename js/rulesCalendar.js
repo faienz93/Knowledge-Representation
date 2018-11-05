@@ -408,21 +408,21 @@ reactor.createRule("checkClassroomBlackboard", -1, { l: Lesson },
  * Rule for the end lesson over 19 
  */
 
-reactor.createRule("maxLessonEnd", 0, { l: Lesson },
-function (l) {
-    var slotLesson = l.getStartLesson() + l.getDurationLesson();
-    return slotLesson >= END_LESSONS;
-},
-function (l) {
-    var dL = l.getDurationLesson();
-    // printForDebug(l, "blue", "white");
-    // l.getStartLesson()
-    l.setDay(generateDayByExcludingOne(l.getDay()));
-    l.setStartLesson(START_LESSONS);
-    l.setEndLesson(START_LESSONS + dL);
-    //   printForDebug(l,"white","black");    
-    assert(l);
-});
+// reactor.createRule("maxLessonEnd", 0, { l: Lesson },
+// function (l) {
+//     var slotLesson = l.getStartLesson() + l.getDurationLesson();
+//     return slotLesson >= END_LESSONS;
+// },
+// function (l) {
+//     var dL = l.getDurationLesson();
+//     // printForDebug(l, "blue", "white");
+//     // l.getStartLesson()
+//     l.setDay(generateDayByExcludingOne(l.getDay()));
+//     l.setStartLesson(START_LESSONS);
+//     l.setEndLesson(START_LESSONS + dL);
+//     //   printForDebug(l,"white","black");    
+//     assert(l);
+// });
 
 
 /**
