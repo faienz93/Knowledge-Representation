@@ -44,23 +44,6 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
  */
 
 
-/**
- * If lesson start after the 18:00 then swap to next Day
- */
-// reactor.createRule("swapDay", -1, { l: Lesson },
-//     function (l) {
-//         return l.getStartLesson() >= END_LESSONS;
-//     },
-//     function (l) {
-//         var dL = l.getDurationLesson();        
-//         l.setStartLesson(START_LESSONS);
-//         l.setEndLesson(START_LESSONS + dL);        
-//         var actualDay = l.getDay();
-//         l.setNewDay(actualDay, 1);
-//     });
-
-
-
 
 /**
 * RULE: Assign Classroom based on number subscription
@@ -97,10 +80,10 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
 
         // printForDebug("CLASSROOMOCCUPIED " + l1.toString() + " " + l2.toString(), "white", "black");
 
-        var dL = l2.getDurationLesson();
-        l2.setStartLesson(l1.getEndLesson());
-        l2.setEndLesson(l2.getStartLesson() + dL);
-        // assert([l1, l2]); 
+        var newClassroom = generateClassroom(l1.getClassroom());
+        l2.setClassroom(newClassroom);
+
+        // printForDebug("CLASSROOMOCCUPIED ASSIGNED " + l1.getClassroom() + " " + l2.getClassroom(), "white", "black");
         assert([l1,l2]);
     });
 
@@ -116,11 +99,8 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
 
         // printForDebug("CLASSROOMOCCUPIED " + l1.toString() + " " + l2.toString(), "white", "black");
-
-        var dL = l2.getDurationLesson();
-        l2.setStartLesson(l1.getEndLesson());
-        l2.setEndLesson(l2.getStartLesson() + dL);
-        // assert([l1, l2]); 
+        var newClassroom = generateClassroom(l1.getClassroom());
+        l2.setClassroom(newClassroom);
         assert([l1,l2]);
     });
 
@@ -150,17 +130,7 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
         // printForDebug("UBIQUITY: " + l1.toString() + " ** " + l2.toString(), "red", "white");
-        if (l1.getStartLesson() < l2.getStartLesson()) {
-
-            var dL = l2.getDurationLesson();
-            l2.setStartLesson(l1.getEndLesson());
-            l2.setEndLesson(l2.getStartLesson() + dL);
-        }
-        else {
-            var dL = l1.getDurationLesson();
-            l1.setStartLesson(l2.getEndLesson());
-            l1.setEndLesson(l1.getStartLesson() + dL);
-        }
+        switchLesson(l1,l2);
         assert([l1,l2]);
     });
 
@@ -174,7 +144,7 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
  * - overlap the time slot
  * In this case, switch the time slot to make it consequential
  */
-reactor.createRule("overlapTimeSlot", 0, { l1: Lesson, l2: Lesson },
+reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
@@ -184,18 +154,7 @@ reactor.createRule("overlapTimeSlot", 0, { l1: Lesson, l2: Lesson },
 
     },
     function (l1, l2) {
-        if (l1.getStartLesson() < l2.getStartLesson()) {
-
-            var dL = l2.getDurationLesson();
-            l2.setStartLesson(l1.getEndLesson());
-            l2.setEndLesson(l2.getStartLesson() + dL);
-        }
-        else {
-            var dL = l1.getDurationLesson();
-            l1.setStartLesson(l2.getEndLesson());
-            l1.setEndLesson(l1.getStartLesson() + dL);
-         
-        }
+        switchLesson(l1,l2);
 
     });
 
@@ -225,17 +184,7 @@ reactor.createRule("overlapTimeSlot", 0, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
 
         // printForDebug("OVERLAPTIMESLOT2 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "black", "red");
-        if (l1.getStartLesson() < l2.getStartLesson()) {
-
-            var dL = l2.getDurationLesson();
-            l2.setStartLesson(l1.getEndLesson());
-            l2.setEndLesson(l2.getStartLesson() + dL);
-        }
-        else {
-            var dL = l1.getDurationLesson();
-            l1.setStartLesson(l2.getEndLesson());
-            l1.setEndLesson(l1.getStartLesson() + dL);
-        }
+        switchLesson(l1,l2);
 
     });
 
@@ -263,17 +212,7 @@ reactor.createRule("overlapTimeSlot", 0, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
 
         // printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
-        if (l1.getStartLesson() < l2.getStartLesson()) {
-
-            var dL = l2.getDurationLesson();
-            l2.setStartLesson(l1.getEndLesson());
-            l2.setEndLesson(l2.getStartLesson() + dL);
-        }
-        else {
-            var dL = l1.getDurationLesson();
-            l1.setStartLesson(l2.getEndLesson());
-            l1.setEndLesson(l1.getStartLesson() + dL);
-        }
+        switchLesson(l1,l2);
         
 
     });
@@ -463,25 +402,6 @@ reactor.createRule("checkClassroomBlackboard", -1, { l: Lesson },
         l.setClassroom(newClassRoom);
         assert(l);
     });
-
-
-
-
-    // reactor.createRule("maxLessonEnd0", 0, { l: Lesson },
-    // function (l) {
-    //     var slotLesson = l.getStartLesson() + l.getDurationLesson();
-    //     return slotLesson >= END_LESSONS;
-    // },
-    // function (l) {
-    //     var dL = l.getDurationLesson();
-    //     // printForDebug(l, "blue", "white");
-    //     // l.getStartLesson()
-    //     l.setDay(generateDayByExcludingOne(l.getDay()));
-    //     l.setStartLesson(START_LESSONS);
-    //     l.setEndLesson(START_LESSONS + dL);
-    //     //   printForDebug(l,"white","black");    
-    //     assert(l);
-    // });
   
 
     /**
