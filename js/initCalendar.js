@@ -14,15 +14,16 @@ $(document).ready(function () {
         // defaultView: 'basicWeek',
         // events: events,
         // weekends: false, // will hide Saturdays and Sundays
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,basicWeek,basicDay'
+        header: { 
+            left: 'prev,next,today',
+            center: 'title',   
+            right: 'month,agendaWeek,agendaDay'          
         },
         defaultView: 'basicWeek',
         weekends: false,
         events: events
       });
+  
 
       
     queryClassrooms(classrooms, (value) => classrooms = value);
@@ -85,25 +86,23 @@ function startGenerationCalendar() {
             var arrayStart = start.split(".");
             var end = timetable.tt[i].getEndLesson().toFixed(2);
             var arrayEnd = end.split(".");
-            var numDay = defineDayNumber(timetable.tt[i].getDay());
-            var prova = '2018-11-0'+numDay+'T12:30:00';
-            var prova2 = '2018-11-0'+numDay+'T19:30:00';
-            console.log(prova);
+            var numDay = defineDayNumber(timetable.tt[i].getDay());            
             var newEvent = {
                 // start: now.startOf('week').add(numDay, 'days').add(10, 'h').add(arrayStart[1], 'm').format('X'),
                 // end: now.startOf('week').add(numDay, 'days').add(11, 'h').add(arrayEnd[1], 'm').format('X'),
                 // start: '2018-11-0'+numDay+'T'+ arrayStart[0] + ':'+ arrayStart[1] + ':00',
                 // end: '2018-11-'+numDay+'T'+ arrayEnd[0] + ':'+ arrayEnd[1] + ':00',
-                start: String(prova),
-                end: String(prova2),
+                start: $.fullCalendar.moment(dateConverter(numDay,arrayStart)),
+                end:  $.fullCalendar.moment(dateConverter(numDay,arrayEnd)),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "<br>" + 
-                        "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "<br>" + 
-                    "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br>" + 
-                    "CORSO:: " + timetable.tt[i].getDiscipline().getCourse() +"<br>" + "<br>" +
-                    "AULA:" + timetable.tt[i].getClassroom(),
-                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
+                // content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "<br>" + 
+                //         "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "<br>" + 
+                //     "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br>" + 
+                //     "CORSO:: " + timetable.tt[i].getDiscipline().getCourse() +"<br>" + "<br>" +
+                //     "AULA:" + timetable.tt[i].getClassroom(),
+                // category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
             }
+            console.log(newEvent);
             events.push(newEvent);           
         }
         // calendar.init();

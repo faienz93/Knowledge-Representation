@@ -266,6 +266,15 @@ function switchLesson(l1,l2) {
 
 }
 
+/**
+ * Function for the conversion between rulereactor outpot and fullcalendar input event
+ * @param {Object} toPrint - Object to print i.e String/Integer/array etc.
+ */
+
+function dateConverter(d,hm){
+    var result='2018-11-0'+(d)+'T'+("0" + hm[0]).slice(-2)+':'+hm[1]+':00';   
+    return result;
+}
 
 /**
  * Function for print somethings
