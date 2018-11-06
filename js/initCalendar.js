@@ -11,48 +11,61 @@
 $(document).ready(function () {
 
     $('#calendar').fullCalendar({
+        // eventAfterRender: function(event, element, view) { 
+        //     var category = event.category;
+        //     console.log(event);
+        //     if (category=="8028 Informatica Magistrale|1") {
+        //         //event.color = "#FFB347"; //Em andamento
+        //         element.css('background-color', '#FFB347');
+        //     } else {
+        //         element.css('background-color', '#FFFF00');
+        //     }
+            
+        //   } ,
         // defaultView: 'basicWeek',
         // events: events,
         // weekends: false, // will hide Saturdays and Sundays
-        header: { 
+        header: {
             left: 'prev,next,today',
-            center: 'title',   
-            right: 'month,agendaWeek,agendaDay'          
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
         },
         timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
         defaultView: 'basicWeek',
         weekends: false,
-        // QUESTO NON FUNZIONA
-          // https://stackoverflow.com/a/28734778/4700162
-          eventRender: function(event, element) {
-            // if(event.description == "blah blah") {
-            //     element.css('background-color', '#ff000');
-            // }
-            console.log(event);
-            if(-1 != event.title.indexOf("blah blah")) {
-                element.find('.fc-category').css('background-color', '#ff000'); 
-            }
-            element.css('border-color', 'red !important'); 
-            // console.log(event);
-            // console.log(element);
-            
-            
-        },    
-        events: events,    
-        eventClick: function(calEvent, jsEvent, view) {
+        // // QUESTO NON FUNZIONA
+        // // https://stackoverflow.com/a/28734778/4700162
+        // eventRender: function (event, element) {
+        //     // if(event.description == "blah blah") {
+        //     //     element.css('background-color', '#ff000');
+        //     // }
+        //     console.log(event);
+        //     if (-1 != event.title.indexOf("blah blah")) {
+        //         element.find('.fc-category').css('background-color', '#ff000');
+        //     }
+        //     element.css('border-color', 'red !important');
+        //     // console.log(event);
+        //     // console.log(element);
+
+
+        // },
+        events: events,
+        
+        
+        eventClick: function (calEvent, jsEvent, view) {
 
             alert(calEvent.content);
             // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
             // alert('View: ' + view.name);
-        
+
             // change the border color just for fun
             // $(this).css('border-color', 'red');
-        
-          }
-      });
-  
 
-      
+        }
+    });
+
+
+
     queryClassrooms(classrooms, (value) => classrooms = value);
     queryProfessors(professors, (value) => professors = value);
     queryCourses(courses, (value) => courses = value);
@@ -100,45 +113,55 @@ function queryDisciplineAsync(sem) {
  * @method startGenerationCalendar
  */
 function startGenerationCalendar() {
-   // $("#loader").css("display", "block");
+    // $("#loader").css("display", "block");
     assert(timetable);
     reactor.run(Infinity, true, function () {
         console.log("END");
         $("#loader").css("display", "none");
         var output = JSON.stringify({ timetable }, null, " ");
         console.log(output);
-       
+
         for (var i = 0; i < timetable.tt.length; i++) {
             var start = timetable.tt[i].getStartLesson().toFixed(2);
             var arrayStart = start.split(".");
             var end = timetable.tt[i].getEndLesson().toFixed(2);
             var arrayEnd = end.split(".");
-            var numDay = defineDayNumber(timetable.tt[i].getDay());     
+            var numDay = defineDayNumber(timetable.tt[i].getDay());            
             var newEvent = {
                 // start: now.startOf('week').add(numDay, 'days').add(10, 'h').add(arrayStart[1], 'm').format('X'),
                 // end: now.startOf('week').add(numDay, 'days').add(11, 'h').add(arrayEnd[1], 'm').format('X'),
                 // start: '2018-11-0'+numDay+'T'+ arrayStart[0] + ':'+ arrayStart[1] + ':00',
                 // end: '2018-11-'+numDay+'T'+ arrayEnd[0] + ':'+ arrayEnd[1] + ':00',
-                start: createDate(numDay,arrayStart[0],arrayStart[1]),
-                end:  createDate(numDay,arrayEnd[0],arrayEnd[1]),
+                start: createDate(numDay, arrayStart[0], arrayStart[1]),
+                end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "\n" + 
-                        "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "\n" + 
-                    "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "\n" + 
-                    "CORSO:: " + timetable.tt[i].getDiscipline().getCourse() +"\n" + "\n" +
-                    "AULA:" + timetable.tt[i].getClassroom(),
-                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
-                // color: 'yellow',   // a non-ajax option
-                // textColor: 'black' // a non-ajax option,
-              
+                content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "\n" +
+                    "INIZIO: " + timetable.tt[i].getStartLesson().toFixed(2) + "\n" +
+                    "FINE: " + timetable.tt[i].getEndLesson().toFixed(2) + "\n" +
+                    "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "\n" +
+                    "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "\n" +
+                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "\n" + "\n" +
+                    "AULA:" + timetable.tt[i].getClassroom().getName()+ "\n"+
+                    "INDIRIZZO: " + timetable.tt[i].getClassroom().getAddress(),
+                    category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
+               color: 'yellow',   // a non-ajax option
+             textColor: 'black' // a non-ajax option,
+
             }
+
+           
+            newEvent.color=colorCategory(newEvent.category);
             // console.log(newEvent);
-            events.push(newEvent);           
+            events.push(newEvent);
+            
         }
         // calendar.init();
-        $('#calendar').fullCalendar('addEventSource', events);   
+        $('#calendar').fullCalendar('addEventSource', events);
         
+
         
+
+
     });
 
 }
@@ -165,7 +188,7 @@ function setDiscipline(disc) {
 
     }
 
-   
+
     // for every query reset the timetable.length has resize
     timetable.tt.length = 0
 

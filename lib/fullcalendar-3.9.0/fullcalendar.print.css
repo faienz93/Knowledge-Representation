@@ -19,7 +19,7 @@
 /* Global Event Restyling
 --------------------------------------------------------------------------------------------------*/
 .fc-event {
-  background: #fff !important;
+  /* background: #fff !important; */
   color: #000 !important;
   page-break-inside: avoid; }
 

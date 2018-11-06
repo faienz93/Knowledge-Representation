@@ -306,4 +306,34 @@ function printForDebug(toPrint, color = "black", background = "yellow") {
 }
 
 
-
+/**
+ * Function for color events based on category 
+ */
+function colorCategory(cy){
+    
+    if(cy=="8028 Informatica Magistrale 1 anno"){
+        return "coral";
+    }
+    else if(cy=="8028 Informatica Magistrale 1 anno"){
+        return "orange";
+    }
+    else if(cy=="8009 Informatica Triennale 1 anno"){
+        return "blue";
+    }
+    else if(cy=="8009 Informatica Triennale 2 anno"){
+        return "green";
+    }
+    else if(cy=="8009 Informatica Triennale 3 anno"){
+        return "yellow";
+    }
+    else if(cy=="8014 Informatica per il Management 1 anno"){
+        return "brown";
+    }
+    else if(cy=="8014 Informatica per il Management 2 anno"){
+        return "gray";
+    }
+    else if(cy=="8014 Informatica per il Management 3 anno"){
+        return "white";
+    }
+    
+}
