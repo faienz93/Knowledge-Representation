@@ -19,9 +19,20 @@ $(document).ready(function () {
             center: 'title',   
             right: 'month,agendaWeek,agendaDay'          
         },
+        timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
         defaultView: 'basicWeek',
         weekends: false,
-        events: events
+        events: events,
+        eventClick: function(calEvent, jsEvent, view) {
+
+            alert('Event: ' + calEvent.title);
+            alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+            alert('View: ' + view.name);
+        
+            // change the border color just for fun
+            $(this).css('border-color', 'red');
+        
+          }
       });
   
 
@@ -86,14 +97,14 @@ function startGenerationCalendar() {
             var arrayStart = start.split(".");
             var end = timetable.tt[i].getEndLesson().toFixed(2);
             var arrayEnd = end.split(".");
-            var numDay = defineDayNumber(timetable.tt[i].getDay());            
+            var numDay = defineDayNumber(timetable.tt[i].getDay());     
             var newEvent = {
                 // start: now.startOf('week').add(numDay, 'days').add(10, 'h').add(arrayStart[1], 'm').format('X'),
                 // end: now.startOf('week').add(numDay, 'days').add(11, 'h').add(arrayEnd[1], 'm').format('X'),
                 // start: '2018-11-0'+numDay+'T'+ arrayStart[0] + ':'+ arrayStart[1] + ':00',
                 // end: '2018-11-'+numDay+'T'+ arrayEnd[0] + ':'+ arrayEnd[1] + ':00',
-                start: $.fullCalendar.moment(dateConverter(numDay,arrayStart)),
-                end:  $.fullCalendar.moment(dateConverter(numDay,arrayEnd)),
+                start: createDate(numDay,arrayStart[0],arrayStart[1]),
+                end:  createDate(numDay,arrayEnd[0],arrayEnd[1]),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
                 // content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "<br>" + 
                 //         "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "<br>" + 

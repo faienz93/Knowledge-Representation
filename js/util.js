@@ -227,9 +227,9 @@ function getProfessorById(idProf) {
  * 
  * @method switchLesson
  */
-function switchLesson(l1,l2) {
+function switchLesson(l1, l2) {
 
-   
+
     // if(l1.getStartLesson() > 22 || l2.getStartLesson() > 22){
     //     console.log("OOOOOOOOOO " + l1.getStartLesson() + " " + l2.getStartLesson())
     // }else {
@@ -248,7 +248,7 @@ function switchLesson(l1,l2) {
         l1.setEndLesson(l1.getStartLesson() + dL);
     }
 
-    if ((l1.getStartLesson() + l1.getDurationLesson())>= END_LESSONS) {
+    if ((l1.getStartLesson() + l1.getDurationLesson()) >= END_LESSONS) {
 
         var dL = l1.getDurationLesson();
         l1.setNewDay(l1.getDay(), 1);
@@ -262,8 +262,27 @@ function switchLesson(l1,l2) {
         l2.setStartLesson(START_LESSONS);
         l2.setEndLesson(START_LESSONS + dL);
     }
-    
 
+
+}
+
+
+function createDate(numDay, h, m) {
+    // create Date object from valid string inputs
+    var datetime = new Date();
+
+    // format the output
+    // var month = datetime.getMonth() + 1;
+    datetime.setDate(datetime.getDate() - datetime.getDay() + numDay);
+    // console.log(datetime.getDay());
+    // var year = datetime.getFullYear();
+
+    datetime.setHours(h);
+    datetime.setMinutes(m);
+    datetime.setMilliseconds(00);
+    // put it all togeter
+    // var dateTimeString = month + '/' + day + '/' + year + ' ' + hour + ':' + min;
+    return datetime;
 }
 
 /**
@@ -271,8 +290,8 @@ function switchLesson(l1,l2) {
  * @param {Object} toPrint - Object to print i.e String/Integer/array etc.
  */
 
-function dateConverter(d,hm){
-    var result='2018-11-0'+(d)+'T'+("0" + hm[0]).slice(-2)+':'+hm[1]+':00';   
+function dateConverter(d, hm) {
+    var result = '2018-11-0' + (d) + 'T' + ("0" + hm[0]).slice(-2) + ':' + hm[1] + ':00';
     return result;
 }
 
