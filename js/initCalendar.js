@@ -22,15 +22,31 @@ $(document).ready(function () {
         timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
         defaultView: 'basicWeek',
         weekends: false,
-        events: events,
+        // QUESTO NON FUNZIONA
+          // https://stackoverflow.com/a/28734778/4700162
+          eventRender: function(event, element) {
+            // if(event.description == "blah blah") {
+            //     element.css('background-color', '#ff000');
+            // }
+            console.log(event);
+            if(-1 != event.title.indexOf("blah blah")) {
+                element.find('.fc-category').css('background-color', '#ff000'); 
+            }
+            element.css('border-color', 'red !important'); 
+            // console.log(event);
+            // console.log(element);
+            
+            
+        },    
+        events: events,    
         eventClick: function(calEvent, jsEvent, view) {
 
-            alert('Event: ' + calEvent.title);
-            alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-            alert('View: ' + view.name);
+            alert(calEvent.content);
+            // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+            // alert('View: ' + view.name);
         
             // change the border color just for fun
-            $(this).css('border-color', 'red');
+            // $(this).css('border-color', 'red');
         
           }
       });
@@ -106,19 +122,20 @@ function startGenerationCalendar() {
                 start: createDate(numDay,arrayStart[0],arrayStart[1]),
                 end:  createDate(numDay,arrayEnd[0],arrayEnd[1]),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                // content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "<br>" + 
-                //         "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "<br>" + 
-                //     "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br>" + 
-                //     "CORSO:: " + timetable.tt[i].getDiscipline().getCourse() +"<br>" + "<br>" +
-                //     "AULA:" + timetable.tt[i].getClassroom(),
-                // category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
+                content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "\n" + 
+                        "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "\n" + 
+                    "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "\n" + 
+                    "CORSO:: " + timetable.tt[i].getDiscipline().getCourse() +"\n" + "\n" +
+                    "AULA:" + timetable.tt[i].getClassroom(),
+                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
+                // color: 'yellow',   // a non-ajax option
+                // textColor: 'black' // a non-ajax option,
+              
             }
-            console.log(newEvent);
+            // console.log(newEvent);
             events.push(newEvent);           
         }
         // calendar.init();
-        // $('#calendar').fullCalendar( 'renderEvent', event, true);
-        // $('.calendar').fullCalendar('renderEvent', events, true);
         $('#calendar').fullCalendar('addEventSource', events);   
         
         
