@@ -23,7 +23,7 @@ $(document).ready(function () {
         maxTime: "20:30:00",
         slotLabelFormat: "HH:mm",
         allDaySlot: false,
-        events: events,  
+        events: events,
         eventClick: function (calEvent, jsEvent, view) {
             alertModal(calEvent);
         },
@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     $("#generateCalendar").click(function () {
         events.length = 0;
-        startGenerationCalendar();
+        startGenerationCalendar(100);
     });
 
 });
@@ -74,59 +74,88 @@ function queryDisciplineAsync(sem) {
  * For this start the rollspinner and at the end create a new Calendar
  * @method startGenerationCalendar
  */
-function startGenerationCalendar() {
+function startGenerationCalendar(v) {
     $("#loader").css("display", "block");
-    assert(timetable);
-    reactor.run(Infinity, true, function () {
-        console.log("END");
-        $("#loader").css("display", "none");
-        // var output = JSON.stringify({ timetable }, null, " ");
-        // console.log(output);
-
+    if (v > 0) {
+        console.log(v);
         assert(timetable);
         reactor.run(Infinity, true, function () {
-            assert(timetable);
-            reactor.run(Infinity, true, function () {
-                for (var i = 0; i < timetable.tt.length; i++) {
-                    var start = timetable.tt[i].getStartLesson().toFixed(2);
-                    var arrayStart = start.split(".");
-                    var end = timetable.tt[i].getEndLesson().toFixed(2);
-                    var arrayEnd = end.split(".");
-                    var numDay = defineDayNumber(timetable.tt[i].getDay());
-                    var newEvent = {
-                        start: createDate(numDay, arrayStart[0], arrayStart[1]),
-                        end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
-                        title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                        content: "<b>MATERIA:</b> " + timetable.tt[i].getDiscipline().getName() + "<br />" +
-                            "<b>INIZIO:</b>  " + timetable.tt[i].getStartLesson().toFixed(2) + "<br />" +
-                            "<b>FINE:</b> " + timetable.tt[i].getEndLesson().toFixed(2) + "<br />" +
-                            "<b>CURRICULUM:</b> " + timetable.tt[i].getDiscipline().getCurriculum() + "<br />" +
-                            "<b>PROFESSORE:</b> " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br />" +
-                            "<b>CORSO:</b> " + timetable.tt[i].getDiscipline().getCourse() + "<br /><br />" + 
-                            "<b>AULA:</b> " + timetable.tt[i].getClassroom().getName() + "<br />" +
-                            "<b>INDIRIZZO:</b> " + timetable.tt[i].getClassroom().getAddress() + "",
-                        category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
-                        color: 'yellow',   // a non-ajax option
-                        textColor: 'black' // a non-ajax option,
-                    }
-                    newEvent.color = colorCategory(newEvent.category);
-                    // console.log(newEvent);
-                    events.push(newEvent);
-        
-                }
-                // calendar.init();
-                $('#calendar').fullCalendar('addEventSource', events);
-            });
+            return startGenerationCalendar(v - 1);
         });
+    } else {
+        console.log("END");
+        $("#loader").css("display", "none");
+        for (var i = 0; i < timetable.tt.length; i++) {
+            var start = timetable.tt[i].getStartLesson().toFixed(2);
+            var arrayStart = start.split(".");
+            var end = timetable.tt[i].getEndLesson().toFixed(2);
+            var arrayEnd = end.split(".");
+            var numDay = defineDayNumber(timetable.tt[i].getDay());
+            var newEvent = {
+                start: createDate(numDay, arrayStart[0], arrayStart[1]),
+                end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
+                title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
+                content: "<b>MATERIA:</b> " + timetable.tt[i].getDiscipline().getName() + "<br />" +
+                    "<b>INIZIO:</b>  " + timetable.tt[i].getStartLesson().toFixed(2) + "<br />" +
+                    "<b>FINE:</b> " + timetable.tt[i].getEndLesson().toFixed(2) + "<br />" +
+                    "<b>CURRICULUM:</b> " + timetable.tt[i].getDiscipline().getCurriculum() + "<br />" +
+                    "<b>PROFESSORE:</b> " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br />" +
+                    "<b>CORSO:</b> " + timetable.tt[i].getDiscipline().getCourse() + "<br /><br />" +
+                    "<b>AULA:</b> " + timetable.tt[i].getClassroom().getName() + "<br />" +
+                    "<b>INDIRIZZO:</b> " + timetable.tt[i].getClassroom().getAddress() + "",
+                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
+            }
+            newEvent.color = colorCategory(newEvent.category);
+            // console.log(newEvent);
+            events.push(newEvent);
 
+        }
+        // calendar.init();
+        $('#calendar').fullCalendar('addEventSource', events);
+    }
+    // assert(timetable);
+    // reactor.run(Infinity, true, function () {
+    //     console.log("END");
+    //     $("#loader").css("display", "none");
+    //     // var output = JSON.stringify({ timetable }, null, " ");
+    //     // console.log(output);
 
+    //     assert(timetable);
+    //     reactor.run(Infinity, true, function () {
+    //         assert(timetable);
+    //         reactor.run(Infinity, true, function () {
+    //             for (var i = 0; i < timetable.tt.length; i++) {
+    //                 var start = timetable.tt[i].getStartLesson().toFixed(2);
+    //                 var arrayStart = start.split(".");
+    //                 var end = timetable.tt[i].getEndLesson().toFixed(2);
+    //                 var arrayEnd = end.split(".");
+    //                 var numDay = defineDayNumber(timetable.tt[i].getDay());
+    //                 var newEvent = {
+    //                     start: createDate(numDay, arrayStart[0], arrayStart[1]),
+    //                     end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
+    //                     title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
+    //                     content: "<b>MATERIA:</b> " + timetable.tt[i].getDiscipline().getName() + "<br />" +
+    //                         "<b>INIZIO:</b>  " + timetable.tt[i].getStartLesson().toFixed(2) + "<br />" +
+    //                         "<b>FINE:</b> " + timetable.tt[i].getEndLesson().toFixed(2) + "<br />" +
+    //                         "<b>CURRICULUM:</b> " + timetable.tt[i].getDiscipline().getCurriculum() + "<br />" +
+    //                         "<b>PROFESSORE:</b> " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br />" +
+    //                         "<b>CORSO:</b> " + timetable.tt[i].getDiscipline().getCourse() + "<br /><br />" + 
+    //                         "<b>AULA:</b> " + timetable.tt[i].getClassroom().getName() + "<br />" +
+    //                         "<b>INDIRIZZO:</b> " + timetable.tt[i].getClassroom().getAddress() + "",
+    //                     category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
+    //                     color: 'yellow',   // a non-ajax option
+    //                     textColor: 'black' // a non-ajax option,
+    //                 }
+    //                 newEvent.color = colorCategory(newEvent.category);
+    //                 // console.log(newEvent);
+    //                 events.push(newEvent);
 
-
-
-
-
-
-    });
+    //             }
+    //             // calendar.init();
+    //             $('#calendar').fullCalendar('addEventSource', events);
+    //         });
+    //     });
+    // });
 
 }
 
