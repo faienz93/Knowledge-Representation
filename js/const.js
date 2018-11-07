@@ -46,6 +46,9 @@ var classroom = [];
 // Days of week
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
+// Number of repetition of assert
+var REPETITION_RULES = 10;
+
 
 
 
