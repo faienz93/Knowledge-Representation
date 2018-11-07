@@ -25,7 +25,6 @@ $(document).ready(function () {
         slotLabelFormat:"HH:mm",        
         allDaySlot: false,
         events: events,        
-        
         eventClick: function (calEvent, jsEvent, view) {
             alertModal(calEvent);
         }
@@ -54,7 +53,6 @@ $(document).ready(function () {
 
     $("#generateCalendar").click(function () {
         events.length = 0;
-        // calendar.init();
         startGenerationCalendar();
     });
   

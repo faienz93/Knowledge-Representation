@@ -199,6 +199,7 @@
 /* Modal Header/Box */
 .modal-header {
   background-color: #fefefe;
+  width: 50%; /* Full width */
   margin: auto; /* 15% from the top and centered */
   margin-top: 5%;
   padding: 20px;

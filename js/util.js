@@ -264,15 +264,18 @@ function switchLesson(l1, l2) {
  * @method alertModal
  */
 function alertModal(event) {
-
+    
     // Header 
     $('.modal-header').find('h2').text(event.title);
+    $('.modal-header').css("background", colorCategory(event.category));
 
-    // Title
+    // Content
     $('.modal-content').find('p').text(event.content);
 
     // Footer
     $('.modal-footer').find('p').text(event.category);
+    $('.modal-footer').css("background", colorCategory(event.category));
+
 
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
