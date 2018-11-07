@@ -35,19 +35,25 @@ $(document).ready(function () {
     queryProfessors(professors, (value) => professors = value);
     queryCourses(courses, (value) => courses = value);
 
-    var sem = $("#semesterDisciplineDropDown").val();
-    queryDisciplineAsync(sem).then(function (matters) {
+    var newSem = localStorage.getItem("semesterUpdate");
+    var sem = $("#semesterDisciplineDropDown").val(newSem);
+    queryDisciplineAsync(newSem).then(function (matters) {
         setDiscipline(matters);
     });
 
     // make query every time the value change
     $(".dropdownChoiceDiscipline").change(function () {
+       
         var newTimetable = new TimetableArray();
         timetable = newTimetable;
-        var sem = $("#semesterDisciplineDropDown").val();
-        queryDisciplineAsync(sem).then(function (matters) {
-            setDiscipline(matters);
-        });
+        
+        var sem =  $("#semesterDisciplineDropDown").val();
+        localStorage.setItem("semesterUpdate", sem);
+        window.location.replace("/");
+        
+        // queryDisciplineAsync(sem).then(function (matters) {
+        //     setDiscipline(matters);
+        // });
     });
 
     $("#generateCalendar").click(function () {
@@ -112,6 +118,7 @@ function startGenerationCalendar(v) {
         }
         // calendar.init();
         $('#calendar').fullCalendar('addEventSource', events);
+        $("#generateCalendar").prop("disabled",true);
     }
     // assert(timetable);
     // reactor.run(Infinity, true, function () {
