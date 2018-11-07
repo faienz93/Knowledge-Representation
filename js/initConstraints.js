@@ -29,7 +29,7 @@ $(document).ready(function () {
         else{
             resetFormValues();
             $('#divConstraint').hide();
-    $('#DivSelectDay2').hide();
+            $('#DivSelectDay2').hide();
         }
     });
 
@@ -71,6 +71,12 @@ $(document).ready(function () {
             $('#DivSelectDay2').hide();
             $('#RowConsecutiveDays').show();
             $('#RowNoLessonAMPM').show();
+
+            var ddl2 = $("#ChooseDay2");
+            ddl2.empty();
+            ddl2.append("<option value='' selected>Nessuna Preferenza</option>");
+            $("#ChooseDay2  option[value='']");
+            ddl2.trigger("chosen:updated");
         }
         else{
             $('#RowConsecutiveDays').hide();
@@ -256,10 +262,10 @@ function resetFormValues(){
 
     var ddl1 = $("#ChooseDay1");
     generateChooseDays(ddl1);
-    var day1 = $('#ChooseDay1').val();
+
     var ddl2 = $("#ChooseDay2");
-    generateChooseDays(ddl2);
-    $("#ChooseDay2 option[value='" + day1 + "']").remove();
+    ddl2.empty();
+    ddl2.append("<option value='' selected>Nessuna Preferenza</option>");
     $("#ChooseDay2  option[value='']");
     ddl2.trigger("chosen:updated");
 
