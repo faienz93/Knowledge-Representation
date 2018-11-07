@@ -42,6 +42,7 @@
 }
 
 .maindiv {
+  padding: 10px 0;
   margin: 0 auto;
   text-align: center;
   width: 100%;
@@ -63,7 +64,7 @@
 
 /* BUTTON STYLES */
 .mainbutton{
-  /* padding:16px 32px; */
+  padding:16px 32px;
   font-family:helvetica;
   font-size:25px;
   font-weight:100;
@@ -204,7 +205,11 @@
   margin-top: 5%;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 40%; /* Could be more or less, depending on screen size */
+}
+
+.modal-header h2{
+  text-align: center;
 }
 
 /* Modal Content/Box */
@@ -213,7 +218,7 @@
   margin: auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 40%; /* Could be more or less, depending on screen size */
 }
 
 /* Modal Header/Box */
@@ -222,7 +227,7 @@
   margin: auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 40%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */

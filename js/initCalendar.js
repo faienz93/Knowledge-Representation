@@ -10,7 +10,6 @@
  */
 $(document).ready(function () {
 
-
     $('#calendar').fullCalendar({
         defaultView: 'agendaWeek',
         header: {
@@ -24,10 +23,10 @@ $(document).ready(function () {
         maxTime:"20:30:00",
         slotLabelFormat:"HH:mm",        
         allDaySlot: false,
-        events: events,        
+        events: events,  
         eventClick: function (calEvent, jsEvent, view) {
             alertModal(calEvent);
-        }
+        },
     });
 
 
@@ -98,14 +97,14 @@ function startGenerationCalendar() {
                         start: createDate(numDay, arrayStart[0], arrayStart[1]),
                         end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
                         title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                        content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "\n" +
-                            "INIZIO: " + timetable.tt[i].getStartLesson().toFixed(2) + "\n" +
-                            "FINE: " + timetable.tt[i].getEndLesson().toFixed(2) + "\n" +
-                            "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "\n" +
-                            "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "\n" +
-                            "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "\n" + "\n" +
-                            "AULA:" + timetable.tt[i].getClassroom().getName() + "\n" +
-                            "INDIRIZZO: " + timetable.tt[i].getClassroom().getAddress(),
+                        content: "<b>MATERIA:</b> " + timetable.tt[i].getDiscipline().getName() + "<br />" +
+                            "<b>INIZIO:</b>  " + timetable.tt[i].getStartLesson().toFixed(2) + "<br />" +
+                            "<b>FINE:</b> " + timetable.tt[i].getEndLesson().toFixed(2) + "<br />" +
+                            "<b>CURRICULUM:</b> " + timetable.tt[i].getDiscipline().getCurriculum() + "<br />" +
+                            "<b>PROFESSORE:</b> " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br />" +
+                            "<b>CORSO:</b> " + timetable.tt[i].getDiscipline().getCourse() + "<br /><br />" + 
+                            "<b>AULA:</b> " + timetable.tt[i].getClassroom().getName() + "<br />" +
+                            "<b>INDIRIZZO:</b> " + timetable.tt[i].getClassroom().getAddress() + "",
                         category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
                         color: 'yellow',   // a non-ajax option
                         textColor: 'black' // a non-ajax option,

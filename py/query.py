@@ -248,7 +248,7 @@ def cancelDiscipline(id_discipline):
 #   - students
 #   - teacher
 # ======================================================================
-def modifyDiscipline(id_discipline, discipline_abb, discipline_name, semester,obligatory, totalHours, weeksHours, cfu, year, course, curriculum, students, teacher):   
+def modifyDiscipline(id_discipline, discipline_abb, discipline_name, semester,obligatory, totalHours, weeksHours, cfu, year, curriculum, course , students, teacher):   
     isTaughtBy = ""
     for t in teacher:          
         isTaughtBy += "uni:isTaughtBy uni:" + t + ";"

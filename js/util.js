@@ -270,7 +270,7 @@ function alertModal(event) {
     $('.modal-header').css("background", colorCategory(event.category));
 
     // Content
-    $('.modal-content').find('p').text(event.content);
+    $('.modal-content').find('p').html(event.content);
 
     // Footer
     $('.modal-footer').find('p').text(event.category);
