@@ -85,43 +85,53 @@ function queryDisciplineAsync(sem) {
  * @method startGenerationCalendar
  */
 function startGenerationCalendar() {
-    // $("#loader").css("display", "block");
+    $("#loader").css("display", "block");
     assert(timetable);
     reactor.run(Infinity, true, function () {
         console.log("END");
         $("#loader").css("display", "none");
-        var output = JSON.stringify({ timetable }, null, " ");
-        console.log(output);
+        // var output = JSON.stringify({ timetable }, null, " ");
+        // console.log(output);
 
-        for (var i = 0; i < timetable.tt.length; i++) {
-            var start = timetable.tt[i].getStartLesson().toFixed(2);
-            var arrayStart = start.split(".");
-            var end = timetable.tt[i].getEndLesson().toFixed(2);
-            var arrayEnd = end.split(".");
-            var numDay = defineDayNumber(timetable.tt[i].getDay());
-            var newEvent = {
-                start: createDate(numDay, arrayStart[0], arrayStart[1]),
-                end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
-                title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "\n" +
-                    "INIZIO: " + timetable.tt[i].getStartLesson().toFixed(2) + "\n" +
-                    "FINE: " + timetable.tt[i].getEndLesson().toFixed(2) + "\n" +
-                    "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "\n" +
-                    "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "\n" +
-                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "\n" + "\n" +
-                    "AULA:" + timetable.tt[i].getClassroom().getName() + "\n" +
-                    "INDIRIZZO: " + timetable.tt[i].getClassroom().getAddress(),
-                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
-                color: 'yellow',   // a non-ajax option
-                textColor: 'black' // a non-ajax option,
-            }
-            newEvent.color = colorCategory(newEvent.category);
-            // console.log(newEvent);
-            events.push(newEvent);
+        assert(timetable);
+        reactor.run(Infinity, true, function () {
+            assert(timetable);
+            reactor.run(Infinity, true, function () {
+                for (var i = 0; i < timetable.tt.length; i++) {
+                    var start = timetable.tt[i].getStartLesson().toFixed(2);
+                    var arrayStart = start.split(".");
+                    var end = timetable.tt[i].getEndLesson().toFixed(2);
+                    var arrayEnd = end.split(".");
+                    var numDay = defineDayNumber(timetable.tt[i].getDay());
+                    var newEvent = {
+                        start: createDate(numDay, arrayStart[0], arrayStart[1]),
+                        end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
+                        title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
+                        content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "\n" +
+                            "INIZIO: " + timetable.tt[i].getStartLesson().toFixed(2) + "\n" +
+                            "FINE: " + timetable.tt[i].getEndLesson().toFixed(2) + "\n" +
+                            "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "\n" +
+                            "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "\n" +
+                            "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "\n" + "\n" +
+                            "AULA:" + timetable.tt[i].getClassroom().getName() + "\n" +
+                            "INDIRIZZO: " + timetable.tt[i].getClassroom().getAddress(),
+                        category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
+                        color: 'yellow',   // a non-ajax option
+                        textColor: 'black' // a non-ajax option,
+                    }
+                    newEvent.color = colorCategory(newEvent.category);
+                    // console.log(newEvent);
+                    events.push(newEvent);
+        
+                }
+                // calendar.init();
+                $('#calendar').fullCalendar('addEventSource', events);
+            });
+        });
 
-        }
-        // calendar.init();
-        $('#calendar').fullCalendar('addEventSource', events);
+
+
+        
 
 
 
@@ -160,35 +170,35 @@ function setDiscipline(disc) {
     for (var i = 0; i < disc.length; i++) {
 
         var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
-        // var randomDay = days[Math.floor(Math.random() * days.length)];
-        // var subjectWeeksHours = disc[i].getWeeksHours();
-        var subjectWeeksHours = DURATION_LESSON;
+        var randomDay = days[Math.floor(Math.random() * days.length)];
+        var subjectWeeksHours = disc[i].getWeeksHours();
+        //var subjectWeeksHours = DURATION_LESSON;
         if (subjectWeeksHours < 4) {
-            timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
         }
         if (subjectWeeksHours == 4) {
-            timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-            timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
         }
         if (subjectWeeksHours == 5) {
-            timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
-            timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
         }
         if (subjectWeeksHours == 6) {
 
             if (disc[i].getSplitDuration(2)) {
-                timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-                timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-                timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+                timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+                timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+                timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
             }
             else if (disc[i].getSplitDuration(3)) {
 
-                timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
-                timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+                timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+                timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
             }
             else {
-                timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
-                timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
+                timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+                timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
             }
 
         }
