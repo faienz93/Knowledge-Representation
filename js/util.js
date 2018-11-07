@@ -364,8 +364,8 @@ function colorCategory(cy) {
     else if (cy == "8014 Informatica per il Management 2 anno") {
         return "gray";
     }
-    else if (cy == "8014 Informatica per il Management 3 anno") {
-        return "white";
+    else if(cy=="8014 Informatica per il Management 3 anno"){
+        return "purple";
     }
 
 }
