@@ -11,34 +11,15 @@
 $(document).ready(function () {
 
     $('#calendar').fullCalendar({
-            header: {
-            left: 'prev,next,today',
+        defaultView: 'agendaWeek',
+        header: {
+            left: 'prev,next today',
             center: 'title',
-            
+            right: 'agendaWeek,agendaDay'
         },
         timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
-        defaultView: 'basicWeek',
-        
         weekends: false,
-        // // QUESTO NON FUNZIONA
-        // // https://stackoverflow.com/a/28734778/4700162
-        // eventRender: function (event, element) {
-        //     // if(event.description == "blah blah") {
-        //     //     element.css('background-color', '#ff000');
-        //     // }
-        //     console.log(event);
-        //     if (-1 != event.title.indexOf("blah blah")) {
-        //         element.find('.fc-category').css('background-color', '#ff000');
-        //     }
-        //     element.css('border-color', 'red !important');
-        //     // console.log(event);
-        //     // console.log(element);
-
-
-        // },
         events: events,
-        
-        
         eventClick: function (calEvent, jsEvent, view) {
 
             alert(calEvent.content);
@@ -47,9 +28,9 @@ $(document).ready(function () {
 
             // change the border color just for fun
             // $(this).css('border-color', 'red');
-            
+
         }
-        
+
     });
 
 
@@ -78,21 +59,6 @@ $(document).ready(function () {
         // calendar.init();
         startGenerationCalendar();
     });
-    $('#basicWeek').click(function() {
-    $('#calendar').fullCalendar('changeView', 'basicWeek');
-    });
-    $('#basicDay').click(function() {
-        $('#calendar').fullCalendar('changeView', 'basicDay');
-        });
-    $('#next').click(function() {
-        $('#calendar').fullCalendar('next');
-      });
-      $('#prev').click(function() {
-        $('#calendar').fullCalendar('prev');
-      });
-
-
-
 });
 
 /**
@@ -126,12 +92,8 @@ function startGenerationCalendar() {
             var arrayStart = start.split(".");
             var end = timetable.tt[i].getEndLesson().toFixed(2);
             var arrayEnd = end.split(".");
-            var numDay = defineDayNumber(timetable.tt[i].getDay());            
+            var numDay = defineDayNumber(timetable.tt[i].getDay());
             var newEvent = {
-                // start: now.startOf('week').add(numDay, 'days').add(10, 'h').add(arrayStart[1], 'm').format('X'),
-                // end: now.startOf('week').add(numDay, 'days').add(11, 'h').add(arrayEnd[1], 'm').format('X'),
-                // start: '2018-11-0'+numDay+'T'+ arrayStart[0] + ':'+ arrayStart[1] + ':00',
-                // end: '2018-11-'+numDay+'T'+ arrayEnd[0] + ':'+ arrayEnd[1] + ':00',
                 start: createDate(numDay, arrayStart[0], arrayStart[1]),
                 end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
@@ -141,25 +103,22 @@ function startGenerationCalendar() {
                     "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "\n" +
                     "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "\n" +
                     "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "\n" + "\n" +
-                    "AULA:" + timetable.tt[i].getClassroom().getName()+ "\n"+
+                    "AULA:" + timetable.tt[i].getClassroom().getName() + "\n" +
                     "INDIRIZZO: " + timetable.tt[i].getClassroom().getAddress(),
-                    category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
-               color: 'yellow',   // a non-ajax option
-             textColor: 'black' // a non-ajax option,
-
+                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
+                color: 'yellow',   // a non-ajax option
+                textColor: 'black' // a non-ajax option,
             }
-
-           
-            newEvent.color=colorCategory(newEvent.category);
+            newEvent.color = colorCategory(newEvent.category);
             // console.log(newEvent);
             events.push(newEvent);
-            
+
         }
         // calendar.init();
         $('#calendar').fullCalendar('addEventSource', events);
-        
 
-        
+
+
 
 
     });
