@@ -10,6 +10,7 @@
  */
 $(document).ready(function () {
 
+
     $('#calendar').fullCalendar({
         defaultView: 'agendaWeek',
         header: {
@@ -26,16 +27,8 @@ $(document).ready(function () {
         events: events,        
         
         eventClick: function (calEvent, jsEvent, view) {
-
-            alert(calEvent.content);
-            // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-            // alert('View: ' + view.name);
-
-            // change the border color just for fun
-            // $(this).css('border-color', 'red');
-
+            alertModal(calEvent);
         }
-
     });
 
 

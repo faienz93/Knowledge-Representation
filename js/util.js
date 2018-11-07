@@ -228,14 +228,6 @@ function getProfessorById(idProf) {
  * @method switchLesson
  */
 function switchLesson(l1, l2) {
-
-
-    // if(l1.getStartLesson() > 22 || l2.getStartLesson() > 22){
-    //     console.log("OOOOOOOOOO " + l1.getStartLesson() + " " + l2.getStartLesson())
-    // }else {
-    //     console.log("NON INIZIA TARDI")
-    // }
-
     if (l1.getStartLesson() <= l2.getStartLesson()) {
 
         var dL = l2.getDurationLesson();
@@ -263,25 +255,65 @@ function switchLesson(l1, l2) {
         l2.setEndLesson(START_LESSONS + dL);
     }
 
+}
 
+/**
+ * Modal alert when click on the event
+ * @param {event} Object
+ * 
+ * @method alertModal
+ */
+function alertModal(event) {
+
+    // Header 
+    $('.modal-header').find('h2').text(event.title);
+
+    // Title
+    $('.modal-content').find('p').text(event.content);
+
+    // Footer
+    $('.modal-footer').find('p').text(event.category);
+
+    var modal = document.getElementById('myModal');
+    modal.style.display = "block";
+
+
+    var span = document.getElementsByClassName("close")[0];
+
+
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 }
 
 
+/**
+ * This function define a Date based on day of week, 
+ * the start and the end of lessons.
+ * @param {Integer} numDay - number of day of week 
+ * @param {Integer} h - hours
+ * @param {Integer} m - minutes
+ * 
+ * @method createDate
+ */
 function createDate(numDay, h, m) {
     // create Date object from valid string inputs
     var datetime = new Date();
 
-    // format the output
-    // var month = datetime.getMonth() + 1;
     datetime.setDate(datetime.getDate() - datetime.getDay() + numDay);
-    // console.log(datetime.getDay());
-    // var year = datetime.getFullYear();
 
     datetime.setHours(h);
     datetime.setMinutes(m);
     datetime.setMilliseconds(00);
-    // put it all togeter
-    // var dateTimeString = month + '/' + day + '/' + year + ' ' + hour + ':' + min;
     return datetime;
 }
 
@@ -309,31 +341,31 @@ function printForDebug(toPrint, color = "black", background = "yellow") {
 /**
  * Function for color events based on category 
  */
-function colorCategory(cy){
-    
-    if(cy=="8028 Informatica Magistrale 1 anno"){
+function colorCategory(cy) {
+
+    if (cy == "8028 Informatica Magistrale 1 anno") {
         return "coral";
     }
-    else if(cy=="8028 Informatica Magistrale 1 anno"){
+    else if (cy == "8028 Informatica Magistrale 1 anno") {
         return "orange";
     }
-    else if(cy=="8009 Informatica Triennale 1 anno"){
+    else if (cy == "8009 Informatica Triennale 1 anno") {
         return "blue";
     }
-    else if(cy=="8009 Informatica Triennale 2 anno"){
+    else if (cy == "8009 Informatica Triennale 2 anno") {
         return "green";
     }
-    else if(cy=="8009 Informatica Triennale 3 anno"){
+    else if (cy == "8009 Informatica Triennale 3 anno") {
         return "yellow";
     }
-    else if(cy=="8014 Informatica per il Management 1 anno"){
+    else if (cy == "8014 Informatica per il Management 1 anno") {
         return "brown";
     }
-    else if(cy=="8014 Informatica per il Management 2 anno"){
+    else if (cy == "8014 Informatica per il Management 2 anno") {
         return "gray";
     }
     else if(cy=="8014 Informatica per il Management 3 anno"){
         return "purple";
     }
-    
+
 }

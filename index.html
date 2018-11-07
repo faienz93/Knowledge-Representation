@@ -21,13 +21,6 @@
     <script src="lib/rule-reactor.js"></script>
 
     <!-- CALENDAR -->
-    <!-- <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/moment/min/moment-with-locales.min.js"></script>
-    <script src="node_modules/jquery-touchswipe/jquery.touchSwipe.min.js"></script>
-    <script src="node_modules/arrobefr-jquery-calendar/dist/js/jquery-calendar.min.js"></script>
-    <link rel="stylesheet" href="node_modules/arrobefr-jquery-calendar/dist/css/jquery-calendar.min.css"> -->
     <script src="lib/moment.min.js"></script>
     <!-- <script rel='stylesheet' type='text/css' href='lib/moment-with-locales.min.js'></script> -->
     <link href="lib/fullcalendar-3.9.0/fullcalendar.css" rel="stylesheet">
@@ -59,6 +52,25 @@
 
 <body>
 
+    <!-- Trigger/Open The Modal
+    <button id="myBtn">Open Modal</button> -->
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <header class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Modal Header</h2>
+        </header>
+        <!-- Modal content -->
+        <div class="modal-content">           
+            <p>Some text in the Modal..</p>
+        </div>
+        <footer class="modal-footer">
+            <p>Modal Footer</p>
+        </footer>
+
+    </div>
+
     <div class="maindiv">
         <p class="referenceproject"> <strong> ALMA MATER STUDIORUM - UNIVERSITÀ DI BOLOGNA </strong> <br> <i>
                 Rappresentazione della Conoscenza </i> <br> Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi </p>
@@ -73,7 +85,7 @@
     </div>
     <h3 style="text-align:center; margin-top: 200px;"> Scegli il semestre</h3>
     <!-- DROPDOWN FOR CHOICE TIMETABLE -->
-    <div class="dropdownChoiceDiscipline">            
+    <div class="dropdownChoiceDiscipline">
         <select id="semesterDisciplineDropDown">
             <option value="1">Primo Semestre</option>
             <option value="2">Secondo Semestre</option>
