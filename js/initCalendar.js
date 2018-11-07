@@ -11,27 +11,14 @@
 $(document).ready(function () {
 
     $('#calendar').fullCalendar({
-        // eventAfterRender: function(event, element, view) { 
-        //     var category = event.category;
-        //     console.log(event);
-        //     if (category=="8028 Informatica Magistrale|1") {
-        //         //event.color = "#FFB347"; //Em andamento
-        //         element.css('background-color', '#FFB347');
-        //     } else {
-        //         element.css('background-color', '#FFFF00');
-        //     }
-            
-        //   } ,
-        // defaultView: 'basicWeek',
-        // events: events,
-        // weekends: false, // will hide Saturdays and Sundays
-        header: {
+            header: {
             left: 'prev,next,today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay'
+            
         },
         timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
         defaultView: 'basicWeek',
+        
         weekends: false,
         // // QUESTO NON FUNZIONA
         // // https://stackoverflow.com/a/28734778/4700162
@@ -60,8 +47,9 @@ $(document).ready(function () {
 
             // change the border color just for fun
             // $(this).css('border-color', 'red');
-
+            
         }
+        
     });
 
 
@@ -90,6 +78,18 @@ $(document).ready(function () {
         // calendar.init();
         startGenerationCalendar();
     });
+    $('#basicWeek').click(function() {
+    $('#calendar').fullCalendar('changeView', 'basicWeek');
+    });
+    $('#basicDay').click(function() {
+        $('#calendar').fullCalendar('changeView', 'basicDay');
+        });
+    $('#next').click(function() {
+        $('#calendar').fullCalendar('next');
+      });
+      $('#prev').click(function() {
+        $('#calendar').fullCalendar('prev');
+      });
 
 
 
