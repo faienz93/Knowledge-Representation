@@ -27,7 +27,7 @@ var START_LESSONS = 8.30
 var DURATION_LESSON = 5;
 
 // end lessons
-var END_LESSONS = 18.30;
+var END_LESSONS = 19;
 
 // Global calendar
 var calendar;
@@ -47,7 +47,7 @@ var classroom = [];
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 // Number of repetition of assert
-var REPETITION_RULES = 10;
+var REPETITION_RULES = 200;
 
 
 
