@@ -83,10 +83,6 @@ function generateDayConsecutive(toRemove = undefined) {
             daysTemp.splice(index, 1);
         }
     }
-
-    // 
-
-
     //alert(randomDay);
     return daysTemp[0];
 }

@@ -257,7 +257,7 @@ reactor.createRule("avoidLessonDay1", -1, { l: Lesson },
 
     },
     function (l) {
-        printForDebug("AVOIDLESSON " + l.getDiscipline().getName() + " " + l.getDay(), "white", "blue");
+        printForDebug("AVOIDLESSON1 " + l.getDiscipline().getName() + " " + l.getDay(), "white", "blue");
 
         var actualDayToAvoid = l.getDay();
         var dL = l.getDurationLesson();

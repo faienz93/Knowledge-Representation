@@ -185,10 +185,13 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
 
     this.setPreferences = function (p) {
         var prefKeys = p.split(",");
+        console.log("================================================");
+        console.log("================= " + name + " =================")
         for (var i = 0; i < prefKeys.length; i++) {
             var pKeyValue = prefKeys[i].split(":");
             var pKey = pKeyValue[0];
             var pValue = pKeyValue[1];
+            console.log(pKey + " " + pValue);
             if (pValue != "") {
                 if (pKey == "consecutivedays") {
                     this.consecutiveDay(pValue)
@@ -199,7 +202,6 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
                 if (pKey == "avoidlessonday2") {
                     this.avoidLessonDay2(pValue)
                 }
-
                 if (pKey == "splitdurationlessons6h") {
                     this.splitDurationLessons6h(parseInt(pValue))
                 }
@@ -212,6 +214,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
             }
 
         }
+        console.log("===============================================");
 
 
     }
