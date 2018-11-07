@@ -10,6 +10,7 @@
  */
 $(document).ready(function () {
 
+
     $('#calendar').fullCalendar({
         defaultView: 'agendaWeek',
         header: {
@@ -21,16 +22,8 @@ $(document).ready(function () {
         weekends: false,
         events: events,
         eventClick: function (calEvent, jsEvent, view) {
-
-            alert(calEvent.content);
-            // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-            // alert('View: ' + view.name);
-
-            // change the border color just for fun
-            // $(this).css('border-color', 'red');
-
+            alertModal(calEvent);
         }
-
     });
 
 
@@ -84,8 +77,8 @@ function startGenerationCalendar() {
     reactor.run(Infinity, true, function () {
         console.log("END");
         $("#loader").css("display", "none");
-        var output = JSON.stringify({ timetable }, null, " ");
-        console.log(output);
+        // var output = JSON.stringify({ timetable }, null, " ");
+        // console.log(output);
 
         for (var i = 0; i < timetable.tt.length; i++) {
             var start = timetable.tt[i].getStartLesson().toFixed(2);
@@ -97,17 +90,15 @@ function startGenerationCalendar() {
                 start: createDate(numDay, arrayStart[0], arrayStart[1]),
                 end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
                 title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
-                content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "\n" +
-                    "INIZIO: " + timetable.tt[i].getStartLesson().toFixed(2) + "\n" +
-                    "FINE: " + timetable.tt[i].getEndLesson().toFixed(2) + "\n" +
-                    "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "\n" +
-                    "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "\n" +
-                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "\n" + "\n" +
-                    "AULA:" + timetable.tt[i].getClassroom().getName() + "\n" +
+                content: "MATERIA: " + timetable.tt[i].getDiscipline().getName() + "<br/>" +
+                    "INIZIO: " + timetable.tt[i].getStartLesson().toFixed(2) + "<br/>" +
+                    "FINE: " + timetable.tt[i].getEndLesson().toFixed(2) + "<br/>" +
+                    "CURRICULUM: " + timetable.tt[i].getDiscipline().getCurriculum() + "<br/>" +
+                    "PROFESSORE: " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br/>" +
+                    "CORSO: " + timetable.tt[i].getDiscipline().getCourse() + "<br/>" + "<br/>" +
+                    "AULA:" + timetable.tt[i].getClassroom().getName() + "<br/>" +
                     "INDIRIZZO: " + timetable.tt[i].getClassroom().getAddress(),
-                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
-                color: 'yellow',   // a non-ajax option
-                textColor: 'black' // a non-ajax option,
+                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
             }
             newEvent.color = colorCategory(newEvent.category);
             // console.log(newEvent);
@@ -155,8 +146,8 @@ function setDiscipline(disc) {
 
         var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
         // var randomDay = days[Math.floor(Math.random() * days.length)];
-        // var subjectWeeksHours = disc[i].getWeeksHours();
-        var subjectWeeksHours = DURATION_LESSON;
+        var subjectWeeksHours = disc[i].getWeeksHours();
+        // var subjectWeeksHours = DURATION_LESSON;
         if (subjectWeeksHours < 4) {
             timetable.tt.push(new Lesson("Monday", disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
         }
