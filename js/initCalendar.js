@@ -19,9 +19,9 @@ $(document).ready(function () {
         },
         timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
         weekends: false,
-        minTime:"08:30:00",
-        maxTime:"20:30:00",
-        slotLabelFormat:"HH:mm",        
+        minTime: "08:30:00",
+        maxTime: "20:30:00",
+        slotLabelFormat: "HH:mm",
         allDaySlot: false,
         events: events,  
         eventClick: function (calEvent, jsEvent, view) {
@@ -54,7 +54,7 @@ $(document).ready(function () {
         events.length = 0;
         startGenerationCalendar();
     });
-  
+
 });
 
 /**
@@ -121,7 +121,6 @@ function startGenerationCalendar() {
 
 
 
-        
 
 
 
