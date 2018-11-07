@@ -71,12 +71,13 @@ $(document).ready(function () {
             $('#DivSelectDay2').hide();
             $('#RowConsecutiveDays').show();
             $('#RowNoLessonAMPM').show();
-
+            
             var ddl2 = $("#ChooseDay2");
             ddl2.empty();
-            ddl2.append("<option value='' selected>Nessuna Preferenza</option>");
-            $("#ChooseDay2  option[value='']");
-            ddl2.trigger("chosen:updated");
+            generateChooseDays(ddl2);
+            // ddl2.append("<option value='' selected>Nessuna Preferenza</option>");
+            // $("#ChooseDay2  option[value='']");
+            // ddl2.trigger("chosen:updated");
         }
         else{
             $('#RowConsecutiveDays').hide();
@@ -267,9 +268,10 @@ function resetFormValues(){
 
     var ddl2 = $("#ChooseDay2");
     ddl2.empty();
-    ddl2.append("<option value='' selected>Nessuna Preferenza</option>");
-    $("#ChooseDay2  option[value='']");
-    ddl2.trigger("chosen:updated");
+    // ddl2.append("<option value='' selected>Nessuna Preferenza</option>");
+    // $("#ChooseDay2  option[value='']");
+    // ddl2.trigger("chosen:updated");
+    generateChooseDays(ddl2);
 
     $('.checkDisc').prop('checked', false).change();
     $('.checkConse').prop('checked', false).change();           
@@ -277,3 +279,4 @@ function resetFormValues(){
     $('.checkChalks').prop('checked', false).change();
 
 }
+
