@@ -345,7 +345,7 @@ function colorCategory(cy) {
     if (cy == "8028 Informatica Magistrale 1 anno") {
         return "coral";
     }
-    else if (cy == "8028 Informatica Magistrale 1 anno") {
+    else if (cy == "8028 Informatica Magistrale 2 anno") {
         return "orange";
     }
     else if (cy == "8009 Informatica Triennale 1 anno") {
