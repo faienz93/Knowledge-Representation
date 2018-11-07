@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     $("#generateCalendar").click(function () {
         events.length = 0;
-        startGenerationCalendar(100);
+        startGenerationCalendar(50);
     });
 
 });

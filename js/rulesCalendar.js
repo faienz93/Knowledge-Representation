@@ -49,10 +49,10 @@ reactor.createRule("checkDuplicatedDay", 0, { l: TimetableArray },
 * RULE: Assign Classroom based on number subscription
 */
 reactor.createRule("assignClassroom", -1, { l: Lesson },
-    function (l) {         
+    function (l) {
         return l.getDiscipline().getNumStudent() > l.getClassroom().getCapacity();
     },
-    function (l) {        
+    function (l) {
         // printForDebug("ASSIGNCLASSROOM " + l.getDiscipline().getName() + " " + l.getDiscipline().getNumStudent() + " -- " + l.getClassroom().toString());
         var compatibilityClassroom = checkCapacityClassroom(l.getDiscipline().getNumStudent());
         var newClassRoom = compatibilityClassroom[Math.floor(Math.random() * compatibilityClassroom.length)];
@@ -84,11 +84,11 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
         l2.setClassroom(newClassroom);
 
         // printForDebug("CLASSROOMOCCUPIED ASSIGNED " + l1.getClassroom() + " " + l2.getClassroom(), "white", "black");
-        assert([l1,l2]);
+        assert([l1, l2]);
     });
 
 
-    reactor.createRule("checkClassroomOccupied2", -2, { l1: Lesson, l2: Lesson },
+reactor.createRule("checkClassroomOccupied2", -2, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
 
         return l1 != l2 &&
@@ -101,7 +101,7 @@ reactor.createRule("checkClassroomOccupied", -1, { l1: Lesson, l2: Lesson },
         // printForDebug("CLASSROOMOCCUPIED " + l1.toString() + " " + l2.toString(), "white", "black");
         var newClassroom = generateClassroom(l1.getClassroom());
         l2.setClassroom(newClassroom);
-        assert([l1,l2]);
+        assert([l1, l2]);
     });
 
 
@@ -130,69 +130,11 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
         // printForDebug("UBIQUITY: " + l1.toString() + " ** " + l2.toString(), "red", "white");
-        switchLesson(l1,l2);
-        assert([l1,l2]);
+        switchLesson(l1, l2);
+        assert([l1, l2]);
     });
 
-/**
- * RULE: check if:
- * - the discipline are different
- * - is of same Course
- * - same year
- * - same day 
- * - overlap lesson
- * - one obligatory
- * - one facultative
- * In this case, switch the time slot to make it consequential
- */
-reactor.createRule("overlapTimeSlot2", -1, { l1: Lesson, l2: Lesson },
-function (l1, l2) {
-    var getCurriculumL1 = l1.getDiscipline().getCurriculum();
-    var getCurriculumL2 = l2.getDiscipline().getCurriculum();
-    return l1 != l2 &&
-        l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-        l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
-        l1.getDay() == l2.getDay() &&
-        (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
-        getCurriculumL1 != undefined && getCurriculumL2 == undefined ;
 
-},
-function (l1, l2) {
-
-    // printForDebug("OVERLAPTIMESLOT2 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "black", "red");
-    switchLesson(l1,l2);
-    
-
-});
-
-/**
-* RULE: check if:
-* - the discipline are different
-* - is of same Course
-* - same year
-* - same day 
-* - overlap lesson
-* - hasCommonCurriculum
-* In this case, switch the time slot to make it consequential
-*/
-reactor.createRule("overlapTimeSlot3", -1, { l1: Lesson, l2: Lesson },
-function (l1, l2) {
-    var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
-    return l1 != l2 &&
-        l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-        l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
-        l1.getDay() == l2.getDay() &&
-        (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
-        hasCommonCurriculum;
-
-},
-function (l1, l2) {
-
-    // printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
-    switchLesson(l1,l2);
-    
-
-});
 
 /**
  * RULE: check if:
@@ -209,14 +151,70 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
             l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
             l1.getDay() == l2.getDay() &&
             (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson());
-
     },
     function (l1, l2) {
-        switchLesson(l1,l2);
+        switchLesson(l1, l2);
 
     });
 
+/**
+ * OVERLAP DISCIPLINE OBLIGATORY AND FACULTATIVE
+ * RULE: check if:
+ * - the discipline are different
+ * - is of same Course
+ * - same year
+ * - same day 
+ * - overlap lesson
+ * - one obligatory
+ * - one facultative
+ * In this case, switch the time slot to make it consequential
+ */
+reactor.createRule("overlapTimeSlot2", -1, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var getCurriculumL1 = l1.getDiscipline().getCurriculum();
+        var getCurriculumL2 = l2.getDiscipline().getCurriculum();
+        return l1 != l2 &&
+            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
+            l1.getDay() == l2.getDay() &&
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
+            getCurriculumL1 != undefined && getCurriculumL2 == undefined;
 
+    },
+    function (l1, l2) {
+        // printForDebug("OVERLAPTIMESLOT2 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "black", "red");
+        switchLesson(l1, l2);
+    });
+
+/**
+* OVERLAP DISCIPLINE WITH SAME CURRICULUM
+* RULE: check if:
+* - the discipline are different
+* - is of same Course
+* - same year
+* - same day 
+* - overlap lesson
+* - hasCommonCurriculum
+* In this case, switch the time slot to make it consequential
+*/
+reactor.createRule("overlapTimeSlot3", -1, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
+        return l1 != l2 &&
+            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
+            l1.getDay() == l2.getDay() &&
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
+            hasCommonCurriculum;
+
+    },
+    function (l1, l2) {
+
+        // printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
+        switchLesson(l1, l2);
+
+
+    });
 
 
 
@@ -230,11 +228,8 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
 
-        // printForDebug("NOSameLessonSameDay " + l1.toString() + " " + l2.toString(), "white", "pink");
-        // var actualDayToAvoid = l2.getDay();
-        // l1.setDay(generateDayByExcludingOne(actualDayToAvoid));
         l2.setNewDay(l1.getDay(), 1);
-        assert([l1,l2]);
+        assert([l1, l2]);
     });
 
 
@@ -394,16 +389,16 @@ reactor.createRule("setPeriodOfDayPM", -1, { l: Lesson },
 reactor.createRule("checkClassroomBlackboard", -1, { l: Lesson },
     function (l) {
         return l.getClassroom().getBlackboard() != l.getDiscipline().getBlackboard() &&
-                l.getDiscipline().checkExistPreference("blackboard");
+            l.getDiscipline().checkExistPreference("blackboard");
     },
     function (l) {
 
-        var compatibilityRooms = checkBlackboardClassroom(l.getDiscipline().getBlackboard());  
+        var compatibilityRooms = checkBlackboardClassroom(l.getDiscipline().getBlackboard());
         var newClassRoom = compatibilityRooms[Math.floor(Math.random() * compatibilityRooms.length)];
         l.setClassroom(newClassRoom);
         assert(l);
     });
-  
+
 
 
 
@@ -431,7 +426,7 @@ reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
         var newStart = l2.getStartLesson() + 1;
         l2.setStartLesson(newStart);
         l2.setEndLesson(newStart + dL);
-        assert([l1,l2]);
+        assert([l1, l2]);
     });
 
 
@@ -450,7 +445,7 @@ reactor.createRule("stop", -100, {},
     },
     function () {
         reactor.stop();
-       
+
 
     });
 
