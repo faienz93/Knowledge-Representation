@@ -257,8 +257,10 @@ function selectPreference(prof) {
 
 
 function resetFormValues(){
+    
     // reset values
     $('#constraintForm').attr('action', 'http://127.0.0.1:5000/addPreference');
+
 
     var ddl1 = $("#ChooseDay1");
     generateChooseDays(ddl1);
