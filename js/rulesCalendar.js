@@ -158,6 +158,34 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
     });
 
 /**
+* OVERLAP DISCIPLINE WITH SAME CURRICULUM
+* RULE: check if:
+* - the discipline are different
+* - is of same Course
+* - same year
+* - same day 
+* - overlap lesson
+* - hasCommonCurriculum
+* In this case, switch the time slot to make it consequential
+*/
+reactor.createRule("overlapTimeSlot2", -2, { l1: Lesson, l2: Lesson },
+    function (l1, l2) {
+        var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
+        return l1 != l2 &&
+            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+            l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
+            l1.getDay() == l2.getDay() &&
+            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
+            hasCommonCurriculum;
+
+    },
+    function (l1, l2) {
+
+        // printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
+        switchLesson(l1, l2);
+    });
+
+/**
  * OVERLAP DISCIPLINE OBLIGATORY AND FACULTATIVE
  * RULE: check if:
  * - the discipline are different
@@ -169,7 +197,7 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
  * - one facultative
  * In this case, switch the time slot to make it consequential
  */
-reactor.createRule("overlapTimeSlot2", -1, { l1: Lesson, l2: Lesson },
+reactor.createRule("overlapTimeSlot3", -3, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         var getCurriculumL1 = l1.getDiscipline().getCurriculum();
         var getCurriculumL2 = l2.getDiscipline().getCurriculum();
@@ -186,35 +214,7 @@ reactor.createRule("overlapTimeSlot2", -1, { l1: Lesson, l2: Lesson },
         switchLesson(l1, l2);
     });
 
-/**
-* OVERLAP DISCIPLINE WITH SAME CURRICULUM
-* RULE: check if:
-* - the discipline are different
-* - is of same Course
-* - same year
-* - same day 
-* - overlap lesson
-* - hasCommonCurriculum
-* In this case, switch the time slot to make it consequential
-*/
-reactor.createRule("overlapTimeSlot3", -1, { l1: Lesson, l2: Lesson },
-    function (l1, l2) {
-        var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
-        return l1 != l2 &&
-            l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
-            l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
-            l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
-            hasCommonCurriculum;
 
-    },
-    function (l1, l2) {
-
-        // printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
-        switchLesson(l1, l2);
-
-
-    });
 
 
 
