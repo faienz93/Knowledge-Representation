@@ -105,19 +105,28 @@ function startGenerationCalendar(v) {
             var end = timetable.tt[i].getEndLesson().toFixed(2);
             var arrayEnd = end.split(".");
             var numDay = defineDayNumber(timetable.tt[i].getDay());
+            var name=timetable.tt[i].getDiscipline().getName();
+            var abb=timetable.tt[i].getDiscipline().getAbbreviation();
+            var curriculum='['+timetable.tt[i].getDiscipline().getCurriculum()+'] - ';
+            if(curriculum=='[undefined] - ') {
+                curriculum=""
+            };
+            var profs=timetable.tt[i].getDiscipline().getAllProfessor();
+            var obb=timetable.tt[i].getDiscipline().getObligatory();
+            var className=timetable.tt[i].getClassroom().getName();
+            var classAddress=timetable.tt[i].getClassroom().getAddress()
             var newEvent = {
                 start: createDate(numDay, arrayStart[0], arrayStart[1]),
                 end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
-                title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - [' + timetable.tt[i].getDiscipline().getCurriculum() + '] - ' + timetable.tt[i].getClassroom().getName(),
-                content: "<b>MATERIA:</b> " + timetable.tt[i].getDiscipline().getName() + "<br />" +
-                    "<b>INIZIO:</b>  " + timetable.tt[i].getStartLesson().toFixed(2) + "<br />" +
-                    "<b>FINE:</b> " + timetable.tt[i].getEndLesson().toFixed(2) + "<br />" +
-                    "<b>CURRICULUM:</b> " + timetable.tt[i].getDiscipline().getCurriculum() + "<br />" +
-                    "<b>PROFESSORE:</b> " + timetable.tt[i].getDiscipline().getAllProfessor() + "<br />" +
-                    "<b>OBBLIGATORIO:</b> " + timetable.tt[i].getDiscipline().getObligatory() + "<br /><br />" +
-                    //"<b>CORSO:</b> " + timetable.tt[i].getDiscipline().getCourse() + "<br /><br />" +
-                    "<b>AULA:</b> " + timetable.tt[i].getClassroom().getName() + "<br />" +
-                    "<b>INDIRIZZO:</b> " + timetable.tt[i].getClassroom().getAddress() + "",
+                title: abb + ' - ' + curriculum + className,
+                content: "<b>MATERIA:</b> " + name + "<br />" +
+                    "<b>INIZIO:</b>  " + start + "<br />" +
+                    "<b>FINE:</b> " + end + "<br />" +
+                    "<b>CURRICULUM:</b> " + curriculum + "<br />" +
+                    "<b>PROFESSORE:</b> " + profs + "<br />" +
+                    "<b>OBBLIGATORIO:</b> " + obb + "<br /><br />" +                   
+                    "<b>AULA:</b> " + className + "<br />" +
+                    "<b>INDIRIZZO:</b> " + classAddress + "",
                 category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
             }
             newEvent.color = colorCategory(newEvent.category);

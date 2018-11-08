@@ -266,12 +266,23 @@ function queryDiscipline(sem) {
                        
                         var profPreferences = bindings[i].preferences; 
                         if(profPreferences!=undefined){
-                            var profPreferencesSplit=profPreferences.value.split("|");
+                            var profPreferencesSplit=profPreferences.value.split("|");    
+                                                    
                             for(var p = 0; p < profPreferencesSplit.length;p++){
-                               d.setPreferences(profPreferencesSplit[p])                               
+                               d.preferences={};
+                               if(d.getPreference().length==1){  //tutto if solo per la stampa alert                          
+                               var overWritePreference="\n"; 
+                               var prefSplit= profPreferencesSplit[1].split(',');//prende l'ultima e la splitta nelle rispettive preferenze
+                               for(var i=0;i<prefSplit.length;i++){
+                                overWritePreference+=prefSplit[i]+"\n";
+                               }
+                               alert("Per la materia condivisa "+d.name+" sono state utilizzate le seguenti preferenze: "+overWritePreference);
+                               }
+                               d.setPreferences(profPreferencesSplit[p]);                               
                             }
-                        }
-                                          
+                        
+                        
+                    }        
                         result.push(d);
                     }   
                     if(result.length > 0){

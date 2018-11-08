@@ -1,19 +1,19 @@
 id_room,className,address,capacity,blackboard,wired
-12347,E1,Ercolani,100,Markers,true
-12348,E2,Ercolani,100,Markers,true
-12349,E3,Ercolani,30,Markers,true
-44981,C1 Ranzani,Ranzani,130,Markers,true
-44982,Lab Ranzani,Ranzani,50,Markers,true
-20000,Arzela,Matematica,48,Chalk,true
-20001,Bombelli,Matematica,40,Chalk,true
-20002,Cremona,Matematica,210,Chalk,true
-20003,Enriques,Matematica,55,Chalk,true
-20004,Pincherle,Matematica,235,Chalk,true
-20005,Seminario,Matematica,20,Chalk,true
-20006,VIII piano,Matematica,38,Chalk,true
-20007,Tonelli,Matematica,170,Chalk,true
-20008,VII piano,Matematica,115,Chalk,true
-20009,Vitali,Matematica,75,Chalk,true
-30001,Aula1,Fisica,70,Chalk,true
-30002,Aula2,Fisica,20,Chalk,true
-30003,Aula3,Fisica,20,Chalk,true
+12347,E1,Mura Anteo Zamboni 2/A,100,Markers,true
+12348,E2,Mura Anteo Zamboni 2/A,100,Markers,true
+12349,E3,Mura Anteo Zamboni 2/A,30,Markers,true
+44981,C1 Ranzani,Via Ranzani 14/C,130,Markers,true
+44982,Lab Ranzani,Via Ranzani 14/C,50,Markers,true
+20000,Arzela,Piazza di Porta San Donato 5,48,Chalk,true
+20001,Bombelli,Piazza di Porta San Donato 5,40,Chalk,true
+20002,Cremona,Piazza di Porta San Donato 5,210,Chalk,true
+20003,Enriques,Piazza di Porta San Donato 5,55,Chalk,true
+20004,Pincherle,Piazza di Porta San Donato 5,235,Chalk,true
+20005,Seminario,Piazza di Porta San Donato 5,20,Chalk,true
+20006,VIII piano,Piazza di Porta San Donato 5,38,Chalk,true
+20007,Tonelli,Piazza di Porta San Donato 5,170,Chalk,true
+20008,VII piano,Piazza di Porta San Donato 5,115,Chalk,true
+20009,Vitali,Piazza di Porta San Donato 5,75,Chalk,true
+30001,Aula1,Viale Berti-Pichat 6/2,70,Chalk,true
+30002,Aula2,Viale Berti-Pichat 6/2,20,Chalk,true
+30003,Aula3,Viale Berti-Pichat 6/2,20,Chalk,true
