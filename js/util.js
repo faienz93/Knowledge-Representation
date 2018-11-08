@@ -264,6 +264,7 @@ function alertModal(event) {
     // Header 
     $('.modal-header').find('h2').text(event.title);
     $('.modal-header').css("background", colorCategory(event.category));
+    $('.modal-header').css("color", "white");
 
     // Content
     $('.modal-content').find('p').html(event.content);
@@ -271,6 +272,7 @@ function alertModal(event) {
     // Footer
     $('.modal-footer').find('p').text(event.category);
     $('.modal-footer').css("background", colorCategory(event.category));
+    $('.modal-footer').css("color", "white");
 
 
     var modal = document.getElementById('myModal');
@@ -338,33 +340,35 @@ function printForDebug(toPrint, color = "black", background = "yellow") {
 
 
 /**
- * Function for color events based on category 
+ * Function for color events based on category
+ * 
+ * REF: https://www.w3schools.com/colors/colors_picker.asp?
  */
 function colorCategory(cy) {
 
     if (cy == "8028 Informatica Magistrale 1 anno") {
-        return "coral";
+        return "#000000"; // BLACK //"coral";
     }
     else if (cy == "8028 Informatica Magistrale 2 anno") {
-        return "orange";
+        return "#737373"; // GRAY //"orange";
     }
     else if (cy == "8009 Informatica Triennale 1 anno") {
-        return "blue";
+        return "#800000"; 
     }
     else if (cy == "8009 Informatica Triennale 2 anno") {
-        return "green";
+        return "#cc3300"; 
     }
     else if (cy == "8009 Informatica Triennale 3 anno") {
-        return "yellow";
+        return "#ff9966" 
     }
     else if (cy == "8014 Informatica per il Management 1 anno") {
-        return "brown";
+        return "#003300" 
     }
     else if (cy == "8014 Informatica per il Management 2 anno") {
-        return "gray";
+        return "#339966" 
     }
     else if(cy=="8014 Informatica per il Management 3 anno"){
-        return "purple";
+        return "#009999" 
     }
 
 }
@@ -390,13 +394,3 @@ function hideSpinnerLoader(){
 }
 
 
-function countNumberEvent(){
-    $('#calendar').fullCalendar( 'clientEvents', function(eventObj){
-        if (eventObj.start.isSame(eventObj.getStartLesson())) {
-            console.log(eventObj);
-            return true;
-        } else {
-            return false;
-        }
-    }).length;
-}

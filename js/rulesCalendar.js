@@ -8,7 +8,7 @@ function exists() { return reactor.exists.apply(reactor, arguments); }
 function forAll() { return reactor.forAll.apply(reactor, arguments); }
 
 // https://github.com/anywhichway/rule-reactor#debugging-and-testing
-reactor.trace(0);
+reactor.trace(1);
 
 
 /**
@@ -152,8 +152,12 @@ reactor.createRule("overlapTimeSlotOtherCourse", -1, { l1: Lesson, l2: Lesson },
     },
     function (l1, l2) {
         switchLesson(l1, l2);
-
     });
+
+
+    
+
+
 /**
 * OVERLAP DISCIPLINE WITH SAME CURRICULUM
 * RULE: check if:
@@ -165,7 +169,7 @@ reactor.createRule("overlapTimeSlotOtherCourse", -1, { l1: Lesson, l2: Lesson },
 * - hasCommonCurriculum
 * In this case, switch the time slot to make it consequential
 */
-reactor.createRule("overlapTimeSlot2", -1, { l1: Lesson, l2: Lesson },
+reactor.createRule("overlapTimeSlotSameCurriculum", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
         return l1 != l2 &&
@@ -179,7 +183,7 @@ reactor.createRule("overlapTimeSlot2", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         // printForDebug("OVERLAPTIMESLOT2 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
         switchLesson(l1, l2);
-        assert([l1, l2]);
+        // assert([l1, l2]);
     });
 
 /**
@@ -194,7 +198,7 @@ reactor.createRule("overlapTimeSlot2", -1, { l1: Lesson, l2: Lesson },
  * - one facultative
  * In this case, switch the time slot to make it consequential
  */
-reactor.createRule("overlapTimeSlot3", -1, { l1: Lesson, l2: Lesson },
+reactor.createRule("overlapTimeSlotObligatoryFacultative", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         var getCurriculumL1 = l1.getDiscipline().getCurriculum();
         var getCurriculumL2 = l2.getDiscipline().getCurriculum();
@@ -209,7 +213,7 @@ reactor.createRule("overlapTimeSlot3", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         // printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "black", "red");
         switchLesson(l1, l2);
-        assert([l1, l2]);
+        // assert([l1, l2]);
     });
 
 
@@ -228,7 +232,25 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
         assert([l1, l2]);
     });
 
+    /**
+     * This rule check il are there from timetable facultative course. In this case swithc lesson. 
+     * it has lower priority beacause it is considered an optiomization
+     */
+    // reactor.createRule("overlapTimeSlotFacultative", -2, { l1: Lesson, l2: Lesson },
+    // function (l1, l2) {
+    //     return l1 != l2 &&
+    //         l1.getDay() == l2.getDay() &&
+    //         l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+    //         l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
+    //         (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
+    //         l1.getDiscipline().getCurriculum() == undefined && l2.getDiscipline().getCurriculum() == undefined &&
+    //         !l1.getDiscipline().getObligatory() && !l2.getDiscipline().getObligatory();
+    // },
+    // function (l1, l2) {
+    //     // printForDebug("boh " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
+    //     switchLesson(l1,l2);
 
+    // });
 
 /**
  * ********************************************************************************
