@@ -368,3 +368,35 @@ function colorCategory(cy) {
     }
 
 }
+
+/**
+ * Show the spinner and the background opacity
+ * 
+ * @method showSpinnerLoader
+ */
+function showSpinnerLoader(){
+    $(".overlayLoader").css("display", "block");
+    $("#loader").css("display", "block");
+}
+
+/**
+ * Hide the spinner and the background opacity
+ * 
+ * @method hideSpinnerLoader
+ */
+function hideSpinnerLoader(){
+    $("#loader").css("display", "none");
+    $(".overlayLoader").css("display", "none");
+}
+
+
+function countNumberEvent(){
+    $('#calendar').fullCalendar( 'clientEvents', function(eventObj){
+        if (eventObj.start.isSame(eventObj.getStartLesson())) {
+            console.log(eventObj);
+            return true;
+        } else {
+            return false;
+        }
+    }).length;
+}

@@ -47,7 +47,7 @@ var classroom = [];
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 // Number of repetition of assert
-var REPETITION_RULES = 1;
+var REPETITION_RULES = 10;
 
 
 

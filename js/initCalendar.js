@@ -20,7 +20,7 @@ $(document).ready(function () {
         timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
         weekends: false,
         minTime: "08:30:00",
-        maxTime: "20:30:00",
+        maxTime: "20:00:00",
         slotLabelFormat: "HH:mm",
         allDaySlot: false,
         events: events,
@@ -28,8 +28,6 @@ $(document).ready(function () {
             alertModal(calEvent);
         },
     });
-
-
 
     queryClassrooms(classrooms, (value) => classrooms = value);
     queryProfessors(professors, (value) => professors = value);
@@ -89,7 +87,8 @@ function queryDisciplineAsync(sem) {
  * @method startGenerationCalendar
  */
 function startGenerationCalendar(v) {
-    $("#loader").css("display", "block");
+    // show the spinner
+    showSpinnerLoader();
     if (v > 0) {
         console.log(v);
         assert(timetable);
@@ -98,7 +97,8 @@ function startGenerationCalendar(v) {
         });
     } else {
         console.log("END");
-        $("#loader").css("display", "none");
+        // hide the spinner
+        hideSpinnerLoader();
         for (var i = 0; i < timetable.tt.length; i++) {
             var start = timetable.tt[i].getStartLesson().toFixed(2);
             var arrayStart = start.split(".");
@@ -108,7 +108,7 @@ function startGenerationCalendar(v) {
             var newEvent = {
                 start: createDate(numDay, arrayStart[0], arrayStart[1]),
                 end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
-                title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getClassroom().getName(),
+                title: timetable.tt[i].getDiscipline().getAbbreviation() + ' - ' + timetable.tt[i].getDiscipline().getCurriculum() + ' - ' + timetable.tt[i].getClassroom().getName(),
                 content: "<b>MATERIA:</b> " + timetable.tt[i].getDiscipline().getName() + "<br />" +
                     "<b>INIZIO:</b>  " + timetable.tt[i].getStartLesson().toFixed(2) + "<br />" +
                     "<b>FINE:</b> " + timetable.tt[i].getEndLesson().toFixed(2) + "<br />" +

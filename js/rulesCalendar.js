@@ -8,7 +8,7 @@ function exists() { return reactor.exists.apply(reactor, arguments); }
 function forAll() { return reactor.forAll.apply(reactor, arguments); }
 
 // https://github.com/anywhichway/rule-reactor#debugging-and-testing
-reactor.trace(1);
+reactor.trace(0);
 
 
 /**
@@ -137,26 +137,23 @@ reactor.createRule("avoidUbiquityProfessor", -1, { l1: Lesson, l2: Lesson },
 
 
 /**
- * RULE: check if:
- * - the discipline are different
- * - is of same Course
- * - are thought in the same day
- * - overlap the time slot
+ * RULE: check if there are overlap between subject of the other course
  * In this case, switch the time slot to make it consequential
  */
-reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
+reactor.createRule("overlapTimeSlotOtherCourse", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         return l1 != l2 &&
+            l1.getDay() == l2.getDay() &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
             l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
-            l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson());
+            (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
+            l1.getDiscipline().getCurriculum() == undefined && l2.getDiscipline().getCurriculum() == undefined &&
+            l1.getDiscipline().getObligatory() && l2.getDiscipline().getObligatory();
     },
     function (l1, l2) {
         switchLesson(l1, l2);
 
     });
-
 /**
 * OVERLAP DISCIPLINE WITH SAME CURRICULUM
 * RULE: check if:
@@ -168,21 +165,21 @@ reactor.createRule("overlapTimeSlot", -1, { l1: Lesson, l2: Lesson },
 * - hasCommonCurriculum
 * In this case, switch the time slot to make it consequential
 */
-reactor.createRule("overlapTimeSlot2", -2, { l1: Lesson, l2: Lesson },
+reactor.createRule("overlapTimeSlot2", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
             l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
             l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
+            (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
             hasCommonCurriculum;
 
     },
     function (l1, l2) {
-
-        // printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
+        // printForDebug("OVERLAPTIMESLOT2 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
         switchLesson(l1, l2);
+        assert([l1, l2]);
     });
 
 /**
@@ -197,7 +194,7 @@ reactor.createRule("overlapTimeSlot2", -2, { l1: Lesson, l2: Lesson },
  * - one facultative
  * In this case, switch the time slot to make it consequential
  */
-reactor.createRule("overlapTimeSlot3", -3, { l1: Lesson, l2: Lesson },
+reactor.createRule("overlapTimeSlot3", -1, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         var getCurriculumL1 = l1.getDiscipline().getCurriculum();
         var getCurriculumL2 = l2.getDiscipline().getCurriculum();
@@ -205,15 +202,15 @@ reactor.createRule("overlapTimeSlot3", -3, { l1: Lesson, l2: Lesson },
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
             l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
             l1.getDay() == l2.getDay() &&
-            (l1.getStartLesson() <= l2.getEndLesson() && l1.getEndLesson() >= l2.getStartLesson()) &&
-            getCurriculumL1 != undefined && getCurriculumL2 == undefined;
+            (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
+            getCurriculumL1 !== undefined && getCurriculumL2 === undefined;
 
     },
     function (l1, l2) {
-        // printForDebug("OVERLAPTIMESLOT2 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "black", "red");
+        // printForDebug("OVERLAPTIMESLOT3 " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "black", "red");
         switchLesson(l1, l2);
+        assert([l1, l2]);
     });
-
 
 
 
@@ -227,7 +224,6 @@ reactor.createRule("NOSameLessonSameDay", -1, { l1: Lesson, l2: Lesson },
             l1.getDiscipline().getName() == l2.getDiscipline().getName() && l1.getDay() == l2.getDay();
     },
     function (l1, l2) {
-
         l2.setNewDay(l1.getDay(), 1);
         assert([l1, l2]);
     });
@@ -426,9 +422,93 @@ reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
         var newStart = l2.getStartLesson() + 1;
         l2.setStartLesson(newStart);
         l2.setEndLesson(newStart + dL);
+
+        if ((l1.getStartLesson() + l1.getDurationLesson()) >= END_LESSONS) {
+
+            var dL = l1.getDurationLesson();
+            l1.setNewDay(l1.getDay(), 1);
+            l1.setStartLesson(START_LESSONS);
+            l1.setEndLesson(START_LESSONS + dL);
+        }
+        if ((l2.getStartLesson() + l2.getDurationLesson()) >= END_LESSONS) {
+
+            var dL = l2.getDurationLesson();
+            l2.setNewDay(l2.getDay(), 1);
+            l2.setStartLesson(START_LESSONS);
+            l2.setEndLesson(START_LESSONS + dL);
+        }
         assert([l1, l2]);
     });
 
+
+// reactor.createRule("optimizeSameCurriculum", -20, { l1: Lesson, l2: Lesson },
+//     function (l1, l2) {
+//         var hasCommonCurriculum = l1.getDiscipline().getExistCurriculum(l2.getDiscipline().getCurriculum());
+//         return l1 != l2 &&
+//             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
+//             l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
+//             l1.getDay() == l2.getDay() &&
+//             // (l1.getStartLesson() == l2.getEndLesson() || l2.getStartLesson() == l1.getEndLesson()) &&
+//             l1.getDiscipline().getCurriculum() != undefined && l2.getDiscipline().getCurriculum() != undefined &&
+//             !hasCommonCurriculum;
+
+//     },
+//     function (l1, l2) {
+
+//         printForDebug("optimizeSameCurriculum " + l1.getDiscipline().getName() + " " + l2.getDiscipline().getName(), "red", "black");
+
+
+//         // if l1 start before l2
+//         if(l1.getStartLesson() < l2.getStartLesson()){
+//             var dl2 = l2.getDurationLesson();
+//             l2.setStartLesson(l1.getStartLesson());
+//             l2.setEndLesson(l2.getStartLesson() + dl2);
+//         }else {
+//             var dl1 = l1.getDurationLesson();
+//             l1.setStartLesson(l2.getStartLesson());
+//             l1.setEndLesson(l1.getStartLesson() + dl1);
+//         }
+
+//         // var l1
+//     });
+
+/**
+* Rule for the end lesson over 19 
+*/
+
+// reactor.createRule("maxLessonEnd", -10, { l1: Lesson, l2: Lesson },
+// function (l1,l2) {
+//     var slotLesson1 = l1.getStartLesson() + l1.getDurationLesson();
+//     var slotLesson2 = l2.getStartLesson() + l2.getDurationLesson();
+//     return slotLesson1 >= END_LESSONS || slotLesson2 >= END_LESSONS;
+// },
+// function (l1,l2) {
+//     // var dL = l.getDurationLesson();
+
+//     // // l.getStartLesson()
+//     // l.setNewDay(l.getDay(), 1);
+//     // l.setStartLesson(START_LESSONS);
+//     // l.setEndLesson(START_LESSONS + dL);
+//     // //   printForDebug(l,"white","black");    
+//     // assert(l);
+
+//     if ((l1.getStartLesson() + l1.getDurationLesson()) >= END_LESSONS) {
+
+//         var dL = l1.getDurationLesson();
+//         // l1.setNewDay(l1.getDay(), 1);
+//         l1.setStartLesson(START_LESSONS);
+//         l1.setEndLesson(START_LESSONS + dL);
+//     }
+//     if ((l2.getStartLesson() + l2.getDurationLesson()) >= END_LESSONS) {
+
+//         var dL = l2.getDurationLesson();
+//         // l2.setNewDay(l2.getDay(), 1);
+//         l2.setStartLesson(START_LESSONS);
+//         l2.setEndLesson(START_LESSONS + dL);
+//     }
+
+//     assert([l1,l2]);
+// });
 
 
 
