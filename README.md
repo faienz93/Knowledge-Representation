@@ -7,14 +7,13 @@
 - RDFlib 
 - [Protégé](https://github.com/antoniofaienza93/Knowledge-Representation/blob/master/docs/ontology.md#definizione-di-unontologia)
 - [Rule-reactor](https://github.com/anywhichway/rule-reactor#rule-reactor)
-- [jquery-calendar](https://github.com/ArrobeFr/jquery-calendar#jquery-calendar)
+
 
 ## Requisiti
 
 - Installare flask `pip install flask`
 - Installare SPARQLWrapper `pip install sparqlwrapper --user`
 - Installare RDFlib `pip install rdflib --user`
-- Installare le dipendenze npm `npm install`
 - Installare [Apache Jena Fuseki](https://jena.apache.org/download/#apache-jena-fuseki)
 
 
