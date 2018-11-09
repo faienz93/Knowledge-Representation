@@ -429,7 +429,7 @@ def modifyClassRoom(id_room, name_room, capacity_room, wired_room, blackboard, a
     sparql.setQuery(query)
     sparql.setMethod('POST') 
     print query
-    return sparqlQuery.query().convert()
+    sparql.query()
 
 
 
