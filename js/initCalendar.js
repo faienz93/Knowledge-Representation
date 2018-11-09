@@ -63,8 +63,14 @@ $(document).ready(function () {
     });
 
     $("#generateCalendar").click(function () {
-        events.length = 0;
-        startGenerationCalendar(REPETITION_RULES);
+        if($("#semesterDisciplineDropDown").val()>0){
+            $("#semesterDropDownMex").html("");
+            events.length = 0;
+            startGenerationCalendar(REPETITION_RULES);
+        }
+        else{
+            $("#semesterDropDownMex").html("<br/> Indicare il semestre da generare");
+        }
     });
 
 });

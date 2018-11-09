@@ -216,7 +216,7 @@
 
 /* Modal Header/Box */
 .modal-header {
-  background-color: #fefefe;
+  background-color: #fff;
   width: 50%; /* Full width */
   margin: auto; /* 15% from the top and centered */
   margin-top: 5%;
@@ -231,7 +231,7 @@
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #fefefe;
+  background-color: #fff;
   margin: auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
@@ -240,7 +240,7 @@
 
 /* Modal Header/Box */
 .modal-footer {
-  background-color: #fefefe;
+  background-color: #fff;
   margin: auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
@@ -249,7 +249,7 @@
 
 /* The Close Button */
 .close {
-  color: #aaa;
+  color: #fff;
   float: right;
   font-size: 28px;
   font-weight: bold;
