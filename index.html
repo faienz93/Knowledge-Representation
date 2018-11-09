@@ -50,7 +50,7 @@
 
 </head>
 
-<body>
+<body style="margin: 0 !important;">
 
     <!-- Trigger/Open The Modal
     <button id="myBtn">Open Modal</button> -->
@@ -76,9 +76,9 @@
                 Rappresentazione della Conoscenza </i> <br> Antonio Faienza, Luca Angelucci, Alessio Ciarrocchi </p>
         <!-- ICON BY https://www.flaticon.com/ -->
         <!-- onclick="location.href = 'http://127.0.0.1:5000/ciao'" -->
-        <button class="mainbutton" onclick="location.href = 'http://127.0.0.1:5000/formEntities'"><a href="#"><img src="assets/img/database.png"></a><br>Aggiungi al DB</button>
+        <button class="mainbutton" onclick="location.href = 'http://127.0.0.1:5000/formEntities'"><a href="#"><img src="assets/img/database.png"></a><br>Gestione<br/> DB</button>
         <button id="generateCalendar" class="mainbutton calendarbutton"><a href="#"><img src="assets/img/calendar.png"></a><br>Genera Calendario</button>
-        <button class="mainbutton" onclick="location.href = 'http://127.0.0.1:5000/constraints'"><a href="#"><img src="assets/img/link.png"></a><br>Vincoli</button>
+        <button class="mainbutton" onclick="location.href = 'http://127.0.0.1:5000/constraints'"><a href="#"><img src="assets/img/link.png"></a><br>Gestione Vincoli</button>
     </div>
     <h3 style="text-align:center; margin-top: 200px;"> Scegli il semestre</h3>
     <!-- DROPDOWN FOR CHOICE TIMETABLE -->
@@ -87,6 +87,7 @@
             <option value="1">Primo Semestre</option>
             <option value="2">Secondo Semestre</option>
         </select>
+        <div style="text-align:center; color:red" id="semesterDropDownMex"></div>
     </div>
     <!-- LOADER SPINNER -->
     <!-- https://www.w3schools.com/howto/howto_css_loader.asp -->

@@ -186,7 +186,7 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
     this.setPreferences = function (p) {
         var prefKeys = p.split(",");
         console.log("================================================");
-        console.log("================= " + name + " =================")
+        console.log("================= " + abbreviation + " =================")
         for (var i = 0; i < prefKeys.length; i++) {
             var pKeyValue = prefKeys[i].split(":");
             var pKey = pKeyValue[0];
