@@ -18,6 +18,9 @@ var classrooms = undefined;
 // Professors returned by query
 var professors = undefined;
 
+// Preferences returned by query
+var resultPreferences = undefined;
+
 // Courses returned by query
 var courses = undefined;
 

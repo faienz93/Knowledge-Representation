@@ -31,6 +31,7 @@ $(document).ready(function () {
 
     queryClassrooms(classrooms, (value) => classrooms = value);
     queryProfessors(professors, (value) => professors = value);
+    queryPreferences(resultPreferences, (value) => resultPreferences = value);
     queryCourses(courses, (value) => courses = value);
 
     var newSem = localStorage.getItem("semesterUpdate");
@@ -154,22 +155,34 @@ function startGenerationCalendar(v) {
  * @method setDiscipline
  */
 function setDiscipline(disc) {
+    // console.log(resultPreferences);
+    
     for (var i = 0; i < disc.length; i++) {
         var prof = disc[i].getProfessor();
         // Set Professors
-        for (var index = 0; index < prof.length; index++) {
+        for (var index = 0; index < prof.length; index++) {            
             prof[index] = professors.find(o => o.id === prof[index]);
         }
-        // SET Course
+        // Set Course       
         disc[i].setCourse(courses.find(o => o.id === disc[i].getCourse()));
 
-        // Set Preference
-        if (disc[i].checkExistPreference("splitdurationlessons6h") == false) {
-            disc[i].splitDurationLessons6h(3);
+        // Set Preferences       
+        for (var index = 0; index < prof.length; index++) {            
+            
+            var prf = resultPreferences.find(o => o.idProf === prof[index].getId());
+            if(prf!=undefined){
+                disc[i].setPreferences(prf);
+            }
+            
         }
+        
+
+        // console.log(disc[i].getName());
+        // console.log(disc[i].getPreference());
 
     }
 
+    
 
     // for every query reset the timetable.length has resize
     timetable.tt.length = 0

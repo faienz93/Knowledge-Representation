@@ -184,37 +184,22 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
      */
 
     this.setPreferences = function (p) {
-        var prefKeys = p.split(",");
-        console.log("================================================");
-        console.log("================= " + abbreviation + " =================")
-        for (var i = 0; i < prefKeys.length; i++) {
-            var pKeyValue = prefKeys[i].split(":");
-            var pKey = pKeyValue[0];
-            var pValue = pKeyValue[1];
-            console.log(pKey + " " + pValue);
-            if (pValue != "") {
-                if (pKey == "consecutivedays") {
-                    this.consecutiveDay(pValue)
-                }
-                if (pKey == "avoidlessonday1") {
-                    this.avoidLessonDay1(pValue)
-                }
-                if (pKey == "avoidlessonday2") {
-                    this.avoidLessonDay2(pValue)
-                }
-                if (pKey == "splitdurationlessons6h") {
-                    this.splitDurationLessons6h(parseInt(pValue))
-                }
-                if (pKey == "setperiodofday") {
-                    this.setPeriodOfDay(pValue);
-                }
-                if (pKey == "blackboard") {
-                    this.blackboard(pValue)
-                }
-            }
+        // Resize preferences 
+        preference.length = 0;
 
+        // Set preferences
+        if(p.consecutiveday != "") this.consecutiveDay(p.consecutiveday);       
+        if(p.setperiodofday != "") this.setPeriodOfDay(p.setperiodofday);
+        if(p.blackboard != "") this.blackboard(p.blackboard);
+        if(p.avoidlessonday1 != "") this.avoidlessonday1(p.avoidlessonday1);
+        if(p.avoidlessonday2 != "") this.avoidlessonday2(p.avoidlessonday2);        
+        if(p.splitdurationlessons6h != "") {
+            this.splitDurationLessons6h(parseInt(p.splitdurationlessons6h))
+        }else{
+            this.splitDurationLessons6h(3);
         }
-        console.log("===============================================");
+        
+        
 
 
     }
@@ -235,17 +220,13 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
 
     }
 
-
+   
 
     /**
      * Return the array of Preference
      */
-    this.getPreference = function () {
-        if (preference.length == 0) {
-            return "ATTENZIONE: Nessuna preferenza impostata per la disciplina" + this.name;
-        } else {
-            return preference;
-        }
+    this.getPreference = function () {        
+            return preference;        
     }
 
     /**

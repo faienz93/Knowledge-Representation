@@ -11,7 +11,7 @@
  * Query Professors
  ************************************/
 function queryProfessors(returnValue, callback) {
-    
+
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -57,14 +57,92 @@ function queryProfessors(returnValue, callback) {
 
     });
 
+
+}
+
+
+/***********************************
+ * Query Preferences
+ ************************************/
+function queryPreferences(returnValue, callback) {
+
+    var endpointURL = "http://localhost:3030/ds/query";
+
+    var myquery = ` PREFIX uni: <http://www.rdfproject.com/>           
+
+                    SELECT DISTINCT ?idProf ?consecutiveDays ?setperiodofday ?noLessonDay1 ?noLessonDay2 
+                                    ?sixHourSplit ?writeMethodRoom
     
+                    FROM <http://www.rdcproject.com/graph/disciplines>
+                    FROM <http://www.rdcproject.com/graph/professor>    
+                    FROM <http://www.rdcproject.com/graph/preferences>
+
+                    WHERE
+                    {                           
+                        ?x  a uni:Discipline;
+                            uni:isTaughtBy ?isTaughtBy.
+                                ?isTaughtBy a uni:Teacher;
+                            uni:idProfessor ?idProf. 
+                            ?isTaughtBy a uni:Preference;                             
+                                uni:consecutiveDays ?consecutiveDays;
+                                uni:noLessonAMPM ?setperiodofday;
+                                uni:noLessonDay1 ?noLessonDay1;
+                                uni:noLessonDay2 ?noLessonDay2;
+                                uni:sixHourSplit ?sixHourSplit;
+                                uni:writeMethodRoom ?writeMethodRoom.
+                    }
+                    `;
+
+    var encodedquery = encodeURIComponent(myquery);
+
+
+    $.ajax({
+        dataType: "jsonp",
+        url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
+        success: function (results) {
+            $.each(results, function (index, element) {
+                var result = [];
+                var bindings = element.bindings;
+                // REF: https://www.w3.org/TR/rdf-sparql-json-res/
+                for (i in bindings) {
+                    
+                    var idProf = bindings[i].idProf.value;
+                    var consecutiveDays = bindings[i].consecutiveDays.value;
+                    var setperiodofday = bindings[i].setperiodofday.value;
+                    var noLessonDay1 = bindings[i].noLessonDay1.value;
+                    var noLessonDay2 = bindings[i].noLessonDay2.value;
+                    var sixHourSplit = bindings[i].sixHourSplit.value;
+                    var writeMethodRoom = bindings[i].writeMethodRoom.value;
+                                    
+                    
+                    result.push({
+                        "idProf": idProf,
+                        "consecutiveday": consecutiveDays,
+                        "setperiodofday": setperiodofday,
+                        "avoidlessonday1": noLessonDay1,
+                        "avoidlessonday2": noLessonDay2,
+                        "splitdurationlessons6h": sixHourSplit,
+                        "blackboard": writeMethodRoom
+                    });
+                    
+                }
+
+                callback(result);
+
+            });
+
+        }
+
+    });
+
+
 }
 
 /***********************************
  * Query Classes
  ************************************/
 function queryClassrooms(returnValue, callback) {
-    
+
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -112,7 +190,7 @@ function queryClassrooms(returnValue, callback) {
         }
 
     });
-    
+
 }
 
 
@@ -120,7 +198,7 @@ function queryClassrooms(returnValue, callback) {
  * Query Course
  ************************************/
 function queryCourses(returnValue, callback) {
-   
+
     var endpointURL = "http://localhost:3030/ds/query";
 
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>
@@ -158,7 +236,7 @@ function queryCourses(returnValue, callback) {
         }
 
     });
-   
+
 }
 
 
@@ -167,22 +245,22 @@ function queryCourses(returnValue, callback) {
  * REF: https://stackoverflow.com/a/18214142/4700162
  * @method queryDiscipline
  ************************************/
-function queryDiscipline(sem) {   
-    var endpointURL = "http://localhost:3030/ds/query";    
-     var myquery = `
+function queryDiscipline(sem) {
+    var endpointURL = "http://localhost:3030/ds/query";
+    var myquery = `
                     PREFIX uni: <http://www.rdfproject.com/>
-                    PREFIX un: <http://www.w3.org/2007/ont/unit#>
+                            
 
-                    SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year 
-                            (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors) ?numStudents
-                            (GROUP_CONCAT(DISTINCT ?preference_str;separator="|") AS ?preferences)
+                    SELECT  ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu  ?idCourse ?idCourse2 ?obligatory ?curriculum ?semester ?totalhours ?weekhours ?year ?numStudents                            
+                            (GROUP_CONCAT(DISTINCT ?prof_str;separator=",") AS ?professors) 
+                            
                     FROM <http://www.rdcproject.com/graph/disciplines>
                     FROM <http://www.rdcproject.com/graph/professor>
                     FROM <http://www.rdcproject.com/graph/course>
                     FROM <http://www.rdcproject.com/graph/preferences>
                     WHERE
-                    { 
-                            {       
+                    {                           
+                            {      
                             ?x  a uni:Discipline;
                             uni:disciplinename ?disciplineName;
                             uni:idDiscipline ?idDiscipline;
@@ -192,45 +270,29 @@ function queryDiscipline(sem) {
                             uni:obligatory ?obligatory;
                             uni:curriculum ?curriculum;
                             uni:semester ?semester;
-                            uni:semester "`+sem+`";
+                            uni:semester "`+ sem + `";
                             uni:totalhours ?totalhours;
                             uni:weekhours ?weekhours;
                             uni:year ?year;
                             uni:numStudents  ?numStudents;
                             uni:isTaughtBy ?isTaughtBy.
                                 ?isTaughtBy a uni:Teacher;
-                                uni:idProfessor ?idProf;
-                                uni:firstName ?firstName;
-                                uni:lastName ?lastName;
-                                uni:role ?role.
+                                uni:idProfessor ?idProf. 
                             ?hasCourseof a uni:Course;
-                                uni:idCourse ?idCourse.
-                    OPTIONAL{?isTaughtBy a uni:Preference;                
-                                uni:consecutiveDays ?consecutiveDays;
-                                uni:noLessonAMPM ?noLessonAMPM;
-                                uni:noLessonDay1 ?noLessonDay1;
-                                uni:noLessonDay2 ?noLessonDay2;
-                                uni:sixHourSplit ?sixHourSplit;
-                                uni:writeMethodRoom ?writeMethodRoom
+                                uni:idCourse ?idCourse.                        
                     }
-                            }
+                    
+                    
 
-                        BIND(CONCAT(?idProf) AS ?prof_str)
-                        BIND(CONCAT(
-                    "consecutivedays:",?consecutiveDays,",",      
-                    "setperiodofday:",?noLessonAMPM,",",
-                    "avoidlessonday1:",?noLessonDay1,",",
-                    "avoidlessonday2:",?noLessonDay2,",",
-                    "splitdurationlessons6h:",?sixHourSplit,",",
-                    "blackboard:",?writeMethodRoom)
-                    AS ?preference_str)
+                    BIND(CONCAT(?idProf) AS ?prof_str)
+                    
 
-                    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?obligatory ?curriculum ?semester 
-                    ?totalhours ?weekhours ?year ?numStudents ?preferences		
+                    }GROUP BY ?idDiscipline ?sigleDiscipline ?disciplineName ?cfu ?idCourse ?idCourse2 ?obligatory ?curriculum ?semester 
+                    ?totalhours ?weekhours ?year ?numStudents 		
                     `;
-    
 
-    
+
+
 
     var encodedquery = encodeURIComponent(myquery);
 
@@ -240,63 +302,44 @@ function queryDiscipline(sem) {
             url: endpointURL + "?query=" + encodedquery + "&format=" + "json",
             success: function (results) {
                 $.each(results, function (index, element) {
-                    
+
                     var result = [];
-                    var bindings = element.bindings;                
-                    
+                    var bindings = element.bindings;
+
                     for (i in bindings) {
-                              var d = new Discipline(
-                              bindings[i].idDiscipline.value,
-                              bindings[i].sigleDiscipline.value,
-                              bindings[i].disciplineName.value,
-                              bindings[i].semester.value,
-                              bindings[i].obligatory.value, 
-                              splitCurriculum(bindings[i].curriculum.value), 
-                              bindings[i].totalhours.value, 
-                              bindings[i].weekhours.value, 
-                              bindings[i].cfu.value, 
-                              bindings[i].year.value, 
-                              parseInt(bindings[i].numStudents.value)
-                              );
+                        var d = new Discipline(
+                            bindings[i].idDiscipline.value,
+                            bindings[i].sigleDiscipline.value,
+                            bindings[i].disciplineName.value,
+                            bindings[i].semester.value,
+                            bindings[i].obligatory.value,
+                            splitCurriculum(bindings[i].curriculum.value),
+                            bindings[i].totalhours.value,
+                            bindings[i].weekhours.value,
+                            bindings[i].cfu.value,
+                            bindings[i].year.value,
+                            parseInt(bindings[i].numStudents.value)
+                        );
                         d.setCourse(bindings[i].idCourse.value);
                         var idProfs = bindings[i].professors.value.split(",");
-                        for(var p = 0; p < idProfs.length;p++){
+                        for (var p = 0; p < idProfs.length; p++) {
                             d.setProfessor(idProfs[p]);
                         }
-                       
-                        var profPreferences = bindings[i].preferences; 
-                        if(profPreferences!=undefined){
-                            var profPreferencesSplit=profPreferences.value.split("|");    
-                                                    
-                            for(var p = 0; p < profPreferencesSplit.length;p++){
-                               d.preferences={};
-                               if(d.getPreference().length==1){  //tutto if solo per la stampa alert                          
-                               var overWritePreference="\n"; 
-                               var prefSplit= profPreferencesSplit[1].split(',');//prende l'ultima e la splitta nelle rispettive preferenze
-                               for(var i=0;i<prefSplit.length;i++){
-                                overWritePreference+=prefSplit[i]+"\n";
-                               }
-                               alert("Per la materia condivisa "+d.name+" sono state utilizzate le seguenti preferenze: "+overWritePreference);
-                               }
-                               d.setPreferences(profPreferencesSplit[p]);                               
-                            }
-                        
-                        
-                    }        
+     
                         result.push(d);
-                    }   
-                    if(result.length > 0){
+                    }
+                    if (result.length > 0) {
                         resolve(result);
                     }
-                        
-                });    
+
+                });
             }
-    
+
         });
     });
 
-    
-   
+
+
 }
 
 
