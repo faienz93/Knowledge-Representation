@@ -71,8 +71,8 @@ function queryPreferences(returnValue, callback) {
     var myquery = ` PREFIX uni: <http://www.rdfproject.com/>           
 
                     SELECT DISTINCT ?idProf ?consecutiveDays ?setperiodofday ?noLessonDay1 ?noLessonDay2 
-                                    ?sixHourSplit ?writeMethodRoom
-    
+                                    ?sixHourSplit ?writeMethodRoom ?role
+
                     FROM <http://www.rdcproject.com/graph/disciplines>
                     FROM <http://www.rdcproject.com/graph/professor>    
                     FROM <http://www.rdcproject.com/graph/preferences>
@@ -82,6 +82,7 @@ function queryPreferences(returnValue, callback) {
                         ?x  a uni:Discipline;
                             uni:isTaughtBy ?isTaughtBy.
                                 ?isTaughtBy a uni:Teacher;
+                            uni:role ?role;
                             uni:idProfessor ?idProf. 
                             ?isTaughtBy a uni:Preference;                             
                                 uni:consecutiveDays ?consecutiveDays;
@@ -90,7 +91,7 @@ function queryPreferences(returnValue, callback) {
                                 uni:noLessonDay2 ?noLessonDay2;
                                 uni:sixHourSplit ?sixHourSplit;
                                 uni:writeMethodRoom ?writeMethodRoom.
-                    }
+                }ORDER BY (?role)
                     `;
 
     var encodedquery = encodeURIComponent(myquery);

@@ -191,8 +191,8 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
         if(p.consecutiveday != "") this.consecutiveDay(p.consecutiveday);       
         if(p.setperiodofday != "") this.setPeriodOfDay(p.setperiodofday);
         if(p.blackboard != "") this.blackboard(p.blackboard);
-        if(p.avoidlessonday1 != "") this.avoidlessonday1(p.avoidlessonday1);
-        if(p.avoidlessonday2 != "") this.avoidlessonday2(p.avoidlessonday2);        
+        if(p.avoidlessonday1 != "") this.avoidLessonDay1(p.avoidlessonday1);
+        if(p.avoidlessonday2 != "") this.avoidLessonDay2(p.avoidlessonday2);        
         if(p.splitdurationlessons6h != "") {
             this.splitDurationLessons6h(parseInt(p.splitdurationlessons6h))
         }else{
