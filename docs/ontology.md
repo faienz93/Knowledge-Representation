@@ -24,73 +24,58 @@ Un'ontologia sarà costituita da
 
 ### Class
 - Person
-    - Teacher
+- Teacher
 - Discipline
 - ClassRoom
-
+- Preference
 - Course Name
-    - Undergraduate_Course
-        - Informatica Triennale
-        - Informatica Per il Management
-    - Postgraduate_Course
-        - Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE
-        - Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT
-        - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI
-                            
-
-
-
-
+    
 ### Properties
 
 #### Data Properties
 - Teacher
-    - First Name
-    - Last Name
     - ID Professor 
+    - First Name
+    - Last Name    
     - Role
 - Discipline
-    - discipline name
-    - obligatory
-    - cfu
-    - totalHours
-    - semester
-    - weekHours
     - ID Discipline
+    - Discipline Abbreviation
+    - Discipline name
+    - Semester
+    - Obligatory
+    - Curriculum   
+    - TotalHours    
+    - WeekHours
+    - CFU
+    - Year
+    - Num students
 - ClassRoom
-    - capacity
-    - wired
-    - wifi
-    - ID Classroom
+    - ID room
+    - Class Room Name
     - Address
+    - Capacity
+    - Blackboard
+    - Wired
+- Course
+    - ID Course
+    - Course Name
+- Preferences
+    - ID teacher
+    - How to split 6 hours Discipline
+    - Consecutive days start week or end week
+    - No lesson day 1
+    - No lesson day 2
+    - No lesson morning or afternnon
+    - How to write in the classroom
 
 #### Object Properties
 - Discipline 
-    - *hasCourseof* - Course_Name
-    - ]*isTaughtBy* - Teacher
+    - *hasCourseof* - Course
+    - *isTaughtBy* - Teacher
+    - *Is Preference Of* - Teacher
 
-### Instances
-- Informatica Triennale
-    - Informatica Triennale 1 anno
-    - Informatica Triennale 2 anno
-    - Informatica Triennale 3 anno
 
-- Informatica Per il Management
-    - Informatica Per il Management 1 anno
-    - Informatica Per il Management 2 anno
-    - Informatica Per il Management 3 anno
-
-- Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE
-    - Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE 1 anno 
-    - Informatica Magistrale - CURRICULUM A: TECNICHE DEL SOFTWARE 2 anno
-
-- Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT
-    - Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT 1 anno 
-    - Informatica Magistrale - CURRICULUM B: INFORMATICA PER IL MANAGEMENT 2 anno
-
-- Informatica Magistrale - CURRICULUM C: SISTEMI E RETI
-    - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI 1 anno 
-    - Informatica Magistrale - CURRICULUM C: SISTEMI E RETI 2 anno
 
 ## Definizione di un'Ontologia
 Per definire un'ontologia: 
