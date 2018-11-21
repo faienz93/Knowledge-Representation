@@ -23,12 +23,12 @@ Un'ontologia sarà costituita da
 ## Definizione dell'ontologia
 
 ### Class
-- Person
 - Teacher
 - Discipline
 - ClassRoom
+- Course
 - Preference
-- Course Name
+
     
 ### Properties
 
