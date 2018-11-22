@@ -110,7 +110,7 @@
 
 
 /* Define Drop down css */
-.dropdownChoiceDiscipline{
+.dropdownChoiceDiscipline, .dropdownFilterDiscipline{
   width: 100%;
   margin:auto;  
   display:inline-block;
@@ -119,7 +119,7 @@
 } 
 
 /* Custom every drop down */
-.dropdownChoiceDiscipline > select {
+.dropdownChoiceDiscipline > select, .dropdownFilterDiscipline > select {
   height: calc(2.25rem + 2px);
   padding: .375rem .75rem;
   font-size: 15px;

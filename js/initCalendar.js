@@ -27,6 +27,9 @@ $(document).ready(function () {
         eventClick: function (calEvent, jsEvent, view) {
             alertModal(calEvent);
         },
+        eventRender: function eventRender( event, element, view ) {
+            return ['all', event.filter].indexOf($('#filterEvent').val()) >= 0
+        }
     });
 
     queryClassrooms(classrooms, (value) => classrooms = value);
@@ -134,7 +137,8 @@ function startGenerationCalendar(v) {
                     "<b>OBBLIGATORIO:</b> " + obb + "<br /><br />" +                   
                     "<b>AULA:</b> " + className + "<br />" +
                     "<b>INDIRIZZO:</b> " + classAddress + "",
-                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno"
+                category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
+                filter: timetable.tt[i].getDiscipline().getCourse().getId()+timetable.tt[i].getDiscipline().getYear()
             }
             newEvent.color = colorCategory(newEvent.category);
             // console.log(newEvent);
@@ -144,6 +148,9 @@ function startGenerationCalendar(v) {
         // calendar.init();
         $('#calendar').fullCalendar('addEventSource', events);
         $("#generateCalendar").prop("disabled", true);
+        $('#filterEvent').on('change',function(){
+            $('#calendar').fullCalendar('rerenderEvents');
+        })
     }
    
 
