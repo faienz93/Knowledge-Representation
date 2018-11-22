@@ -27,7 +27,7 @@ $(document).ready(function () {
         eventClick: function (calEvent, jsEvent, view) {
             alertModal(calEvent);
         },
-        eventRender: function eventRender( event, element, view ) {
+        eventRender: function eventRender(event, element, view) {
             return ['all', event.filter].indexOf($('#filterEvent').val()) >= 0
         }
     });
@@ -67,12 +67,12 @@ $(document).ready(function () {
     });
 
     $("#generateCalendar").click(function () {
-        if($("#semesterDisciplineDropDown").val()>0){
+        if ($("#semesterDisciplineDropDown").val() > 0) {
             $("#semesterDropDownMex").html("");
             events.length = 0;
             startGenerationCalendar(REPETITION_RULES);
         }
-        else{
+        else {
             $("#semesterDropDownMex").html("<br/> Indicare il semestre da generare");
         }
     });
@@ -115,16 +115,16 @@ function startGenerationCalendar(v) {
             var end = timetable.tt[i].getEndLesson().toFixed(2);
             var arrayEnd = end.split(".");
             var numDay = defineDayNumber(timetable.tt[i].getDay());
-            var name=timetable.tt[i].getDiscipline().getName();
-            var abb=timetable.tt[i].getDiscipline().getAbbreviation();
-            var curriculum='['+timetable.tt[i].getDiscipline().getCurriculum()+'] - ';
-            if(curriculum=='[undefined] - ') {
-                curriculum=""
+            var name = timetable.tt[i].getDiscipline().getName();
+            var abb = timetable.tt[i].getDiscipline().getAbbreviation();
+            var curriculum = '[' + timetable.tt[i].getDiscipline().getCurriculum() + '] - ';
+            if (curriculum == '[undefined] - ') {
+                curriculum = ""
             };
-            var profs=timetable.tt[i].getDiscipline().getAllProfessor();
-            var obb=timetable.tt[i].getDiscipline().getObligatory();
-            var className=timetable.tt[i].getClassroom().getName();
-            var classAddress=timetable.tt[i].getClassroom().getAddress()
+            var profs = timetable.tt[i].getDiscipline().getAllProfessor();
+            var obb = timetable.tt[i].getDiscipline().getObligatory();
+            var className = timetable.tt[i].getClassroom().getName();
+            var classAddress = timetable.tt[i].getClassroom().getAddress()
             var newEvent = {
                 start: createDate(numDay, arrayStart[0], arrayStart[1]),
                 end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
@@ -134,11 +134,11 @@ function startGenerationCalendar(v) {
                     "<b>FINE:</b> " + end + "<br />" +
                     "<b>CURRICULUM:</b> " + curriculum + "<br />" +
                     "<b>PROFESSORE:</b> " + profs + "<br />" +
-                    "<b>OBBLIGATORIO:</b> " + obb + "<br /><br />" +                   
+                    "<b>OBBLIGATORIO:</b> " + obb + "<br /><br />" +
                     "<b>AULA:</b> " + className + "<br />" +
                     "<b>INDIRIZZO:</b> " + classAddress + "",
                 category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
-                filter: timetable.tt[i].getDiscipline().getCourse().getId()+timetable.tt[i].getDiscipline().getYear()
+                filter: timetable.tt[i].getDiscipline().getCourse().getId() + timetable.tt[i].getDiscipline().getYear()
             }
             newEvent.color = colorCategory(newEvent.category);
             // console.log(newEvent);
@@ -148,11 +148,11 @@ function startGenerationCalendar(v) {
         // calendar.init();
         $('#calendar').fullCalendar('addEventSource', events);
         $("#generateCalendar").prop("disabled", true);
-        $('#filterEvent').on('change',function(){
+        $('#filterEvent').on('change', function () {
             $('#calendar').fullCalendar('rerenderEvents');
         })
     }
-   
+
 
 }
 
@@ -163,33 +163,41 @@ function startGenerationCalendar(v) {
  */
 function setDiscipline(disc) {
     // console.log(resultPreferences);
-    
+
     for (var i = 0; i < disc.length; i++) {
         var prof = disc[i].getProfessor();
         // Set Professors
-        for (var index = 0; index < prof.length; index++) {            
+        for (var index = 0; index < prof.length; index++) {
             prof[index] = professors.find(o => o.id === prof[index]);
         }
         // Set Course       
         disc[i].setCourse(courses.find(o => o.id === disc[i].getCourse()));
 
         // Set Preferences       
-        for (var index = 0; index < prof.length; index++) {            
-            
+        for (var index = 0; index < prof.length; index++) {
+
             var prf = resultPreferences.find(o => o.idProf === prof[index].getId());
-            if(prf!=undefined){
+            if (prf != undefined) {
                 disc[i].setPreferences(prf);
             }
-            
         }
-        
-
-        // console.log(disc[i].getName());
-        // console.log(disc[i].getPreference());
-
     }
 
-    
+      /**
+      * NUMBER OF WEEK OF LESSONS
+      */
+
+    // i.e. 24/09/2018
+    // var startWeek = moment(2018 + "/" + 09 + "/" + 24, 'YYYY-MM-DD');
+
+    // // i.e 14/12/2018
+    // var endWeeek = moment(2018 + "/" + 12 + "/" + 14, 'YYYY-MM-DD');
+    // var numberOfWeek = endWeeek.diff(startWeek, 'week');
+    // console.log("Numero di settimane di lezione " + numberOfWeek);
+    /**
+     ******************************************************************
+     */
+
 
     // for every query reset the timetable.length has resize
     timetable.tt.length = 0
@@ -198,7 +206,8 @@ function setDiscipline(disc) {
 
         var randomClassroom = classrooms[Math.floor(Math.random() * classrooms.length)];
         var randomDay = days[Math.floor(Math.random() * days.length)];
-        var subjectWeeksHours = disc[i].getWeeksHours();
+        // var subjectWeeksHours = disc[i].getWeeksHours();
+        var subjectWeeksHours = Math.round(disc[i].getTotalHours()/11);
         //var subjectWeeksHours = DURATION_LESSON;
         if (subjectWeeksHours < 4) {
             timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
@@ -228,6 +237,16 @@ function setDiscipline(disc) {
                 timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 4, randomClassroom));
             }
 
+        }
+        if (subjectWeeksHours == 8) {
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 2, randomClassroom));
+        }
+        if (subjectWeeksHours == 9) {
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
+            timetable.tt.push(new Lesson(randomDay, disc[i], START_LESSONS, START_LESSONS + 3, randomClassroom));
         }
 
     }

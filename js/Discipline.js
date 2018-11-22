@@ -52,6 +52,17 @@ function Discipline(id, abbreviation, name, semester, obligatory, curriculum, to
     this.getWeeksHours = function () {
         return this.weeksHours;
     };
+
+
+    /**
+     * Return the TotalHours of Course
+     */
+    this.getTotalHours = function () {
+        return this.totalHours;
+    };
+
+
+
     /**
      * Return the obligatory of Course
      */

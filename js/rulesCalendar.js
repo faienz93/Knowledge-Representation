@@ -558,20 +558,7 @@ reactor.createRule("stop", -100, {},
  * **********************************************************
  */
 
-/**
- * NUMBER OF WEEK OF LESSONS
- */
 
-// i.e. 24/09/2018
-// var startWeek = moment(2018 + "/" + 09 + "/" + 24, 'YYYY-MM-DD');
-
-// // i.e 14/12/2018
-// var endWeeek = moment(2018 + "/" + 12 + "/" + 14, 'YYYY-MM-DD');
-// var numberOfWeek = endWeeek.diff(startWeek, 'week');
-// console.log("Numero di settimane di lezione " + numberOfWeek);
-/**
- ******************************************************************
- */
 
 
 
