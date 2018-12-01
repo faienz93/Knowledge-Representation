@@ -32,6 +32,11 @@ var DURATION_LESSON = 5;
 // end lessons
 var END_LESSONS = 18.30;
 
+
+// High frequency
+var HIGH_FREQUENCY=50;
+
+
 // Global calendar
 var calendar;
 

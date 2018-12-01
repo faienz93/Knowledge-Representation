@@ -125,6 +125,7 @@ function startGenerationCalendar(v) {
             var obb = timetable.tt[i].getDiscipline().getObligatory();
             var className = timetable.tt[i].getClassroom().getName();
             var classAddress = timetable.tt[i].getClassroom().getAddress()
+            var prefDisc=timetable.tt[i].getDiscipline().getPreference();
             var newEvent = {
                 start: createDate(numDay, arrayStart[0], arrayStart[1]),
                 end: createDate(numDay, arrayEnd[0], arrayEnd[1]),
@@ -136,7 +137,17 @@ function startGenerationCalendar(v) {
                     "<b>PROFESSORE:</b> " + profs + "<br />" +
                     "<b>OBBLIGATORIO:</b> " + obb + "<br /><br />" +
                     "<b>AULA:</b> " + className + "<br />" +
-                    "<b>INDIRIZZO:</b> " + classAddress + "",
+                    "<b>INDIRIZZO:</b> " + classAddress + "<br />" +
+                    "<b>PREFERENZE:</b> " +"<br />"+
+                    JSON.stringify(prefDisc)
+                    // "<b>sixHourSplit:</b> " + prefDisc[0].splitdurationlessons6h + "-"+ 
+                    // "<b>consecutiveDays:</b> " + prefDisc.consecutiveday + "-"+ 
+                    // "<b>noLessonDay1:</b> " + prefDisc.avoidlessonday1 + "-"+ 
+                    // "<b>noLessonDay2:</b> " + prefDisc.avoidlessonday2 + "-"+ 
+                    // "<b>noLessonAMPM:</b> " + prefDisc.setperiodofday + "-"+
+                    // "<b>writeMethodRoom:</b> " + prefDisc.blackboard + ""
+                    ,
+
                 category: timetable.tt[i].getDiscipline().getCourse() + " " + timetable.tt[i].getDiscipline().getYear() + " anno",
                 filter: timetable.tt[i].getDiscipline().getCourse().getId() + timetable.tt[i].getDiscipline().getYear()
             }

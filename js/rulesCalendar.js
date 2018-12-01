@@ -167,6 +167,7 @@ reactor.createRule("overlapTimeSlotOtherCourse", -1, { l1: Lesson, l2: Lesson },
 * - same day 
 * - overlap lesson
 * - hasCommonCurriculum
+* - or the courses are facoltative but with a high frequency
 * In this case, switch the time slot to make it consequential
 */
 reactor.createRule("overlapTimeSlotSameCurriculum", -1, { l1: Lesson, l2: Lesson },
@@ -177,7 +178,8 @@ reactor.createRule("overlapTimeSlotSameCurriculum", -1, { l1: Lesson, l2: Lesson
             l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
             l1.getDay() == l2.getDay() &&
             (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
-            hasCommonCurriculum;
+            (hasCommonCurriculum || 
+                l1.getDiscipline().getNumStudent()>HIGH_FREQUENCY && l2.getDiscipline().getNumStudent()>HIGH_FREQUENCY);
 
     },
     function (l1, l2) {
@@ -194,7 +196,7 @@ reactor.createRule("overlapTimeSlotSameCurriculum", -1, { l1: Lesson, l2: Lesson
  * - same year
  * - same day 
  * - overlap lesson
- * - one obligatory
+ * - one obligatory or facoltative with a high frequency
  * - one facultative
  * In this case, switch the time slot to make it consequential
  */
@@ -202,12 +204,14 @@ reactor.createRule("overlapTimeSlotObligatoryFacultative", -1, { l1: Lesson, l2:
     function (l1, l2) {
         var getCurriculumL1 = l1.getDiscipline().getCurriculum();
         var getCurriculumL2 = l2.getDiscipline().getCurriculum();
+        
         return l1 != l2 &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
             l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
             l1.getDay() == l2.getDay() &&
             (l1.getStartLesson() < l2.getEndLesson() && l1.getEndLesson() > l2.getStartLesson()) &&
-            getCurriculumL1 !== undefined && getCurriculumL2 === undefined;
+            (getCurriculumL1 !== undefined || l1.getDiscipline().getNumStudent()> HIGH_FREQUENCY) && 
+            getCurriculumL2 === undefined;
 
     },
     function (l1, l2) {
@@ -421,18 +425,21 @@ reactor.createRule("checkClassroomBlackboard", -1, { l: Lesson },
 
 
 /**
- * RULE: Break hour for a course if it has more of 5 hours consecutive (function in util) * 
+ * RULE: Break hour for a course if it has more of 5 hours consecutive (only obbligatories and high frequency facoltative) * 
  */
 reactor.createRule("studentBreakForCourse", -2, { l1: Lesson, l2: Lesson },
     function (l1, l2) {
         var count = 0;
-        if (l1 != l2 &&
+        if (
+            l1 != l2 &&
             l1.getDay() == l2.getDay() &&
             l1.getDiscipline().getCourse() == l2.getDiscipline().getCourse() &&
             l1.getDiscipline().getYear() == l2.getDiscipline().getYear() &&
             l1.getEndLesson() == l2.getStartLesson() &&
             l1.getDiscipline().getCurriculum() == undefined && l2.getDiscipline().getCurriculum() == undefined &&
-            l1.getDiscipline().getObligatory() && l2.getDiscipline().getObligatory()) {
+            (l1.getDiscipline().getObligatory()|| l1.getDiscipline().getNumStudent()> HIGH_FREQUENCY) && 
+            (l2.getDiscipline().getObligatory()|| l2.getDiscipline().getNumStudent()> HIGH_FREQUENCY)
+            ) {
             count = countHoursBetween(l2.getDiscipline().getCourse(), l2.getDay(), l1.getStartLesson(), l2.getEndLesson());
         }
         return count > 5;
