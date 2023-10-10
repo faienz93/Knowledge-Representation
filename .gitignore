@@ -16,3 +16,8 @@ foaf.owl
 # Ignore Compiler File
 ##########################
 *.pyc
+
+##########################
+# Virtual environment
+##########################
+virtual_environment
