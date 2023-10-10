@@ -42,7 +42,7 @@ DELETE DATA
 sparql.setQuery(query)
 sparql.setMethod('POST') 
 #q = sparql.query()
-print query
+print(query)
 
 # print q.info()["content-type"]
 # print q.convert()

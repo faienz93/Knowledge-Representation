@@ -115,7 +115,7 @@ def addDiscipline():
     weeksHours = request.form['weeksHours']
     students = request.form['numberStudents']
     teacher = request.form.getlist('teacher')
-    print teacher
+    print(teacher)
 
     insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obligatory, totalHours, weeksHours, cfu, year, curriculum, course, students, teacher)
 

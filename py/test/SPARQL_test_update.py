@@ -183,6 +183,6 @@ elif(classes=="course"):
 
 sparql.setQuery(query)
 sparql.setMethod('POST') 
-print query
+print(query)
 q = sparql.query()
 

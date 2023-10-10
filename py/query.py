@@ -58,7 +58,7 @@ def insertProfessor(id_professor, name, surname, role):
     # Run the query 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 # ======================================================================
@@ -85,7 +85,7 @@ def cancelProfessor(id_professor):
 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 # ======================================================================
@@ -127,7 +127,7 @@ def modifyProfessor(id_professor, name, surname, role):
 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 # ======================================================================
@@ -151,7 +151,7 @@ def getAllProfessors():
 
     sparqlQuery.setQuery(query)
     sparqlQuery.setMethod('POST') 
-    print query
+    print(query)
     return sparqlQuery.query().convert()
 
 
@@ -207,7 +207,7 @@ def insertDiscipline(id_discipline, discipline_abb, discipline_name,semester,obl
     # Run the query and print the result
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 # ======================================================================
@@ -229,7 +229,7 @@ def cancelDiscipline(id_discipline):
 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 # ======================================================================
@@ -313,7 +313,7 @@ def modifyDiscipline(id_discipline, discipline_abb, discipline_name, semester,ob
 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 
@@ -353,7 +353,7 @@ def insertClassRoom(id_room,className, address, capacity, blackboard, wired):
     # Run the query 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 # ======================================================================
@@ -375,7 +375,7 @@ def cancelClassRoom(id_room):
 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 # ======================================================================
@@ -428,7 +428,7 @@ def modifyClassRoom(id_room, name_room, capacity_room, wired_room, blackboard, a
 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 
@@ -460,7 +460,7 @@ def insertPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2
     # Run the query and print the result
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 # ======================================================================
@@ -511,7 +511,7 @@ def modifyPreference(prof, Discipline6H, ConsecutiveDays, selectDay1, selectDay2
 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 
 # ======================================================================
@@ -531,6 +531,6 @@ def cancelPreference(prof):
 
     sparql.setQuery(query)
     sparql.setMethod('POST') 
-    print query
+    print(query)
     sparql.query()
 

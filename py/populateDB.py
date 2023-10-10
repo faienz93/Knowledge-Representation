@@ -108,7 +108,7 @@ with open('../assets/csv/professors.csv', 'rb') as csvfile:
         # Run the query and print the result
         sparql.setQuery(query)
         sparql.setMethod('POST') 
-        # print query
+        # print(query)
         q = sparql.query()
 
 
@@ -145,7 +145,7 @@ with open('../assets/csv/classrooms.csv', 'rb') as csvfile:
         # Run the query and print the result
         sparql.setQuery(query)
         sparql.setMethod('POST') 
-        # print query
+        # print(query)
         q = sparql.query()
 
 
@@ -198,7 +198,7 @@ with open('../assets/csv/disciplines.csv', 'rb') as csvfile:
         # Run the query and print the result
         sparql.setQuery(query)
         sparql.setMethod('POST') 
-        #print query
+        #print(query)
         q = sparql.query()
 
 
@@ -238,7 +238,7 @@ with open('../assets/csv/preferences.csv', 'rb') as csvfile:
         # Run the query and print the result
         sparql.setQuery(query)
         sparql.setMethod('POST') 
-        #print query
+        #print(query)
         q = sparql.query()
 
 

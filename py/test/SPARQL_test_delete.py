@@ -57,6 +57,6 @@ DELETE WHERE {
 
 sparql.setQuery(queryDelete)
 sparql.setMethod('POST') 
-print queryDelete
+print(query)Delete
 q = sparql.query()
 
